@@ -1,6 +1,7 @@
 import React from 'react'
-import styles from './styles.module.css'
 
-export const ChatEngine = ({ text }) => {
-  return <div className={styles.test}>Example Component: {text}</div>
+import SocketConnector from './components'
+
+export const ChatEngine = (props) => {
+  return <SocketConnector {...props} />
 }
