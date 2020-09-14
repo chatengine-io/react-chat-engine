@@ -51,6 +51,8 @@
     "dist"
   ],
   "dependencies": {
+    "axios": "^0.20.0",
+    "lodash": "^4.17.20",
     "reconnecting-websocket": "^4.4.0"
   }
 }
