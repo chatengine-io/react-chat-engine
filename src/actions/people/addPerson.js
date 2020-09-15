@@ -3,7 +3,7 @@ import * as str from '..'
 
 export function addPerson(props, chatId, userName) {
     axios.post(
-        `${str.ROOT_URL}/chats/${chatId}/people/`,
+        `${str.getApiUrl(props)}/chats/${chatId}/people/`,
         { username: userName },
         { headers: { 
             "Public-Key": props.publicKey,

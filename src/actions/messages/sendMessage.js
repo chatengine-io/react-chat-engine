@@ -3,7 +3,7 @@ import * as str from '../../actions'
 
 export function sendMessage(props, chatId, data) {
     axios.post(
-        `${str.ROOT_URL}/chats/${chatId}/messages/`,
+        `${str.getApiUrl(props)}/chats/${chatId}/messages/`,
         data,
         { headers: { 
             "Public-Key": props.publicKey,

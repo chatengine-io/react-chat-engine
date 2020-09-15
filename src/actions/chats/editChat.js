@@ -3,7 +3,7 @@ import * as str from '../../actions'
 
 export function editChat(props, chatId, data) {
     axios.patch(
-        `${str.ROOT_URL}/chats/${chatId}/`,
+        `${str.getApiUrl(props)}/chats/${chatId}/`,
         data, 
         { headers: { 
             "Public-Key": props.publicKey,

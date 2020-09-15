@@ -3,7 +3,7 @@ import * as str from '../../actions'
 
 export function deleteChat(props, chatId) {
     axios.delete(
-        `${str.ROOT_URL}/chats/${chatId}/`,
+        `${str.getApiUrl(props)}/chats/${chatId}/`,
         { headers: { 
             "Public-Key": props.publicKey,
             "User-Name": props.userName,

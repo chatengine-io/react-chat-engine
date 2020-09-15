@@ -1,14 +1,10 @@
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
 export function connectSocket(props) {    
-  const { publicKey, userName, userSecret } = props 
-
-  // const env = process.env.NODE_ENV
-  // const wsStart = env === 'production' ? 'wss://' : 'ws://'
-  // const rootHost = env === 'production' ? 'api.chatengine.io' : '127.0.0.1:8000'
-  const wsStart = 'wss://'
-  const rootHost = 'api.chatengine.io'
-
+  const { publicKey, userName, userSecret, development } = props 
+  const wsStart = development ? 'ws://' : 'wss://'
+  const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
+  console.log(`${wsStart}${rootHost}/person/?publicKey=${publicKey}&username=${userName}&secret=${userSecret}`)
   const rws = new ReconnectingWebSocket(`${wsStart}${rootHost}/person/?publicKey=${publicKey}&username=${userName}&secret=${userSecret}`)
 
   rws.onopen = function(event) {

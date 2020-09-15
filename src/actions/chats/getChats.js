@@ -3,7 +3,7 @@ import * as str from '../../actions'
 
 export function getChats(props) {
     axios.get(
-        `${str.ROOT_URL}/chats/`,
+        `${str.getApiUrl(props)}/chats/`,
         { headers: { 
             "Public-Key": props.publicKey,
             "User-Name": props.userName,

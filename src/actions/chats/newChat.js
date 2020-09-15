@@ -3,7 +3,7 @@ import * as str from '../../actions'
 
 export function newChat(props, data) {
     axios.post(
-        `${str.ROOT_URL}/chats/`,
+        `${str.getApiUrl(props)}/chats/`,
         data, 
         { headers: { 
             "Public-Key": props.publicKey,

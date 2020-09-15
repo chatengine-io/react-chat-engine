@@ -3,7 +3,7 @@ import * as str from '../../actions'
 
 export function deleteMessage(props, chatId, messageId) {
     axios.delete(
-        `${str.ROOT_URL}/chats/${chatId}/messages/${messageId}/`,
+        `${str.getApiUrl(props)}/chats/${chatId}/messages/${messageId}/`,
         { headers: { 
             "Public-Key": props.publicKey,
             "User-Name": props.userName,

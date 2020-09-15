@@ -3,7 +3,7 @@ import * as str from '..'
 
 export function removePerson(props, chatId, userName) {
     axios.patch(
-        `${str.ROOT_URL}/chats/${chatId}/people/`,
+        `${str.getApiUrl(props)}/chats/${chatId}/people/`,
         { username: userName },
         { headers: { 
             "Public-Key": props.publicKey,

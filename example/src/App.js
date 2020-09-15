@@ -82,7 +82,8 @@ class App extends Component {
       <div>
 
         <ChatEngine
-          publicKey={'6781ca86-9ebf-47b0-88a9-37e88a356235'}
+          development
+          publicKey={'1ed59673-1fd6-46ed-9eb9-56239a6a4f82'}
           userName={'john_smith'}
           userSecret={'pass1234'}
           onConnect={(creds) => this.onConnect(creds)}
