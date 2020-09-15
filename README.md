@@ -2,7 +2,7 @@
 
 Chat Engine is the first cheap, easy, and scalable chat API.
 
-Try our free basic plan at [chatengine.io](https://www.chatengine.io)
+Try our free plan at [chatengine.io](https://chatengine.io)
 
 ## Features
 
@@ -124,7 +124,7 @@ See [`App.js`](https://github.com/alamorre/react-chat-engine/blob/master/src/dem
 
 ## Props
 
-- **`publicKey`** _(UUID REQUIRED)_ - Public API key for your [chatengine.io](https://www.chatengine.io) project
+- **`publicKey`** _(UUID REQUIRED)_ - Public API key for your [chatengine.io](https://chatengine.io) project
 - **`userName`** _(String REQUIRED)_ - Username of a person in this project
 - **`userSecret`** _(String REQUIRED)_ - Secret for the person in this project
 - **`onConnect`** (Function) - Callback when the connection/authentication is complete
