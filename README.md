@@ -19,103 +19,27 @@ Try our free plan at [chatengine.io](https://chatengine.io)
 
 ## Example
 
+Step 1: Create an account, project and user at [chatengine.io](https://chatengine.io)
+Step 2: Collect the public-key, username and user-secret
+Step 3: Run `npm install react-chat-engine --save` or `yarn add react-chat-engine`
+Step 4: Import the `ChatEngine` component and pass in `publicKey`, `userName`, and `userSecret` props
+Step 5: Voila! You're done
+
+BONUS: Add more users into your chats with the Private Key API
+
 ```jsx
-import React, { Component } from 'react'
+import React from 'react'
 
-import _ from 'lodash'
+import { ChatEngine } from 'react-chat-engine'
 
-import { ChatEngine, getChats, getMessages } from 'react-chat-engine'
-
-
-export default class App extends Component {
-    state = {
-        creds: {},
-        chats: {},
-        messages: {},
-        activeChat: null,
-    }
-
-    onConnect(creds) {
-        this.setState({ creds })
-        getChats(creds)
-    }
-
-    setActiveChat(chatId) {
-        this.setState({ activeChat: chatId })
-        getMessages(this.state.creds, chatId)
-    }
-
-    onGetChats(chats) {
-        if (chats.length > 0) { this.setActiveChat(chats[0].id) }
-        this.setState({ chats: _.mapKeys(chats, 'id') })
-    }
-
-    onNewChat(chat) {
-        const { chats } = this.state
-        chats[chat.id] = chat
-        this.setState({ chats })
-    }
-
-    onEditChat(chat) {
-        const { chats } = this.state
-        chats[chat.id] = chat
-        this.setState({ chats })
-    }
-
-    onDeleteChat(chat) {
-        const { chats } = this.state
-        chats[chat.id] = undefined
-        this.setState({ chats })
-    }
-
-    onGetMessages(chatId, messages) {
-        this.setState({ messages: _.mapKeys(messages, 'id') })
-    }
-
-    onNewMessage(chatId, message) {
-        if (chatId === this.state.activeChat) {
-            const { messages } = this.state
-            messages[message.id] = message
-            this.setState({ messages })
-        }
-    }
-
-    onEditMessage(chatId, message) {
-        if (chatId === this.state.activeChat) {
-            const { messages } = this.state
-            messages[message.id] = message
-            this.setState({ messages })
-        }
-    }
-
-    onDeleteMessage(chatId, message) {
-        if (chatId === this.state.activeChat) {
-            const { messages } = this.state
-            messages[message.id] = undefined
-            this.setState({ messages })
-        }
-    }
-
-    render() {
-        return (
-            <ChatEngine
-                publicKey={'b75e5bd5-cd84-404c-b820-06feff8c98c0'}
-                userName={'john_smith'}
-                userSecret={'secret_1234'}
-                onConnect={(creds) => this.onConnect(creds)}
-                onGetChats={(chats) => this.onGetChats(chats)}
-                onNewChat={(chat) => this.onNewChat(chat)}
-                onEditChat={(chat) => this.onEditChat(chat)}
-                onDeleteChat={(chat) => this.onDeleteChat(chat)}
-                onAddPerson={(chat) => this.onEditChat(chat)}
-                onRemovePerson={(chat) => this.onEditChat(chat)}
-                onGetMessages={(chatId, messages) => this.onGetMessages(chatId, messages)}
-                onNewMessage={(chatId, message) => this.onNewMessage(chatId, message)}
-                onEditMessage={(chatId, message) => this.onEditMessage(chatId, message)}
-                onDeleteMessage={(chatId, message) => this.onDeleteMessage(chatId, message)}
-            />
-        )
-    }
+export function App() {
+    return (
+        <ChatEngine
+            publicKey={'b75e5bd5-cd84-404c-b820-06feff8c98c0'}
+            userName={'john_smith'}
+            userSecret={'secret_1234'}
+        />
+    )
 }
 ```
 
