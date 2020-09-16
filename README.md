@@ -4,26 +4,22 @@ Chat Engine is the first cheap, easy, and scalable chat API.
 
 Try our free plan at [chatengine.io](https://chatengine.io)
 
-## Features
-
-- Authenticate users
-- Subscribe (connect) to incoming chats and messages
-- Create chats and messages
-- Add and remove people from chats
-- Edit and delete chat and message data
-
 ## Installation
 
 - Using [npm](https://www.npmjs.com/#getting-started): `npm install react-chat-engine --save`
 - Using [Yarn](https://yarnpkg.com/): `yarn add react-chat-engine`
 
-## Example
+## Getting Started
 
-Step 1: Create an account, project and user at [chatengine.io](https://chatengine.io)
-Step 2: Collect the public-key, username and user-secret
-Step 3: Run `npm install react-chat-engine --save` or `yarn add react-chat-engine`
-Step 4: Import the `ChatEngine` component and pass in `publicKey`, `userName`, and `userSecret` props
-Step 5: Voila! You're done
+1. Create an **account**, **project** and **user** at [chatengine.io](https://chatengine.io)
+
+2. Collect the **public key**, **username** and **user secret**
+
+3. Install `yarn add react-chat-engine`
+
+4. Import the `ChatEngine` component and pass in `publicKey`, `userName`, and `userSecret` props
+
+5. Voila! You're done
 
 BONUS: Add more users into your chats with the Private Key API
 
@@ -46,6 +42,14 @@ export function App() {
 ## Complete Example
 See [`App.js`](https://github.com/alamorre/react-chat-engine/blob/master/src/demo/App.js) for a working demo!
 
+## Features
+
+- Authenticate users
+- Subscribe (connect) to incoming chats and messages
+- Create chats and messages
+- Add and remove people from chats
+- Edit and delete chat and message data
+
 ## Props
 
 - **`publicKey`** _(UUID REQUIRED)_ - Public API key for your [chatengine.io](https://chatengine.io) project
@@ -62,7 +66,7 @@ See [`App.js`](https://github.com/alamorre/react-chat-engine/blob/master/src/dem
 - **`onNewMessage`** _(Function)_ - Callback when a person posts a new message in one of the chats
 - **`onEditMessage`** _(Function)_ - Callback when a person edits a new message in one of the chats
 - **`onDeleteMessage`** _(Function)_ - Callback when a person deletes a new message in one of the chats
-
+- **`hideUI`** _(Boolean)_ - Hides all UI components for a custom implementation (Warning: Advanced)
 
 ## Functions
 
