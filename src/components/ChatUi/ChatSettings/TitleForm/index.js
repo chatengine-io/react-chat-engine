@@ -32,7 +32,7 @@ export default class MessageForm extends React.Component {
                     label="Title" 
                     value={this.state.value} 
                     handleChange={this.handleChange.bind(this)} 
-                    style={{ width: 'calc(100%8px)', marginBottom: '12px' }}
+                    style={{ width: 'calc(100% - 18px)', marginBottom: '12px' }}
                 />
 
                 <Button 
