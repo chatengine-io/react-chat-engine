@@ -26,6 +26,7 @@ const styles = {
         color: 'white',
         border: 'none',
         outline: 'none',
+        height: '36px',
         fontSize: '15px',
         borderRadius: '4px',
         padding: '8px 16px',
@@ -35,9 +36,10 @@ const styles = {
         color: 'white',
         border: 'none',
         outline: 'none',
+        height: '36px',
         fontSize: '15px',
         borderRadius: '4px',
-        padding: '8px 16px',
+        padding: '0px 16px',
         backgroundColor: '#40a9ff'
     }
 }
