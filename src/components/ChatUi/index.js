@@ -101,20 +101,20 @@ class App extends Component {
                 <div style={{ content: "", display: 'table', clear: 'both' }}>
 
                     <ChatList
-                        creds={this.state.creds}
-                        chats={this.state.chats}
-                        onChatClick={(chatId) => this.setActiveChat(chatId)}
+                      creds={this.state.creds}
+                      chats={this.state.chats}
+                      onChatClick={(chatId) => this.setActiveChat(chatId)}
                     />
 
                     <ChatFeed
-                        creds={this.state.creds}
-                        chatId={this.state.activeChat}
-                        messages={this.state.messages}
+                      creds={this.state.creds}
+                      chatId={this.state.activeChat}
+                      messages={this.state.messages}
                     />
 
                     <ChatSettings
-                        creds={this.state.creds}
-                        chat={this.state.chats[this.state.activeChat]}
+                      creds={this.state.creds}
+                      chat={this.state.chats[this.state.activeChat]}
                     />
 
                 </div>
