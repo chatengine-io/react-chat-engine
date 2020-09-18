@@ -14,6 +14,8 @@ class Message extends Component {
 
         if (!message) { return <div /> }
 
+        console.log('message', message)
+
         return (
             <div 
                 onMouseEnter={() => this.setState({ selected: true })}

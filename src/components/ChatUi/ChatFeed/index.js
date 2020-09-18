@@ -18,8 +18,11 @@ class ChatList extends Component {
 
         return (
             <div style={{ float: 'left', width: '55vw', height: '100vh' }}>
+
                 { this.renderMessages(messages) }
+
                 <MessageForm chatId={this.props.chatId} creds={this.props.creds} />
+
             </div>
         )
     }
