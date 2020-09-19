@@ -2,7 +2,6 @@ import React from 'react';
 
 import { editChat } from 'react-chat-engine'
 
-import { Button } from '../../components/Button'
 import { TextInput } from '../../components/Input'
 
 export default class MessageForm extends React.Component {
@@ -31,6 +30,7 @@ export default class MessageForm extends React.Component {
                 <TextInput 
                     label="Rename this Chat" 
                     value={this.state.value} 
+                    default={this.props.chat.title}
                     handleChange={this.handleChange.bind(this)} 
                     style={{ width: 'calc(100% - 18px)', marginBottom: '12px' }}
                 />

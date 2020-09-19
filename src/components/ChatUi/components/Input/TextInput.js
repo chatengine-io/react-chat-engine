@@ -5,6 +5,14 @@ export default class TextInput extends Component {
         focused: false
     }
 
+    componentDidMount() {
+        if(this.props.default) {
+            console.log('this.props.default', this.props.default)
+            const event = {target: {value: this.props.default}}
+            this.props.handleChange(event)
+        }
+    }
+
     render() {
         const customStyle = this.props.style ? this.props.style : {}
         const defaultStyle = this.state.focused ? styles.focusInput : styles.input

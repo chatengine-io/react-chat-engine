@@ -16,11 +16,12 @@ class ChatList extends Component {
         return (
             <div style={{ height: '100vh', borderLeft: '1px solid #afafaf' }}>
 
-                <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px' }}>
-                    { chat.title }
-                </div>
                 
-                <TitleForm creds={creds} chat={chat} />
+                
+                <TitleForm 
+                    chat={chat} 
+                    creds={creds} 
+                />
 
 
                 <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px' }}>
