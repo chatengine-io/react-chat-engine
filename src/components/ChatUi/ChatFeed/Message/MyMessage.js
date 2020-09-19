@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import MessageEditForm from './MessageForm/edit'
+import MessageEditForm from '../MessageForm/edit'
 
 import { deleteMessage } from 'react-chat-engine'
 
@@ -16,9 +16,9 @@ export default class Message extends Component {
 
         return (
             <div 
+                style={styles.myMessage}
                 onMouseEnter={() => this.setState({ selected: true })}
                 onMouseLeave={() => this.setState({ selected: false })}
-                style={ message.sender == creds.userName ? styles.myMessage : styles.theirMessage }
             >
 
                 { message.text }
@@ -44,10 +44,5 @@ const styles = {
         color: '#2f54eb', 
         width: '100%', 
         cursor: 'pointer'
-    },
-    theirMessage: {
-        color: 'red', 
-        width: '100%', 
-        cursor: 'pointer'
-    },
+    }
 }
