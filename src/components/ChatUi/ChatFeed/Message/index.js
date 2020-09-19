@@ -20,16 +20,3 @@ export default class Message extends Component {
         }   
     }
 }
-
-const styles = {
-    myMessage: {
-        color: '#2f54eb', 
-        width: '100%', 
-        cursor: 'pointer'
-    },
-    theirMessage: {
-        color: 'red', 
-        width: '100%', 
-        cursor: 'pointer'
-    },
-}

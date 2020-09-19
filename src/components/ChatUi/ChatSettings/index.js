@@ -12,22 +12,28 @@ class ChatList extends Component {
 
     renderOnePerson(people) {
         return (
-            <Avatar text={people[0].person} />
+            <Col xs={6} style={{ paddingTop: '22px', height: '72px' }}>
+                <div style={{ margin: 'auto', width: '33%' }}>
+                    <Avatar text={people[0].person} />
+                </div>
+            </Col>
         )
     }
 
     renderTwoPeople(people) {
         return (
-            <div>
-                <Avatar 
-                    text={people[0].person} 
-                    style={{ float: 'left', position: 'relative', right: '5px' }}
-                />
-                <Avatar 
-                    text={people[1].person} 
-                    style={{ float: 'right', position: 'relative', left: '5px', bottom: '44px', zIndex: 11 }}
-                />
-            </div>
+            <Col xs={6} style={{ paddingTop: '22px', height: '72px' }}>
+                <div style={{ margin: 'auto', width: '50%' }}>
+                    <Avatar 
+                        text={people[0].person} 
+                        style={{ float: 'left', position: 'relative', right: '5px' }}
+                    />
+                    <Avatar 
+                        text={people[1].person} 
+                        style={{ float: 'right', position: 'relative', left: '5px', bottom: '44px', zIndex: 11 }}
+                    />
+                </div>
+            </Col>
         )
     }
 
@@ -55,13 +61,9 @@ class ChatList extends Component {
 
                     <Col xs={3} />
 
-                    <Col xs={6} style={{ paddingTop: '22px', paddingBottom: '12px', backgroundColor: 'red' }}>
-                        <div style={{ margin: 'auto', width: '50%' }}>
-                            { topPeople.length == 1 && this.renderOnePerson(topPeople) }
-                            { topPeople.length == 2 && this.renderTwoPeople(topPeople) }
-                            { topPeople.length == 3 && this.renderThreePeople(topPeople) }
-                        </div>
-                    </Col>
+                    { topPeople.length == 1 && this.renderOnePerson(topPeople) }
+                    { topPeople.length == 2 && this.renderTwoPeople(topPeople) }
+                    { topPeople.length == 3 && this.renderThreePeople(topPeople) }
                     
                     <Col xs={3} />
 

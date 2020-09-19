@@ -25,7 +25,7 @@ export default class MessageForm extends React.Component {
   
     render() {
         return (
-            <form onSubmit={this.handleSubmit.bind(this)}>
+            <form onSubmit={this.handleSubmit.bind(this)} style={{ zIndex: 100 }}>
 
                 <TextInput 
                     label="Rename this Chat" 

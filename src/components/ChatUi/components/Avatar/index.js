@@ -16,13 +16,26 @@ const colors = [
 ]
 
 export default class Avatar extends Component {
+    stringToNumber(str){
+        let sum = 0
+        for (var i = 0; i < str.length; i++) {
+            sum = sum + str.charCodeAt(i) - 97
+        }
+        return sum
+    }
+
+    hashColors(num) {
+        const mod = num % colors.length
+        return colors[num % colors.length]
+    }
 
     render() {
         const customStyle = this.props.style ? this.props.style : {}
         const text = this.props.text.substring(0, 2).toUpperCase()
+        const color = colors[this.stringToNumber(this.props.text) % colors.length]
 
         return (
-            <div style={{ ...styles.avatar, ...customStyle }}>
+            <div style={{ ...styles.avatar, ...customStyle, ...{ backgroundColor: color } }}>
                 
                 <div style={{ color: 'white', paddingTop: '12px', fontSize: '15px', fontWeight: '600' }}>
                 
@@ -41,7 +54,6 @@ const styles = {
         height: '44px',
         borderRadius: '22px',
         color: 'white',
-        backgroundColor: '#FA7921',
         textAlign: 'center',
     }
 }
