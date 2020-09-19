@@ -7,7 +7,6 @@ export default class TextInput extends Component {
 
     componentDidMount() {
         if(this.props.default) {
-            console.log('this.props.default', this.props.default)
             const event = {target: {value: this.props.default}}
             this.props.handleChange(event)
         }
