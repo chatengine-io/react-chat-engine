@@ -17,7 +17,7 @@ class ChatList extends Component {
         const { messages } = this.props
 
         return (
-            <div style={{ float: 'left', width: '55vw', height: '100vh' }}>
+            <div style={{ height: '100vh' }}>
 
                 { this.renderMessages(messages) }
 

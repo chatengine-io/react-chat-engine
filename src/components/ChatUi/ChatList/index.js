@@ -23,7 +23,7 @@ class ChatList extends Component {
 
     render() {
         return (
-            <div style={{ float: 'left', width: '20vw', height: '100vh', borderRight: '1px solid #afafaf' }}>
+            <div style={{ height: '100vh', borderRight: '1px solid #afafaf' }}>
                 { this.renderChats(this.props.chats) } 
 
                 <ChatForm creds={this.props.creds} />

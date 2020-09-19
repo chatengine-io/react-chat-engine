@@ -11,6 +11,12 @@ import ChatList from './ChatList'
 import ChatFeed from './ChatFeed'
 import ChatSettings from './ChatSettings'
 
+import { Row, Col } from 'react-grid-system'
+
+import { setConfiguration } from 'react-grid-system';
+ 
+setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
+
 class App extends Component {
   state = {
     creds: {},
@@ -80,48 +86,44 @@ class App extends Component {
     }
   }
 
-    render() {
-        return (
-            <div>
-                <Socket 
-                    {...this.props} 
-                    onConnect={(creds) => this.onConnect(creds)}
-                    onGetChats={(chats) => this.onGetChats(chats)}
-                    onNewChat={(chat) => this.onNewChat(chat)}
-                    onEditChat={(chat) => this.onEditChat(chat)}
-                    onDeleteChat={(chat) => this.onDeleteChat(chat)}
-                    onAddPerson={(chat) => this.onEditChat(chat)}
-                    onRemovePerson={(chat) => this.onEditChat(chat)}
-                    onGetMessages={(chatId, messages) => this.onGetMessages(chatId, messages)}
-                    onNewMessage={(chatId, message) => this.onNewMessage(chatId, message)}
-                    onEditMessage={(chatId, message) => this.onEditMessage(chatId, message)}
-                    onDeleteMessage={(chatId, message) => this.onDeleteMessage(chatId, message)}
-                />
+  render() {
+    return (
+      <div>
 
-                <div style={{ content: "", display: 'table', clear: 'both' }}>
+        <Socket 
+          {...this.props} 
+          onConnect={(creds) => this.onConnect(creds)}
+          onGetChats={(chats) => this.onGetChats(chats)}
+          onNewChat={(chat) => this.onNewChat(chat)}
+          onEditChat={(chat) => this.onEditChat(chat)}
+          onDeleteChat={(chat) => this.onDeleteChat(chat)}
+          onAddPerson={(chat) => this.onEditChat(chat)}
+          onRemovePerson={(chat) => this.onEditChat(chat)}
+          onGetMessages={(chatId, messages) => this.onGetMessages(chatId, messages)}
+          onNewMessage={(chatId, message) => this.onNewMessage(chatId, message)}
+          onEditMessage={(chatId, message) => this.onEditMessage(chatId, message)}
+          onDeleteMessage={(chatId, message) => this.onDeleteMessage(chatId, message)}
+        />
 
-                    <ChatList
-                      creds={this.state.creds}
-                      chats={this.state.chats}
-                      onChatClick={(chatId) => this.setActiveChat(chatId)}
-                    />
+        <Row>
 
-                    <ChatFeed
-                      creds={this.state.creds}
-                      chatId={this.state.activeChat}
-                      messages={this.state.messages}
-                    />
+          <Col sm={3}>
+            <ChatList creds={this.state.creds} chats={this.state.chats} onChatClick={(chatId) => this.setActiveChat(chatId)} />
+          </Col>
 
-                    <ChatSettings
-                      creds={this.state.creds}
-                      chat={this.state.chats[this.state.activeChat]}
-                    />
+          <Col sm={6}>
+            <ChatFeed creds={this.state.creds} chatId={this.state.activeChat} messages={this.state.messages} />
+          </Col>
 
-                </div>
+          <Col sm={3}>
+            <ChatSettings creds={this.state.creds} chat={this.state.chats[this.state.activeChat]} />
+          </Col>
 
-            </div>
-        )
-    }
+        </Row>
+
+      </div>
+    )
+  }
 }
 
 export default App;

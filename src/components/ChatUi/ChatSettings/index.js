@@ -14,7 +14,7 @@ class ChatList extends Component {
         if (!chat) { return <div/> }
         
         return (
-            <div style={{ float: 'left', width: '20vw', height: '100vh', borderLeft: '1px solid #afafaf' }}>
+            <div style={{ height: '100vh', borderLeft: '1px solid #afafaf' }}>
 
                 <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px' }}>
                     { chat.title }
