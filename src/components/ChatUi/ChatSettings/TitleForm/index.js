@@ -32,7 +32,14 @@ export default class MessageForm extends React.Component {
                     value={this.state.value} 
                     default={this.props.chat.title}
                     handleChange={this.handleChange.bind(this)} 
-                    style={{ width: 'calc(100% - 18px)', marginBottom: '12px' }}
+                    style={{ 
+                        fontSize: '16px',
+                        fontWeight: '600',
+                        textAlign: 'center',
+                        marginBottom: '12px',
+                        border: '0px solid white',
+                        width: 'calc(100% - 18px)',
+                    }}
                 />
 
             </form>

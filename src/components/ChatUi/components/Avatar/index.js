@@ -40,11 +40,8 @@ const styles = {
         width: '44px',
         height: '44px',
         borderRadius: '22px',
-        
         color: 'white',
         backgroundColor: '#FA7921',
-
         textAlign: 'center',
-        
     }
 }

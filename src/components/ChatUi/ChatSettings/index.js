@@ -2,27 +2,42 @@ import React, { Component } from 'react'
 
 import { deleteChat } from 'react-chat-engine'
 
+import { Row, Col } from 'react-grid-system'
+
 import Avatar from '../components/Avatar'
 import TitleForm from './TitleForm'
 import People from './People'
 
 class ChatList extends Component {
 
-    renderOnePerson() {
+    renderOnePerson(people) {
         return (
-            <div>One</div>
+            <Avatar text={people[0].person} />
         )
     }
 
-    renderTwoPeople() {
+    renderTwoPeople(people) {
         return (
-            <div>Two</div>
+            <div>
+                <Avatar 
+                    text={people[0].person} 
+                    style={{ float: 'left', position: 'relative', right: '5px' }}
+                />
+                <Avatar 
+                    text={people[1].person} 
+                    style={{ float: 'right', position: 'relative', left: '5px', bottom: '44px', zIndex: 11 }}
+                />
+            </div>
         )
     }
 
-    renderThreePeople() {
+    renderThreePeople(people) {
         return (
-            <div>Three</div>
+            <div>
+                <Avatar text={people[0].person} />
+                <Avatar text={people[1].person} />
+                <Avatar text={people[2].person} />
+            </div>
         )
     }
 
@@ -36,15 +51,23 @@ class ChatList extends Component {
         return (
             <div style={{ height: '100vh', borderLeft: '1px solid #afafaf' }}>
 
-                { topPeople.length == 1 && this.renderOnePerson() }
-                { topPeople.length == 2 && this.renderTwoPeople() }
-                { topPeople.length == 3 && this.renderThreePeople() }
-                
-                <TitleForm 
-                    chat={chat} 
-                    creds={creds} 
-                />
+                <Row>
 
+                    <Col xs={3} />
+
+                    <Col xs={6} style={{ paddingTop: '22px', paddingBottom: '12px', backgroundColor: 'red' }}>
+                        <div style={{ margin: 'auto', width: '50%' }}>
+                            { topPeople.length == 1 && this.renderOnePerson(topPeople) }
+                            { topPeople.length == 2 && this.renderTwoPeople(topPeople) }
+                            { topPeople.length == 3 && this.renderThreePeople(topPeople) }
+                        </div>
+                    </Col>
+                    
+                    <Col xs={3} />
+
+                </Row>
+
+                <TitleForm chat={chat} creds={creds} />
 
                 <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px' }}>
                     People
