@@ -15,25 +15,30 @@ export default class Message extends Component {
         if (!message) { return <div /> }
 
         return (
-            <div 
-                style={styles.myMessage}
-                onMouseEnter={() => this.setState({ selected: true })}
-                onMouseLeave={() => this.setState({ selected: false })}
-            >
+            <div style={{ width: '100%', float: 'right' }}>
 
-                { message.text }
+                <div 
+                    onMouseEnter={() => this.setState({ selected: true })}
+                    onMouseLeave={() => this.setState({ selected: false })}
+                >
 
-                {
-                    this.state.selected &&
-                    <div>
-
-                        <MessageEditForm creds={creds} chatId={chatId} message={message} />
-
-                        <button onClick={() => deleteMessage(creds, chatId, message.id)}>Delete</button>
-
+                    <div style={styles.myMessage}>
+                        { message.text }
                     </div>
-                }
 
+                    {
+                        this.state.selected &&
+                        <div>
+
+                            <MessageEditForm creds={creds} chatId={chatId} message={message} />
+
+                            <button onClick={() => deleteMessage(creds, chatId, message.id)}>Delete</button>
+
+                        </div>
+                    }
+
+                </div>
+                
             </div>
         )
     }
@@ -41,8 +46,11 @@ export default class Message extends Component {
 
 const styles = {
     myMessage: {
-        color: '#2f54eb', 
-        width: '100%', 
-        cursor: 'pointer'
+        color: 'white', 
+        cursor: 'pointer',
+        float: 'right',
+        padding: '12px',
+        borderRadius: '6px 6px 0px 6px',
+        backgroundColor: 'rgb(24, 144, 255)', 
     }
 }

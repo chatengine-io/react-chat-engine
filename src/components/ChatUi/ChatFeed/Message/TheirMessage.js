@@ -11,14 +11,16 @@ export default class TheirMessage extends Component {
         if (!message) { return <div /> }
 
         return (
-            <div 
-                style={styles.theirMessage}
-                onMouseEnter={() => this.setState({ selected: true })}
-                onMouseLeave={() => this.setState({ selected: false })}
-            >
+            <div style={{ width: '100%', float: 'left' }}> 
 
-                { message.text }
-
+                <div 
+                    style={styles.theirMessage}
+                    onMouseEnter={() => this.setState({ selected: true })}
+                    onMouseLeave={() => this.setState({ selected: false })}
+                >
+                    { message.text }
+                </div>
+            
             </div>
         )
     }
@@ -26,8 +28,11 @@ export default class TheirMessage extends Component {
 
 const styles = {
     theirMessage: {
-        color: 'green', 
-        width: '100%', 
-        cursor: 'pointer'
+        color: 'white', 
+        cursor: 'pointer',
+        float: 'left',
+        padding: '12px',
+        borderRadius: '6px 6px 6px 0px',
+        backgroundColor: '#8c8c8c', 
     },
 }
