@@ -15,7 +15,7 @@ export default class Message extends Component {
         if (!message) { return <div /> }
 
         return (
-            <div style={{ width: '100%', float: 'right' }}>
+            <div style={{ width: '100%', float: 'right', paddingRight: '12px' }}>
 
                 <div 
                     onMouseEnter={() => this.setState({ selected: true })}

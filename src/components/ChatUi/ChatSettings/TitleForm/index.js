@@ -29,16 +29,10 @@ export default class MessageForm extends React.Component {
             <form onSubmit={this.handleSubmit.bind(this)}>
 
                 <TextInput 
-                    label="Title" 
+                    label="Rename this Chat" 
                     value={this.state.value} 
                     handleChange={this.handleChange.bind(this)} 
                     style={{ width: 'calc(100% - 18px)', marginBottom: '12px' }}
-                />
-
-                <Button 
-                    type='submit'
-                    value='Edit'
-                    style={{ width: '100%', marginBottom: '12px' }}
                 />
 
             </form>

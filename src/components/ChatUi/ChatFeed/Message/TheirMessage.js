@@ -11,7 +11,7 @@ export default class TheirMessage extends Component {
         if (!message) { return <div /> }
 
         return (
-            <div style={{ width: '100%', float: 'left' }}> 
+            <div style={{ width: '100%', float: 'left', paddingLeft: '12px' }}> 
 
                 <div 
                     style={styles.theirMessage}

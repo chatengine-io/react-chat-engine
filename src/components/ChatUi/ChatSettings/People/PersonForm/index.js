@@ -29,7 +29,7 @@ export default class PersonForm extends React.Component {
       <form onSubmit={this.handleSubmit.bind(this)} id="new-msg-form">
 
         <TextInput 
-          label='Username'
+          label='Add a Person'
           value={this.props.value}
           handleChange={(e) => this.handleChange(e)} 
           style={{ width: 'calc(100% - 18px)', marginBottom: '12px' }}
