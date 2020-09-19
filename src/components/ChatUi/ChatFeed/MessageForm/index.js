@@ -26,7 +26,7 @@ export default class MessageForm extends React.Component {
   
     render() {
       return (
-        <div style={{ position: 'absolute', bottom: '0px', width: 'inherit' }}>
+        <div style={{ position: 'absolute', bottom: '0px', width: '100%' }}>
 
           <form 
             id="new-msg-form"
