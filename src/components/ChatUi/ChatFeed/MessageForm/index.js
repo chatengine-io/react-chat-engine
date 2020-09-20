@@ -38,12 +38,12 @@ export default class MessageForm extends React.Component {
               label='Send a message...' 
               value={this.state.value} 
               handleChange={this.handleChange.bind(this)} 
-              style={{ width: 'calc(100% - 18px - 74px)' }}
+              style={{ width: 'calc(100% - 18px - 50px)' }}
             />
 
             <Button 
               type="submit" 
-              value="Send" 
+              icon='send'
             />
 
           </form>

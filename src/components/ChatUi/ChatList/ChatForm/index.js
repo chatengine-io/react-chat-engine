@@ -36,6 +36,7 @@ export default class MessageForm extends React.Component {
           />
 
           <Button 
+            icon='plus'
             type="submit" 
             value="New Chat" 
             style={{ width: '100%' }}

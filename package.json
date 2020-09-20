@@ -51,6 +51,7 @@
     "dist"
   ],
   "dependencies": {
+    "@ant-design/icons": "^4.2.2",
     "axios": "^0.20.0",
     "lodash": "^4.17.20",
     "react-grid-system": "^7.1.1",

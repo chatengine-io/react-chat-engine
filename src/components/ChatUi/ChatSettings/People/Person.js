@@ -47,7 +47,7 @@ export default class Person extends Component {
 
                         <Button 
                             theme='danger'
-                            value='Remove'
+                            icon='delete'
                             onClick={() => this.onRemovePerson()}
                         />
 

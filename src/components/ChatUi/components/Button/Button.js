@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 
+import { PlusOutlined, ArrowUpOutlined, DeleteOutlined, UserAddOutlined } from '@ant-design/icons'
+
 export default class Button extends Component {
     state = {
         hovered: false
     }
 
     render() {
-        const themeStyle = this.props.theme == 'danger' ? styles.dangerButton : styles.button
-        const customStyle = this.props.style ? this.props.style : {}
+        const { value, icon, theme, style } = this.props
+
+        const themeStyle = theme == 'danger' ? styles.dangerButton : styles.button
+        const customStyle = style ? style : {}
         const hoverStyle = this.state.hovered ? styles.hoverButton : {}
 
         return (
@@ -18,7 +22,15 @@ export default class Button extends Component {
                 onMouseLeave={() => this.setState({ hovered: false })}
                 style={{ ...themeStyle, ...customStyle, ...hoverStyle }}
             >
-                {this.props.value}  
+                
+                { icon == 'plus' && <PlusOutlined /> }
+                { icon == 'send'  && <ArrowUpOutlined /> }
+                { icon == 'delete'  && <DeleteOutlined /> }
+                { icon == 'user-add'  && <UserAddOutlined /> }
+                
+                
+                { value && icon ? ` ${value}` : value}  
+
             </button>
         )
     }

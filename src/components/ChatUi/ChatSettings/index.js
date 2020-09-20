@@ -100,6 +100,7 @@ class ChatList extends Component {
                 <Button 
                     value="Delete" 
                     theme='danger'
+                    icon='delete'
                     onClick={() => deleteChat(creds, chat.id)}
                     style={{ width: '100%', marginBottom: '12px' }}
                 />

@@ -30,7 +30,7 @@ export default class PersonForm extends React.Component {
       <form onSubmit={this.handleSubmit.bind(this)} id="new-msg-form">
 
         <TextInput 
-          label='Add a Person'
+          label='Type a username'
           value={this.state.value}
           handleChange={(e) => this.handleChange(e)} 
           style={{ width: 'calc(100% - 18px)', marginBottom: '12px' }}
@@ -38,7 +38,8 @@ export default class PersonForm extends React.Component {
 
         <Button 
           type="submit" 
-          value="Add Person" 
+          value="Add Group Member" 
+          icon='user-add'
           style={{ width: '100%', marginBottom: '12px' }}
         />
 
