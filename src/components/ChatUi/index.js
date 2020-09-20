@@ -108,11 +108,20 @@ class App extends Component {
         <Row>
 
           <Col sm={3}>
-            <ChatList creds={this.state.creds} chats={this.state.chats} onChatClick={(chatId) => this.setActiveChat(chatId)} />
+            <ChatList 
+              creds={this.state.creds} 
+              chats={this.state.chats} 
+              activeChat={this.state.activeChat}
+              onChatClick={(chatId) => this.setActiveChat(chatId)} 
+            />
           </Col>
 
           <Col sm={6}>
-            <ChatFeed creds={this.state.creds} chatId={this.state.activeChat} messages={this.state.messages} />
+            <ChatFeed 
+              creds={this.state.creds} 
+              chatId={this.state.activeChat} 
+              messages={this.state.messages} 
+            />
           </Col>
 
           <Col sm={3}>

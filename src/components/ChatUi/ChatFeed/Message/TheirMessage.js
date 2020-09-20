@@ -28,11 +28,11 @@ export default class TheirMessage extends Component {
 
 const styles = {
     theirMessage: {
-        color: 'white', 
+        color: 'black', 
         cursor: 'pointer',
         float: 'left',
         padding: '12px',
         borderRadius: '6px 6px 6px 0px',
-        backgroundColor: '#8c8c8c', 
+        backgroundColor: '#d9d9d9', 
     },
 }

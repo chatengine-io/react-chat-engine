@@ -8,12 +8,15 @@ class ChatList extends Component {
 
     renderChats(chats) {
         return _.map(chats, (chat, index) => {
+            const extraStyle = this.props.activeChat === chat.id ? styles.activeChat : {}
+            
             if (chat) { // Handle Deleted chats
                 return (
                     <div 
                         key={`chat_${index}`} 
                         onClick={() => this.props.onChatClick(chat.id)}
-                        style={{ padding: '12px', borderBottom: '1px solid #afafaf', cursor: 'pointer' }}>
+                        style={{ ...styles.chat, ...extraStyle }}
+                    >
                         {chat.title}
                     </div>
                 )
@@ -36,6 +39,18 @@ class ChatList extends Component {
             </div>
         )
     }
+}
+
+const styles={
+    chat: { 
+        padding: '16px', 
+        cursor: 'pointer'
+    },
+    activeChat: {
+        backgroundColor: '#d9d9d9',
+        border: '4px solid white',
+        borderRadius: '12px'
+    },
 }
 
 export default ChatList;
