@@ -21,6 +21,7 @@ export default class PersonForm extends React.Component {
       this.props.creds,
       this.props.chat.id,
       this.state.value,
+      () => this.setState({ value: '' })
     )
   }
 

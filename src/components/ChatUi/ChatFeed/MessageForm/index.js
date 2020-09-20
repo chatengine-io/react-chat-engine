@@ -7,7 +7,7 @@ import { TextInput } from '../../components/Input'
 
 export default class MessageForm extends React.Component {
     state = {
-        value: ''
+      value: ''
     }
   
     handleChange(event) {
@@ -15,13 +15,14 @@ export default class MessageForm extends React.Component {
     }
   
     handleSubmit(event) {
-        event.preventDefault();
+      event.preventDefault();
 
-        sendMessage(
-            this.props.creds, 
-            this.props.chatId, 
-            { text: this.state.value }
-        )
+      sendMessage(
+        this.props.creds, 
+        this.props.chatId, 
+        { text: this.state.value },
+        () => this.setState({ value: '' })
+      )
     }
   
     render() {

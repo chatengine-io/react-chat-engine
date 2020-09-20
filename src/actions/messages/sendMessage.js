@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as str from '../../actions'
 
-export function sendMessage(props, chatId, data) {
+export function sendMessage(props, chatId, data, onSend) {
     axios.post(
         `${str.getApiUrl(props)}/chats/${chatId}/messages/`,
         data,
@@ -12,7 +12,9 @@ export function sendMessage(props, chatId, data) {
         }}
     )
 
-    .then((response) => {})
+    .then((response) => {
+        onSend && onSend(response.data)
+    })
     
     .catch((error) => {
         console.log('Send Messages Error', error)

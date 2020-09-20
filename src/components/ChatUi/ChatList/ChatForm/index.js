@@ -19,7 +19,8 @@ export default class MessageForm extends React.Component {
 
         newChat(
             this.props.creds, 
-            { title: this.state.value }
+            { title: this.state.value },
+            () => this.setState({ value: '' })
         )
     }
   

@@ -8,7 +8,7 @@ class ChatList extends Component {
 
     renderChats(chats) {
         return _.map(chats, (chat, index) => {
-            const extraStyle = this.props.activeChat === chat.id ? styles.activeChat : {}
+            const extraStyle = (chat && this.props.activeChat === chat.id) ? styles.activeChat : {}
             
             if (chat) { // Handle Deleted chats
                 return (
