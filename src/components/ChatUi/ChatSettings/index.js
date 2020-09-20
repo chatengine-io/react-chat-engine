@@ -12,7 +12,7 @@ class ChatList extends Component {
 
     renderOnePerson(people) {
         return (
-            <Col xs={6} style={{ paddingTop: '22px', height: '72px' }}>
+            <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
                 <div style={{ margin: 'auto', width: '33%' }}>
                     <Avatar text={people[0].person} />
                 </div>
@@ -22,7 +22,7 @@ class ChatList extends Component {
 
     renderTwoPeople(people) {
         return (
-            <Col xs={6} style={{ paddingTop: '22px', height: '72px' }}>
+            <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
                 <div style={{ margin: 'auto', width: '50%' }}>
                     <Avatar 
                         text={people[0].person} 
@@ -39,11 +39,21 @@ class ChatList extends Component {
 
     renderThreePeople(people) {
         return (
-            <div>
-                <Avatar text={people[0].person} />
-                <Avatar text={people[1].person} />
-                <Avatar text={people[2].person} />
-            </div>
+            <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
+                <div style={{ margin: 'auto', width: '50%' }}>
+                    <Avatar 
+                        text={people[0].person} 
+                        style={{ position: 'relative', top: '10px' }}
+                    />
+                    <Avatar text={people[1].person} 
+                        style={{ float: 'right', position: 'relative', right: '8px', bottom: '56px', zIndex: 11 }}
+                    />
+                    <Avatar 
+                        text={people[2].person} 
+                        style={{ float: 'right', position: 'relative', left: '5px', bottom: '78px', zIndex: 11 }}
+                    />
+                </div>
+            </Col>
         )
     }
 

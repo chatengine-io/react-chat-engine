@@ -16,6 +16,9 @@ const colors = [
     '#688E26',
     '#550527',
     '#A10702',
+    '#FF1053',
+    '#6C6EA0',
+    '#100B00',
 ]
 
 export default class Avatar extends Component {
