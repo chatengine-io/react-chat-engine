@@ -31,7 +31,7 @@ export default class PersonForm extends React.Component {
 
         <TextInput 
           label='Add a Person'
-          value={this.props.value}
+          value={this.state.value}
           handleChange={(e) => this.handleChange(e)} 
           style={{ width: 'calc(100% - 18px)', marginBottom: '12px' }}
         />

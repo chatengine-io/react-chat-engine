@@ -30,6 +30,7 @@ export default class MessageForm extends React.Component {
           
           <TextInput 
             label='Title'
+            value={this.state.value}
             style={{ width: 'calc(100% - 18px)' }}
             handleChange={(e) => this.handleChange(e)}
           />
