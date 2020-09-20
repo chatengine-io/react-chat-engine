@@ -21,11 +21,11 @@ Try our free plan at [chatengine.io](https://chatengine.io)
 
 1. Create an **account**, **project** and **user** at [chatengine.io](https://chatengine.io)
 
-2. Collect the **public key**, **username** and **user secret**
+2. Collect the **public key**, **username** and **user password**
 
 3. Install `yarn add react-chat-engine`
 
-4. Import the `ChatEngine` component and pass in `publicKey`, `userName`, and `userSecret` props
+4. Import the `ChatEngine` component and pass in `publicKey`, `userName`, and `userPassword` props
 
 5. Voila! You're done
 
@@ -41,7 +41,7 @@ export function App() {
         <ChatEngine
             publicKey={'b75e5bd5-cd84-404c-b820-06feff8c98c0'}
             userName={'john_smith'}
-            userSecret={'secret_1234'}
+            userPassword={'secret_1234'}
         />
     )
 }
@@ -62,7 +62,7 @@ See [`App.js`](https://github.com/alamorre/react-chat-engine/blob/master/src/dem
 
 - **`publicKey`** _(UUID REQUIRED)_ - Public API key for your [chatengine.io](https://chatengine.io) project
 - **`userName`** _(String REQUIRED)_ - Username of a person in this project
-- **`userSecret`** _(String REQUIRED)_ - Secret for the person in this project
+- **`userPassword`** _(String REQUIRED)_ - Password for the person in this project
 - **`onConnect`** (Function) - Callback when the connection/authentication is complete
 - **`onGetChats`** _(Function)_ Callback when the person fetches their chats array
 - **`onNewChat`** _(Function)_ - Callback when the person creates a new chat
