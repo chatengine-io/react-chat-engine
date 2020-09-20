@@ -1,3 +1,11 @@
+<p align="center" >
+<p align="center" >
+   <a href="https://chatengine.io/">
+    <img alt="react-chat-engine" src="https://chat-engine-assets.s3.amazonaws.com/NPM+Example.jpg" />
+ </a>
+
+</p>
+
 ## Chat Engine
 
 Chat Engine is the first cheap, easy, and scalable chat API.
