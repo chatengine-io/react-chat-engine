@@ -30,7 +30,10 @@ export default class MessageForm extends React.Component {
 
                 <div style={{ height: '12px' }} />
 
-                <PersonForm creds={creds} chat={chat} />
+                {
+                    chat.admin === creds.userName &&
+                    <PersonForm creds={creds} chat={chat} />
+                }
             
             </div>
         )

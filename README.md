@@ -1,14 +1,14 @@
 <p align="center" >
-<p align="center" >
-   <a href="https://chatengine.io/">
-    <img alt="react-chat-engine" src="https://chat-engine-assets.s3.amazonaws.com/NPM+Example.jpg" />
- </a>
-
+    <p align="center" >
+        <a href="https://chatengine.io/">
+            <img alt="react-chat-engine" src="https://chat-engine-assets.s3.amazonaws.com/NPM+Example.jpg" />
+        </a>
+    </p>
 </p>
 
 ## Chat Engine
 
-Chat Engine is the first cheap, easy, and scalable chat API.
+Chat Engine is the React's first serverless chat API.
 
 Try our free plan at [chatengine.io](https://chatengine.io)
 
@@ -18,6 +18,8 @@ Try our free plan at [chatengine.io](https://chatengine.io)
 - Using [Yarn](https://yarnpkg.com/): `yarn add react-chat-engine`
 
 ## Getting Started
+
+Add serverless chat to your React app in 3 minutes.
 
 1. Create an **account**, **project** and **user** at [chatengine.io](https://chatengine.io)
 

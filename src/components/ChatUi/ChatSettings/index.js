@@ -91,19 +91,26 @@ class ChatList extends Component {
 
                 <People creds={creds} chat={chat} />
 
-                <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
-                    Options
-                </div>
+                {
+                    chat.admin === creds.userName &&
+                    <div>
 
-                <div style={{ height: '12px' }} />
+                        <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
+                            Options
+                        </div>
 
-                <Button 
-                    value="Delete" 
-                    theme='danger'
-                    icon='delete'
-                    onClick={() => deleteChat(creds, chat.id)}
-                    style={{ width: '100%', marginBottom: '12px' }}
-                />
+                        <div style={{ height: '12px' }} />
+
+                        <Button 
+                            value="Delete" 
+                            theme='danger'
+                            icon='delete'
+                            onClick={() => deleteChat(creds, chat.id)}
+                            style={{ width: '100%', marginBottom: '12px' }}
+                        />
+
+                    </div>
+                }
 
             </div>
         )

@@ -8,7 +8,7 @@ export function editChat(props, chatId, data) {
         { headers: { 
             "Public-Key": props.publicKey,
             "User-Name": props.userName,
-            "User-Secret": props.useuserPasswordrSecret,
+            "User-Secret": props.userPassword,
         }}
     )
 
