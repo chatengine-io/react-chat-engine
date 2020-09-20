@@ -8,6 +8,10 @@ const users = [
     userSecret: 'pass1234',
   },
   {
+    userName: 'jane_smith',
+    userSecret: 'pass1234',
+  },
+  {
     userName: 'adam_lamorre',
     userSecret: 'pass1234',
   }
