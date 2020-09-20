@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 
 import { removePerson } from 'react-chat-engine'
 
+import Avatar from '../../components/Avatar'
+import { Button } from '../../components/Button'
+
 export default class Person extends Component {
     state = {
         selected: false
@@ -26,12 +29,28 @@ export default class Person extends Component {
                 onMouseLeave={() => this.setState({ selected: false })}
             >
 
-                { person.person }
+                <div style={{ padding: '2px', height: '0px' }}>
+                    
+                    <Avatar text={person.person} />
+
+                </div>
+
+                <div style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px' }}>
+
+                    { person.person }
+
+                </div>
 
                 {
                     this.state.selected &&
-                    <div>
-                        <button onClick={() => this.onRemovePerson()}>Delete</button>
+                    <div style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}>
+
+                        <Button 
+                            theme='danger'
+                            value='Remove'
+                            onClick={() => this.onRemovePerson()}
+                        />
+
                     </div>
                 }
             </div>

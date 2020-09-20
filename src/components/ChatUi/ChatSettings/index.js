@@ -67,7 +67,7 @@ class ChatList extends Component {
         if (!chat) { return <div/> }
         
         return (
-            <div style={{ height: '100vh', borderLeft: '1px solid #afafaf' }}>
+            <div style={{ height: '100vh', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }}>
 
                 <Row>
 
@@ -83,15 +83,19 @@ class ChatList extends Component {
 
                 <TitleForm chat={chat} creds={creds} />
 
-                <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px' }}>
+                <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
                     People
                 </div>
 
+                <div style={{ height: '12px' }} />
+
                 <People creds={creds} chat={chat} />
 
-                <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px' }}>
+                <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
                     Options
                 </div>
+
+                <div style={{ height: '12px' }} />
 
                 <Button 
                     value="Delete" 

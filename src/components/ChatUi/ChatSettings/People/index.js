@@ -25,9 +25,13 @@ export default class MessageForm extends React.Component {
 
         return (
             <div>
+
                 { this.renderPeople(chat.people) }
 
+                <div style={{ height: '12px' }} />
+
                 <PersonForm creds={creds} chat={chat} />
+            
             </div>
         )
     }
