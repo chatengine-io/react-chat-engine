@@ -57,7 +57,7 @@ const styles = {
         cursor: 'pointer',
         float: 'left',
         padding: '12px',
-        borderRadius: '6px',
+        borderRadius: '1.3em',
         backgroundColor: '#d9d9d9', 
     },
 }

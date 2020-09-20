@@ -64,7 +64,7 @@ const styles = {
         cursor: 'pointer',
         float: 'right',
         padding: '12px',
-        borderRadius: '6px',
+        borderRadius: '1.3em',
         backgroundColor: 'rgb(24, 144, 255)', 
     }
 }
