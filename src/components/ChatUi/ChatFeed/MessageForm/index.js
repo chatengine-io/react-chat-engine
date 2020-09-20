@@ -41,10 +41,7 @@ export default class MessageForm extends React.Component {
               style={{ width: 'calc(100% - 18px - 50px)' }}
             />
 
-            <Button 
-              type="submit" 
-              icon='send'
-            />
+            <Button type="submit" icon='send' />
 
           </form>
           
