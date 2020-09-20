@@ -13,13 +13,16 @@ const colors = [
     '#0CAADC',
     '#FF5154',
     '#FA7921',
+    '#688E26',
+    '#550527',
+    '#A10702',
 ]
 
 export default class Avatar extends Component {
     stringToNumber(str){
         let sum = 0
         for (var i = 0; i < str.length; i++) {
-            sum = sum + str.charCodeAt(i) - 97
+            sum = sum + (str.charCodeAt(i) * i) - 97
         }
         return sum
     }

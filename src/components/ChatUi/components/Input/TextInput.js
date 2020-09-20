@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 
 export default class TextInput extends Component {
     state = {
-        focused: false
+        focused: false,
+        value: null
     }
 
     componentDidMount() {
-        if(this.props.default) {
-            const event = {target: {value: this.props.default}}
+        const value = this.props.default
+        if(value) {
+            const event = {target: {value}}
             this.props.handleChange(event)
+            this.setState({ value })
         }
     }
 
