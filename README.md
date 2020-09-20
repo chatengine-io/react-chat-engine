@@ -49,9 +49,6 @@ export function App() {
 }
 ```
 
-## Complete Example
-See [`App.js`](https://github.com/alamorre/react-chat-engine/blob/master/src/demo/App.js) for a working demo!
-
 ## Features
 
 - Authenticate users
