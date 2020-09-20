@@ -37,12 +37,12 @@ export default class Person extends Component {
 
                 <div style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px' }}>
 
-                    { person.person }
+                    { person.person !== chat.admin ? person.person : `${person.person} (Admin)` }
 
                 </div>
 
                 {
-                    this.state.selected && (creds.userName === chat.admin) &&
+                    this.state.selected && (creds.userName === chat.admin) && (person.person !== chat.admin) &&
                     <div style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}>
 
                         <Button 

@@ -2,6 +2,9 @@ import React from 'react';
 
 import { editMessage } from 'react-chat-engine'
 
+import { Button } from '../../components/Button'
+import { TextInput } from '../../components/Input'
+
 export default class MessageEditForm extends React.Component {
     state = {
         value: ''
@@ -25,8 +28,17 @@ export default class MessageEditForm extends React.Component {
     render() {
       return (
         <form onSubmit={this.handleSubmit.bind(this)} id="new-msg-form">
-          <input type="text" value={this.state.value} onChange={this.handleChange.bind(this)} />
-          <input type="submit" value="Submit" />
+          
+          <TextInput 
+            type="text" 
+            label='Edit message...'
+            value={this.state.value} 
+            style={{ width: 'calc(100% - 80px)' }}
+            handleChange={this.handleChange.bind(this)} 
+          />
+          
+          <Button type="submit" value="Edit" />
+
         </form>
       );
     }

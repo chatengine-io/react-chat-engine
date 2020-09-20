@@ -25,10 +25,10 @@ export default class TextInput extends Component {
                 value={this.props.value} 
                 placeholder={this.props.label}
                 style={{ ...defaultStyle, ...customStyle }}
-                onChange={(e) => this.props.handleChange(e)} 
                 onBlur={() => this.setState({ focused: false })}
                 onFocus={() => this.setState({ focused: true })}
                 type={this.props.type ? this.props.type : "text" }
+                onChange={(e) => this.props.handleChange && this.props.handleChange(e)} 
             />
         )
     }

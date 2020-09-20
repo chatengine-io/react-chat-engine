@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import MessageEditForm from '../MessageForm/edit'
 
+import { Button } from '../../components/Button'
+
 import { deleteMessage } from 'react-chat-engine'
 
 import { Row, Col, setConfiguration } from 'react-grid-system'
@@ -19,7 +21,11 @@ export default class Message extends Component {
         if (!message) { return <div /> }
 
         return (
-            <div style={{ width: '100%', float: 'right', paddingBottom: '12px'  }}>
+            <div 
+                style={{ width: '100%', float: 'right', paddingBottom: '12px'  }}
+                onMouseEnter={() => this.setState({ selected: true })}
+                onMouseLeave={() => this.setState({ selected: false })}
+            >
 
                 <Row style={{ paddingRight: '2px' }}>
 
@@ -27,27 +33,33 @@ export default class Message extends Component {
 
                     <Col xs={11} sm={10} md={9}>
 
-                        <div 
-                            onMouseEnter={() => this.setState({ selected: true })}
-                            onMouseLeave={() => this.setState({ selected: false })}
-                        >
-
-                            <div style={styles.myMessage}>
-                                { message.text }
-                            </div>
-
-                            {
-                                this.state.selected &&
-                                <div>
-
-                                    <MessageEditForm creds={creds} chatId={chatId} message={message} />
-
-                                    <button onClick={() => deleteMessage(creds, chatId, message.id)}>Delete</button>
-
-                                </div>
-                            }
-
+                        <div style={styles.myMessage}>
+                            { message.text }
                         </div>
+
+                    </Col>
+
+                    <Col xs={1} sm={2} md={3} />
+
+                    <Col xs={11} sm={10} md={9}>
+
+                        {
+                            this.state.selected &&
+                            <div style={{ width: '100%', height: '44px' }}>
+
+                                <div style={{ width: 'calc(100% - 46px)' }}>
+                                    <MessageEditForm creds={creds} chatId={chatId} message={message} />
+                                </div>
+
+                                <Button
+                                    theme='danger'
+                                    icon='delete'
+                                    style={{ float: 'right', position: 'relative', bottom: '37px' }}
+                                    onClick={() => deleteMessage(creds, chatId, message.id)} 
+                                />
+
+                            </div>
+                        }
 
                     </Col>
             
