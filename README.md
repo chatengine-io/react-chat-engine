@@ -8,7 +8,7 @@
 
 ## Chat Engine
 
-Chat Engine is the React's first serverless chat API.
+Chat Engine is the a free serverless chat API.
 
 Try our free plan at [chatengine.io](https://chatengine.io)
 
@@ -49,8 +49,6 @@ export function App() {
 }
 ```
 
-## Complete Example
-See [`App.js`](https://github.com/alamorre/react-chat-engine/blob/master/src/demo/App.js) for a working demo!
 
 ## Features
 
