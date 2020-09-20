@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
 
+import Avatar from '../../components/Avatar'
+
+import { Row, Col, setConfiguration } from 'react-grid-system'
+
+setConfiguration({ maxScreenClass: 'xl' })
+
+
 export default class TheirMessage extends Component {
     state = {
         selected: false
@@ -11,15 +18,33 @@ export default class TheirMessage extends Component {
         if (!message) { return <div /> }
 
         return (
-            <div style={{ width: '100%', float: 'left', paddingLeft: '12px' }}> 
+            <div style={{ width: '100%', paddingBottom: '12px' }}>
+            
+                <Row style={{ paddingLeft: '2px' }}>
 
-                <div 
-                    style={styles.theirMessage}
-                    onMouseEnter={() => this.setState({ selected: true })}
-                    onMouseLeave={() => this.setState({ selected: false })}
-                >
-                    { message.text }
-                </div>
+                    <Col xs={11} sm={10} md={9}>
+
+                        <div style={{ height: '0px' }}>
+                            
+                            <Avatar text={message.sender} />
+
+                        </div>
+
+                        <div style={{ paddingLeft: '48px' }}>
+
+                            <div 
+                                style={styles.theirMessage}
+                                onMouseEnter={() => this.setState({ selected: true })}
+                                onMouseLeave={() => this.setState({ selected: false })}
+                            >
+                                { message.text }
+                            </div>
+                        
+                        </div>
+
+                    </Col>
+                
+                </Row>
             
             </div>
         )
@@ -32,7 +57,7 @@ const styles = {
         cursor: 'pointer',
         float: 'left',
         padding: '12px',
-        borderRadius: '6px 6px 6px 0px',
+        borderRadius: '6px',
         backgroundColor: '#d9d9d9', 
     },
 }

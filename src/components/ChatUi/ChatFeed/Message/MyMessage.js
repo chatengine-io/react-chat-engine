@@ -4,6 +4,10 @@ import MessageEditForm from '../MessageForm/edit'
 
 import { deleteMessage } from 'react-chat-engine'
 
+import { Row, Col, setConfiguration } from 'react-grid-system'
+
+setConfiguration({ maxScreenClass: 'xl' })
+
 export default class Message extends Component {
     state = {
         selected: false
@@ -15,29 +19,39 @@ export default class Message extends Component {
         if (!message) { return <div /> }
 
         return (
-            <div style={{ width: '100%', float: 'right', paddingRight: '12px' }}>
+            <div style={{ width: '100%', float: 'right', paddingBottom: '12px'  }}>
 
-                <div 
-                    onMouseEnter={() => this.setState({ selected: true })}
-                    onMouseLeave={() => this.setState({ selected: false })}
-                >
+                <Row style={{ paddingRight: '2px' }}>
 
-                    <div style={styles.myMessage}>
-                        { message.text }
-                    </div>
+                    <Col xs={1} sm={2} md={3} />
 
-                    {
-                        this.state.selected &&
-                        <div>
+                    <Col xs={11} sm={10} md={9}>
 
-                            <MessageEditForm creds={creds} chatId={chatId} message={message} />
+                        <div 
+                            onMouseEnter={() => this.setState({ selected: true })}
+                            onMouseLeave={() => this.setState({ selected: false })}
+                        >
 
-                            <button onClick={() => deleteMessage(creds, chatId, message.id)}>Delete</button>
+                            <div style={styles.myMessage}>
+                                { message.text }
+                            </div>
+
+                            {
+                                this.state.selected &&
+                                <div>
+
+                                    <MessageEditForm creds={creds} chatId={chatId} message={message} />
+
+                                    <button onClick={() => deleteMessage(creds, chatId, message.id)}>Delete</button>
+
+                                </div>
+                            }
 
                         </div>
-                    }
 
-                </div>
+                    </Col>
+            
+                </Row>
                 
             </div>
         )
@@ -50,7 +64,7 @@ const styles = {
         cursor: 'pointer',
         float: 'right',
         padding: '12px',
-        borderRadius: '6px 6px 0px 6px',
+        borderRadius: '6px',
         backgroundColor: 'rgb(24, 144, 255)', 
     }
 }
