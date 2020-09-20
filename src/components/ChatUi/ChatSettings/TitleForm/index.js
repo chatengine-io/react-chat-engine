@@ -6,6 +6,7 @@ import { TextInput } from '../../components/Input'
 
 export default class MessageForm extends React.Component {
     state = {
+        activeChat: null,
         value: ''
     }
   
@@ -21,6 +22,16 @@ export default class MessageForm extends React.Component {
             this.props.chat.id,
             { title: this.state.value }
         )
+    }
+
+    // Update on new active chat. TODO: Find more eloquent way perhaps
+    componentDidUpdate() {
+        if(this.props.chat.title !== this.state.value && this.state.activeChat !== this.props.chat.id) {
+            this.setState({ 
+                value: this.props.chat.title,
+                activeChat: this.props.chat.id
+            })
+        }
     }
   
     render() {

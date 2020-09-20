@@ -58,6 +58,6 @@ const styles = {
         float: 'left',
         padding: '12px',
         borderRadius: '1.3em',
-        backgroundColor: '#d9d9d9', 
+        backgroundColor: '#f1f0f0', 
     },
 }
