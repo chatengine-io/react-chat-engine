@@ -19,7 +19,7 @@ export default class Person extends Component {
     }
 
     render() {
-        const { person } = this.props
+        const { person, chat, creds } = this.props
 
         if (!person) { return <div /> }
 
@@ -42,7 +42,7 @@ export default class Person extends Component {
                 </div>
 
                 {
-                    this.state.selected &&
+                    this.state.selected && (creds.userName === chat.admin) &&
                     <div style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}>
 
                         <Button 
