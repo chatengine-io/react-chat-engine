@@ -5,6 +5,8 @@ import { deleteChat } from 'react-chat-engine'
 import { Row, Col } from 'react-grid-system'
 
 import Avatar from '../components/Avatar'
+import { Button } from '../components/Button'
+
 import TitleForm from './TitleForm'
 import People from './People'
 
@@ -91,9 +93,11 @@ class ChatList extends Component {
                     Options
                 </div>
 
-                <button onClick={() => deleteChat(creds, chat.id)}>
-                    Delete
-                </button>
+                <Button 
+                    value="Delete" 
+                    onClick={() => deleteChat(creds, chat.id)}
+                    style={{ width: '100%', marginBottom: '12px' }}
+                />
 
             </div>
         )

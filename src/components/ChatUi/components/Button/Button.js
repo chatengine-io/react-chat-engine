@@ -10,13 +10,14 @@ export default class Button extends Component {
         const defaultStyle = this.state.hovered ? styles.hoverButton : styles.button
 
         return (
-            <input 
+            <button 
                 type={this.props.type}
-                value={this.props.value}
                 onMouseEnter={() => this.setState({ hovered: true })}
                 onMouseLeave={() => this.setState({ hovered: false })}
                 style={{ ...defaultStyle, ...customStyle }}
-            />
+            >
+                {this.props.value}  
+            </button>
         )
     }
 }
