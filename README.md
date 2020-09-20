@@ -66,7 +66,7 @@ See [`App.js`](https://github.com/alamorre/react-chat-engine/blob/master/src/dem
 - **`onNewMessage`** _(Function)_ - Callback when a person posts a new message in one of the chats
 - **`onEditMessage`** _(Function)_ - Callback when a person edits a new message in one of the chats
 - **`onDeleteMessage`** _(Function)_ - Callback when a person deletes a new message in one of the chats
-- **`hideUI`** _(Boolean)_ - Hides all UI components for a custom implementation (Warning: Advanced)
+- **`hideExample`** _(Boolean)_ - Hides all UI components for a custom implementation (Warning: Advanced)
 
 ## Functions
 
