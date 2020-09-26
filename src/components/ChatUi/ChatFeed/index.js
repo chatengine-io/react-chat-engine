@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
-import { Row } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { Loading, AuthFail, Welcome } from './Steps'
 
 import Message from './Message'
 import MessageForm from './MessageForm'
@@ -19,51 +18,18 @@ export default class ChatList extends Component {
     render() {
         const { messages, chats, creds } = this.props
 
+        console.log(chats, chats === {})
+
         if(creds === null) { 
-            return <LoadingOutlined 
-                className='vertical-center' 
-                style={{ 
-                    width: '100%', 
-                    position: 'relative', 
-                    top: 'calc(50vh - 26px)', 
-                    textAlign: 'center',
-                    fontSize: '52px'
-                }} 
-            />
+            return <Loading />
         }
 
-        else if(creds === undefined) {
-            return (
-                <div style={{ height: '100vh', textAlign: 'center' }}>
-                    <Row>
-                        <img
-                            style={{ width: '40%', paddingTop: '25vh' }}
-                            src='https://chat-engine-assets.s3.amazonaws.com/denied.svg'
-                            alt='welcome-to-chat-engine'
-                        />
-                    </Row>
-                    <Row style={{ fontSize: '18px', paddingTop: '24px', width: '75%', paddingLeft: '12.5%' }}>
-                        Your credentials are incorrect. Make sure your Public Key, Username, and Password are correct at <a href='https://chatengine.io'>chatengine.io</a>
-                    </Row>
-                </div>
-            )
+        if(creds === undefined) {
+            return <AuthFail />
         }
 
-        else if(creds && chats === {}) {
-            return (
-                <div style={{ height: '100vh', textAlign: 'center' }}>
-                    <Row>
-                        <img
-                            style={{ width: '60%', paddingTop: '33vh' }}
-                            src='https://chat-engine-assets.s3.amazonaws.com/welcome.svg'
-                            alt='welcome-to-chat-engine'
-                        />
-                    </Row>
-                    <Row style={{ fontSize: '18px', paddingTop: '24px', width: '75%', paddingLeft: '12.5%' }}>
-                        Fill out the "New Chat" form to get started.
-                    </Row>
-                </div>
-            )
+        if(creds && chats !== null && _.isEmpty(chats)) {
+            return <Welcome />
         }
 
         return (
