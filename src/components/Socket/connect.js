@@ -14,6 +14,9 @@ export function connectSocket(props) {
 
   rws.onerror = function(event) {
     console.log("User socket error", event)
+    if(event.message === 'TIMEOUT') {
+      props.onFailAuth && props.onFailAuth(props)
+    }
   }
 
   rws.onmessage = function(event) {

@@ -19,8 +19,8 @@ setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
 class App extends Component {
   state = {
-    creds: {},
-    chats: {},
+    creds: null,
+    chats: null,
     messages: {},
     activeChat: null,
   }
@@ -28,6 +28,10 @@ class App extends Component {
   onConnect(creds) {
     this.setState({ creds })
     getChats(creds)
+  }
+
+  onFailAuth(creds) {
+    this.setState({ creds: undefined })
   }
 
   setActiveChat(chatId) {
@@ -93,6 +97,7 @@ class App extends Component {
         <Socket 
           {...this.props} 
           onConnect={(creds) => this.onConnect(creds)}
+          onFailAuth={(props) => this.onFailAuth(props)}
           onGetChats={(chats) => this.onGetChats(chats)}
           onNewChat={(chat) => this.onNewChat(chat)}
           onEditChat={(chat) => this.onEditChat(chat)}
@@ -119,13 +124,17 @@ class App extends Component {
           <Col sm={6}>
             <ChatFeed 
               creds={this.state.creds} 
+              chats={this.state.chats} 
               chatId={this.state.activeChat} 
               messages={this.state.messages} 
             />
           </Col>
 
           <Col sm={3}>
-            <ChatSettings creds={this.state.creds} chat={this.state.chats[this.state.activeChat]} />
+            <ChatSettings 
+              creds={this.state.creds} 
+              chat={this.state.chats && this.state.chats[this.state.activeChat]} 
+            />
           </Col>
 
         </Row>

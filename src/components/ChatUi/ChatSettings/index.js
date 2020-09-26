@@ -64,7 +64,7 @@ class ChatList extends Component {
         const { chat, creds } = this.props
         const topPeople = chat ? chat.people.slice(0, 3) : []
 
-        if (!chat) { return <div/> }
+        if (!chat) { return <div style={{ height: '100vh', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }} /> }
         
         return (
             <div style={{ height: '100vh', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }}>
