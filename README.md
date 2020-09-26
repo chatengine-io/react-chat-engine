@@ -21,7 +21,7 @@ Try our free plan at [chatengine.io](https://chatengine.io)
 
 Add serverless chat to your React app in 3 minutes.
 
-1. Create an **account**, **project** and **user** at [chatengine.io](https://chatengine.io)
+1. Register then create a **project** and **user** at [chatengine.io](https://chatengine.io)
 
 2. Collect the **public key**, **username** and **user password**
 

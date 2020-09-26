@@ -4,17 +4,17 @@ import { ChatEngine } from 'react-chat-engine'
 
 const users = [
   {
-    userName: 'john_smith',
+    userName: 'John_Doe',
     userPassword: 'pass1234',
   },
-  {
-    userName: 'jane_smith',
-    userPassword: 'pass1234',
-  },
-  {
-    userName: 'adam_lamorre',
-    userPassword: 'pass1234',
-  }
+  // {
+  //   userName: 'Jane_Smith',
+  //   userPassword: 'pass1234',
+  // },
+  // {
+  //   userName: 'Adam_La_Morre',
+  //   userPassword: 'pass1234',
+  // }
 ]
 
 export function App () {
