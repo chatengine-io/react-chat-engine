@@ -67,7 +67,7 @@ const styles = {
         color: 'black', 
         float: 'left',
         padding: '12px',
-        borderRadius: '1.3em',
+        fontSize: '15px',
         backgroundColor: '#f1f0f0', 
     },
 }

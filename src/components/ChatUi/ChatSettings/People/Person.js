@@ -35,7 +35,7 @@ export default class Person extends Component {
 
                 </div>
 
-                <div style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px' }}>
+                <div style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px', fontSize: '15px' }}>
 
                     { person.person !== chat.admin ? person.person : `${person.person} (Admin)` }
 

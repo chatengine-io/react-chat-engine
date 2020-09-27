@@ -82,6 +82,7 @@ const styles = {
         cursor: 'pointer',
         float: 'right',
         padding: '12px',
+        fontSize: '15px',
         backgroundColor: 'rgb(24, 144, 255)', 
     }
 }
