@@ -27,20 +27,26 @@ export default class MessageForm extends React.Component {
     render() {
       return (
         <form onSubmit={this.handleSubmit.bind(this)}>
-          
-          <TextInput 
-            label='Title'
-            value={this.state.value}
-            style={{ width: 'calc(100% - 26px)' }}
-            handleChange={(e) => this.handleChange(e)}
-          />
 
-          <Button 
-            icon='plus'
-            type="submit" 
-            value="New Chat" 
-            style={{ width: '100%' }}
-          />
+          <div style={{ width: 'calc(100% - 26px)', border: '1px solid #d9d9d9', borderRadius: '24px', backgroundColor: 'white' }}>
+            
+            <div style={{ height: '0px' }}>
+              <TextInput 
+                label='New Chat'
+                value={this.state.value}
+                style={{ width: 'calc(100% - 26px - 48px)', borderColor: 'white' }}
+                handleChange={(e) => this.handleChange(e)}
+              />
+            </div>
+
+            <div style={{ width: '100%', textAlign: 'right', marginTop: '1px' }}>
+              <Button 
+                icon='plus'
+                type="submit" 
+              />
+            </div>
+          
+          </div>
 
         </form>
       );

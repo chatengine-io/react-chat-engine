@@ -42,14 +42,18 @@ class ChatList extends Component {
 
     render() {
         return (
-            <div style={{ height: '100vh', borderRight: '1px solid #afafaf' }}>
+            <div style={{ height: '100vh', borderRight: '1px solid #afafaf', backgroundColor: 'rgb(240, 240, 240)' }}>
 
-                { this.renderChats(this.props.chats) } 
+                <div style={ styles.chatsContainer }>
 
-                <div style={{ position: 'absolute', bottom: '0px', width: '100%' }}>
+                    { this.renderChats(this.props.chats) } 
+
+                    <div style={ styles.newChatContainer }>
+                        
+                        <ChatForm creds={this.props.creds} />
+
+                    </div>
                     
-                    <ChatForm creds={this.props.creds} />
-
                 </div>
 
             </div>
@@ -58,6 +62,13 @@ class ChatList extends Component {
 }
 
 const styles={
+    chatsContainer: { 
+        width: '100%', 
+        overflow: 'scroll',
+        height: 'calc(100% - 64px)', 
+        backgroundColor: 'white', 
+        borderRadius: '0px 0px 24px 24px' 
+    },
     chatContainer: { 
         padding: '16px', 
         cursor: 'pointer'
@@ -80,6 +91,12 @@ const styles={
         border: '4px solid white',
         borderRadius: '12px'
     },
+    newChatContainer: { 
+        position: 'absolute', 
+        bottom: '0px', 
+        width: '100%', 
+        padding: '12px', 
+    }
 }
 
 export default ChatList;

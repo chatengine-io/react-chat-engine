@@ -38,7 +38,7 @@ const styles = {
     input: {
         outline: 'none',
         height: '36px',
-        fontSize: '16px',
+        fontSize: '15px',
         padding: '0px 12px',
         borderRadius: '4px',
         borderRadius: '24px',
@@ -47,7 +47,7 @@ const styles = {
     focusInput: {
         outline: 'none',
         height: '36px',
-        fontSize: '16px',
+        fontSize: '15px',
         padding: '0px 12px',
         borderRadius: '4px',
         borderRadius: '24px',

@@ -81,10 +81,10 @@ const styles = {
     feedContainer: { 
         position: 'absolute', 
         top: '0px', 
-        height: 'calc(100% - 72px)', 
+        height: 'calc(100% - 64px)', 
         width: '100%', 
         overflow: 'scroll',
-        borderRadius: '24px',
+        borderRadius: '0px 0px 24px 24px',
         backgroundColor: 'white'
     }
 }
