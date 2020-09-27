@@ -20,6 +20,8 @@ const users = [
 export function App () {
   const user = users[Math.floor(Math.random() * users.length)]
 
+  console.log('user', user)
+
   return (
     <ChatEngine
       development

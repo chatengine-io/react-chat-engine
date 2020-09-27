@@ -47,7 +47,7 @@ class App extends Component {
   onNewChat(chat) {
     const { chats } = this.state
     chats[chat.id] = chat
-    this.setState({ chats })
+    this.setState({ chats, activeChat: chat.id })
   }
 
   onEditChat(chat) {
