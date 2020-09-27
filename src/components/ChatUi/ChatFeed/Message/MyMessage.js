@@ -16,13 +16,19 @@ export default class Message extends Component {
     }
 
     render() {
-        const { creds, message, chatId } = this.props
+        const { creds, chatId, lastMessage, message, nextMessage } = this.props
 
         if (!message) { return <div /> }
 
+        const topRightRadius = !lastMessage || lastMessage.sender !== message.sender ? '1.3em' : '0.3em'
+        const bottomRightRadius = !nextMessage || nextMessage.sender !== message.sender ? '1.3em' : '0.3em'
+
+        const borderRadius = `1.3em ${topRightRadius} ${bottomRightRadius} 1.3em`
+        const paddingBottom = !nextMessage || nextMessage.sender !== message.sender ? '12px' : '2px'
+
         return (
             <div 
-                style={{ width: '100%', float: 'right', paddingBottom: '12px'  }}
+                style={{ width: '100%', float: 'right', paddingBottom }}
                 onMouseEnter={() => this.setState({ selected: true })}
                 onMouseLeave={() => this.setState({ selected: false })}
             >
@@ -33,7 +39,7 @@ export default class Message extends Component {
 
                     <Col xs={11} sm={10} md={9}>
 
-                        <div style={styles.myMessage}>
+                        <div style={{ ...styles.myMessage, ...{ borderRadius } }}>
                             { message.text }
                         </div>
 
@@ -76,7 +82,6 @@ const styles = {
         cursor: 'pointer',
         float: 'right',
         padding: '12px',
-        borderRadius: '1.3em',
         backgroundColor: 'rgb(24, 144, 255)', 
     }
 }

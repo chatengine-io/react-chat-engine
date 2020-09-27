@@ -13,12 +13,18 @@ export default class TheirMessage extends Component {
     }
 
     render() {
-        const { creds, message } = this.props
+        const { lastMessage, message, nextMessage } = this.props
 
         if (!message) { return <div /> }
 
+        const topLeftRadius = !lastMessage || lastMessage.sender !== message.sender ? '1.3em' : '0.3em'
+        const bottomLeftRadius = !nextMessage || nextMessage.sender !== message.sender ? '1.3em' : '0.3em'
+
+        const borderRadius = `${topLeftRadius} 1.3em 1.3em ${bottomLeftRadius}`
+        const paddingBottom = !nextMessage || nextMessage.sender !== message.sender ? '12px' : '2px'
+
         return (
-            <div style={{ width: '100%', paddingBottom: '12px' }}>
+            <div style={{ width: '100%', paddingBottom }}>
             
                 <Row style={{ paddingLeft: '2px' }}>
 
@@ -26,14 +32,17 @@ export default class TheirMessage extends Component {
 
                         <div style={{ height: '0px' }}>
                             
-                            <Avatar text={message.sender} />
+                            {
+                                !nextMessage || nextMessage.sender !== message.sender &&
+                                <Avatar text={message.sender} />
+                            }
 
                         </div>
 
                         <div style={{ paddingLeft: '48px' }}>
 
                             <div 
-                                style={styles.theirMessage}
+                                style={{ ...styles.theirMessage, ...{ borderRadius } }}
                                 onMouseEnter={() => this.setState({ selected: true })}
                                 onMouseLeave={() => this.setState({ selected: false })}
                             >
