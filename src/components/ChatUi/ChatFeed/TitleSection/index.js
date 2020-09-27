@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import ChatList from '../../ChatList';
+
+import { timeSinceDate } from '../../Utilities/dateToString'
 
 export default class Title extends Component {
   
     render() {
         const { chat } = this.props
+
+        if (!chat) { return <div /> }
 
         return (
             <div style={{ position: 'absolute', top: '0px', width: '100%', zIndex: '999' }}>
@@ -16,7 +19,7 @@ export default class Title extends Component {
                     </div>
                     
                     <div style={ styles.subtitleText }>
-                        Active 3 mins ago
+                        Active { timeSinceDate(chat.last_message.created) }
                     </div>
 
                 </div>

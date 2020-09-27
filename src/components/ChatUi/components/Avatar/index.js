@@ -1,45 +1,15 @@
 import React, { Component } from 'react'
 
-const colors = [
-    '#D64045',
-    '#5B3000',
-    '#00CC99',
-    '#467599',
-    '#1D3354',
-    '#8F250C',
-    '#6153CC',
-    '#961D4E',
-    '#A29F15',
-    '#0CAADC',
-    '#FF5154',
-    '#FA7921',
-    '#688E26',
-    '#550527',
-    '#A10702',
-    '#FF1053',
-    '#6C6EA0',
-    '#100B00',
-]
+import { stringToColor } from '../../Utilities/colorMapping' 
+
 
 export default class Avatar extends Component {
-    stringToNumber(str){
-        let sum = 0
-        for (var i = 0; i < str.length; i++) {
-            sum = sum + (str.charCodeAt(i) * i) - 97
-        }
-        return sum
-    }
-
-    hashColors(num) {
-        const mod = num % colors.length
-        return colors[num % colors.length]
-    }
 
     render() {
         const customStyle = this.props.style ? this.props.style : {}
         const text = this.props.text.substring(0, 2).toUpperCase()
-        const color = colors[this.stringToNumber(this.props.text) % colors.length]
-
+        const color = stringToColor(this.props.text)
+        
         return (
             <div style={{ ...styles.avatar, ...customStyle, ...{ backgroundColor: color } }}>
                 
