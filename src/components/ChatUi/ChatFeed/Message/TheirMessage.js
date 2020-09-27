@@ -33,8 +33,9 @@ export default class TheirMessage extends Component {
                         <div style={{ height: '0px' }}>
                             
                             {
-                                !nextMessage || nextMessage.sender !== message.sender &&
-                                <Avatar text={message.sender} />
+                                !nextMessage || nextMessage.sender !== message.sender ?
+                                <Avatar text={message.sender} />  :
+                                <div />
                             }
 
                         </div>
@@ -62,8 +63,8 @@ export default class TheirMessage extends Component {
 
 const styles = {
     theirMessage: {
+        cusor: 'auto',
         color: 'black', 
-        cursor: 'pointer',
         float: 'left',
         padding: '12px',
         borderRadius: '1.3em',

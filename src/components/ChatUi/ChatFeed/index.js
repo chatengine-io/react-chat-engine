@@ -84,7 +84,7 @@ const styles = {
         height: 'calc(100% - 72px)', 
         width: '100%', 
         overflow: 'scroll',
-        borderRadius: '42px',
+        borderRadius: '24px',
         backgroundColor: 'white'
     }
 }

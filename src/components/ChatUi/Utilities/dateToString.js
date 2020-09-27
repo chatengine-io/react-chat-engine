@@ -4,3 +4,8 @@ export function timeSinceDate(date) {
     const time = sent.substr(15, 6)
     return `${day} at ${time}`
 }
+
+export function daySinceSent(date) {
+    const sent = Date(date)
+    return sent.substr(4, 6)
+}

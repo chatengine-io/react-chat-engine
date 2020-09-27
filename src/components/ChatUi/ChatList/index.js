@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import _ from 'lodash'
 
+import { daySinceSent } from '../Utilities/dateToString'
+
 import ChatForm from './ChatForm'
 
 class ChatList extends Component {
@@ -23,8 +25,14 @@ class ChatList extends Component {
                         {chat.title}
                     </div>
 
-                    <div style={ styles.messageText }>
-                        { chat.last_message.text ? chat.last_message.text : 'Say hello!' }
+                    <div style={{ width: '100%' }}>
+                        <div style={ styles.messageText }>
+                            { chat.last_message.text ? chat.last_message.text : 'Say hello!' }
+                        </div>
+
+                        <div style={{ ...styles.messageText, ...{ float: 'right', textAlign: 'right', width: '25%', position: 'relative', bottom: '17px' } }}>
+                            { daySinceSent(chat.last_message.created) }
+                        </div>
                     </div>
 
                 </div>
@@ -61,7 +69,7 @@ const styles={
          overflow: 'hidden' 
     },
     messageText: {
-        width: '80%',
+        width: '75%',
         color: 'rgba(153, 153, 153, 1)', 
         fontSize: '14px', 
         whiteSpace: 'nowrap', 
