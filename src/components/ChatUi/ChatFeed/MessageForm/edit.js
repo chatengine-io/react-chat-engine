@@ -33,7 +33,7 @@ export default class MessageEditForm extends React.Component {
             type="text" 
             label='Edit message...'
             value={this.state.value} 
-            style={{ width: 'calc(100% - 80px)' }}
+            style={{ width: 'calc(100% - 84px)' }}
             handleChange={this.handleChange.bind(this)} 
           />
           

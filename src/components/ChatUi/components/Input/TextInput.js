@@ -39,20 +39,18 @@ const styles = {
         outline: 'none',
         height: '36px',
         fontSize: '16px',
-        padding: '0px 8px',
+        padding: '0px 12px',
         borderRadius: '4px',
         borderRadius: '24px',
-        paddingLeft: '12px',
         border: '1px solid #d9d9d9',
     },
     focusInput: {
         outline: 'none',
         height: '36px',
         fontSize: '16px',
-        padding: '0px 8px',
+        padding: '0px 12px',
         borderRadius: '4px',
         borderRadius: '24px',
-        paddingLeft: '12px',
         border: '1px solid #1890ff',
     }
 }

@@ -33,7 +33,7 @@ export default class PersonForm extends React.Component {
           label='Type a username'
           value={this.state.value}
           handleChange={(e) => this.handleChange(e)} 
-          style={{ width: 'calc(100% - 18px)', marginBottom: '12px' }}
+          style={{ width: 'calc(100% - 24px)', marginBottom: '12px' }}
         />
 
         <Button 

@@ -42,7 +42,7 @@ export default class MessageForm extends React.Component {
                 handleChange={this.handleChange.bind(this)} 
                 style={{ 
                   borderColor: 'white',
-                  width: 'calc(100% - 18px - 52px)',
+                  width: 'calc(100% - 18px - 56px)',
                 }}
               />
 

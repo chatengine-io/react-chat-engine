@@ -55,7 +55,7 @@ const styles = {
     feedContainer: { 
         position: 'absolute', 
         top: '0px', 
-        height: 'calc(100% - 64px)', 
+        height: 'calc(100% - 72px)', 
         width: '100%', 
         overflow: 'scroll',
         borderRadius: '42px',

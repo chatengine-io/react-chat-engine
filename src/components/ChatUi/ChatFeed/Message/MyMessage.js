@@ -47,7 +47,7 @@ export default class Message extends Component {
                             this.state.selected &&
                             <div style={{ width: '100%', height: '44px' }}>
 
-                                <div style={{ width: 'calc(100% - 46px)' }}>
+                                <div style={{ width: 'calc(100% - 52px)' }}>
                                     <MessageEditForm creds={creds} chatId={chatId} message={message} />
                                 </div>
 
