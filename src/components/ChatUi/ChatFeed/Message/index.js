@@ -9,7 +9,7 @@ export default class Message extends Component {
     }
 
     render() {
-        const { creds, message, chatId } = this.props
+        const { creds, chatId, lastMessage, message, nextMessage } = this.props
 
         if (!message) { return <div /> }
 

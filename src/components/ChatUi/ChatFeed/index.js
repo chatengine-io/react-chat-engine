@@ -11,9 +11,35 @@ import _ from 'lodash'
 export default class ChatList extends Component {
 
     renderMessages(messages) {
-        return _.map(messages, (message, index) => {
-            return <Message key={`message_${index}`} message={message} creds={this.props.creds} chatId={this.props.chatId} />            
+        const keys = Object.keys(messages)
+
+        return keys.map((key, index) => {
+            const message = messages[key]
+            const lastMessageKey = index == 0 ? null : keys[index - 1]
+            const nextMessageKey = index == keys.length - 1 ? null : keys[index + 1]
+            
+            return (
+                <Message 
+                    key={`message_${index}`} 
+                    creds={this.props.creds} 
+                    chatId={this.props.chatId} 
+                    lastMessage={messages[lastMessageKey]}
+                    message={message} 
+                    nextMessage={messages[nextMessageKey]}
+                />
+            )
         })
+
+        // return _.map(messages, (message, id) => {
+        //     const lastMessage = i == 0 ? null : messages[i - 1]
+        //     const nextMessage = i == messages.length - 1 ? null : messages[i + 1]
+        //     console.log(lastMessage)
+        //     console.log(nextMessage)
+
+        //     i = i + 1
+
+        //     return <Message key={`message_${id}`} message={message} creds={this.props.creds} chatId={this.props.chatId} />            
+        // })
     }
 
     render() {
