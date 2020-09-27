@@ -14,9 +14,26 @@ export default class Message extends Component {
         if (!message) { return <div /> }
 
         if(message.sender == creds.userName) {
-            return <MyMessage creds={creds} message={message} chatId={chatId} />
+            return (
+                <MyMessage 
+                    creds={creds} 
+                    chatId={chatId} 
+                    lastMessage={lastMessage} 
+                    message={message} 
+                    nextMessage={nextMessage} 
+                />
+            )
+            
         } else {
-            return <TheirMessage message={message} />
+            return (
+                <TheirMessage 
+                    creds={creds} 
+                    chatId={chatId} 
+                    lastMessage={lastMessage} 
+                    message={message} 
+                    nextMessage={nextMessage} 
+                />
+            )
         }   
     }
 }
