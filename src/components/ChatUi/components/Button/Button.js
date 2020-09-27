@@ -46,6 +46,7 @@ const styles = {
         cursor: 'pointer',
         borderRadius: '4px',
         padding: '8px 16px',
+        borderRadius: '24px',
         backgroundColor: '#1890ff'
     },
     dangerButton: {
@@ -57,6 +58,7 @@ const styles = {
         cursor: 'pointer',
         borderRadius: '4px',
         padding: '8px 16px',
+        borderRadius: '24px',
         backgroundColor: 'white',
         border: '2px solid red',
     },

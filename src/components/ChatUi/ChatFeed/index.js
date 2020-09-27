@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import Title from './TitleSection'
 import { Loading, AuthFail, Welcome } from './Steps'
 
 import Message from './Message'
@@ -16,9 +17,8 @@ export default class ChatList extends Component {
     }
 
     render() {
-        const { messages, chats, creds } = this.props
-
-        console.log(chats, chats === {})
+        const { messages, chats, creds, chatId } = this.props
+        const chat = chats && chats[chatId] 
 
         if(creds === null) { 
             return <Loading />
@@ -33,13 +33,32 @@ export default class ChatList extends Component {
         }
 
         return (
-            <div style={{ height: '100vh' }}>
+            <div style={{ height: '100vh', backgroundColor: '#f0f0f0' }}>
 
-                { this.renderMessages(messages) }
+                <Title chat={chat} />
 
-                <MessageForm chatId={this.props.chatId} creds={this.props.creds} />
+                <div style={ styles.feedContainer }>
+
+                    <div style={{ height: '92px' }} />
+
+                    { this.renderMessages(messages) }
+
+                </div>
+
+                <MessageForm chatId={chatId} creds={creds} />
 
             </div>
         )
+    }
+}
+const styles = {
+    feedContainer: { 
+        position: 'absolute', 
+        top: '0px', 
+        height: 'calc(100% - 64px)', 
+        width: '100%', 
+        overflow: 'scroll',
+        borderRadius: '42px',
+        backgroundColor: 'white'
     }
 }
