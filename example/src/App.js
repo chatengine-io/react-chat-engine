@@ -28,6 +28,8 @@ export function App () {
       publicKey={'1ed59673-1fd6-46ed-9eb9-56239a6a4f82'}
       userName={user.userName}
       userPassword={user.userPassword}
+      // Render Custom Components
+      renderNewChatForm={() => { return <div /> }}
     />
   )
 }
