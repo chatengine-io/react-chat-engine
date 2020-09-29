@@ -96,6 +96,7 @@ class App extends Component {
 
         <Socket 
           {...this.props} 
+          // API Hooks
           onConnect={(creds) => this.onConnect(creds)}
           onFailAuth={(props) => this.onFailAuth(props)}
           onGetChats={(chats) => this.onGetChats(chats)}
@@ -118,6 +119,7 @@ class App extends Component {
               chats={this.state.chats} 
               activeChat={this.state.activeChat}
               onChatClick={(chatId) => this.setActiveChat(chatId)} 
+              renderNewChatForm={this.props.renderNewChatForm}
             />
           </Col>
 

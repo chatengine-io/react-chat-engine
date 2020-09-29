@@ -22,7 +22,7 @@ class ChatList extends Component {
                 >
                     
                     <div style={ styles.titleText }>
-                        {chat.title}
+                        { chat.title }
                     </div>
 
                     <div style={{ width: '100%' }}>
@@ -42,17 +42,19 @@ class ChatList extends Component {
 
     render() {
         return (
-            <div style={{ height: '100vh', borderRight: '1px solid #afafaf', backgroundColor: 'rgb(240, 240, 240)' }}>
+            <div style={{ height: '100vh', borderRight: '1px solid #afafaf' }}>
 
                 <div style={ styles.chatsContainer }>
 
                     { this.renderChats(this.props.chats) } 
 
-                    <div style={ styles.newChatContainer }>
-                        
-                        <ChatForm creds={this.props.creds} />
-
-                    </div>
+                    {
+                        this.props.renderNewChatForm ?
+                        this.props.renderNewChatForm() :
+                        <div style={ styles.newChatContainer }>
+                            <ChatForm creds={this.props.creds} />
+                        </div>
+                    }
                     
                 </div>
 
@@ -64,10 +66,10 @@ class ChatList extends Component {
 const styles={
     chatsContainer: { 
         width: '100%', 
+        height: '100%', 
         overflow: 'scroll',
-        height: 'calc(100% - 64px)', 
         backgroundColor: 'white', 
-        borderRadius: '0px 0px 24px 24px' 
+        borderRadius: '0px 0px 24px 24px'
     },
     chatContainer: { 
         padding: '16px', 
