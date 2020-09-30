@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class Welcome extends Component {
     render() {
         return (
-            <div style={{ height: '100vh', textAlign: 'center' }}>
+            <div style={{ height: '100%', textAlign: 'center' }}>
 
                 <div style={{ width: '100%' }}>                    
                     <img

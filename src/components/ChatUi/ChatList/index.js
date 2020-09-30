@@ -42,11 +42,13 @@ class ChatList extends Component {
 
     render() {
         return (
-            <div style={{ height: '100vh', borderRight: '1px solid #afafaf' }}>
+            <div style={{ height: '100%', maxHeight: '100vh', overflow: 'scroll', borderRight: '1px solid #afafaf' }}>
 
                 <div style={ styles.chatsContainer }>
 
                     { this.renderChats(this.props.chats) } 
+
+                    <div style={{ height: '100px' }} />
 
                     {
                         this.props.renderNewChatForm ?

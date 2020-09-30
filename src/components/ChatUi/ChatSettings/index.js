@@ -67,7 +67,7 @@ class ChatList extends Component {
         if (!chat) { return <div style={{ height: '100vh', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }} /> }
         
         return (
-            <div style={{ height: '100vh', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }}>
+            <div style={{ height: '100%', maxHeight: '100vh', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }}>
 
                 <Row>
 
