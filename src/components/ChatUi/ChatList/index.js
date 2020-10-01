@@ -68,8 +68,6 @@ class ChatList extends Component {
 const styles={
     chatsContainer: { 
         width: '100%', 
-        height: '100%', 
-        overflow: 'scroll',
         backgroundColor: 'white', 
         borderRadius: '0px 0px 24px 24px'
     },

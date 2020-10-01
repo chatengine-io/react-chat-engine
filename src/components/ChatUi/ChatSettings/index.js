@@ -10,7 +10,7 @@ import { Button } from '../components/Button'
 import TitleForm from './TitleForm'
 import People from './People'
 
-class ChatList extends Component {
+export default class ChatList extends Component {
 
     renderOnePerson(people) {
         return (
@@ -64,57 +64,58 @@ class ChatList extends Component {
         const { chat, creds } = this.props
         const topPeople = chat ? chat.people.slice(0, 3) : []
 
-        if (!chat) { return <div style={{ height: '100vh', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }} /> }
+        if (!chat) { return <div style={{ display: 'flex', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }} /> }
         
         return (
-            <div style={{ height: '100%', maxHeight: '100vh', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }}>
+            <div style={{ backgroundColor: 'white' }}>
+                <div style={{ height: '100%', maxHeight: '100vh', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }}>
 
-                <Row>
+                    <Row>
 
-                    <Col xs={3} />
+                        <Col xs={3} />
 
-                    { topPeople.length == 1 && this.renderOnePerson(topPeople) }
-                    { topPeople.length == 2 && this.renderTwoPeople(topPeople) }
-                    { topPeople.length == 3 && this.renderThreePeople(topPeople) }
-                    
-                    <Col xs={3} />
+                        { topPeople.length == 1 && this.renderOnePerson(topPeople) }
+                        { topPeople.length == 2 && this.renderTwoPeople(topPeople) }
+                        { topPeople.length == 3 && this.renderThreePeople(topPeople) }
+                        
+                        <Col xs={3} />
 
-                </Row>
+                    </Row>
 
-                <TitleForm chat={chat} creds={creds} />
+                    <TitleForm chat={chat} creds={creds} />
 
-                <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
-                    People
-                </div>
-
-                <div style={{ height: '12px' }} />
-
-                <People creds={creds} chat={chat} />
-
-                {
-                    chat.admin === creds.userName &&
-                    <div>
-
-                        <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
-                            Options
-                        </div>
-
-                        <div style={{ height: '12px' }} />
-
-                        <Button 
-                            value="Delete" 
-                            theme='danger'
-                            icon='delete'
-                            onClick={() => deleteChat(creds, chat.id)}
-                            style={{ width: '100%', marginBottom: '12px' }}
-                        />
-
+                    <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
+                        People
                     </div>
-                }
+
+                    <div style={{ height: '12px' }} />
+
+                    <People creds={creds} chat={chat} />
+
+                    {
+                        chat.admin === creds.userName &&
+                        <div>
+
+                            <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
+                                Options
+                            </div>
+
+                            <div style={{ height: '12px' }} />
+
+                            <Button 
+                                value="Delete" 
+                                theme='danger'
+                                icon='delete'
+                                onClick={() => deleteChat(creds, chat.id)}
+                                style={{ width: '100%', marginBottom: '12px' }}
+                            />
+
+                        </div>
+                    }
+
+                </div>
 
             </div>
         )
     }
 }
-
-export default ChatList;

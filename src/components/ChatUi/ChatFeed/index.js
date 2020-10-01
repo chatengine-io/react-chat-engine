@@ -59,7 +59,7 @@ export default class ChatList extends Component {
         }
 
         return (
-            <div style={{ height: '100%', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}>
+            <div style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}>
 
                 <Title chat={chat} />
 
