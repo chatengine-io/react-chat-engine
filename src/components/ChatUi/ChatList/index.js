@@ -42,7 +42,7 @@ class ChatList extends Component {
 
     render() {
         return (
-            <div style={{ height: '100%', maxHeight: '100vh', overflow: 'scroll', borderRight: '1px solid #afafaf' }}>
+            <div style={styles.chatListContainer}>
 
                 <div style={ styles.chatsContainer }>
 
@@ -66,6 +66,13 @@ class ChatList extends Component {
 }
 
 const styles={
+    chatListContainer: { 
+        height: '100%', 
+        maxHeight: '100vh', 
+        overflow: 'scroll', 
+        borderRight: '1px solid #afafaf', 
+        backgroundColor: 'white' 
+    },
     chatsContainer: { 
         width: '100%', 
         backgroundColor: 'white', 

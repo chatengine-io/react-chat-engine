@@ -67,8 +67,9 @@ export default class ChatList extends Component {
         if (!chat) { return <div style={{ display: 'flex', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }} /> }
         
         return (
-            <div style={{ backgroundColor: 'white' }}>
-                <div style={{ height: '100%', maxHeight: '100vh', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }}>
+            <div style={styles.settingsContainer}>
+
+                <div style={{ width: '90%', paddingLeft: '5%' }}>
 
                     <Row>
 
@@ -117,5 +118,14 @@ export default class ChatList extends Component {
 
             </div>
         )
+    }
+}
+
+const styles = {
+    settingsContainer: { 
+        height: '100%', 
+        maxHeight: '100vh', 
+        borderLeft: '1px solid #afafaf', 
+        backgroundColor: 'white'  
     }
 }

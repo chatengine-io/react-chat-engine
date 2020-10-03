@@ -21,13 +21,14 @@ export function App () {
   const user = users[Math.floor(Math.random() * users.length)]
 
   return (
-    <div>
+    <div style={{ width: '66vw',  backgroundColor: '#e6f7ff' }}>
       <ChatEngine
         development
         publicKey={'1ed59673-1fd6-46ed-9eb9-56239a6a4f82'}
         userName={user.userName}
         userPassword={user.userPassword}
         // Render Custom Components
+        height='66vh'
         // renderNewChatForm={() => { return <div /> }}
       />
     </div>
