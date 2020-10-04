@@ -24,8 +24,6 @@ export default class Title extends Component {
 
                 </div>
 
-                <div style={ styles.bottomFade } />
-
             </div>
         );
     }
@@ -36,7 +34,7 @@ const styles = {
         padding: '18px',
         textAlign: 'center',
         color: 'rgb(24, 144, 255)',
-        backgroundColor: 'white'
+        backgroundColor: 'rgb(256, 256, 256, 0.92)'
     },
     titleText: {
         fontSize: '24px',
@@ -44,9 +42,5 @@ const styles = {
     },
     subtitleText: {
         fontSize: '12px',
-    },
-    bottomFade: {
-        height: '18px',
-        backgroundImage: 'linear-gradient(to bottom, rgba(255,255,255, 1), rgba(255,255,255, 0) 100%)'
     }
 }

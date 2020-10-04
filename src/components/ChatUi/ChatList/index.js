@@ -48,7 +48,7 @@ class ChatList extends Component {
 
                     { this.renderChats(this.props.chats) } 
 
-                    <div style={{ height: '100px' }} />
+                    <div style={{ height: '64px' }} />
 
                     {
                         this.props.renderNewChatForm ?
