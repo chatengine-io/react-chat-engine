@@ -29,17 +29,12 @@ export default class ChatList extends Component {
                 />
             )
         })
+    }
 
-        // return _.map(messages, (message, id) => {
-        //     const lastMessage = i == 0 ? null : messages[i - 1]
-        //     const nextMessage = i == messages.length - 1 ? null : messages[i + 1]
-        //     console.log(lastMessage)
-        //     console.log(nextMessage)
-
-        //     i = i + 1
-
-        //     return <Message key={`message_${id}`} message={message} creds={this.props.creds} chatId={this.props.chatId} />            
-        // })
+    componentDidUpdate(){
+        if(this.el != undefined){
+            this.el.scrollIntoView({ behavior: 'smooth' })
+        }
     }
 
     render() {
@@ -68,6 +63,8 @@ export default class ChatList extends Component {
                     <div style={{ height: '92px' }} />
 
                     { this.renderMessages(messages) }
+
+                    <div ref={el => { this.el = el }}/>
 
                 </div>
 
