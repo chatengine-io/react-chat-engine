@@ -13,9 +13,13 @@ export default class TheirMessage extends Component {
         selected: false
     }
 
-    renderReads(message) {
+    renderReads() {
+        const { lastMessage, message, nextMessage } = this.props
+
         return message.reads.map((read, index) => {
-            return <Dot key={`read_${index}`} text={read.person} />
+            if (!nextMessage) {
+                return <Dot key={`read_${index}`} text={read.person} style={{ marginLeft: '48px' }} />
+            }
         })
     }
 
@@ -62,7 +66,7 @@ export default class TheirMessage extends Component {
                     </Col>
 
                     <Col xs={12}>
-                        { this.renderReads(message) }
+                        { this.renderReads() }
                     </Col>
                 
                 </Row>

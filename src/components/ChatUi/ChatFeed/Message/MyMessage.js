@@ -18,7 +18,9 @@ export default class Message extends Component {
 
     renderReads(message) {
         return message.reads.map((read, index) => {
-            return <Dot key={`read_${index}`} text={read.person} style={{ float: 'right' }} />
+            if (!nextMessage) {
+                return <Dot key={`read_${index}`} text={read.person} style={{ float: 'right' }} />
+            }
         })
     }
 
