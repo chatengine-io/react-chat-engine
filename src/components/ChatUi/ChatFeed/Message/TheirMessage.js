@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import Dot from '../../components/Avatar/Dot'
 import Avatar from '../../components/Avatar'
 
 import { Row, Col, setConfiguration } from 'react-grid-system'
@@ -10,6 +11,12 @@ setConfiguration({ maxScreenClass: 'xl' })
 export default class TheirMessage extends Component {
     state = {
         selected: false
+    }
+
+    renderReads(message) {
+        return message.reads.map((read, index) => {
+            return <Dot key={`read_${index}`} text={read.person} />
+        })
     }
 
     render() {
@@ -52,6 +59,10 @@ export default class TheirMessage extends Component {
                         
                         </div>
 
+                    </Col>
+
+                    <Col xs={12}>
+                        { this.renderReads(message) }
                     </Col>
                 
                 </Row>

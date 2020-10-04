@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import MessageEditForm from '../MessageForm/edit'
 
+import Dot from '../../components/Avatar/Dot'
 import { Button } from '../../components/Button'
 
 import { deleteMessage } from 'react-chat-engine'
@@ -13,6 +14,12 @@ setConfiguration({ maxScreenClass: 'xl' })
 export default class Message extends Component {
     state = {
         selected: false
+    }
+
+    renderReads(message) {
+        return message.reads.map((read, index) => {
+            return <Dot key={`read_${index}`} text={read.person} style={{ float: 'right' }} />
+        })
     }
 
     render() {
@@ -67,6 +74,10 @@ export default class Message extends Component {
                             </div>
                         }
 
+                    </Col>
+
+                    <Col xs={12}>
+                        { this.renderReads(message) }
                     </Col>
             
                 </Row>
