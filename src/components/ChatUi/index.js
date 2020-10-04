@@ -28,10 +28,14 @@ class App extends Component {
   onConnect(creds) {
     this.setState({ creds })
     getChats(creds)
+
+    this.props.onConnect && this.props.onConnect(creds)
   }
 
   onFailAuth(creds) {
     this.setState({ creds: undefined })
+
+    this.props.onFailAuth && this.props.onFailAuth(creds)
   }
 
   setActiveChat(chatId) {
@@ -42,28 +46,38 @@ class App extends Component {
   onGetChats(chats) {
     if (chats.length > 0) { this.setActiveChat(chats[0].id) }
     this.setState({ chats: _.mapKeys(chats, 'id') })
+
+    this.props.onGetChats && this.props.onGetChats(chats)
   }
 
   onNewChat(chat) {
     const { chats } = this.state
     chats[chat.id] = chat
     this.setState({ chats, activeChat: chat.id })
+
+    this.props.onNewChat && this.props.onNewChat(chat)
   }
 
   onEditChat(chat) {
     const { chats } = this.state
     chats[chat.id] = chat
     this.setState({ chats })
+
+    this.props.onEditChat && this.props.onEditChat(chat)
   }
 
   onDeleteChat(chat) {
     const { chats } = this.state
     chats[chat.id] = undefined
     this.setState({ chats })
+
+    this.props.onDeleteChat && this.props.onDeleteChat(chat)
   }
 
   onGetMessages(chatId, messages) {
     this.setState({ messages: _.mapKeys(messages, 'id') })
+    
+    this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
   }
 
   onNewMessage(chatId, message) {
@@ -72,6 +86,8 @@ class App extends Component {
       messages[message.id] = message
       this.setState({ messages })
     }
+
+    this.props.onNewMessage && this.props.onNewMessage(chatId, message)
   }
 
   onEditMessage(chatId, message) {
@@ -80,6 +96,8 @@ class App extends Component {
       messages[message.id] = message
       this.setState({ messages })
     }
+
+    this.props.onEditMessage && this.props.onEditMessage(chatId, message)
   }
 
   onDeleteMessage(chatId, message) {
@@ -88,6 +106,8 @@ class App extends Component {
       messages[message.id] = undefined
       this.setState({ messages })
     }
+
+    this.props.onDeleteMessage && this.props.onDeleteMessage(chatId, message)
   }
 
   render() {

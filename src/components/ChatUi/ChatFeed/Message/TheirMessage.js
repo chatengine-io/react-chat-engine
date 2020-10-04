@@ -14,7 +14,7 @@ export default class TheirMessage extends Component {
     }
 
     renderReads() {
-        const { lastMessage, message, nextMessage } = this.props
+        const { message, nextMessage } = this.props
 
         return message.reads.map((read, index) => {
             if (!nextMessage) {

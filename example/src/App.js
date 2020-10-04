@@ -23,13 +23,15 @@ export function App () {
   return (
     <div style={{ width: '66vw',  backgroundColor: '#e6f7ff' }}>
       <ChatEngine
+        // Creds
         development
         publicKey={'1ed59673-1fd6-46ed-9eb9-56239a6a4f82'}
         userName={user.userName}
         userPassword={user.userPassword}
+        // Hooks
+        // onNewMessage={(chatId, message) => console.log(chatId, message)}
         // Render Custom Components
         height='66vh'
-        // renderNewChatForm={() => { return <div /> }}
       />
     </div>
   )

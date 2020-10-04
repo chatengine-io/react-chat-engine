@@ -16,7 +16,9 @@ export default class Message extends Component {
         selected: false
     }
 
-    renderReads(message) {
+    renderReads() {
+        const { message, nextMessage } = this.props
+
         return message.reads.map((read, index) => {
             if (!nextMessage) {
                 return <Dot key={`read_${index}`} text={read.person} style={{ float: 'right' }} />
@@ -79,7 +81,7 @@ export default class Message extends Component {
                     </Col>
 
                     <Col xs={12}>
-                        { this.renderReads(message) }
+                        { this.renderReads() }
                     </Col>
             
                 </Row>
