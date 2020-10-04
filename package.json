@@ -1,6 +1,6 @@
 {
   "name": "react-chat-engine",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Cheap and easy chat API",
   "author": "alamorre",
   "license": "MIT",
@@ -55,6 +55,7 @@
     "axios": "^0.20.0",
     "lodash": "^4.17.20",
     "react-grid-system": "^7.1.1",
+    "react-scroll": "^1.8.1",
     "reconnecting-websocket": "^4.4.0"
   }
 }

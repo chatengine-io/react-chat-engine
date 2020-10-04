@@ -7,6 +7,7 @@ import Message from './Message'
 import MessageForm from './MessageForm'
 
 import _ from 'lodash'
+import { animateScroll } from "react-scroll"
 
 export default class ChatList extends Component {
 
@@ -32,9 +33,13 @@ export default class ChatList extends Component {
     }
 
     componentDidUpdate(){
-        if(this.el != undefined){
-            this.el.scrollIntoView({ behavior: 'smooth' })
-        }
+        this.scrollToBottom()
+    }
+
+    scrollToBottom() {
+        animateScroll.scrollToBottom({
+          containerId: "feed-container"
+        })
     }
 
     render() {
@@ -58,13 +63,11 @@ export default class ChatList extends Component {
 
                 <Title chat={chat} />
 
-                <div style={ styles.feedContainer }>
+                <div style={ styles.feedContainer } id='feed-container'>
 
                     <div style={{ height: '92px' }} />
 
                     { this.renderMessages(messages) }
-
-                    <div ref={el => { this.el = el }}/>
 
                 </div>
 

@@ -114,7 +114,7 @@ class App extends Component {
     const { height } = this.props
 
     return (
-      <div>
+      <div style={{ textAlign: 'left' }}>
 
         <Socket 
           {...this.props} 

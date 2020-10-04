@@ -14,13 +14,13 @@ export default class TheirMessage extends Component {
     }
 
     renderReads() {
-        const { message, nextMessage } = this.props
+        // const { message, nextMessage } = this.props
 
-        return message.reads.map((read, index) => {
-            if (!nextMessage) {
-                return <Dot key={`read_${index}`} text={read.person} style={{ marginLeft: '48px' }} />
-            }
-        })
+        // return message.reads.map((read, index) => {
+        //     if (!nextMessage) {
+        //         return <Dot key={`read_${index}`} text={read.person} style={{ marginLeft: '48px' }} />
+        //     }
+        // })
     }
 
     render() {
