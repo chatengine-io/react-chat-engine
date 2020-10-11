@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as str from '..'
 
 export function removePerson(props, chatId, userName) {
-    axios.patch(
+    axios.put(
         `${str.getApiUrl(props)}/chats/${chatId}/people/`,
         { username: userName },
         { headers: { 
