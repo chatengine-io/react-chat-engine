@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 
 import { getChats } from '../../actions/chats'
-import { getMessages } from '../../actions/messages'
+import { getMessages, readMessage } from '../../actions/messages'
 
 import Socket from '../Socket'
 
@@ -76,6 +76,9 @@ class App extends Component {
 
   onGetMessages(chatId, messages) {
     this.setState({ messages: _.mapKeys(messages, 'id') })
+
+    const messageId = messages[messages.length - 1].id
+    readMessage(this.state.creds, chatId, messageId)
     
     this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
   }
@@ -86,6 +89,8 @@ class App extends Component {
       messages[message.id] = message
       this.setState({ messages })
     }
+
+    readMessage(this.state.creds, chatId, message.id)
 
     this.props.onNewMessage && this.props.onNewMessage(chatId, message)
   }

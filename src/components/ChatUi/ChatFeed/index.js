@@ -10,7 +10,6 @@ import _ from 'lodash'
 import { animateScroll } from "react-scroll"
 
 export default class ChatList extends Component {
-
     renderMessages() {
         const { messages, chats, chatId } = this.props
         const chat = chats && chats[chatId] 

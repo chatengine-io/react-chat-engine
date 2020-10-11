@@ -2,9 +2,9 @@ import axios from 'axios'
 import * as str from '../../actions'
 
 export function readMessage(props, chatId, messageId, onRead) {
-    axios.post(
-        `${str.getApiUrl(props)}/chats/${chatId}/messages/${messageId}/reads/`,
-        data,
+    axios.patch(
+        `${str.getApiUrl(props)}/chats/${chatId}/people/`,
+        { last_read: messageId },
         { headers: { 
             "Public-Key": props.publicKey,
             "User-Name": props.userName,
