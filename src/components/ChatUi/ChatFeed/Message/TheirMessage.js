@@ -65,7 +65,8 @@ export default class TheirMessage extends Component {
 
                     </Col>
 
-                    <Col xs={12} style={{ marginLeft: '48px' }}>
+                    {/* Col is 9 to not slipp into RHS */}
+                    <Col xs={9} style={{ marginLeft: '48px' }}>
                         { this.renderReads() }
                     </Col>
                 
