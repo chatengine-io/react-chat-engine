@@ -39,7 +39,7 @@ export default class Message extends Component {
 
         return (
             <div 
-                style={{ width: '100%', float: 'right', paddingBottom }}
+                style={{ width: '100%', textAlign: 'right', paddingBottom }}
                 onMouseEnter={() => this.setState({ selected: true })}
                 onMouseLeave={() => this.setState({ selected: false })}
             >

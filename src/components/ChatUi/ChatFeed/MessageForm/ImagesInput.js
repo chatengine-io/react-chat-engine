@@ -13,10 +13,7 @@ export default class ImagesInput extends React.Component {
 
         indexes.map(index => {
             const file = event.target.files[index]
-            files.push({
-                file: file,
-                name: file.name
-            })
+            files.push(file)
         })
         
         this.props.onSelectFiles &&  this.props.onSelectFiles(files)
@@ -27,12 +24,14 @@ export default class ImagesInput extends React.Component {
             <form
                 className="uploader"
                 encType="multipart/form-data"
+                style={{ height: '0px' }}
             >
 
                 <label
-                    id='upload-document-button'
                     htmlFor="files"
-                    style={{ position: 'absolute', bottom: '12px', right: '62px', zIndex: '1' }}>
+                    id='upload-document-button'
+                    style={{ position: 'absolute', bottom: '12px', right: '62px', zIndex: '1' }}
+                >
                         <CameraOutlined style={{ fontSize: '20px', color: '#1890ff' }} />
                 </label>
 
@@ -40,7 +39,7 @@ export default class ImagesInput extends React.Component {
                     multiple
                     id="files"
                     accept="*"
-                    style={{visibility: "hidden"}}
+                    style={{ visibility: "hidden" }}
                     type="file"
                     onChange={(e) => this.onSelect(e)} 
                 />

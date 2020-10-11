@@ -81,6 +81,8 @@ export default class ChatList extends Component {
 
                     { this.renderMessages() }
 
+                    <div style={{ height: '42px' }} />
+
                 </div>
 
                 <MessageForm chatId={chatId} creds={creds} />
@@ -93,10 +95,9 @@ const styles = {
     feedContainer: { 
         position: 'absolute', 
         top: '0px', 
-        height: 'calc(100% - 64px)', 
+        height: '100%', 
         width: '100%', 
         overflow: 'scroll',
-        borderRadius: '0px 0px 24px 24px',
         backgroundColor: 'white'
     }
 }

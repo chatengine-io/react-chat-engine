@@ -2,6 +2,7 @@ import React from 'react';
 
 import { sendMessage } from 'react-chat-engine'
 
+import FileRow from './FileRow'
 import ImagesInput from './ImagesInput'
 
 import { Button } from '../../components/Button'
@@ -33,7 +34,11 @@ export default class MessageForm extends React.Component {
       return this.state.files.map((file, index) => {
         return (
           <div key={`file_${index}`}>
-            {file.name}
+            <img
+              style={{ maxHeight: '66px', maxWidth: '66px' }}
+              src={URL.createObjectURL(file)}
+              alt={file.name}
+            />
           </div>
         )
       })
@@ -41,11 +46,11 @@ export default class MessageForm extends React.Component {
   
     render() {
       return (
-        <div style={{ position: 'absolute', bottom: '10px', width: 'calc(100% - 24px)', left: '12px' }}> 
+        <div style={ styles.messageFormContainer }>
+
+          <FileRow files={this.state.files} />
 
           <ImagesInput onSelectFiles={(files) => this.setState({ files })} /> 
-
-          { this.renderFiles() }
 
           <form 
             id="new-msg-form"
@@ -77,6 +82,12 @@ export default class MessageForm extends React.Component {
 }
 
 const styles = {
+  messageFormContainer: { 
+    position: 'absolute', 
+    bottom: '0px', 
+    width: '100%', 
+    backgroundColor: 'rgb(255, 255, 255, 0.5)',
+  },
   inputContainer: { 
     overflow: 'hidden',
     width: '100%', 
