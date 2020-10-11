@@ -10,8 +10,7 @@ export default class TextAreaInput extends Component {
         const value = this.props.default
 
         if(value) {
-            const event = { target: { value } }
-            this.props.handleChange(event)
+            this.props.handleChange({ target: { value } })
             this.setState({ value })
         }
     }
@@ -32,7 +31,13 @@ export default class TextAreaInput extends Component {
     }
 
     onKeyDown(e) {
-        if (e.key === 'Enter') { this.props.onSubmit && this.props.onSubmit(e) }
+        if (e.key === 'Enter') { 
+            e.preventDefault()
+            
+            if (this.props.value.length > 0) {
+                this.props.onSubmit && this.props.onSubmit(e) 
+            }
+        }
     }
 
     render() {

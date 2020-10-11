@@ -11,6 +11,7 @@ export default class MessageForm extends React.Component {
     }
   
     handleChange(event) {
+      console.log(event.target.value.indexOf('\n'))
       this.setState({value: event.target.value});
     }
   

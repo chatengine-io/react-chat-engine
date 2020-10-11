@@ -58,7 +58,7 @@ export default class Message extends Component {
 
                     <Col xs={1} sm={2} md={3} />
 
-                    <Col xs={11} sm={10} md={9}>
+                    {/* <Col xs={11} sm={10} md={9}>
 
                         {
                             this.state.selected &&
@@ -78,7 +78,7 @@ export default class Message extends Component {
                             </div>
                         }
 
-                    </Col>
+                    </Col> */}
 
                     <Col xs={12}>
                         { this.renderReads() }

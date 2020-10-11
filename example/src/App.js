@@ -21,7 +21,7 @@ export function App () {
   const user = users[Math.floor(Math.random() * users.length)]
 
   return (
-    <div style={{ width: '66vw',  backgroundColor: '#e6f7ff', paddingTop: '2vh', paddingBottom: '66vh' }}>
+    <div style={{ width: '66vw',  backgroundColor: '#e6f7ff', paddingTop: '2vh', paddingBottom: '6vh' }}>
       <ChatEngine
         // Creds
         development
