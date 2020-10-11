@@ -2,12 +2,15 @@ import React from 'react';
 
 import { sendMessage } from 'react-chat-engine'
 
+import ImagesInput from './ImagesInput'
+
 import { Button } from '../../components/Button'
 import { TextAreaInput } from '../../components/Input'
 
 export default class MessageForm extends React.Component {
     state = {
-      value: ''
+      value: '',
+      files: []
     }
   
     handleChange(event) {
@@ -25,34 +28,51 @@ export default class MessageForm extends React.Component {
         () => this.setState({ value: '' })
       )
     }
+
+    renderFiles() {
+      return this.state.files.map((file, index) => {
+        return (
+          <div key={`file_${index}`}>
+            {file.name}
+          </div>
+        )
+      })
+    }
   
     render() {
       return (
-        <form 
-          id="new-msg-form"
-          onSubmit={this.handleSubmit.bind(this)} 
-          style={{ position: 'absolute', bottom: '10px', width: 'calc(100% - 24px)', left: '12px' }}
-        >
+        <div style={{ position: 'absolute', bottom: '10px', width: 'calc(100% - 24px)', left: '12px' }}> 
 
-          <div style={ styles.inputContainer }>
+          <ImagesInput onSelectFiles={(files) => this.setState({ files })} /> 
 
-            <TextAreaInput 
-              label='Send a message...' 
-              value={this.state.value} 
-              handleChange={this.handleChange.bind(this)} 
-              onSubmit={this.handleSubmit.bind(this)} 
-            />
+          { this.renderFiles() }
 
-            <Button 
-              type="submit" 
-              icon='send' 
-              style={{ position: 'absolute', bottom: '5px', right: '4px' }} 
-            />
+          <form 
+            id="new-msg-form"
+            onSubmit={this.handleSubmit.bind(this)} 
+          >
 
-          </div>
+            <div style={ styles.inputContainer }>
 
-        </form>
-        );
+              <TextAreaInput 
+                label='Send a message...' 
+                value={this.state.value} 
+                handleChange={this.handleChange.bind(this)} 
+                onSubmit={this.handleSubmit.bind(this)} 
+              />
+
+              <Button 
+                type="submit" 
+                icon='send' 
+                style={{ position: 'absolute', bottom: '5px', right: '4px' }} 
+              />
+
+            </div>
+
+          </form>
+          
+        </div>
+      );
     }
 }
 

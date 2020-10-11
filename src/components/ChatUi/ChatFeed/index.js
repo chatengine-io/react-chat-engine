@@ -11,13 +11,13 @@ import { animateScroll } from "react-scroll"
 
 export default class ChatList extends Component {
     state = {
-        duration: 1000
+        duration: 0
     }
 
     componentDidMount() {
         setTimeout(() => {
-            this.setState({ duration: 333 })
-        }, 3000); // Once the chat loads, speed up
+            this.setState({ duration: 100 })
+        }, 3000); // Once the chat loads, start animating
     }
 
     renderMessages() {

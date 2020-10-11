@@ -61,7 +61,7 @@ const styles = {
     input: { 
         borderRadius: '10px',
         border: '1px solid white',     
-        width: 'calc(100% - 64px - 24px)', // 24px for 12px 
+        width: 'calc(100% - 64px - 24px - 44px)', // 24px for padding, 44 for file icons
         resize: 'none', 
         outline: 'none', 
         top: '12px',
