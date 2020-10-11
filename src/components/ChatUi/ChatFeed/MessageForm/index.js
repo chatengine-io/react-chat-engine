@@ -3,7 +3,7 @@ import React from 'react';
 import { sendMessage } from 'react-chat-engine'
 
 import { Button } from '../../components/Button'
-import { TextInput } from '../../components/Input'
+import { TextAreaInput } from '../../components/Input'
 
 export default class MessageForm extends React.Component {
     state = {
@@ -36,14 +36,10 @@ export default class MessageForm extends React.Component {
 
             <div style={ styles.inputContainer }>
 
-              <TextInput 
+              <TextAreaInput 
                 label='Send a message...' 
                 value={this.state.value} 
                 handleChange={this.handleChange.bind(this)} 
-                style={{ 
-                  borderColor: 'white',
-                  width: 'calc(100% - 18px - 56px)',
-                }}
               />
 
               <div style={{ float: 'right', position: 'relative', top: '1px', right: '1px' }}>

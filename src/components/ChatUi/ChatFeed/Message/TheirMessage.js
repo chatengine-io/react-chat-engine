@@ -83,6 +83,7 @@ const styles = {
         float: 'left',
         padding: '12px',
         fontSize: '15px',
+        whiteSpace: 'pre-line',
         backgroundColor: '#f1f0f0', 
     },
 }
