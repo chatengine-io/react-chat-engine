@@ -9,7 +9,7 @@ export default class Loading extends Component {
                 style={{ 
                     width: '100%', 
                     position: 'relative', 
-                    top: 'calc(50vh - 26px)', 
+                    top: 'calc(50% - 26px)', 
                     textAlign: 'center',
                     fontSize: '52px'
                 }} 

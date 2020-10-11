@@ -11,7 +11,9 @@ import { animateScroll } from "react-scroll"
 
 export default class ChatList extends Component {
 
-    renderMessages(messages) {
+    renderMessages() {
+        const { messages, chats, chatId } = this.props
+        const chat = chats && chats[chatId] 
         const keys = Object.keys(messages)
 
         return keys.map((key, index) => {
@@ -22,10 +24,10 @@ export default class ChatList extends Component {
             return (
                 <Message 
                     key={`message_${index}`} 
-                    creds={this.props.creds} 
-                    chatId={this.props.chatId} 
-                    lastMessage={messages[lastMessageKey]}
+                    chat={chat} 
                     message={message} 
+                    creds={this.props.creds} 
+                    lastMessage={messages[lastMessageKey]}
                     nextMessage={messages[nextMessageKey]}
                 />
             )
@@ -43,7 +45,7 @@ export default class ChatList extends Component {
     }
 
     render() {
-        const { messages, chats, creds, chatId } = this.props
+        const { chats, creds, chatId } = this.props
         const chat = chats && chats[chatId] 
 
         if(creds === null) { 
@@ -67,7 +69,7 @@ export default class ChatList extends Component {
 
                     <div style={{ height: '92px' }} />
 
-                    { this.renderMessages(messages) }
+                    { this.renderMessages() }
 
                 </div>
 

@@ -14,13 +14,13 @@ export default class TheirMessage extends Component {
     }
 
     renderReads() {
-        // const { message, nextMessage } = this.props
+        const { chat, message } = this.props
 
-        // return message.reads.map((read, index) => {
-        //     if (!nextMessage) {
-        //         return <Dot key={`read_${index}`} text={read.person} style={{ marginLeft: '48px' }} />
-        //     }
-        // })
+        return chat.people.map((person, index) => {
+            if (message.id == person.last_read) {
+                return <Dot key={`read_${index}`} text={person.person} style={{ float: 'left', marginLeft: '4px' }} />
+            }
+        })
     }
 
     render() {
@@ -65,7 +65,7 @@ export default class TheirMessage extends Component {
 
                     </Col>
 
-                    <Col xs={12}>
+                    <Col xs={12} style={{ marginLeft: '48px' }}>
                         { this.renderReads() }
                     </Col>
                 

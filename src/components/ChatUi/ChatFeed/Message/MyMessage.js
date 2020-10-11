@@ -17,17 +17,17 @@ export default class Message extends Component {
     }
 
     renderReads() {
-        // const { message, nextMessage } = this.props
+        const { chat, message } = this.props
 
-        // return message.reads.map((read, index) => {
-        //     if (!nextMessage) {
-        //         return <Dot key={`read_${index}`} text={read.person} style={{ float: 'right' }} />
-        //     }
-        // })
+        return chat.people.map((person, index) => {
+            if (message.id == person.last_read) {
+                return <Dot key={`read_${index}`} text={person.person} style={{ float: 'right', marginLeft: '4px' }} />
+            }
+        })
     }
 
     render() {
-        const { creds, chatId, lastMessage, message, nextMessage } = this.props
+        const { creds, chat, lastMessage, message, nextMessage } = this.props
 
         if (!message) { return <div /> }
 
@@ -65,14 +65,14 @@ export default class Message extends Component {
                             <div style={{ width: '100%', height: '44px' }}>
 
                                 <div style={{ width: 'calc(100% - 52px)' }}>
-                                    <MessageEditForm creds={creds} chatId={chatId} message={message} />
+                                    <MessageEditForm creds={creds} chatId={chat.id} message={message} />
                                 </div>
 
                                 <Button
                                     theme='danger'
                                     icon='delete'
                                     style={{ float: 'right', position: 'relative', bottom: '37px' }}
-                                    onClick={() => deleteMessage(creds, chatId, message.id)} 
+                                    onClick={() => deleteMessage(creds, chat.id, message.id)} 
                                 />
 
                             </div>

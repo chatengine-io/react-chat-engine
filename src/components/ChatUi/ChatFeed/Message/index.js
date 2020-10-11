@@ -9,15 +9,15 @@ export default class Message extends Component {
     }
 
     render() {
-        const { creds, chatId, lastMessage, message, nextMessage } = this.props
+        const { creds, chat, lastMessage, message, nextMessage } = this.props
 
         if (!message) { return <div /> }
 
         if(message.sender == creds.userName) {
             return (
                 <MyMessage 
+                    chat={chat} 
                     creds={creds} 
-                    chatId={chatId} 
                     lastMessage={lastMessage} 
                     message={message} 
                     nextMessage={nextMessage} 
@@ -27,8 +27,8 @@ export default class Message extends Component {
         } else {
             return (
                 <TheirMessage 
+                    chat={chat} 
                     creds={creds} 
-                    chatId={chatId} 
                     lastMessage={lastMessage} 
                     message={message} 
                     nextMessage={nextMessage} 
