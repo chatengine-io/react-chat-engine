@@ -31,7 +31,7 @@ export default class MessageForm extends React.Component {
         <form 
           id="new-msg-form"
           onSubmit={this.handleSubmit.bind(this)} 
-          style={{ position: 'absolute', bottom: '12px', width: 'calc(100% - 24px)', left: '12px' }}
+          style={{ position: 'absolute', bottom: '10px', width: 'calc(100% - 24px)', left: '12px' }}
         >
 
           <div style={ styles.inputContainer }>
@@ -46,7 +46,7 @@ export default class MessageForm extends React.Component {
             <Button 
               type="submit" 
               icon='send' 
-              style={{ position: 'absolute', bottom: '2px', right: '0px' }} 
+              style={{ position: 'absolute', bottom: '5px', right: '4px' }} 
             />
 
           </div>
@@ -58,6 +58,7 @@ export default class MessageForm extends React.Component {
 
 const styles = {
   inputContainer: { 
+    overflow: 'hidden',
     width: '100%', 
     minHeight: '38px',
     borderRadius: '24px', 

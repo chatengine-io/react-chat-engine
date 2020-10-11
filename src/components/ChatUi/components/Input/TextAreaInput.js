@@ -18,7 +18,7 @@ export default class TextAreaInput extends Component {
     resize() {
         var textarea = document.getElementById("msg-textarea");
         textarea.style.height = "";
-        textarea.style.height = Math.min(textarea.scrollHeight - 12, 150) + "px";
+        textarea.style.height = Math.min(textarea.scrollHeight, 150) + "px";
     }
 
     componentDidMount() {
@@ -33,7 +33,7 @@ export default class TextAreaInput extends Component {
     onKeyDown(e) {
         if (e.key === 'Enter') { 
             e.preventDefault()
-            
+
             if (this.props.value.length > 0) {
                 this.props.onSubmit && this.props.onSubmit(e) 
             }
@@ -64,7 +64,7 @@ const styles = {
         width: 'calc(100% - 64px - 24px)', // 24px for 12px 
         resize: 'none', 
         outline: 'none', 
-        top: '8px',
+        top: '12px',
         left: '12px',
         position: 'relative', 
         paddingLeft: '12px', 

@@ -10,9 +10,19 @@ import _ from 'lodash'
 import { animateScroll } from "react-scroll"
 
 export default class ChatList extends Component {
+    state = {
+        duration: 1000
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ duration: 333 })
+        }, 3000); // Once the chat loads, speed up
+    }
+
     renderMessages() {
         const { messages, chats, chatId } = this.props
-        const chat = chats && chats[chatId] 
+        const chat = chats && chats[chatId]
         const keys = Object.keys(messages)
 
         return keys.map((key, index) => {
@@ -39,7 +49,8 @@ export default class ChatList extends Component {
 
     scrollToBottom() {
         animateScroll.scrollToBottom({
-          containerId: "feed-container"
+            duration: this.state.duration,
+            containerId: "feed-container"
         })
     }
 
