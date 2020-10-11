@@ -8,8 +8,9 @@ export default class TextAreaInput extends Component {
 
     componentDidMount() {
         const value = this.props.default
+
         if(value) {
-            const event = {target: {value}}
+            const event = { target: { value } }
             this.props.handleChange(event)
             this.setState({ value })
         }
@@ -18,7 +19,6 @@ export default class TextAreaInput extends Component {
     resize() {
         var textarea = document.getElementById("msg-textarea");
         textarea.style.height = "";
-        console.log(textarea.scrollHeight - 12)
         textarea.style.height = Math.min(textarea.scrollHeight - 12, 150) + "px";
     }
 
@@ -29,6 +29,10 @@ export default class TextAreaInput extends Component {
     handleChange(e) {
         this.resize()
         this.props.handleChange && this.props.handleChange(e)
+    }
+
+    onKeyDown(e) {
+        if (e.key === 'Enter') { this.props.onSubmit && this.props.onSubmit(e) }
     }
 
     render() {
@@ -42,6 +46,7 @@ export default class TextAreaInput extends Component {
                 onFocus={() => this.setState({ focused: true })}
                 type={this.props.type ? this.props.type : "text" }
                 onChange={(e) => this.handleChange(e)} 
+                onKeyDown={(e) => this.onKeyDown(e)}
             />
         )
     }

@@ -39,6 +39,7 @@ export default class MessageForm extends React.Component {
               label='Send a message...' 
               value={this.state.value} 
               handleChange={this.handleChange.bind(this)} 
+              onSubmit={this.handleSubmit.bind(this)} 
             />
 
             <Button 
