@@ -104,7 +104,7 @@ export default class ChatList extends Component {
 const styles = {
     settingsContainer: { 
         height: '100%', 
-        maxHeight: '100vh', 
+        overflow: 'scroll',
         borderLeft: '1px solid #afafaf', 
         backgroundColor: 'white'  
     }
