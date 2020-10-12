@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 
-import MessageEditForm from '../MessageForm/edit'
+import Thumbnail from './Thumbnail'
 
 import Dot from '../../components/Avatar/Dot'
-import { Button } from '../../components/Button'
-
-import { deleteMessage } from 'react-chat-engine'
 
 import { Row, Col, setConfiguration } from 'react-grid-system'
 
@@ -26,6 +23,13 @@ export default class Message extends Component {
         })
     }
 
+    renderAttachments(borderRadius) {
+        const attachments = this.props.message ? this.props.message.attachments : []
+        return attachments.map((attachment, index) => {
+            return <Thumbnail attachment={attachment} key={`attachment_${index}`} borderRadius={borderRadius} />
+        })
+    }
+
     render() {
         const { lastMessage, message, nextMessage } = this.props
 
@@ -43,6 +47,12 @@ export default class Message extends Component {
                 onMouseEnter={() => this.setState({ selected: true })}
                 onMouseLeave={() => this.setState({ selected: false })}
             >
+
+                <div style={{ display: 'auto' }}>
+                    
+                        { this.renderAttachments() }
+                    
+                </div>
 
                 <Row style={{ paddingRight: '2px' }}>
 

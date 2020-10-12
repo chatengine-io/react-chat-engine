@@ -3,25 +3,25 @@ import React from 'react'
 import { ChatEngine } from 'react-chat-engine'
 
 const users = [
-  {
-    userName: 'John_Doe',
-    userPassword: 'pass1234',
-  },
+  // {
+  //   userName: 'John_Doe',
+  //   userPassword: 'pass1234',
+  // },
   {
     userName: 'Jane_Smith',
     userPassword: 'pass1234',
   },
-  {
-    userName: 'Adam_La_Morre',
-    userPassword: 'pass1234',
-  }
+  // {
+  //   userName: 'Adam_La_Morre',
+  //   userPassword: 'pass1234',
+  // }
 ]
 
 export function App () {
   const user = users[Math.floor(Math.random() * users.length)]
 
   return (
-    <div style={{ width: '66vw',  backgroundColor: '#e6f7ff', paddingTop: '2vh', paddingBottom: '6vh' }}>
+    <div style={{ width: '100vw',  backgroundColor: '#e6f7ff', paddingTop: '2vh', paddingBottom: '6vh' }}>
       <ChatEngine
         // Creds
         development
@@ -31,7 +31,7 @@ export function App () {
         // Hooks
         // onNewMessage={(chatId, message) => console.log('COME ON')}
         // Render Custom Components
-        height='66vh'
+        height='88vh'
       />
     </div>
   )
