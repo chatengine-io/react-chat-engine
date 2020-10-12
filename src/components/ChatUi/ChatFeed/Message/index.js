@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import DatePartition from './DatePartition'
 import MyMessage from './MyMessage'
 import TheirMessage from './TheirMessage'
 
@@ -13,27 +14,33 @@ export default class Message extends Component {
 
         if (!message) { return <div /> }
 
-        if(message.sender == creds.userName) {
-            return (
-                <MyMessage 
-                    chat={chat} 
-                    creds={creds} 
-                    lastMessage={lastMessage} 
-                    message={message} 
-                    nextMessage={nextMessage} 
+        return (
+            <div>
+
+                <DatePartition 
+                    lastCreated={lastMessage ? lastMessage.created : null} 
+                    created={message.created} 
                 />
-            )
-            
-        } else {
-            return (
-                <TheirMessage 
-                    chat={chat} 
-                    creds={creds} 
-                    lastMessage={lastMessage} 
-                    message={message} 
-                    nextMessage={nextMessage} 
-                />
-            )
-        }   
+
+                {
+                    message.sender == creds.userName ?
+                    <MyMessage 
+                        chat={chat} 
+                        creds={creds} 
+                        lastMessage={lastMessage} 
+                        message={message} 
+                        nextMessage={nextMessage} 
+                    /> :
+                    <TheirMessage 
+                        chat={chat} 
+                        creds={creds} 
+                        lastMessage={lastMessage} 
+                        message={message} 
+                        nextMessage={nextMessage} 
+                    />
+                }
+                
+            </div>
+        ) 
     }
 }

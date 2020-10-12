@@ -49,9 +49,7 @@ export default class Message extends Component {
             >
 
                 <div style={{ display: 'auto' }}>
-                    
-                        { this.renderAttachments() }
-                    
+                    { this.renderAttachments() }
                 </div>
 
                 <Row style={{ paddingRight: '2px' }}>

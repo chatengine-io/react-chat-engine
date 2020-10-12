@@ -46,6 +46,13 @@ export default class TheirMessage extends Component {
         return (
             <div style={{ width: '100%', paddingBottom }}>
 
+                {
+                    (!lastMessage || lastMessage.sender !== message.sender) &&
+                    <div style={ styles.nameText }>
+                        { message.sender }
+                    </div>
+                }
+
                 <div style={{ display: 'auto', paddingLeft: '48px' }}>
                     
                         { this.renderAttachments() }
@@ -103,4 +110,10 @@ const styles = {
         whiteSpace: 'pre-line',
         backgroundColor: '#f1f0f0', 
     },
+    nameText: { 
+        paddingLeft: '62px', 
+        paddingBottom: '2px', 
+        color: 'rgba(0, 0, 0, .40)', 
+        fontSize: '15px' 
+    }
 }

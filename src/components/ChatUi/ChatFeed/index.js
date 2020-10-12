@@ -77,7 +77,7 @@ export default class ChatList extends Component {
 
                 <div style={ styles.feedContainer } id='feed-container'>
 
-                    <div style={{ height: '92px' }} />
+                    <div style={{ height: '88px' }} />
 
                     { this.renderMessages() }
 
