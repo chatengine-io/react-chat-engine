@@ -71,7 +71,7 @@ export default class MessageForm extends React.Component {
               <Button 
                 type="submit" 
                 icon='send' 
-                style={{ position: 'absolute', bottom: '5px', right: '4px' }} 
+                style={{ position: 'absolute', bottom: '5px', right: '6px' }} 
               />
 
             </div>
@@ -92,29 +92,10 @@ const styles = {
   },
   inputContainer: { 
     overflow: 'hidden',
-    width: '100%', 
+    width: 'calc(100% - 2px)', 
     minHeight: '38px',
     borderRadius: '24px', 
     backgroundColor: 'white', 
     border: '1px solid rgb(217, 217, 217)'
   },
-  verticalCenter: {
-    margin: '0px',
-    position: 'absolute',
-    top: '50%',
-    msTransform: 'translateY(-50%)',
-    transform: 'translateY(-50%)'
-  },
-  input: { 
-    border: '1px solid white',     
-    width: 'calc(100% - 64px - 24px)', // 24px for 12px 
-    resize: 'none', 
-    outline: 'none', 
-    top: '8px',
-    left: '12px',
-    position: 'relative', 
-    paddingLeft: '12px', 
-    paddingRight: '12px', 
-    fontFamily: 'inherit'
-  }
 }
