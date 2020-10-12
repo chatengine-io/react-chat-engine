@@ -1,14 +1,6 @@
 import React from 'react'
 
 export default class Thumbnail extends React.Component {
-
-    componentDidMount() {
-        // const { attachment } = this.props 
-        // var textarea = document.getElementById(`image-${attachment.id}`);
-        // console.log(textarea.style.height, textarea.style.width)
-        // textarea.style.height = Math.min(textarea.scrollHeight, 150) + "px";
-    }
-  
     render() {
         const { attachment } = this.props 
 
