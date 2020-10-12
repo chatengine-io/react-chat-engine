@@ -28,7 +28,8 @@ const styles = {
         position: 'relative', 
         width: 'calc(33% - 2px)', 
         border: '1px solid white', 
-        display: 'inline-block'
+        display: 'inline-block',
+        cursor: 'pointer'
     },
     image: {
         top: '0px', 

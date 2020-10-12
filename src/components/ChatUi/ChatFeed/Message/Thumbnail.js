@@ -18,6 +18,7 @@ export default class Thumbnail extends Component {
 const styles = {
     thumbnail: { 
         width: '100%', 
+        cursor: 'pointer',
         textAlign: 'right', 
         display: 'inline', 
         objectFit: 'cover',
