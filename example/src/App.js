@@ -29,7 +29,7 @@ export function App () {
         userName={user.userName}
         userPassword={user.userPassword}
         // Hooks
-        onNewMessage={(chatId, message) => console.log('COME ON')}
+        // onNewMessage={(chatId, message) => console.log('COME ON')}
         // Render Custom Components
         height='66vh'
       />

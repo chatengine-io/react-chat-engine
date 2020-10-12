@@ -95,7 +95,7 @@ const styles = {
     myMessage: {
         color: 'white', 
         cursor: 'pointer',
-        float: 'right',
+        float: 'right', textAlign: 'left', // Stay right but render text
         padding: '12px',
         fontSize: '15px',
         whiteSpace: 'pre-line',

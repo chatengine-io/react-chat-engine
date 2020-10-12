@@ -21,7 +21,6 @@ export default class MessageForm extends React.Component {
     }
   
     handleChange(event) {
-      console.log(event.target.value.indexOf('\n'))
       this.setState({value: event.target.value});
     }
   
@@ -31,8 +30,8 @@ export default class MessageForm extends React.Component {
       sendMessage(
         this.props.creds, 
         this.props.chatId, 
-        { text: this.state.value },
-        () => this.setState({ value: '' })
+        { text: this.state.value, files: this.state.files },
+        () => this.setState({ value: '', files: [] })
       )
     }
 
