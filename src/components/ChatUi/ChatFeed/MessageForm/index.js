@@ -52,16 +52,13 @@ export default class MessageForm extends React.Component {
   
     render() {
       return (
-        <div style={ styles.messageFormContainer }>
+        <div style={ styles.messageFormContainer } id='msg-form-container'>
 
           <FileRow files={this.state.files} onRemove={(i) => this.onRemove(i)} />
 
           <ImagesInput onSelectFiles={(files) => this.setState({ files })} /> 
 
-          <form 
-            id="new-msg-form"
-            onSubmit={this.handleSubmit.bind(this)} 
-          >
+          <form onSubmit={this.handleSubmit.bind(this)}>
 
             <div style={ styles.inputContainer }>
 

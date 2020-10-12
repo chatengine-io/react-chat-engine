@@ -27,7 +27,7 @@ export default class MessageEditForm extends React.Component {
   
     render() {
       return (
-        <form onSubmit={this.handleSubmit.bind(this)} id="new-msg-form">
+        <form onSubmit={this.handleSubmit.bind(this)}>
           
           <TextInput 
             type="text" 

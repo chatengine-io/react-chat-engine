@@ -27,7 +27,7 @@ export default class PersonForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)} id="new-msg-form">
+      <form onSubmit={this.handleSubmit.bind(this)}>
 
         <TextInput 
           label='Type a username'

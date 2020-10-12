@@ -43,15 +43,15 @@ export default class ChatList extends Component {
         })
     }
 
-    componentDidUpdate(){
-        this.scrollToBottom()
-    }
-
     scrollToBottom() {
         animateScroll.scrollToBottom({
             duration: this.state.duration,
             containerId: "feed-container"
         })
+    }
+
+    componentDidUpdate(){
+        this.scrollToBottom()
     }
 
     render() {
@@ -81,7 +81,7 @@ export default class ChatList extends Component {
 
                     { this.renderMessages() }
 
-                    <div style={{ height: '42px' }} />
+                    <div id='feet-bottom' style={{ height: '42px' }} />
 
                 </div>
 

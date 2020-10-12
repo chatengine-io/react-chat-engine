@@ -42,13 +42,13 @@ export default class ImagesInput extends React.Component {
                             { fontSize: '20px', color: '#1890ff' }
                         } 
                     />
-                    
+
                 </label>
 
                 <input
                     multiple
                     id="files"
-                    accept="*"
+                    accept="image/x-png,image/gif,image/jpeg"
                     style={{ visibility: "hidden" }}
                     type="file"
                     onChange={(e) => this.onSelect(e)} 
