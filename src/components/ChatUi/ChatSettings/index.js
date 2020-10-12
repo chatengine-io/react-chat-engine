@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 
-import { deleteChat } from 'react-chat-engine'
-
 import { Row, Col } from 'react-grid-system'
 
 import Avatar from '../components/Avatar'
-import { Button } from '../components/Button'
 
 import TitleForm from './TitleForm'
+
 import People from './People'
 import Photos from './Photos'
+import Options from './Options'
 
 export default class ChatList extends Component {
 
@@ -46,10 +45,10 @@ export default class ChatList extends Component {
                 <div style={{ margin: 'auto', width: '50%' }}>
                     <Avatar 
                         text={people[0].person} 
-                        style={{ position: 'relative', top: '10px' }}
+                        style={{ float: 'right', position: 'relative', right: '28px', top: '10px', zIndex: 11 }}
                     />
                     <Avatar text={people[1].person} 
-                        style={{ float: 'right', position: 'relative', right: '8px', bottom: '56px', zIndex: 11 }}
+                        style={{ float: 'right', position: 'relative', right: '14px', bottom: '56px', zIndex: 11 }}
                     />
                     <Avatar 
                         text={people[2].person} 
@@ -86,42 +85,13 @@ export default class ChatList extends Component {
 
                     <TitleForm chat={chat} creds={creds} />
 
-                    <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
-                        People
-                    </div>
-
-                    <div style={{ height: '12px' }} />
-
                     <People creds={creds} chat={chat} />
-
-
-                    <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
-                        Photos
-                    </div>
-
-                    <div style={{ height: '12px' }} />
 
                     <Photos chat={chat} />
 
                     {
                         chat.admin === creds.userName &&
-                        <div>
-
-                            <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
-                                Options
-                            </div>
-
-                            <div style={{ height: '12px' }} />
-
-                            <Button 
-                                value="Delete" 
-                                theme='danger'
-                                icon='delete'
-                                onClick={() => deleteChat(creds, chat.id)}
-                                style={{ width: '100%', marginBottom: '12px' }}
-                            />
-
-                        </div>
+                        <Options chat={chat} />
                     }
 
                 </div>
