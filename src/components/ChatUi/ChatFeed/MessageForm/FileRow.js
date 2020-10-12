@@ -1,29 +1,25 @@
 import React from 'react'
 
-export default class FileRow extends React.Component {
+import Thumbnail from './Thumbnail'
 
+export default class FileRow extends React.Component {
     renderFiles() {
-      return this.props.files.map((file, index) => {
-        return (
-          <div key={`file_${index}`} style={{ display: 'inline' }}>
-            <img
-              style={{ maxHeight: '66px', maxWidth: '66px' }}
-              src={URL.createObjectURL(file)}
-              alt={file.name}
-            />
-          </div>
-        )
-      })
+        return this.props.files.map((file, index) => {
+            return (
+                <Thumbnail 
+                    file={file} 
+                    key={`thumb_${index}`} 
+                    onRemove={() => this.props.onRemove && this.props.onRemove(index)}
+                />
+            )
+        })
     }
   
     render() {
-      return (
-        <div style={{ display: 'inline', width: '100%' }}>
-            { this.renderFiles() }
-        </div>
-      );
+        return (
+            <div style={{ width: 'calc(100% - 24px)', paddingLeft: '12px' }}>
+                { this.renderFiles() }
+            </div>
+      ) ;
     }
-}
-
-const styles = {
 }

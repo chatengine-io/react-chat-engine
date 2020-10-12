@@ -27,7 +27,7 @@ export default class Message extends Component {
     }
 
     render() {
-        const { creds, chat, lastMessage, message, nextMessage } = this.props
+        const { lastMessage, message, nextMessage } = this.props
 
         if (!message) { return <div /> }
 

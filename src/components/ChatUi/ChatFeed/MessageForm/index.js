@@ -13,6 +13,12 @@ export default class MessageForm extends React.Component {
       value: '',
       files: []
     }
+
+    onRemove(index) {
+      let { files } = this.state 
+      files.splice(index, 1)
+      this.setState({ files })
+    }
   
     handleChange(event) {
       console.log(event.target.value.indexOf('\n'))
@@ -48,7 +54,7 @@ export default class MessageForm extends React.Component {
       return (
         <div style={ styles.messageFormContainer }>
 
-          <FileRow files={this.state.files} />
+          <FileRow files={this.state.files} onRemove={(i) => this.onRemove(i)} />
 
           <ImagesInput onSelectFiles={(files) => this.setState({ files })} /> 
 
@@ -86,7 +92,7 @@ const styles = {
     position: 'absolute', 
     bottom: '0px', 
     width: '100%', 
-    backgroundColor: 'rgb(255, 255, 255, 0.5)',
+    backgroundColor: 'rgb(255, 255, 255, 0.92)',
   },
   inputContainer: { 
     overflow: 'hidden',

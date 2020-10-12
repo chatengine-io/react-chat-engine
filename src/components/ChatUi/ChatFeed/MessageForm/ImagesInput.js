@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { CameraOutlined } from '@ant-design/icons'
+import { PaperClipOutlined } from '@ant-design/icons'
 
 export default class ImagesInput extends React.Component {
     state = {
+        hovered: false,
         files: []
     }
 
@@ -32,7 +33,16 @@ export default class ImagesInput extends React.Component {
                     id='upload-document-button'
                     style={{ position: 'absolute', bottom: '12px', right: '62px', zIndex: '1' }}
                 >
-                        <CameraOutlined style={{ fontSize: '20px', color: '#1890ff' }} />
+
+                    <PaperClipOutlined 
+                        onMouseEnter={() => this.setState({ hovered: true })}
+                        onMouseLeave={() => this.setState({ hovered: false })}
+                        style={ this.state.hovered ?
+                            { fontSize: '20px', color: '#69c0ff', cursor: 'pointer' } :
+                            { fontSize: '20px', color: '#1890ff' }
+                        } 
+                    />
+                    
                 </label>
 
                 <input
