@@ -53,7 +53,7 @@ export default class TheirMessage extends Component {
                     </div>
                 }
 
-                <div style={{ display: 'auto', paddingLeft: '48px' }}>
+                <div style={{ display: 'auto', paddingLeft: '50px' }}>
                     
                         { this.renderAttachments() }
                     

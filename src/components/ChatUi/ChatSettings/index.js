@@ -9,6 +9,7 @@ import { Button } from '../components/Button'
 
 import TitleForm from './TitleForm'
 import People from './People'
+import Photos from './Photos'
 
 export default class ChatList extends Component {
 
@@ -92,6 +93,15 @@ export default class ChatList extends Component {
                     <div style={{ height: '12px' }} />
 
                     <People creds={creds} chat={chat} />
+
+
+                    <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
+                        Photos
+                    </div>
+
+                    <div style={{ height: '12px' }} />
+
+                    <Photos chat={chat} />
 
                     {
                         chat.admin === creds.userName &&
