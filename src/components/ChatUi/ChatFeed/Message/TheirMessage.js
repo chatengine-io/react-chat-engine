@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import Thumbnail from './Thumbnail'
+
 import Dot from '../../components/Avatar/Dot'
 import Avatar from '../../components/Avatar'
 
@@ -23,6 +25,13 @@ export default class TheirMessage extends Component {
         })
     }
 
+    renderAttachments(borderRadius) {
+        const attachments = this.props.message ? this.props.message.attachments : []
+        return attachments.map((attachment, index) => {
+            return <Thumbnail attachment={attachment} key={`attachment_${index}`} borderRadius={borderRadius} />
+        })
+    }
+
     render() {
         const { lastMessage, message, nextMessage } = this.props
 
@@ -36,6 +45,13 @@ export default class TheirMessage extends Component {
 
         return (
             <div style={{ width: '100%', paddingBottom }}>
+
+                <div style={{ display: 'auto', paddingLeft: '48px' }}>
+                    
+                        { this.renderAttachments() }
+                    
+                </div>
+
             
                 <Row style={{ paddingLeft: '2px' }}>
 
