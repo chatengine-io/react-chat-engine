@@ -8,7 +8,8 @@ import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 
 export default class Options extends React.Component {
     state = {
-        collapsed: false
+        collapsed: true,
+        hovered: false
     }
   
     render() {
@@ -17,17 +18,26 @@ export default class Options extends React.Component {
         if (!chat) { return <div /> }
 
         return (
-            <div style={{ borderTop: '1px solid #f0f0f0', paddingBottom: '12px' }}>
+            <div style={{ borderTop: '1px solid #f0f0f0' }}>
 
-                <div style={{ fontSize: '17px', padding: '12px', paddingBottom: '0px', fontWeight: '600' }}>
-                    Options
+                <div 
+                    onMouseEnter={() => this.setState({ hovered: true })}
+                    onMouseLeave={() => this.setState({ hovered: false })}
+                    onClick={() => this.setState({ collapsed: !this.state.collapsed })}
+                    style={this.state.hovered ? { backgroundColor: '#f0f0f0', cursor: 'pointer' } : {}}
+                >
+
+                    <div style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}>
+                        Options
+                    </div>
+
+                    {
+                        this.state.collapsed ?
+                        <LeftOutlined style={styles.collapseIcon} /> :
+                        <DownOutlined style={styles.collapseIcon} />
+                    }
+
                 </div>
-
-                {
-                    this.state.collapsed ?
-                    <LeftOutlined style={styles.collapseIcon} onClick={() => this.setState({ collapsed: false })} /> :
-                    <DownOutlined style={styles.collapseIcon} onClick={() => this.setState({ collapsed: true })} />
-                }
                 
                 {
                     !this.state.collapsed &&
@@ -55,6 +65,7 @@ const styles = {
     collapseIcon: {
         float: 'right',
         position: 'relative',
-        bottom: '18px'
+        bottom: '30px',
+        right: '4px'
     }
 }
