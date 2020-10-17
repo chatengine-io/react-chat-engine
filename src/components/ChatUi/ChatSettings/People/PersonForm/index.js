@@ -3,7 +3,7 @@ import React from 'react';
 import { addPerson } from 'react-chat-engine'
 
 import { Button } from '../../../components/Button'
-import { TextInput } from '../../../components/Input'
+import { AutoCompleteInput } from '../../../components/Input'
 
 export default class PersonForm extends React.Component {
   state = {
@@ -29,12 +29,14 @@ export default class PersonForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
 
-        <TextInput 
-          label='Type a username'
-          value={this.state.value}
-          handleChange={(e) => this.handleChange(e)} 
-          style={{ width: 'calc(100% - 24px)', marginBottom: '12px' }}
-        />
+        <div onClick={() => console.log('okok')} >
+          <AutoCompleteInput 
+            label='Type a username'
+            value={this.state.value}
+            handleChange={(e) => this.handleChange(e)} 
+            style={{ width: 'calc(100% - 24px)', marginBottom: '12px' }}
+          />
+        </div>
 
         <Button 
           type="submit" 

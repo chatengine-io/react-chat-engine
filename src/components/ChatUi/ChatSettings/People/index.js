@@ -79,6 +79,6 @@ const styles = {
         float: 'right',
         position: 'relative',
         bottom: '30px',
-        right: '4px'
+        right: '12px'
     }
 }
