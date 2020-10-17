@@ -5,13 +5,16 @@ import { addPerson } from 'react-chat-engine'
 import { Button } from '../../../components/Button'
 import { AutoCompleteInput } from '../../../components/Input'
 
+import { getOtherPeople } from '../../../../../actions/people'
+
 export default class PersonForm extends React.Component {
   state = {
-    value: ''
+    value: '',
+    others: []
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleChange(value) {
+    this.setState({ value });
   }
 
   handleSubmit(event) {
@@ -25,18 +28,35 @@ export default class PersonForm extends React.Component {
     )
   }
 
+  onGetOthers(others) {
+    const usernames = []
+    others.map(other => {
+      usernames.push(other.username)
+    })
+    this.setState({ others: usernames })
+  }
+
+  getOthers() {
+    getOtherPeople(
+      this.props.creds,
+      this.props.chat.id,
+      (id, others) => this.onGetOthers(others),
+      () => {},
+    )
+  }
+
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
 
-        <div onClick={() => console.log('okok')} >
-          <AutoCompleteInput 
-            label='Type a username'
-            value={this.state.value}
-            handleChange={(e) => this.handleChange(e)} 
-            style={{ width: 'calc(100% - 24px)', marginBottom: '12px' }}
-          />
-        </div>
+        <AutoCompleteInput 
+          label='Type a username'
+          value={this.state.value}
+          options={this.state.others}
+          onFocus={() => this.getOthers()}
+          handleChange={(value) => this.handleChange(value)} 
+          style={{ width: 'calc(100% - 24px)', marginBottom: '12px' }}
+        />
 
         <Button 
           type="submit" 
