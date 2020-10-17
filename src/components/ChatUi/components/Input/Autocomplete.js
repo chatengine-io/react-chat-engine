@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { PaperClipOutlined } from '@ant-design/icons'
+
 export default class AutoComplete extends Component {
     state = {
         focused: false,
@@ -14,7 +16,6 @@ export default class AutoComplete extends Component {
     }
 
     onBlur() {
-        this.onChange('', false)
         this.setState({ focused: false })
         this.props.onBlur && this.props.onBlur()
     }
@@ -25,12 +26,33 @@ export default class AutoComplete extends Component {
     }
 
     renderOptions(options) {
+        const max = 3 
+        let count = 0
+
         if(!this.state.value && !this.state.showAll) { return <div /> }
 
         return options.map((option, index) => {
-            if (option.toLowerCase().indexOf(this.state.value.toLowerCase()) !== -1) {
+            if (option.toLowerCase().indexOf(this.state.value.toLowerCase()) !== -1 && count < max) {
+                count = count + 1
+
                 return (
-                    <div key={`option_${index}`}>{option}</div>
+                    <div key={`option_${index}`} style={styles.option}>
+                        {option}
+                    </div>
+                )
+            
+            } else if (index == options.length - 1) {
+                return (
+                    <div 
+                        key={`option_${index}`} 
+                        style={styles.close}
+                    >
+
+                        <PaperClipOutlined />
+                        
+                        {` Close`}
+
+                    </div>
                 )
             }
         })
@@ -67,5 +89,18 @@ const styles = {
         padding: '0px 12px',
         borderRadius: '4px',
         borderRadius: '24px',
+    },
+    option: {
+        padding: '12px 24px',
+        border: '1px solid #afafaf',
+        borderRadius: '24px',
+        cursor: 'pointer'
+    },
+    close: {
+        textAlign: 'center', 
+        padding: '12px', 
+        borderRadius: '24px', 
+        backgroundColor: 'rgb(217, 217, 217)' ,
+        cursor: 'pointer'
     }
 }

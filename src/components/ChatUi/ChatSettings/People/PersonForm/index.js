@@ -47,7 +47,7 @@ export default class PersonForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
+      <form onSubmit={this.handleSubmit.bind(this)} style={{ marginBottom: '12px' }}>
 
         <AutoCompleteInput 
           label='Type a username'
@@ -55,14 +55,7 @@ export default class PersonForm extends React.Component {
           options={this.state.others}
           onFocus={() => this.getOthers()}
           handleChange={(value) => this.handleChange(value)} 
-          style={{ width: 'calc(100% - 24px)', marginBottom: '12px' }}
-        />
-
-        <Button 
-          type="submit" 
-          value="Add Group Member" 
-          icon='user-add'
-          style={{ width: '100%', marginBottom: '12px' }}
+          style={{ width: 'calc(100% - 24px)' }}
         />
 
       </form>

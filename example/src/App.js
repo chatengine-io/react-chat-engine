@@ -32,6 +32,7 @@ export function App () {
         // onNewMessage={(chatId, message) => console.log('COME ON')}
         // Render Custom Components
         height='100vh'
+        // renderNewChatForm={() => {}}
       />
     </div>
   )
