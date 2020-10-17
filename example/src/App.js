@@ -21,7 +21,7 @@ export function App () {
   const user = users[Math.floor(Math.random() * users.length)]
 
   return (
-    <div style={{ width: '100vw',  backgroundColor: '#e6f7ff', paddingTop: '2vh', paddingBottom: '6vh' }}>
+    <div style={{ width: '100vw',  backgroundColor: '#e6f7ff' }}>
       <ChatEngine
         // Creds
         development
@@ -31,7 +31,7 @@ export function App () {
         // Hooks
         // onNewMessage={(chatId, message) => console.log('COME ON')}
         // Render Custom Components
-        height='88vh'
+        height='100vh'
       />
     </div>
   )
