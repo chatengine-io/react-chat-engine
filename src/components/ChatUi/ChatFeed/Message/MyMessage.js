@@ -16,6 +16,8 @@ export default class Message extends Component {
     renderReads() {
         const { chat, message } = this.props
 
+        if(!chat) { return <div /> }
+
         return chat.people.map((person, index) => {
             if (message.id == person.last_read) {
                 return <Dot key={`read_${index}`} text={person.person} style={{ float: 'right', marginLeft: '4px' }} />

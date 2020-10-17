@@ -13,7 +13,7 @@ export default class Options extends React.Component {
     }
   
     render() {
-        const { chat } = this.props 
+        const { chat, creds } = this.props 
 
         if (!chat) { return <div /> }
 

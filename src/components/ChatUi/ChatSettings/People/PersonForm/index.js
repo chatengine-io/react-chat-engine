@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { addPerson } from 'react-chat-engine'
+import { addPerson, getOtherPeople } from 'react-chat-engine'
 
-import { Button } from '../../../components/Button'
 import { AutoCompleteInput } from '../../../components/Input'
 
-import { getOtherPeople } from '../../../../../actions/people'
+import Option from './Option'
 
 export default class PersonForm extends React.Component {
   state = {
@@ -17,14 +16,15 @@ export default class PersonForm extends React.Component {
     this.setState({ value });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    
+  addPerson(name) {
     addPerson(
       this.props.creds,
       this.props.chat.id,
-      this.state.value,
-      () => this.setState({ value: '' })
+      name,
+      () => { 
+        this.setState({ value: '' }); 
+        this.getOthers(); 
+      }
     )
   }
 
@@ -45,9 +45,13 @@ export default class PersonForm extends React.Component {
     )
   }
 
+  renderOption(option) {
+    return <Option text={option} onClick={() => this.addPerson(option)} />
+  }
+
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)} style={{ marginBottom: '12px' }}>
+      <div style={{ marginBottom: '12px' }}>
 
         <AutoCompleteInput 
           label='Type a username'
@@ -56,9 +60,10 @@ export default class PersonForm extends React.Component {
           onFocus={() => this.getOthers()}
           handleChange={(value) => this.handleChange(value)} 
           style={{ width: 'calc(100% - 24px)' }}
+          renderOption={(option) => this.renderOption(option)}
         />
 
-      </form>
+      </div>
     );
   }
 }

@@ -91,7 +91,7 @@ export default class ChatList extends Component {
 
                     {
                         chat.admin === creds.userName &&
-                        <Options chat={chat} />
+                        <Options creds={creds} chat={chat} />
                     }
 
                 </div>
