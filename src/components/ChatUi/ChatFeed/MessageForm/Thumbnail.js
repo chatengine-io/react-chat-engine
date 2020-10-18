@@ -17,7 +17,7 @@ export default class FileRow extends React.Component {
                 
                 <img
                     style={styles.imageSquare}
-                    alt={this.props.file.name}
+                    alt={this.props.file ? this.props.file.name : ''}
                     src={URL.createObjectURL(this.props.file)}
                 />
 
