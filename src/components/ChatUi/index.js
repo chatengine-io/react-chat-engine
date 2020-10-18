@@ -140,7 +140,7 @@ class App extends Component {
 
         <Row>
 
-          <Col sm={3} style={{ height: height ? height : '', overflow: 'scroll' }}>
+          <Col xs={0} sm={3} style={{ height: height ? height : '', overflow: 'scroll' }}>
             <ChatList 
               creds={this.state.creds} 
               chats={this.state.chats} 
@@ -150,7 +150,7 @@ class App extends Component {
             />
           </Col>
 
-          <Col sm={6} style={{ height: height ? height : '', overflow: 'scroll' }}>
+          <Col xs={12} sm={6} style={{ height: height ? height : '', overflow: 'scroll' }}>
             <ChatFeed 
               creds={this.state.creds} 
               chats={this.state.chats} 
@@ -159,7 +159,7 @@ class App extends Component {
             />
           </Col>
 
-          <Col sm={3} style={{ height: height ? height : '', overflow: 'scroll' }}>
+          <Col xs={0} sm={3} style={{ height: height ? height : '', overflow: 'scroll' }}>
             <ChatSettings 
               creds={this.state.creds} 
               chat={this.state.chats && this.state.chats[this.state.activeChat]} 
