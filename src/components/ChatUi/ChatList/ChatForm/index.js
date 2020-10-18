@@ -30,7 +30,7 @@ export default class MessageForm extends React.Component {
 
           <div style={{ width: 'calc(100% - 26px)', border: '1px solid #d9d9d9', borderRadius: '24px', backgroundColor: 'white' }}>
             
-            <div style={{ height: '0px' }}>
+            <div style={{ height: '1px' }}>
               <TextInput 
                 label='New Chat'
                 value={this.state.value}
