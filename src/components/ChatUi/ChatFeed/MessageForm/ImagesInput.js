@@ -12,9 +12,9 @@ export default class ImagesInput extends React.Component {
         let files = []
         const indexes = [...Array(event.target.files.length).keys()]
 
-        indexes.map(index => {
+        indexes.map((i, index) => {
             const file = event.target.files[index]
-            files.push(file)
+            if (file) { files.push(file) }
         })
         
         this.props.onSelectFiles &&  this.props.onSelectFiles(files)
@@ -57,7 +57,4 @@ export default class ImagesInput extends React.Component {
             </form>
         );
     }
-}
-
-const styles = {
 }

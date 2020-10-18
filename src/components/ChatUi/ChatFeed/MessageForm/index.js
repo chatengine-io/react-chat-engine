@@ -48,6 +48,10 @@ export default class MessageForm extends React.Component {
         )
       })
     }
+
+    componentDidUpdate() {
+      console.log('this.state.files', this.state.files)
+    }
   
     render() {
       return (
