@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "react": "link:../node_modules/react",
+    "react-chat-engine": "link:..",
     "react-dom": "link:../node_modules/react-dom",
-    "react-scripts": "link:../node_modules/react-scripts",
-    "react-chat-engine": "link:.."
+    "react-scripts": "link:../node_modules/react-scripts"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"

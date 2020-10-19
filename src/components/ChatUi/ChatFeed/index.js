@@ -81,7 +81,7 @@ export default class ChatList extends Component {
 
                     { this.renderMessages() }
 
-                    <div id='feet-bottom' style={{ height: '42px' }} />
+                    <div id='feet-bottom' style={{ height: '54px' }} />
 
                 </div>
 

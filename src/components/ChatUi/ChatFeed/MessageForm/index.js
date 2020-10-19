@@ -94,7 +94,7 @@ const styles = {
     overflow: 'hidden',
     width: 'calc(100% - 2px)', 
     minHeight: '38px',
-    borderRadius: '24px', 
+    borderRadius: '21px', 
     backgroundColor: 'white', 
     border: '1px solid rgb(217, 217, 217)'
   },
