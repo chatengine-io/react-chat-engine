@@ -1,7 +1,7 @@
 <p align="center" >
     <p align="center" >
         <a href="https://chatengine.io/">
-            <img alt="react-chat-engine" src="https://chat-engine-assets.s3.amazonaws.com/NPM+Example.jpg" style='max-width: 50vw;' />
+            <img alt="react-chat-engine" src="https://chat-engine-assets.s3.amazonaws.com/NPM+Example.jpg" style='height: 300px;' />
         </a>
     </p>
 </p>
