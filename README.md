@@ -31,7 +31,7 @@ Add serverless chat to your React app in 3 minutes.
 
 5. Voila! You're done
 
-BONUS: Add more users into your chats with the Private Key API
+EXAMPLE: Your implementation should look like the following
 
 ```jsx
 import React from 'react'
