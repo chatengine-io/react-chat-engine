@@ -49,7 +49,7 @@ export default class Options extends React.Component {
                             value="Delete" 
                             theme='danger'
                             icon='delete'
-                            onClick={() => deleteChat(creds, chat.id)}
+                            onClick={() => deleteChat(creds, chat.id, (data) => {})}
                             style={{ width: '100%', marginBottom: '12px' }}
                         />
 

@@ -27,7 +27,7 @@ class App extends Component {
 
   onConnect(creds) {
     this.setState({ creds })
-    getChats(creds)
+    getChats(creds, (data) => {})
 
     this.props.onConnect && this.props.onConnect(creds)
   }
