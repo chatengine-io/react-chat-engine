@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as str from '..'
 
-export function addPerson(props, chatId, userName, onAddPerson) {
+export function addPerson(props, chatId, userName, callback) {
     axios.post(
         `${str.getApiUrl(props)}/chats/${chatId}/people/`,
         { username: userName },
@@ -13,7 +13,7 @@ export function addPerson(props, chatId, userName, onAddPerson) {
     )
 
     .then((response) => {
-        onAddPerson && onAddPerson(response.data)
+        callback && callback(response.data)
     })
     
     .catch((error) => {

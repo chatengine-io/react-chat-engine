@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as str from '..'
 
-export function removePerson(props, chatId, userName) {
+export function removePerson(props, chatId, userName, callback) {
     axios.put(
         `${str.getApiUrl(props)}/chats/${chatId}/people/`,
         { username: userName },
@@ -12,7 +12,9 @@ export function removePerson(props, chatId, userName) {
         }}
     )
 
-    .then((response) => {})
+    .then((response) => {
+        callback && callback(response.data)
+    })
     
     .catch((error) => {
         console.log('Delete Person Error', error)
