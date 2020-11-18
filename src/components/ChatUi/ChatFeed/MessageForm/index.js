@@ -31,7 +31,7 @@ export default class MessageForm extends React.Component {
         this.props.creds, 
         this.props.chatId, 
         { text: this.state.value, files: this.state.files },
-        () => this.setState({ value: '', files: [] })
+        (data) => this.setState({ value: '', files: [] })
       )
     }
 

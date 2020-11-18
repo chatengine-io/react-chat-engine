@@ -21,7 +21,8 @@ export default class MessageEditForm extends React.Component {
             this.props.creds, 
             this.props.chatId, 
             this.props.message.id,
-            { text: this.state.value }
+            { text: this.state.value },
+            (data) => {}
         )
     }
   

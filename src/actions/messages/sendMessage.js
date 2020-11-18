@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as str from '../../actions'
 
-export function sendMessage(props, chatId, data, onSend) {
+export function sendMessage(props, chatId, data, callback) {
     
     let formdata = new FormData()
     for (let i = 0; i < data.files.length; i++) { 
@@ -20,7 +20,7 @@ export function sendMessage(props, chatId, data, onSend) {
     )
 
     .then((response) => {
-        onSend && onSend(response.data)
+        callback && callback(response.data)
     })
     
     .catch((error) => {

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as str from '../../actions'
 
-export function readMessage(props, chatId, messageId, onRead) {
+export function readMessage(props, chatId, messageId, callback) {
     axios.patch(
         `${str.getApiUrl(props)}/chats/${chatId}/people/`,
         { last_read: messageId },
@@ -13,7 +13,7 @@ export function readMessage(props, chatId, messageId, onRead) {
     )
 
     .then((response) => {
-        onRead && onRead(response.data)
+        callback && callback(response.data)
     })
     
     .catch((error) => {

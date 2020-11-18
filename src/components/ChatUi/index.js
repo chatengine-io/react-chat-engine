@@ -40,7 +40,7 @@ class App extends Component {
 
   setActiveChat(chatId) {
     this.setState({ activeChat: chatId })
-    getMessages(this.state.creds, chatId)
+    getMessages(this.state.creds, chatId, (data) => {})
   }
 
   onGetChats(chats) {
@@ -78,7 +78,7 @@ class App extends Component {
     this.setState({ messages: _.mapKeys(messages, 'id') })
 
     const messageId = messages[messages.length - 1].id
-    readMessage(this.state.creds, this.state.activeChat, messageId)
+    readMessage(this.state.creds, this.state.activeChat, messageId, (data) => {})
     
     this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
   }

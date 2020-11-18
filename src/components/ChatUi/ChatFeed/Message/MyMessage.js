@@ -82,7 +82,7 @@ export default class Message extends Component {
                                     theme='danger'
                                     icon='delete'
                                     style={{ float: 'right', position: 'relative', bottom: '37px' }}
-                                    onClick={() => deleteMessage(creds, chat.id, message.id)} 
+                                    onClick={() => deleteMessage(creds, chat.id, message.id, (data) => {})} 
                                 />
 
                             </div>

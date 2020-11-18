@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as str from '../../actions'
 
-export function getMessages(props, chatId) {
+export function getMessages(props, chatId, callback) {
     axios.get(
         `${str.getApiUrl(props)}/chats/${chatId}/messages/`,
         { headers: { 
@@ -15,6 +15,8 @@ export function getMessages(props, chatId) {
         if (response.status === 200) {
             props.onGetMessages && props.onGetMessages(chatId, response.data)
         }
+
+        callback && callback(response.data)
     })
     
     .catch((error) => {

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as str from '../../actions'
 
-export function deleteMessage(props, chatId, messageId) {
+export function deleteMessage(props, chatId, messageId, callback) {
     axios.delete(
         `${str.getApiUrl(props)}/chats/${chatId}/messages/${messageId}/`,
         { headers: { 
@@ -11,7 +11,9 @@ export function deleteMessage(props, chatId, messageId) {
         }}
     )
 
-    .then((response) => {})
+    .then((response) => {
+        callback && callback(response.data)
+    })
     
     .catch((error) => {
         console.log('Delete Messages Error', error)
