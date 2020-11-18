@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as str from '../../actions'
 
-export function getChats(props) {
+export function getChats(props, callback) {
     axios.get(
         `${str.getApiUrl(props)}/chats/`,
         { headers: { 
@@ -15,6 +15,8 @@ export function getChats(props) {
         if (response.status === 200) {
             props.onGetChats && props.onGetChats(response.data)
         }
+
+        callback && callback(response.data)
     })
     
     .catch((error) => {

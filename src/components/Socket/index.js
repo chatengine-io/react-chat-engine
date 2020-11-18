@@ -7,19 +7,19 @@ export default class Socket extends Component {
         rws: null
     }
 
-    componentDidMount() { 
+    componentDidMount() {
         if (!this.props.publicKey) {
             console.log("You need an API key. Register for one here: https://chatengine.io")
             return;
         }
-    
-        this.setState({ 
-            rws: connectSocket(this.props) 
+
+        this.setState({
+            rws: connectSocket(this.props)
         })
     }
 
-    componentWillUnmount(){ 
-        this.state.rws.close() 
+    componentWillUnmount(){
+        this.state.rws && this.state.rws.close() 
     }
 
     render() {

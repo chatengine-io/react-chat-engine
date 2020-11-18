@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as str from '../../actions'
 
-export function newChat(props, data, onNewChat) {
+export function newChat(props, data, callback) {
     axios.post(
         `${str.getApiUrl(props)}/chats/`,
         data, 
@@ -13,7 +13,7 @@ export function newChat(props, data, onNewChat) {
     )
 
     .then((response) => {
-        onNewChat && onNewChat(response.data)
+        callback && callback(response.data)
     })
     
     .catch((error) => {
