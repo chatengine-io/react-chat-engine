@@ -23,7 +23,10 @@ export function connectSocket(props) {
     const eventJSON = JSON.parse(event.data)
     console.log('action', eventJSON.action)
 
-    if (eventJSON.action === 'new_chat') {
+    if (eventJSON.action === 'is_typing') {
+      props.onTyping && props.onTyping(eventJSON.data.id, eventJSON.data.person)
+    
+    } else if (eventJSON.action === 'new_chat') {
       props.onNewChat && props.onNewChat(eventJSON.data)
 
     } else if (eventJSON.action === 'edit_chat') {
@@ -39,13 +42,14 @@ export function connectSocket(props) {
       props.onRemovePerson && props.onRemovePerson(eventJSON.data)
 
     } else if (eventJSON.action === 'new_message') {
-      props.onNewMessage && props.onNewMessage(eventJSON.data.id, eventJSON.data.messages)
+      props.onNewMessage && props.onNewMessage(eventJSON.data.id, eventJSON.data.message)
 
     } else if (eventJSON.action === 'edit_message') {
-      props.onEditMessage && props.onEditMessage(eventJSON.data.id, eventJSON.data.messages)
+      props.onEditMessage && props.onEditMessage(eventJSON.data.id, eventJSON.data.message)
 
     } else if (eventJSON.action === 'delete_message') {
-      props.onDeleteMessage && props.onDeleteMessage(eventJSON.data.id, eventJSON.data.messages)
+      props.onDeleteMessage && props.onDeleteMessage(eventJSON.data.id, eventJSON.data.message)
+    
     }
   }
 

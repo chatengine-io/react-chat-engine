@@ -20,6 +20,15 @@ export default class ChatList extends Component {
         }, 3000); // Once the chat loads, start animating
     }
 
+    renderTypers() {
+        const { typingData, chatId } = this.props
+        const typers = typingData[chatId] ? typingData[chatId] : []
+        
+        return typers.map((typer, index) => {
+            return <div key={`typer_${index}`}>{typer}</div>
+        })
+    }
+
     renderMessages() {
         const { messages, chats, chatId } = this.props
         const chat = chats && chats[chatId]
@@ -80,6 +89,8 @@ export default class ChatList extends Component {
                     <div style={{ height: '88px' }} />
 
                     { this.renderMessages() }
+
+                    { this.renderTypers() }
 
                     <div id='feet-bottom' style={{ height: '54px' }} />
 

@@ -23,6 +23,8 @@ class App extends Component {
     chats: null,
     messages: {},
     activeChat: null,
+    typingCounter: {},
+    typingData: {},
   }
 
   onConnect(creds) {
@@ -115,6 +117,66 @@ class App extends Component {
     this.props.onDeleteMessage && this.props.onDeleteMessage(chatId, message)
   }
 
+  onTyping(chatId, person) {
+    if (this.state.typingCounter[chatId] && this.state.typingCounter[chatId][person]) {
+      this.setState({
+        ...this.state,
+        typingCounter: {
+          ...this.state.typingCounter,
+          [chatId]: {
+            ...this.state.typingCounter[chatId],
+            [person]: this.state.typingCounter[chatId][person] + 1
+          }
+        }
+      })
+
+    } else {
+      this.setState({
+        ...this.state,
+        typingCounter: {
+          ...this.state.typingCounter,
+          [chatId]: {
+            ...this.state.typingCounter[chatId],
+            [person]: 1
+          }
+        }
+      })
+    }
+
+    this.props.onTyping && this.props.onTyping(chatId, person)
+
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        typingCounter: {
+          ...this.state.typingCounter,
+          [chatId]: {
+            ...this.state.typingCounter[chatId],
+            [person]: this.state.typingCounter[chatId][person] - 1
+          }
+        }
+      })
+    }, 3000);
+  }
+
+  componentDidUpdate() {
+    const { typingCounter, typingData } = this.state
+    
+    Object.keys(typingCounter).map((chat) => {
+      let typers = []
+
+      Object.keys(typingCounter[chat]).map((person) => {
+        if (typingCounter[chat][person] > 0) {
+          typers.push(person)
+        }
+      })
+
+      if (!typingData[chat] || typingData[chat].length !== typers.length) {
+        this.setState({ ...this.state, typingData: { ...this.state.typingData, [chat]: typers } })
+      }
+    })
+  }
+
   render() {
     const { height } = this.props
 
@@ -132,6 +194,7 @@ class App extends Component {
           onDeleteChat={(chat) => this.onDeleteChat(chat)}
           onAddPerson={(chat) => this.onEditChat(chat)}
           onRemovePerson={(chat) => this.onEditChat(chat)}
+          onTyping={(chatId, person) => this.onTyping(chatId, person)}
           onGetMessages={(chatId, messages) => this.onGetMessages(chatId, messages)}
           onNewMessage={(chatId, message) => this.onNewMessage(chatId, message)}
           onEditMessage={(chatId, message) => this.onEditMessage(chatId, message)}
@@ -156,6 +219,7 @@ class App extends Component {
               chats={this.state.chats} 
               chatId={this.state.activeChat} 
               messages={this.state.messages} 
+              typingData={this.state.typingData}
             />
           </Col>
 
