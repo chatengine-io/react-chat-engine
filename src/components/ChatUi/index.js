@@ -17,7 +17,7 @@ import { setConfiguration } from 'react-grid-system';
  
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
-class App extends Component {
+export default class App extends Component {
   state = {
     creds: null,
     chats: null,
@@ -161,7 +161,7 @@ class App extends Component {
 
   componentDidUpdate() {
     const { typingCounter, typingData } = this.state
-    
+
     Object.keys(typingCounter).map((chat) => {
       let typers = []
 
@@ -204,6 +204,7 @@ class App extends Component {
         <Row>
 
           <Col xs={0} sm={3} style={{ height: height ? height : '', overflow: 'scroll' }}>
+
             <ChatList 
               creds={this.state.creds} 
               chats={this.state.chats} 
@@ -211,9 +212,11 @@ class App extends Component {
               onChatClick={(chatId) => this.setActiveChat(chatId)} 
               renderNewChatForm={this.props.renderNewChatForm}
             />
+
           </Col>
 
           <Col xs={12} sm={6} style={{ height: height ? height : '', overflow: 'scroll' }}>
+
             <ChatFeed 
               creds={this.state.creds} 
               chats={this.state.chats} 
@@ -221,13 +224,16 @@ class App extends Component {
               messages={this.state.messages} 
               typingData={this.state.typingData}
             />
+
           </Col>
 
           <Col xs={0} sm={3} style={{ height: height ? height : '', overflow: 'scroll' }}>
+
             <ChatSettings 
               creds={this.state.creds} 
               chat={this.state.chats && this.state.chats[this.state.activeChat]} 
             />
+
           </Col>
 
         </Row>
@@ -236,5 +242,3 @@ class App extends Component {
     )
   }
 }
-
-export default App;
