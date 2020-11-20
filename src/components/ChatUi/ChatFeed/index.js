@@ -9,6 +9,8 @@ import MessageForm from './MessageForm'
 import _ from 'lodash'
 import { animateScroll } from "react-scroll"
 
+import { stringToColor } from '../Utilities/colorMapping'
+
 export default class ChatList extends Component {
     state = {
         duration: 0
@@ -23,9 +25,16 @@ export default class ChatList extends Component {
     renderTypers() {
         const { typingData, chatId } = this.props
         const typers = typingData[chatId] ? typingData[chatId] : []
-        
+
         return typers.map((typer, index) => {
-            return <div key={`typer_${index}`}>{typer}</div>
+            return (
+                <div 
+                    key={`typer_${index}`} 
+                    style={{ color: stringToColor(typer), padding: '2px', paddingLeft: '12px' }}
+                >
+                    {`${typer} is typing...`}
+                </div>
+            )
         })
     }
 
