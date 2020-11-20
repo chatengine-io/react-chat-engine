@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { sendMessage } from 'react-chat-engine'
+import { sendMessage, isTyping } from 'react-chat-engine'
 
 import FileRow from './FileRow'
 import ImagesInput from './ImagesInput'
@@ -22,6 +22,8 @@ export default class MessageForm extends React.Component {
   
     handleChange(event) {
       this.setState({value: event.target.value});
+
+      isTyping(this.props.creds, this.props.chatId)
     }
   
     handleSubmit(event) {

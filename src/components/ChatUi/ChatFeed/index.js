@@ -27,14 +27,16 @@ export default class ChatList extends Component {
         const typers = typingData[chatId] ? typingData[chatId] : []
 
         return typers.map((typer, index) => {
-            return (
-                <div 
-                    key={`typer_${index}`} 
-                    style={{ color: stringToColor(typer), padding: '2px', paddingLeft: '12px' }}
-                >
-                    {`${typer} is typing...`}
-                </div>
-            )
+            if (this.props.creds && this.props.creds.userName !== typer) {
+                return (
+                    <div 
+                        key={`typer_${index}`} 
+                        style={{ color: stringToColor(typer), padding: '2px', paddingLeft: '12px' }}
+                    >
+                        {`${typer} is typing...`}
+                    </div>
+                )
+            }
         })
     }
 
