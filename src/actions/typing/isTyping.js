@@ -16,7 +16,5 @@ export function isTyping(props, chatId, callback) {
         callback && callback(response.data)
     })
     
-    .catch((error) => {
-        console.log('Is Typing Error', error)
-    });
+    .catch((error) => {});
 }
