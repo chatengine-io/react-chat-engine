@@ -30,9 +30,9 @@ export function App () {
         userPassword={user.userPassword}
         // Hooks
         // onNewMessage={(chatId, message) => console.log('COME ON')}
-        // Render Custom Components
+        // Custom UI
         height='100vh'
-        renderChatCard={(chat, index) => {return <div>{chat.title}</div>}}
+        renderNewMessageForm={(chatId, creds) => {return <div>{chatId ? chatId : 'ok'}</div>}}
       />
     </div>
   )

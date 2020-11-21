@@ -26,6 +26,10 @@ export default class ChatList extends Component {
         const { typingData, chatId } = this.props
         const typers = typingData[chatId] ? typingData[chatId] : []
 
+        if (this.props.renderIsTyping) {
+            return this.props.renderIsTyping(typers)
+        }
+
         return typers.map((typer, index) => {
             return (
                 <div 
@@ -39,7 +43,7 @@ export default class ChatList extends Component {
     }
 
     renderMessages() {
-        const { messages, chats, chatId } = this.props
+        const { messages, chats, creds, chatId } = this.props
         const chat = chats && chats[chatId]
         const keys = Object.keys(messages)
 
@@ -47,13 +51,21 @@ export default class ChatList extends Component {
             const message = messages[key]
             const lastMessageKey = index == 0 ? null : keys[index - 1]
             const nextMessageKey = index == keys.length - 1 ? null : keys[index + 1]
+
+            if (this.props.renderMessageBubble) {
+                return (
+                    <div key={`message_${index}`}>
+                        { this.props.renderMessageBubble(creds, chat, messages[lastMessageKey], message, messages[nextMessageKey]) }
+                    </div>
+                )
+            }
             
             return (
                 <Message 
                     key={`message_${index}`} 
                     chat={chat} 
+                    creds={creds} 
                     message={message} 
-                    creds={this.props.creds} 
                     lastMessage={messages[lastMessageKey]}
                     nextMessage={messages[nextMessageKey]}
                 />
@@ -91,7 +103,12 @@ export default class ChatList extends Component {
         return (
             <div style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}>
 
-                <Title chat={chat} />
+                {
+                    this.props.renderChatTitle ? 
+                    this.props.renderChatTitle(chat) :
+                    <Title chat={chat} />
+                }
+
 
                 <div style={ styles.feedContainer } id='feed-container'>
 
@@ -105,7 +122,11 @@ export default class ChatList extends Component {
 
                 </div>
 
-                <MessageForm chatId={chatId} creds={creds} />
+                {
+                    this.props.renderNewMessageForm ?
+                    this.props.renderNewMessageForm(chatId, creds) :
+                    <MessageForm chatId={chatId} creds={creds} />
+                }
 
             </div>
         )

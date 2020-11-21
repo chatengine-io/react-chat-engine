@@ -237,6 +237,7 @@ export default class App extends Component {
               // Customize UI
               renderChatTitle={this.props.renderChatTitle}
               renderMessageBubble={this.props.renderMessageBubble}
+              renderIsTyping={this.props.renderIsTyping}
               renderNewMessageForm={this.props.renderNewMessageForm}
             />
 
@@ -248,10 +249,10 @@ export default class App extends Component {
               creds={this.state.creds} 
               chat={this.state.chats && this.state.chats[this.state.activeChat]} 
               // Customize UI
-              renderChatSettings={this.props.renderChatSettings}
-              renderPeopleSettings={this.props.renderPeopleSettings}
-              renderPhotosSettings={this.props.renderPhotosSettings}
-              renderOptionsSettings={this.props.renderOptionsSettings}
+              // renderChatSettings={this.props.renderChatSettings}
+              // renderPeopleSettings={this.props.renderPeopleSettings}
+              // renderPhotosSettings={this.props.renderPhotosSettings}
+              // renderOptionsSettings={this.props.renderOptionsSettings}
             />
 
           </Col>
