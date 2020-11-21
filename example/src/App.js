@@ -32,7 +32,7 @@ export function App () {
         // onNewMessage={(chatId, message) => console.log('COME ON')}
         // Custom UI
         height='100vh'
-        renderNewMessageForm={(chatId, creds) => {return <div>{chatId ? chatId : 'ok'}</div>}}
+        // renderPeopleSettings={(chatId) => {}}
       />
     </div>
   )

@@ -85,13 +85,29 @@ export default class ChatList extends Component {
 
                     <TitleForm chat={chat} creds={creds} />
 
-                    <People creds={creds} chat={chat} />
+                    {
+                        this.props.renderPeopleSettings ?
+                        this.props.renderPeopleSettings(creds, chat) :
+                        <People creds={creds} chat={chat} />
+                    }
 
-                    <Photos chat={chat} />
+                    {
+                        this.props.renderPhotosSettings ?
+                        this.props.renderPhotosSettings(chat) :
+                        <Photos chat={chat} />
+                    }
 
                     {
                         chat.admin === creds.userName &&
-                        <Options creds={creds} chat={chat} />
+                        <div>
+                            
+                            {
+                                this.props.renderOptionsSettings ?
+                                this.props.renderOptionsSettings(creds, chat) :
+                                <Options creds={creds} chat={chat} />
+                            }
+
+                        </div>
                     }
 
                 </div>
