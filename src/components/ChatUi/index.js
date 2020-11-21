@@ -54,24 +54,33 @@ export default class App extends Component {
 
   onNewChat(chat) {
     const { chats } = this.state
-    chats[chat.id] = chat
-    this.setState({ chats, activeChat: chat.id })
+
+    if (chats) {
+      chats[chat.id] = chat
+      this.setState({ chats, activeChat: chat.id })
+    }
 
     this.props.onNewChat && this.props.onNewChat(chat)
   }
 
   onEditChat(chat) {
     const { chats } = this.state
-    chats[chat.id] = chat
-    this.setState({ chats })
+    
+    if (chats) {
+      chats[chat.id] = chat
+      this.setState({ chats })
+    }
 
     this.props.onEditChat && this.props.onEditChat(chat)
   }
 
   onDeleteChat(chat) {
     const { chats } = this.state
-    chats[chat.id] = undefined
-    this.setState({ chats })
+
+    if (chats) {
+      chats[chat.id] = undefined
+      this.setState({ chats })
+    }
 
     this.props.onDeleteChat && this.props.onDeleteChat(chat)
   }
@@ -186,7 +195,7 @@ export default class App extends Component {
         <Socket 
           {...this.props} 
           // API Hooks
-          onConnect={(creds) => this.onConnect(creds)}
+          onConnect={(props) => this.onConnect(props)}
           onFailAuth={(props) => this.onFailAuth(props)}
           onGetChats={(chats) => this.onGetChats(chats)}
           onNewChat={(chat) => this.onNewChat(chat)}
@@ -210,6 +219,8 @@ export default class App extends Component {
               chats={this.state.chats} 
               activeChat={this.state.activeChat}
               onChatClick={(chatId) => this.setActiveChat(chatId)} 
+              // Customize UI
+              renderChatCard={this.props.renderChatCard}
               renderNewChatForm={this.props.renderNewChatForm}
             />
 
@@ -223,6 +234,10 @@ export default class App extends Component {
               chatId={this.state.activeChat} 
               messages={this.state.messages} 
               typingData={this.state.typingData}
+              // Customize UI
+              renderChatTitle={this.props.renderChatTitle}
+              renderMessageBubble={this.props.renderMessageBubble}
+              renderNewMessageForm={this.props.renderNewMessageForm}
             />
 
           </Col>
@@ -232,6 +247,11 @@ export default class App extends Component {
             <ChatSettings 
               creds={this.state.creds} 
               chat={this.state.chats && this.state.chats[this.state.activeChat]} 
+              // Customize UI
+              renderChatSettings={this.props.renderChatSettings}
+              renderPeopleSettings={this.props.renderPeopleSettings}
+              renderPhotosSettings={this.props.renderPhotosSettings}
+              renderOptionsSettings={this.props.renderOptionsSettings}
             />
 
           </Col>

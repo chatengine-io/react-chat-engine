@@ -14,6 +14,8 @@ class ChatList extends Component {
             
             if (!chat) return <div />
 
+            if (this.props.renderChatCard) return <div key={`chat_${index}`}>{this.props.renderChatCard(chat, index)}</div>
+
             return (
                 <div 
                     key={`chat_${index}`} 
