@@ -235,7 +235,7 @@ export default class App extends Component {
               messages={this.state.messages} 
               typingData={this.state.typingData}
               // Customize UI
-              renderChatTitle={this.props.renderChatTitle}
+              renderChatHeader={this.props.renderChatHeader}
               renderMessageBubble={this.props.renderMessageBubble}
               renderIsTyping={this.props.renderIsTyping}
               renderNewMessageForm={this.props.renderNewMessageForm}

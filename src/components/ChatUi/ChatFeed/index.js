@@ -104,8 +104,8 @@ export default class ChatList extends Component {
             <div style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}>
 
                 {
-                    this.props.renderChatTitle ? 
-                    this.props.renderChatTitle(chat) :
+                    this.props.renderChatHeader ? 
+                    this.props.renderChatHeader(chat) :
                     <Title chat={chat} />
                 }
 
@@ -124,7 +124,7 @@ export default class ChatList extends Component {
 
                 {
                     this.props.renderNewMessageForm ?
-                    this.props.renderNewMessageForm(chatId, creds) :
+                    this.props.renderNewMessageForm(creds, chatId) :
                     <MessageForm chatId={chatId} creds={creds} />
                 }
 

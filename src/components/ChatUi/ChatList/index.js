@@ -14,7 +14,9 @@ class ChatList extends Component {
             
             if (!chat) return <div />
 
-            if (this.props.renderChatCard) return <div key={`chat_${index}`}>{this.props.renderChatCard(chat, index)}</div>
+            if (this.props.renderChatCard) {
+                return <div key={`chat_${index}`}>{this.props.renderChatCard(chat, index)}</div>
+            }
 
             return (
                 <div 
@@ -43,6 +45,8 @@ class ChatList extends Component {
     }
 
     render() {
+        const { creds } = this.props
+        
         return (
             <div style={styles.chatListContainer}>
 
@@ -54,9 +58,9 @@ class ChatList extends Component {
 
                     {
                         this.props.renderNewChatForm ?
-                        this.props.renderNewChatForm() :
+                        this.props.renderNewChatForm(creds) :
                         <div style={ styles.newChatContainer }>
-                            <ChatForm creds={this.props.creds} />
+                            <ChatForm creds={creds} />
                         </div>
                     }
                     
