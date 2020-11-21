@@ -1,89 +1,27 @@
 import React, { Component } from 'react'
 
-import { Row, Col } from 'react-grid-system'
-
-import Avatar from '../components/Avatar'
-
-import TitleForm from './TitleForm'
-
 import People from './People'
 import Photos from './Photos'
 import Options from './Options'
+import ChatSettings from './ChatSettings'
 
-export default class ChatList extends Component {
-
-    renderOnePerson(people) {
-        return (
-            <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
-                <div style={{ margin: 'auto', width: '33%' }}>
-                    <Avatar text={people[0].person} />
-                </div>
-            </Col>
-        )
-    }
-
-    renderTwoPeople(people) {
-        return (
-            <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
-                <div style={{ margin: 'auto', width: '50%' }}>
-                    <Avatar 
-                        text={people[0].person} 
-                        style={{ float: 'left', position: 'relative', right: '5px' }}
-                    />
-                    <Avatar 
-                        text={people[1].person} 
-                        style={{ float: 'right', position: 'relative', left: '5px', bottom: '44px', zIndex: 11 }}
-                    />
-                </div>
-            </Col>
-        )
-    }
-
-    renderThreePeople(people) {
-        return (
-            <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
-                <div style={{ margin: 'auto', width: '50%' }}>
-                    <Avatar 
-                        text={people[0].person} 
-                        style={{ float: 'right', position: 'relative', right: '28px', top: '10px', zIndex: 11 }}
-                    />
-                    <Avatar text={people[1].person} 
-                        style={{ float: 'right', position: 'relative', right: '14px', bottom: '56px', zIndex: 11 }}
-                    />
-                    <Avatar 
-                        text={people[2].person} 
-                        style={{ float: 'right', position: 'relative', left: '5px', bottom: '78px', zIndex: 11 }}
-                    />
-                </div>
-            </Col>
-        )
-    }
+export default class ChatSettingsContainer extends Component {
 
     render() {
-
         const { chat, creds } = this.props
-        const topPeople = chat ? chat.people.slice(0, 3) : []
-
-        if (!chat) { return <div style={{ display: 'flex', width: '90%', paddingLeft: '5%', borderLeft: '1px solid #afafaf' }} /> }
+        
+        if (!chat) return <div style={styles.filler} />
         
         return (
             <div style={styles.settingsContainer}>
 
                 <div style={{ width: '90%', paddingLeft: '5%' }}>
 
-                    <Row>
-
-                        <Col xs={3} />
-
-                        { topPeople.length == 1 && this.renderOnePerson(topPeople) }
-                        { topPeople.length == 2 && this.renderTwoPeople(topPeople) }
-                        { topPeople.length == 3 && this.renderThreePeople(topPeople) }
-                        
-                        <Col xs={3} />
-
-                    </Row>
-
-                    <TitleForm chat={chat} creds={creds} />
+                    {
+                        this.props.renderChatSettings ?
+                        this.props.renderChatSettings(creds, chat) :
+                        <ChatSettings creds={creds} chat={chat} />
+                    }
 
                     {
                         this.props.renderPeopleSettings ?
@@ -94,19 +32,17 @@ export default class ChatList extends Component {
                     {
                         this.props.renderPhotosSettings ?
                         this.props.renderPhotosSettings(chat) :
-                        <Photos chat={chat} />
+                        <Photos creds={creds} chat={chat} />
                     }
 
                     {
                         chat.admin === creds.userName &&
                         <div>
-                            
                             {
                                 this.props.renderOptionsSettings ?
                                 this.props.renderOptionsSettings(creds, chat) :
                                 <Options creds={creds} chat={chat} />
                             }
-
                         </div>
                     }
 
@@ -123,5 +59,11 @@ const styles = {
         overflow: 'scroll',
         borderLeft: '1px solid #afafaf', 
         backgroundColor: 'white'  
+    },
+    filler: { 
+        display: 'flex', 
+        width: '90%', 
+        paddingLeft: '5%', 
+        borderLeft: '1px solid #afafaf' 
     }
 }
