@@ -12,7 +12,7 @@ export default class ChatSettings extends Component {
         return (
             <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
                 <div style={{ margin: 'auto', width: '33%' }}>
-                    <Avatar text={people[0].person} />
+                    <Avatar person={people[0].person} />
                 </div>
             </Col>
         )
@@ -23,11 +23,11 @@ export default class ChatSettings extends Component {
             <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
                 <div style={{ margin: 'auto', width: '50%' }}>
                     <Avatar 
-                        text={people[0].person} 
+                        person={people[0].person} 
                         style={{ float: 'left', position: 'relative', right: '5px' }}
                     />
                     <Avatar 
-                        text={people[1].person} 
+                        person={people[1].person} 
                         style={{ float: 'right', position: 'relative', left: '5px', bottom: '44px', zIndex: 11 }}
                     />
                 </div>
@@ -40,14 +40,15 @@ export default class ChatSettings extends Component {
             <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
                 <div style={{ margin: 'auto', width: '50%' }}>
                     <Avatar 
-                        text={people[0].person} 
+                        person={people[0].person} 
                         style={{ float: 'right', position: 'relative', right: '28px', top: '10px', zIndex: 11 }}
                     />
-                    <Avatar text={people[1].person} 
+                    <Avatar 
+                        person={people[1].person} 
                         style={{ float: 'right', position: 'relative', right: '14px', bottom: '56px', zIndex: 11 }}
                     />
                     <Avatar 
-                        text={people[2].person} 
+                        person={people[2].person} 
                         style={{ float: 'right', position: 'relative', left: '5px', bottom: '78px', zIndex: 11 }}
                     />
                 </div>

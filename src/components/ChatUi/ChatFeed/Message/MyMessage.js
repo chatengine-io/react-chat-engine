@@ -20,7 +20,7 @@ export default class Message extends Component {
 
         return chat.people.map((person, index) => {
             if (message.id == person.last_read) {
-                return <Dot key={`read_${index}`} text={person.person} style={{ float: 'right', marginLeft: '4px' }} />
+                return <Dot key={`read_${index}`} text={person.person.username} style={{ float: 'right', marginLeft: '4px' }} />
             }
         })
     }
@@ -37,11 +37,11 @@ export default class Message extends Component {
 
         if (!message) { return <div /> }
 
-        const topRightRadius = !lastMessage || lastMessage.sender !== message.sender ? '1.3em' : '0.3em'
-        const bottomRightRadius = !nextMessage || nextMessage.sender !== message.sender ? '1.3em' : '0.3em'
+        const topRightRadius = !lastMessage || lastMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
+        const bottomRightRadius = !nextMessage || nextMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
 
         const borderRadius = `1.3em ${topRightRadius} ${bottomRightRadius} 1.3em`
-        const paddingBottom = !nextMessage || nextMessage.sender !== message.sender ? '12px' : '2px'
+        const paddingBottom = !nextMessage || nextMessage.sender.username !== message.sender.username ? '12px' : '2px'
 
         return (
             <div 
@@ -67,28 +67,6 @@ export default class Message extends Component {
                     </Col>
 
                     <Col xs={1} sm={2} md={3} />
-
-                    {/* <Col xs={11} sm={10} md={9}>
-
-                        {
-                            this.state.selected &&
-                            <div style={{ width: '100%', height: '44px' }}>
-
-                                <div style={{ width: 'calc(100% - 52px)' }}>
-                                    <MessageEditForm creds={creds} chatId={chat.id} message={message} />
-                                </div>
-
-                                <Button
-                                    theme='danger'
-                                    icon='delete'
-                                    style={{ float: 'right', position: 'relative', bottom: '37px' }}
-                                    onClick={() => deleteMessage(creds, chat.id, message.id, (data) => {})} 
-                                />
-
-                            </div>
-                        }
-
-                    </Col> */}
 
                     <Col xs={12}>
                         { this.renderReads() }

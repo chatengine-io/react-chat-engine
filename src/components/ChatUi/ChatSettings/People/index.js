@@ -5,7 +5,7 @@ import PersonForm from './PersonForm'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 
-export default class MessageForm extends React.Component {
+export default class PeopleList extends React.Component {
     state = {
         collapsed: false,
         hovered: false

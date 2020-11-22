@@ -31,18 +31,18 @@ export default class Person extends Component {
 
                 <div style={{ padding: '2px', height: '0px' }}>
                     
-                    <Avatar text={person.person} />
+                    <Avatar person={person.person} />
 
                 </div>
 
                 <div style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px', fontSize: '15px' }}>
 
-                    { person.person !== chat.admin ? person.person : `${person.person} (Admin)` }
+                    { person.person.username !== chat.admin ? person.person.username : `${person.person.username} (Admin)` }
 
                 </div>
 
                 {
-                    this.state.selected && (creds.userName === chat.admin) && (person.person !== chat.admin) &&
+                    this.state.selected && (creds.userName === chat.admin) && (person.person.username !== chat.admin) &&
                     <div style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}>
 
                         <Button 

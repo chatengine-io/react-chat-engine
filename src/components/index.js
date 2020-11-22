@@ -4,7 +4,7 @@ import Socket from './Socket'
 import ChatUi from './ChatUi'
 
 const SocketConnector = (props) => {
-    if (props.hideExample) {
+    if (props.hideUI) {
         return <Socket {...props} />
     } else {
         return <ChatUi {...props} />

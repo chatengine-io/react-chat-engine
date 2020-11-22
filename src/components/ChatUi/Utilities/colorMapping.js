@@ -30,5 +30,9 @@ function stringToNumber(str){
 }
 
 export function stringToColor(str) {
-    return colors[stringToNumber(str) % colors.length]
+    if (!str) {
+        return 'black'
+    } else {
+        return colors[stringToNumber(str) % colors.length]
+    }
 }

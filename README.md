@@ -78,7 +78,7 @@ export function App() {
 - **`onNewMessage`** _(Function)_ - Callback when a person posts a new message in one of the chats
 - **`onEditMessage`** _(Function)_ - Callback when a person edits a new message in one of the chats
 - **`onDeleteMessage`** _(Function)_ - Callback when a person deletes a new message in one of the chats
-- **`hideExample`** _(Boolean)_ - Hides all UI components for a custom implementation (Warning: Advanced)
+- **`hideUI`** _(Boolean)_ - Hides all UI components for a custom implementation (Warning: Advanced)
 
 ## Functions
 

@@ -7,8 +7,8 @@ export default class Avatar extends Component {
 
     render() {
         const customStyle = this.props.style ? this.props.style : {}
-        const text = this.props.text.substring(0, 2).toUpperCase()
-        const color = stringToColor(this.props.text)
+        const text = this.props.person.username ? this.props.person.username.substring(0, 2).toUpperCase() : ''
+        const color = stringToColor(this.props.person ? this.props.person.username : '')        
         
         return (
             <div style={{ ...styles.avatar, ...customStyle, ...{ backgroundColor: color } }}>

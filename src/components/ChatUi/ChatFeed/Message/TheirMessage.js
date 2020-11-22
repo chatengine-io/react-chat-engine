@@ -22,7 +22,7 @@ export default class TheirMessage extends Component {
 
         return chat.people.map((person, index) => {
             if (message.id == person.last_read) {
-                return <Dot key={`read_${index}`} text={person.person} style={{ float: 'left', marginLeft: '4px' }} />
+                return <Dot key={`read_${index}`} text={person.person.username} style={{ float: 'left', marginLeft: '4px' }} />
             }
         })
     }
@@ -39,19 +39,19 @@ export default class TheirMessage extends Component {
 
         if (!message) { return <div /> }
 
-        const topLeftRadius = !lastMessage || lastMessage.sender !== message.sender ? '1.3em' : '0.3em'
-        const bottomLeftRadius = !nextMessage || nextMessage.sender !== message.sender ? '1.3em' : '0.3em'
+        const topLeftRadius = !lastMessage || lastMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
+        const bottomLeftRadius = !nextMessage || nextMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
 
         const borderRadius = `${topLeftRadius} 1.3em 1.3em ${bottomLeftRadius}`
-        const paddingBottom = !nextMessage || nextMessage.sender !== message.sender ? '12px' : '2px'
+        const paddingBottom = !nextMessage || nextMessage.sender.username !== message.sender.username ? '12px' : '2px'
 
         return (
             <div style={{ width: '100%', paddingBottom }}>
 
                 {
-                    (!lastMessage || lastMessage.sender !== message.sender) &&
+                    (!lastMessage || lastMessage.sender.username !== message.sender.username) &&
                     <div style={ styles.nameText }>
-                        { message.sender }
+                        { message.sender.username }
                     </div>
                 }
 
@@ -69,8 +69,8 @@ export default class TheirMessage extends Component {
                         <div style={{ height: '0px' }}>
                             
                             {
-                                !nextMessage || nextMessage.sender !== message.sender ?
-                                <Avatar text={message.sender} />  :
+                                !nextMessage || nextMessage.sender.username !== message.sender.username ?
+                                <Avatar person={message.sender} /> :
                                 <div />
                             }
 

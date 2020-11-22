@@ -5,7 +5,7 @@ import { newChat } from 'react-chat-engine'
 import { Button } from '../../components/Button'
 import { TextInput } from '../../components/Input'
 
-export default class MessageForm extends React.Component {
+export default class ChatForm extends React.Component {
     state = {
         value: ''
     }
