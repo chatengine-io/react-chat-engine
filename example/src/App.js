@@ -25,7 +25,7 @@ export function App () {
       <ChatEngine
         // Creds
         development
-        publicKey={'1ed59673-1fd6-46ed-9eb9-56239a6a4f82'}
+        publicKey='1ed59673-1fd6-46ed-9eb9-56239a6a4f82'
         userName={user.userName}
         userPassword={user.userPassword}
         // Hooks
