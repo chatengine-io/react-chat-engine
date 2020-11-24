@@ -11,12 +11,12 @@ export default class PeopleList extends React.Component {
         hovered: false
     }
 
-    renderPeople(people) {
-        return people.map((person, index) => {
+    renderChatPeople(people) {
+        return people.map((chatPerson, index) => {
             return (
                 <Person 
                     key={`person_${index}`} 
-                    person={person}
+                    person={chatPerson.person}
                     creds={this.props.creds} 
                     chat={this.props.chat} 
                 />
@@ -57,7 +57,7 @@ export default class PeopleList extends React.Component {
 
                         <div style={{ height: '12px' }} />
 
-                        { this.renderPeople(chat.people) }
+                        { this.renderChatPeople(chat.people) }
 
                         <div style={{ height: '12px' }} />
 

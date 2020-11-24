@@ -14,7 +14,7 @@ export default class Person extends Component {
         removePerson(
             this.props.creds,
             this.props.chat.id,
-            this.props.person.person
+            this.props.person.username
         )
     }
 
@@ -31,18 +31,18 @@ export default class Person extends Component {
 
                 <div style={{ padding: '2px', height: '0px' }}>
                     
-                    <Avatar person={person.person} />
+                    <Avatar person={person} />
 
                 </div>
 
                 <div style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px', fontSize: '15px' }}>
 
-                    { person.person.username !== chat.admin ? person.person.username : `${person.person.username} (Admin)` }
+                    { person.username !== chat.admin ? person.username : `${person.username} (Admin)` }
 
                 </div>
 
                 {
-                    this.state.selected && (creds.userName === chat.admin) && (person.person.username !== chat.admin) &&
+                    this.state.selected && (creds.userName === chat.admin) && (person.username !== chat.admin) &&
                     <div style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}>
 
                         <Button 

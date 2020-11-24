@@ -18,9 +18,9 @@ export default class Message extends Component {
 
         if(!chat) { return <div /> }
 
-        return chat.people.map((person, index) => {
-            if (message.id == person.last_read) {
-                return <Dot key={`read_${index}`} text={person.person.username} style={{ float: 'right', marginLeft: '4px' }} />
+        return chat.people.map((chatPerson, index) => {
+            if (message.id == chatPerson.last_read) {
+                return <Dot key={`read_${index}`} text={chatPerson.person.username} style={{ float: 'right', marginLeft: '4px' }} />
             }
         })
     }
