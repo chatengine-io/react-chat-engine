@@ -7,10 +7,10 @@ const users = [
   //   userName: 'John_Doe',
   //   userPassword: 'pass1234',
   // },
-  {
-    userName: 'Jane_Smith',
-    userPassword: 'pass1234',
-  },
+  // {
+  //   userName: 'Jane_Smith',
+  //   userPassword: 'pass1234',
+  // },
   {
     userName: 'Adam_La_Morre',
     userPassword: 'pass1234',
