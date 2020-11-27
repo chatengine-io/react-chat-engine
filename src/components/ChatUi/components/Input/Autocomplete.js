@@ -56,8 +56,6 @@ export default class AutoComplete extends Component {
                         <div style={styles.close} onClick={() => this.onChange('', false)}>
                             
                             <CloseOutlined />
-
-                            {` Close`}
                             
                         </div>
                     }
@@ -68,6 +66,7 @@ export default class AutoComplete extends Component {
     }
 
     render() {
+        const { options } = this.props
         const customStyle = this.props.style ? this.props.style : {}
         const defaultStyle = { ...styles.input, ...{ border: this.state.focused ? '1px solid #1890ff' : '1px solid #d9d9d9' } }
 
@@ -82,8 +81,13 @@ export default class AutoComplete extends Component {
                     onFocus={() => this.onFocus()}
                     onChange={(e) => this.onChange(e.target.value, true)}
                 />
-            
-                { this.renderOptions(this.props.options ? this.props.options : []) }
+
+                {
+                    options && options.length > 0 && this.state.showAll &&
+                    <div style={{ borderRadius: '19px', border: '1px solid #afafaf', }}>
+                        { this.renderOptions(this.props.options) }
+                    </div>
+                }
             
             </div>
         )
@@ -101,9 +105,9 @@ const styles = {
     },
     close: {
         textAlign: 'center', 
-        padding: '12px', 
+        padding: '8px 12px', 
+        fontSize: '15px', 
         borderRadius: '24px', 
-        backgroundColor: 'rgb(217, 217, 217)' ,
         cursor: 'pointer'
     }
 }

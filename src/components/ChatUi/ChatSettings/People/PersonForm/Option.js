@@ -22,9 +22,9 @@ export default class Option extends React.Component {
 
 const styles = {
   option: {
-    padding: '12px 24px',
-    border: '1px solid #afafaf',
     borderRadius: '24px',
-    cursor: 'pointer'
+    padding: '8px 16px',
+    cursor: 'pointer',
+    fontSize: '15px'
   },
 }

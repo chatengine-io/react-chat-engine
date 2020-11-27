@@ -62,7 +62,7 @@ export default class PersonForm extends React.Component {
           style={{ width: 'calc(100% - 24px)' }}
           renderOption={(option) => this.renderOption(option)}
         />
-
+        
       </div>
     );
   }
