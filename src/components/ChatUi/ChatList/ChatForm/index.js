@@ -28,13 +28,13 @@ export default class ChatForm extends React.Component {
       return (
         <form onSubmit={this.handleSubmit.bind(this)}>
 
-          <div style={{ width: 'calc(100% - 26px)', border: '1px solid #d9d9d9', borderRadius: '24px', backgroundColor: 'white' }}>
+          <div style={{ width: 'calc(100% - 26px)' }}>
             
             <div style={{ height: '1px' }}>
               <TextInput 
                 label='New Chat'
                 value={this.state.value}
-                style={{ width: 'calc(100% - 26px - 48px)', borderColor: 'white' }}
+                style={{ width: 'calc(100% - 26px - 48px)' }}
                 handleChange={(e) => this.handleChange(e)}
               />
             </div>

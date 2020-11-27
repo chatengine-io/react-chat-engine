@@ -31,7 +31,7 @@ export default class ImagesInput extends React.Component {
                 <label
                     htmlFor="files"
                     id='upload-document-button'
-                    style={{ position: 'absolute', bottom: '12px', right: '63px', zIndex: '1' }}
+                    style={{ position: 'absolute', bottom: '15px', right: '63px', zIndex: '1' }}
                 >
 
                     <PaperClipOutlined 

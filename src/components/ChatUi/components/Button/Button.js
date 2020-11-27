@@ -10,9 +10,9 @@ export default class Button extends Component {
     render() {
         const { value, icon, theme, style } = this.props
 
-        const themeStyle = theme == 'danger' ? styles.dangerButton : styles.button
         const customStyle = style ? style : {}
         const hoverStyle = this.state.hovered ? styles.hoverButton : {}
+        const themeStyle = theme == 'danger' ? styles.dangerButton : styles.button
 
         return (
             <button 
@@ -22,13 +22,12 @@ export default class Button extends Component {
                 onMouseLeave={() => this.setState({ hovered: false })}
                 style={{ ...themeStyle, ...customStyle, ...hoverStyle }}
             >
-                
+
                 { icon == 'plus' && <PlusOutlined /> }
                 { icon == 'send'  && <ArrowUpOutlined /> }
                 { icon == 'delete'  && <DeleteOutlined /> }
                 { icon == 'user-add'  && <UserAddOutlined /> }
-                
-                
+
                 { value && icon ? ` ${value}` : value}  
 
             </button>
@@ -44,9 +43,8 @@ const styles = {
         height: '36px',
         fontSize: '15px',
         cursor: 'pointer',
-        borderRadius: '4px',
         padding: '8px 16px',
-        borderRadius: '24px',
+        borderRadius: '33px',
         backgroundColor: '#1890ff'
     },
     dangerButton: {
@@ -56,11 +54,10 @@ const styles = {
         height: '36px',
         fontSize: '15px',
         cursor: 'pointer',
-        borderRadius: '4px',
         padding: '8px 16px',
-        borderRadius: '24px',
+        borderRadius: '33px',
         backgroundColor: 'white',
-        border: '2px solid red',
+        border: '1px solid red',
     },
     hoverButton: {
         opacity: '0.66'
