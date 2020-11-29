@@ -60,17 +60,20 @@ export default class TextAreaInput extends Component {
 // This is another thing we need to chat about which regards the competence of one more
 const styles = {
     input: { 
+        // Border
         border: '1px solid white',
-        width: 'calc(100% - 64px - 24px - 44px)', // 24px for padding, 44 for file icons
-        resize: 'none', 
+        width: 'calc(100% - 64px - 24px - 44px)',
         outline: 'none', 
-        // top: '12px',
-        left: '12px',
-        position: 'relative', 
+        // Fonts
         fontFamily: 'inherit',
         fontSize: '15px',
         // Padding
         paddingLeft: '12px',
         paddingRight: '12px',
+        // Position
+        position: 'relative', 
+        left: '12px',
+        // Dynamic Sizing
+        resize: 'none', 
     }
 }

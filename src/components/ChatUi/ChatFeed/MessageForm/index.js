@@ -57,7 +57,7 @@ export default class MessageForm extends React.Component {
 
           <FileRow files={this.state.files} onRemove={(i) => this.onRemove(i)} />
 
-          <ImagesInput onSelectFiles={(files) => this.setState({ files })} /> 
+          <ImagesInput onSelectFiles={(files) => this.setState({ files })} />
 
           <form onSubmit={this.handleSubmit.bind(this)}>
 
@@ -91,7 +91,6 @@ const styles = {
     bottom: '0px', 
     width: '100%', 
     backgroundColor: 'white',
-    height: '52px'
   },
   inputContainer: { 
     overflow: 'scroll',

@@ -31,16 +31,15 @@ export default class ImagesInput extends React.Component {
                 <label
                     htmlFor="files"
                     id='upload-document-button'
-                    style={{ position: 'absolute', bottom: '15px', right: '63px', zIndex: '1' }}
                 >
 
                     <PaperClipOutlined 
                         onMouseEnter={() => this.setState({ hovered: true })}
                         onMouseLeave={() => this.setState({ hovered: false })}
-                        style={ this.state.hovered ?
-                            { fontSize: '20px', color: '#69c0ff', cursor: 'pointer' } :
-                            { fontSize: '20px', color: '#1890ff' }
-                        } 
+                        style={{
+                            ...{ cursor: 'pointer', position: 'absolute', bottom: '20px', right: '63px', fontSize: '18px' },
+                            ...{ color: this.state.hovered ? '#69c0ff' : '#1890ff' }
+                        }}
                     />
 
                 </label>
