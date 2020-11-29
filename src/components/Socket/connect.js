@@ -1,19 +1,22 @@
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
 export function connectSocket(props) {    
-  const { publicKey, userName, userPassword, development } = props 
+  const { publicKey, projectID, userName, userPassword, development } = props 
+
   const wsStart = development ? 'ws://' : 'wss://'
   const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
-  console.log(`${wsStart}${rootHost}/person/?publicKey=${publicKey}&username=${userName}&secret=${userPassword}`)
-  const rws = new ReconnectingWebSocket(`${wsStart}${rootHost}/person/?publicKey=${publicKey}&username=${userName}&secret=${userPassword}`)
+  const project = publicKey ? publicKey : projectID
+  
+  console.log(`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${userPassword}`)
+  const rws = new ReconnectingWebSocket(`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${userPassword}`)
 
   rws.onopen = function(event) {
-    console.log("User socket connect", event)
+    console.log("Chat Engine connected", event)
     props.onConnect && props.onConnect(props)
   }
 
   rws.onerror = function(event) {
-    console.log("User socket error", event)
+    console.log("Chat Engine error", event)
     if(event.message === 'TIMEOUT') {
       props.onFailAuth && props.onFailAuth(props)
     }

@@ -6,7 +6,7 @@ export function editMessage(props, chatId, messageId, data, callback) {
         `${str.getApiUrl(props)}/chats/${chatId}/messages/${messageId}/`,
         data,
         { headers: { 
-            "Public-Key": props.publicKey,
+            "Public-Key": props.publicKey ? props.publicKey : props.projectID,
             "User-Name": props.userName,
             "User-Secret": props.userPassword,
         }}

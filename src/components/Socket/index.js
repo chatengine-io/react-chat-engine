@@ -8,7 +8,7 @@ export default class Socket extends Component {
     }
 
     componentDidMount() {
-        if (!this.props.publicKey) {
+        if (!this.props.publicKey && !this.props.projectID) {
             console.log("You need an API key. Register for one here: https://chatengine.io")
             return;
         }

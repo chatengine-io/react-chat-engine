@@ -5,7 +5,7 @@ export function getChats(props, callback) {
     axios.get(
         `${str.getApiUrl(props)}/chats/`,
         { headers: { 
-            "Public-Key": props.publicKey,
+            "Public-Key": props.publicKey ? props.publicKey : props.projectID,
             "User-Name": props.userName,
             "User-Secret": props.userPassword,
         }}

@@ -6,7 +6,7 @@ export function removePerson(props, chatId, userName, callback) {
         `${str.getApiUrl(props)}/chats/${chatId}/people/`,
         { username: userName },
         { headers: { 
-            "Public-Key": props.publicKey,
+            "Public-Key": props.publicKey ? props.publicKey : props.projectID,
             "User-Name": props.userName,
             "User-Secret": props.userPassword,
         }}

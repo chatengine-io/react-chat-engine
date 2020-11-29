@@ -5,7 +5,7 @@ export function getOtherPeople(props, chatId, successCallback, errorCallback) {
     axios.get(
         `${str.getApiUrl(props)}/chats/${chatId}/others/`,
         { headers: { 
-            "Public-Key": props.publicKey,
+            "Public-Key": props.publicKey ? props.publicKey : props.projectID,
             "User-Name": props.userName,
             "User-Secret": props.userPassword,
         }}

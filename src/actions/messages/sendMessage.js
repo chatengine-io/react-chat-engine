@@ -13,7 +13,7 @@ export function sendMessage(props, chatId, data, callback) {
         `${str.getApiUrl(props)}/chats/${chatId}/messages/`,
         formdata,
         { headers: { 
-            "Public-Key": props.publicKey,
+            "Public-Key": props.publicKey ? props.publicKey : props.projectID,
             "User-Name": props.userName,
             "User-Secret": props.userPassword,
         }}

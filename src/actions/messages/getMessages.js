@@ -5,7 +5,7 @@ export function getMessages(props, chatId, callback) {
     axios.get(
         `${str.getApiUrl(props)}/chats/${chatId}/messages/`,
         { headers: { 
-            "Public-Key": props.publicKey,
+            "Public-Key": props.publicKey ? props.publicKey : props.projectID,
             "User-Name": props.userName,
             "User-Secret": props.userPassword,
         }}
