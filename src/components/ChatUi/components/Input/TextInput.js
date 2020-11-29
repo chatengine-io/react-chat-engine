@@ -36,21 +36,27 @@ export default class TextInput extends Component {
 
 const styles = {
     input: {
-        outline: 'none',
+        // Sizes
         height: '36px',
         fontSize: '15px',
-        padding: '0px 12px',
-        borderRadius: '4px',
+        // Border
+        outline: 'none',
         borderRadius: '24px',
         border: '1px solid #d9d9d9',
+        // Padding and fixed width
+        padding: '0px 12px',
+        boxSizing: 'border-box',
     },
     focusInput: {
-        outline: 'none',
+        // Sizes
         height: '36px',
         fontSize: '15px',
-        padding: '0px 12px',
-        borderRadius: '4px',
+        // Border
+        outline: 'none',
         borderRadius: '24px',
         border: '1px solid #1890ff',
+        // Padding and fixed width
+        padding: '0px 12px',
+        boxSizing: 'border-box',
     }
 }

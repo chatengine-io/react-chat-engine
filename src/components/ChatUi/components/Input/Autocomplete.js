@@ -96,18 +96,21 @@ export default class AutoComplete extends Component {
 
 const styles = {
     input: {
-        outline: 'none',
+        // Size
         height: '36px',
         fontSize: '15px',
-        padding: '0px 12px',
-        borderRadius: '4px',
+        // Border
+        outline: 'none',
         borderRadius: '24px',
+        // Padding and width
+        padding: '0px 12px',
+        boxSizing: 'border-box'
     },
     close: {
-        textAlign: 'center', 
-        padding: '8px 12px', 
-        fontSize: '15px', 
-        borderRadius: '24px', 
-        cursor: 'pointer'
+        cursor: 'pointer',
+        textAlign: 'center',
+        padding: '8px 12px',
+        fontSize: '15px',
+        borderRadius: '24px',
     }
 }

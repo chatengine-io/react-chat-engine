@@ -54,12 +54,12 @@ export default class PersonForm extends React.Component {
       <div style={{ marginBottom: '12px' }}>
 
         <AutoCompleteInput 
+          style={{ width: '100%' }}
           label='Type a username'
           value={this.state.value}
           options={this.state.others}
           onFocus={() => this.getOthers()}
           handleChange={(value) => this.handleChange(value)} 
-          style={{ width: 'calc(100% - 24px)' }}
           renderOption={(option) => this.renderOption(option)}
         />
         

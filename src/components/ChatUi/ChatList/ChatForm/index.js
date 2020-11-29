@@ -34,12 +34,12 @@ export default class ChatForm extends React.Component {
               <TextInput 
                 label='New Chat'
                 value={this.state.value}
-                style={{ width: 'calc(100% - 26px - 48px)' }}
+                style={{ width: 'calc(100% - 48px)' }}
                 handleChange={(e) => this.handleChange(e)}
               />
             </div>
 
-            <div style={{ width: '100%', textAlign: 'right', marginTop: '1px' }}>
+            <div style={{ width: '100%', textAlign: 'right' }}>
               <Button 
                 icon='plus'
                 type="submit" 
