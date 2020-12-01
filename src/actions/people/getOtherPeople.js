@@ -12,11 +12,10 @@ export function getOtherPeople(props, chatId, successCallback, errorCallback) {
     )
 
     .then((response) => {
-        if (response.status === 200) {
-            props.onGetOtherPeople && props.onGetOtherPeople(chatId, response.data)
+        // Run hook in Axios on GET requests
+        props.onGetOtherPeople && props.onGetOtherPeople(chatId, response.data)
 
-            successCallback && successCallback(chatId, response.data)
-        }
+        successCallback && successCallback(chatId, response.data)
     })
     
     .catch((error) => {

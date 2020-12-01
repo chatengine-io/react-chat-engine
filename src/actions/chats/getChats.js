@@ -12,9 +12,8 @@ export function getChats(props, callback) {
     )
 
     .then((response) => {
-        if (response.status === 200) {
-            props.onGetChats && props.onGetChats(response.data)
-        }
+        // Run hook in Axios on GET requests
+        props.onGetChats && props.onGetChats(response.data)
 
         callback && callback(response.data)
     })
