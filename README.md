@@ -31,7 +31,7 @@ Add serverless chat to your React app in 3 minutes.
 
 3. Install `yarn add react-chat-engine`
 
-4. Import the `ChatEngine` component and pass in `publicKey`, `userName`, and `userPassword` props
+4. Import the `ChatEngine` component and pass in `publicKey`, `userName`, and `userSecret` props
 
 5. Voila! You're done
 
@@ -47,7 +47,7 @@ export function App() {
         <ChatEngine
             publicKey={'b75e5bd5-cd84-404c-b820-06feff8c98c0'}
             userName={'john_smith'}
-            userPassword={'secret_1234'}
+            userSecret={'secret_1234'}
         />
     )
 }
@@ -66,8 +66,9 @@ export function App() {
 
 - **`publicKey`** _(UUID REQUIRED)_ - Public API key for your [chatengine.io](https://chatengine.io) project
 - **`userName`** _(String REQUIRED)_ - Username of a person in this project
-- **`userPassword`** _(String REQUIRED)_ - Password for the person in this project
+- **`userSecret`** _(String REQUIRED)_ - Set a secret for this person and use it to authenticate.
 - **`onConnect`** (Function) - Callback when the connection/authentication is complete
+- **`onFailAuth`** (Function) - Callback when the connection/authentication fails
 - **`onGetChats`** _(Function)_ Callback when the person fetches their chats array
 - **`onNewChat`** _(Function)_ - Callback when the person creates a new chat
 - **`onEditChat`** _(Function)_ - Callback when the person edits a chat title

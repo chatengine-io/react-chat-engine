@@ -7,7 +7,7 @@ export function deleteChat(props, chatId, callback) {
         { headers: { 
             "Public-Key": props.publicKey ? props.publicKey : props.projectID,
             "User-Name": props.userName,
-            "User-Secret": props.userPassword,
+            "User-Secret": props.userPassword ? props.userPassword : props.userSecret,
         }}
     )
 

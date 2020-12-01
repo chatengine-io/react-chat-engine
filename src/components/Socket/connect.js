@@ -1,14 +1,20 @@
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
 export function connectSocket(props) {    
-  const { publicKey, projectID, userName, userPassword, development } = props 
+  const { 
+    publicKey, projectID, 
+    userName, 
+    userPassword, userSecret, 
+    development 
+  } = props 
 
   const wsStart = development ? 'ws://' : 'wss://'
   const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
-  const project = publicKey ? publicKey : projectID
   
-  console.log(`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${userPassword}`)
-  const rws = new ReconnectingWebSocket(`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${userPassword}`)
+  const project = publicKey ? publicKey : projectID
+  const secret = userPassword ? userPassword : userSecret
+  
+  const rws = new ReconnectingWebSocket(`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`)
 
   rws.onopen = function(event) {
     console.log("Chat Engine connected", event)
@@ -24,7 +30,6 @@ export function connectSocket(props) {
 
   rws.onmessage = function(event) {
     const eventJSON = JSON.parse(event.data)
-    console.log('action', eventJSON.action)
 
     if (eventJSON.action === 'is_typing') {
       props.onTyping && props.onTyping(eventJSON.data.id, eventJSON.data.person)
