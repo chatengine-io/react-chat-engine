@@ -3,14 +3,14 @@ import React from 'react'
 import { ChatEngine } from 'react-chat-engine'
 
 const users = [
-  // {
-  //   userName: 'John_Doe',
-  //   userSecret: 'pass1234',
-  // },
-  // {
-  //   userName: 'Jane_Smith',
-  //   userSecret: 'pass1234',
-  // },
+  {
+    userName: 'John_Doe',
+    userSecret: 'pass1234',
+  },
+  {
+    userName: 'Jane_Smith',
+    userSecret: 'pass1234',
+  },
   {
     userName: 'Adam_La_Morre',
     userSecret: 'pass1234',
@@ -29,7 +29,7 @@ export function App () {
         userName={user.userName}
         userSecret={user.userSecret}
         // Hooks
-        // onNewMessage={(chatId, message) => console.log('COME ON')}
+        onDeleteChat={(chatId, message) => console.log('DELERE')}
         // Custom UI
         height='100vh'
         // renderPeopleSettings={(chatId) => {}} 
