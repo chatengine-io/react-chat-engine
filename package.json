@@ -56,6 +56,6 @@
     "lodash": "^4.17.20",
     "react-grid-system": "^7.1.1",
     "react-scroll": "^1.8.1",
-    "reconnecting-websocket": "^4.4.0"
+    "react-websocket": "^2.1.0"
   }
 }

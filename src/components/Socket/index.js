@@ -1,28 +1,65 @@
 import React, { Component } from 'react'
 
-import { connectSocket } from './connect'
+import Websocket from 'react-websocket';
 
 export default class Socket extends Component {
-    state = {
-        rws: null
-    }
+    handleEvent(event) {
+        const { props } = this
+        const eventJSON = JSON.parse(event)
 
-    componentDidMount() {
-        if (!this.props.publicKey && !this.props.projectID) {
-            console.log("You need an API key. Register for one here: https://chatengine.io")
-            return;
+        if (eventJSON.action === 'is_typing') {
+            props.onTyping && props.onTyping(eventJSON.data.id, eventJSON.data.person)
+          
+        } else if (eventJSON.action === 'new_chat') {
+            props.onNewChat && props.onNewChat(eventJSON.data)
+    
+        } else if (eventJSON.action === 'edit_chat') {
+            props.onEditChat && props.onEditChat(eventJSON.data)
+    
+        } else if (eventJSON.action === 'delete_chat') {
+            props.onDeleteChat && props.onDeleteChat(eventJSON.data)
+    
+        } else if (eventJSON.action === 'add_person') {
+            props.onAddPerson && props.onAddPerson(eventJSON.data)
+    
+        } else if (eventJSON.action === 'remove_person') {
+            props.onRemovePerson && props.onRemovePerson(eventJSON.data)
+    
+        } else if (eventJSON.action === 'new_message') {
+            props.onNewMessage && props.onNewMessage(eventJSON.data.id, eventJSON.data.message)
+    
+        } else if (eventJSON.action === 'edit_message') {
+            props.onEditMessage && props.onEditMessage(eventJSON.data.id, eventJSON.data.message)
+    
+        } else if (eventJSON.action === 'delete_message') {
+            props.onDeleteMessage && props.onDeleteMessage(eventJSON.data.id, eventJSON.data.message)
+        
         }
-
-        this.setState({
-            rws: connectSocket(this.props)
-        })
     }
 
-    componentWillUnmount(){
-        this.state.rws && this.state.rws.close() 
+    onClose() {
+        this.props.onFailAuth && this.props.onFailAuth(this.props)
     }
 
     render() {
-        return <div />
+        const { 
+            publicKey, projectID, 
+            userName, 
+            userPassword, userSecret, 
+            development 
+        } = this.props 
+        
+        const wsStart = development ? 'ws://' : 'wss://'
+        const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
+        
+        const project = publicKey ? publicKey : projectID
+        const secret = userPassword ? userPassword : userSecret
+
+        return <Websocket 
+            url={`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`}
+            onOpen={() => this.props.onConnect && this.props.onConnect(this.props)}
+            onClose={this.onClose.bind(this)}
+            onMessage={this.handleEvent.bind(this)}
+        />
     }
 }
