@@ -26,12 +26,11 @@ export default class App extends Component {
         <ChatEngine
           // Creds
           development
-          hideUI={true}
           projectID='1ed59673-1fd6-46ed-9eb9-56239a6a4f82'
           userName={user.userName}
           userSecret={user.userSecret}
           // Hooks
-          onDeleteChat={(chatId, message) => console.log('DELERE')}
+          // onDeleteChat={(chatId, message) => console.log('DELETE')}
           // Custom UI
           height='100vh'
           // renderPeopleSettings={(chatId) => {}} 
