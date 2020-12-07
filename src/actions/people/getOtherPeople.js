@@ -19,7 +19,7 @@ export function getOtherPeople(props, chatId, successCallback, errorCallback) {
     })
     
     .catch((error) => {
-        console.log('Fetch Messages Error', error)
+        console.log('Fetch Other People Error', error)
 
         errorCallback && errorCallback()
     });

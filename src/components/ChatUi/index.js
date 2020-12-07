@@ -88,8 +88,10 @@ export default class App extends Component {
   onGetMessages(chatId, messages) {
     this.setState({ messages: _.mapKeys(messages, 'id') })
 
-    const messageId = messages[messages.length - 1].id
-    readMessage(this.state.creds, this.state.activeChat, messageId, (data) => {})
+    if (messages.length > 0) {
+      const messageId = messages[messages.length - 1].id
+      readMessage(this.state.creds, this.state.activeChat, messageId, (data) => {})
+    }
     
     this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
   }
