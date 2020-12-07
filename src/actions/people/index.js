@@ -3,6 +3,7 @@ import { removePerson } from './removePerson'
 import { getOtherPeople } from './getOtherPeople'
 import { getMyData } from './getMyData'
 import { editMyData } from './editMyData'
+import { leaveChat } from './leaveChat'
 
 export {
     addPerson,
@@ -10,4 +11,5 @@ export {
     getOtherPeople,
     getMyData,
     editMyData,
+    leaveChat,
 }
