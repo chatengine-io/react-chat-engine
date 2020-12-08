@@ -62,7 +62,7 @@ export default class PeopleList extends React.Component {
                         <div style={{ height: '12px' }} />
 
                         {
-                            creds && creds.userName === chat.admin &&
+                            creds && chat && creds.userName === chat.admin.username &&
                             <PersonForm creds={creds} chat={chat} />
                         }
 

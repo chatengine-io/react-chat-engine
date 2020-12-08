@@ -21,7 +21,9 @@ export default class Person extends Component {
     render() {
         const { person, chat, creds } = this.props
 
-        if (!person) { return <div /> }
+        if (!person || !chat) { return <div /> }
+
+        const { admin } = chat
 
         return (
             <div 
@@ -37,12 +39,12 @@ export default class Person extends Component {
 
                 <div style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px', fontSize: '15px' }}>
 
-                    { person.username !== chat.admin ? person.username : `${person.username} (Admin)` }
+                    { person.username !== admin.username ? person.username : `${person.username} (Admin)` }
 
                 </div>
 
                 {
-                    this.state.selected && (creds.userName === chat.admin) && (person.username !== chat.admin) &&
+                    this.state.selected && (creds.userName === admin.username) && (person.username !== admin.username) &&
                     <div style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}>
 
                         <Button 

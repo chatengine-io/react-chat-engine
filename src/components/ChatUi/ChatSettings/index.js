@@ -36,7 +36,7 @@ export default class ChatSettingsContainer extends Component {
                     }
 
                     {
-                        creds && creds.userName === chat.admin  &&
+                        creds && chat && creds.userName === chat.admin.username  &&
                         <div>
                             {
                                 this.props.renderOptionsSettings ?
