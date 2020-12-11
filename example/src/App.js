@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { ChatEngine } from 'react-chat-engine'
+import { ChatEngine, editMyData } from 'react-chat-engine'
 
 const users = [
   {
@@ -18,6 +18,10 @@ const users = [
 ]
 
 export default class App extends Component {
+  onConnect(props) {
+    editMyData(props, { is_online: true }, () => {})
+  }
+
   render() {
     const user = users[Math.floor(Math.random() * users.length)]
 
@@ -30,7 +34,7 @@ export default class App extends Component {
           userName={user.userName}
           userSecret={user.userSecret}
           // Hooks
-          // onDeleteChat={(chatId, message) => console.log('DELETE')}
+          // onConnect={(props) => this.onConnect(props)}
           // Custom UI
           height='100vh'
           // renderPeopleSettings={(chatId) => {}} 

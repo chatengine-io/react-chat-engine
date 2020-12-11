@@ -12,7 +12,7 @@ export default class ChatSettings extends Component {
         return (
             <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
                 <div style={{ margin: 'auto', width: '33%' }}>
-                    <Avatar person={people[0].person} />
+                    <Avatar show_online={false} person={people[0].person} />
                 </div>
             </Col>
         )
@@ -23,10 +23,12 @@ export default class ChatSettings extends Component {
             <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
                 <div style={{ margin: 'auto', width: '50%' }}>
                     <Avatar 
+                        show_online={false}
                         person={people[0].person} 
                         style={{ float: 'left', position: 'relative', right: '5px' }}
                     />
                     <Avatar 
+                        show_online={false}
                         person={people[1].person} 
                         style={{ float: 'right', position: 'relative', left: '5px', bottom: '44px', zIndex: 11 }}
                     />
@@ -40,14 +42,17 @@ export default class ChatSettings extends Component {
             <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
                 <div style={{ margin: 'auto', width: '50%' }}>
                     <Avatar 
+                        show_online={false}
                         person={people[0].person} 
                         style={{ float: 'right', position: 'relative', right: '28px', top: '10px', zIndex: 11 }}
                     />
                     <Avatar 
+                        show_online={false}
                         person={people[1].person} 
                         style={{ float: 'right', position: 'relative', right: '14px', bottom: '56px', zIndex: 11 }}
                     />
                     <Avatar 
+                        show_online={false}
                         person={people[2].person} 
                         style={{ float: 'right', position: 'relative', left: '5px', bottom: '78px', zIndex: 11 }}
                     />

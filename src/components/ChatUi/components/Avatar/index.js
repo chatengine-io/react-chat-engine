@@ -6,19 +6,37 @@ import { stringToColor } from '../../Utilities/colorMapping'
 export default class Avatar extends Component {
 
     render() {
+        const { person } = this.props
         const customStyle = this.props.style ? this.props.style : {}
-        const text = this.props.person.username ? this.props.person.username.substring(0, 2).toUpperCase() : ''
-        const color = stringToColor(this.props.person ? this.props.person.username : '')        
+        const text = person.username ? person.username.substring(0, 2).toUpperCase() : ''
+        const color = stringToColor(person ? person.username : '')        
         
         return (
-            <div style={{ ...styles.avatar, ...customStyle, ...{ backgroundColor: color } }}>
-                
-                <div style={{ color: 'white', paddingTop: '12px', fontSize: '15px', fontWeight: '600' }}>
-                
-                    { text }
+            <div>
+
+                {
+                    this.props.show_online !== false && 
+                    <div  
+                        style={{ 
+                            width: '8px', 
+                            height: '8px', 
+                            borderRadius: '100%', 
+                            position: 'absolute', 
+                            border: '2px solid white',
+                            backgroundColor: person.is_online ? '#52c41a' : '#f5222d' 
+                        }} 
+                    />
+                }
+
+                <div style={{ ...styles.avatar, ...customStyle, ...{ backgroundColor: color } }}>
+                    
+                    <div style={{ color: 'white', paddingTop: '12px', fontSize: '15px', fontWeight: '600' }}>
+                    
+                        { text }
+                    
+                    </div>
                 
                 </div>
-            
             </div>
         )
     }
