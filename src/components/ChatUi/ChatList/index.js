@@ -7,13 +7,22 @@ import { daySinceSent } from '../Utilities/dateToString'
 import ChatForm from './ChatForm'
 
 class ChatList extends Component {
+    readLastMessage(creds, chat) {
+        let readLastMessage = true
+        chat.people.map(chat_person => {
+            if(creds && creds.userName === chat_person.person.username) {
+                readLastMessage = chat.last_message.id === chat_person.last_read
+            }
+        })
+        return readLastMessage
+    }
 
     renderChats(chats) {
         return _.map(chats, (chat, index) => {
             const extraStyle = (chat && this.props.activeChat === chat.id) ? styles.activeChat : {}
             
             if (!chat) return <div />
-
+            
             if (this.props.renderChatCard) {
                 return <div key={`chat_${index}`}>{this.props.renderChatCard(chat, index)}</div>
             }
@@ -27,6 +36,21 @@ class ChatList extends Component {
                     
                     <div style={ styles.titleText }>
                         { chat.title }
+                        {' '}
+                        {
+                            !this.readLastMessage(this.props.creds, chat) &&
+                            <div 
+                                style={{ 
+                                    float: 'right',
+                                    width: '12px',
+                                    height: '12px',
+                                    borderRadius: '6px',
+                                    backgroundColor: '#1890ff',
+                                    display: 'inline-block'
+                                }} 
+                            />
+                        }
+                        
                     </div>
 
                     <div style={{ width: '100%' }}>
@@ -34,7 +58,7 @@ class ChatList extends Component {
                             { chat.last_message.text ? chat.last_message.text : 'Say hello!' }
                         </div>
 
-                        <div style={{ ...styles.messageText, ...{ float: 'right', textAlign: 'right', width: '25%', position: 'relative', bottom: '17px' } }}>
+                        <div style={{ ...styles.messageText, ...{ textAlign: 'right', width: '25%' } }}>
                             { daySinceSent(chat.last_message.created) }
                         </div>
                     </div>
@@ -86,6 +110,7 @@ const styles={
     },
     chatContainer: { 
         padding: '16px', 
+        paddingBottom: '12px',
         cursor: 'pointer'
     },
     titleText: { 
@@ -99,7 +124,8 @@ const styles={
         color: 'rgba(153, 153, 153, 1)', 
         fontSize: '14px', 
         whiteSpace: 'nowrap', 
-        overflow: 'hidden'
+        overflow: 'hidden',
+        display: 'inline-block'
     },
     activeChat: {
         backgroundColor: '#d9d9d9',

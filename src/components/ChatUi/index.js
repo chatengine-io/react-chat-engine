@@ -192,7 +192,7 @@ export default class App extends Component {
     const { height } = this.props
 
     return (
-      <div style={{ textAlign: 'left' }}>
+      <div style={{ textAlign: 'left', backgroundColor: 'white' }}>
 
         <Socket 
           {...this.props} 
