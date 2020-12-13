@@ -7,6 +7,7 @@ import Message from './Message'
 import MessageForm from './MessageForm'
 
 import _ from 'lodash'
+
 import { animateScroll } from "react-scroll"
 
 import { stringToColor } from '../Utilities/colorMapping'
