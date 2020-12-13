@@ -4,7 +4,9 @@ import { Row, Col } from 'react-grid-system'
 
 import { timeSinceDate } from '../../Utilities/dateToString'
 
-import { MenuOutlined, SettingOutlined } from '@ant-design/icons'
+import { SettingOutlined } from '@ant-design/icons'
+
+import ChatListDrawer from './ChatListDrawer'
 
 export default class Title extends Component {
   
@@ -18,8 +20,8 @@ export default class Title extends Component {
 
                 <Row>
 
-                    <Col xs={2} sm={0} style={{ textAlign: 'center', padding: '32px 0px' }}>
-                        <MenuOutlined style={{ color: 'rgb(24, 144, 255)' }} />
+                    <Col xs={2} sm={0} style={styles.mobileSection}>
+                        <ChatListDrawer />
                     </Col>
 
                     <Col xs={8} sm={12}>
@@ -38,7 +40,7 @@ export default class Title extends Component {
 
                     </Col>
 
-                    <Col xs={2} sm={0} style={{ textAlign: 'center', padding: '32px 0px' }}>
+                    <Col xs={2} sm={0} style={styles.mobileSection}>
                         <SettingOutlined style={{ color: 'rgb(24, 144, 255)' }} />
                     </Col>
 
@@ -50,6 +52,12 @@ export default class Title extends Component {
 }
 
 const styles = {
+    mobileSection: {
+        textAlign: 'center', 
+        padding: '30px 0px', 
+        backgroundColor: 'rgb(256, 256, 256, 0.92)',
+        border: '1px solid rgb(256, 256, 256, 0.92)'
+    },
     titleContainer: {
         width: '100%',
         padding: '18px 0px',
