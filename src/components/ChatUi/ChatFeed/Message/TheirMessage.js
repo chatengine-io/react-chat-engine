@@ -22,7 +22,7 @@ export default class TheirMessage extends Component {
 
         return chat.people.map((person, index) => {
             if (message.id == person.last_read) {
-                return <Dot key={`read_${index}`} text={person.person.username} style={{ float: 'left', marginLeft: '4px' }} />
+                return <Dot key={`read_${index}`} person={person.person} style={{ float: 'left', marginLeft: '4px' }} />
             }
         })
     }
@@ -69,9 +69,8 @@ export default class TheirMessage extends Component {
                         <div style={{ height: '0px' }}>
                             
                             {
-                                !nextMessage || nextMessage.sender.username !== message.sender.username ?
-                                <Avatar person={message.sender} /> :
-                                <div />
+                                (!nextMessage || nextMessage.sender.username !== message.sender.username) &&
+                                <Avatar person={message.sender} show_online={false} />
                             }
 
                         </div>

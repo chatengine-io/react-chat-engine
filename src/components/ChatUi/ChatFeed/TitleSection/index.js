@@ -18,33 +18,17 @@ export default class Title extends Component {
         return (
             <div style={{ position: 'absolute', top: '0px', width: '100%', zIndex: '1' }}>
 
-                <Row>
-
-                    <Col xs={2} sm={0} style={styles.mobileSection}>
-                        <ChatListDrawer />
-                    </Col>
-
-                    <Col xs={8} sm={12}>
-
-                        <div style={ styles.titleContainer }>
+                <div style={ styles.titleContainer }>
                         
-                            <div style={ styles.titleText }>
-                                { chat && chat.title }
-                            </div>
-                            
-                            <div style={ styles.subtitleText }>
-                                Active { timeSinceDate(chat.last_message.created) }
-                            </div>
+                    <div style={ styles.titleText }>
+                        { chat && chat.title }
+                    </div>
+                    
+                    <div style={ styles.subtitleText }>
+                        Active { timeSinceDate(chat.last_message.created) }
+                    </div>
 
-                        </div>
-
-                    </Col>
-
-                    <Col xs={2} sm={0} style={styles.mobileSection}>
-                        <SettingOutlined style={{ color: 'rgb(24, 144, 255)' }} />
-                    </Col>
-
-                </Row>
+                </div>
 
             </div>
         );

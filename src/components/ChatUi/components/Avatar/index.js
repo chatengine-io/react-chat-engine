@@ -9,8 +9,8 @@ export default class Avatar extends Component {
         const { person } = this.props
         const customStyle = this.props.style ? this.props.style : {}
         const text = person.username ? person.username.substring(0, 2).toUpperCase() : ''
-        const color = stringToColor(person ? person.username : '')        
-        
+        const color = stringToColor(person ? person.username : '')    
+                
         return (
             <div>
 
@@ -28,11 +28,21 @@ export default class Avatar extends Component {
                     />
                 }
 
-                <div style={{ ...styles.avatar, ...customStyle, ...{ backgroundColor: color } }}>
+                <div style={{ 
+                    ...styles.avatar, 
+                    ...customStyle, 
+                    ...{ backgroundColor: person.avatar ? 'white' : color },
+                    ...{ 
+                        backgroundImage: person.avatar && `url(${person.avatar})`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'center',
+                        backgroundSize: '48px'
+                    }
+                }}>
                     
                     <div style={{ color: 'white', paddingTop: '12px', fontSize: '15px', fontWeight: '600' }}>
                     
-                        { text }
+                        { person.avatar === null && text }
                     
                     </div>
                 
