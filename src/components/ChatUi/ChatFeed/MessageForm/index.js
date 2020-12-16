@@ -29,12 +29,20 @@ export default class MessageForm extends React.Component {
     handleSubmit(event) {
       event.preventDefault();
 
-      sendMessage(
-        this.props.creds, 
-        this.props.chatId, 
-        { text: this.state.value, files: this.state.files },
-        (data) => this.setState({ value: '', files: [] })
-      )
+      const { files } = this.state
+      const text = this.state.value.trim()
+
+      if (text.length === 0 && files.length === 0) {
+        this.setState({ value: '', files: [] })
+
+      } else {
+        sendMessage(
+          this.props.creds, 
+          this.props.chatId, 
+          { text, files },
+          (data) => this.setState({ value: '', files: [] })
+        )
+      }
     }
 
     renderFiles() {
