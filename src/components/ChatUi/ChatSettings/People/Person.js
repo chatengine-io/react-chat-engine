@@ -18,6 +18,14 @@ export default class Person extends Component {
         )
     }
 
+    renderPersonText(person) {
+        if (person.first_name !== null) {
+            return `${person.first_name}${person.last_name ? ` ${person.last_name}` : ''}`
+        } else {
+            return person.username
+        }
+    }
+
     render() {
         const { person, chat, creds } = this.props
 
@@ -39,7 +47,7 @@ export default class Person extends Component {
 
                 <div style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px', fontSize: '15px' }}>
 
-                    { person.username !== admin.username ? person.username : `${person.username} (Admin)` }
+                    { this.renderPersonText(person) }
 
                 </div>
 

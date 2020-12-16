@@ -34,6 +34,14 @@ export default class TheirMessage extends Component {
         })
     }
 
+    renderPersonText(person) {
+        if (person.first_name !== null) {
+            return `${person.first_name}${person.last_name ? ` ${person.last_name}` : ''}`
+        } else {
+            return person.username
+        }
+    }
+
     render() {
         const { lastMessage, message, nextMessage } = this.props
 
@@ -51,7 +59,7 @@ export default class TheirMessage extends Component {
                 {
                     (!lastMessage || lastMessage.sender.username !== message.sender.username) &&
                     <div style={ styles.nameText }>
-                        { message.sender.username }
+                        { this.renderPersonText(message.sender) }
                     </div>
                 }
 
