@@ -12,7 +12,7 @@ import { animateScroll } from "react-scroll"
 
 import { stringToColor } from '../Utilities/colorMapping'
 
-export default class ChatList extends Component {
+export default class ChatFeed extends Component {
     state = {
         duration: 0
     }
