@@ -55,15 +55,16 @@ export default class ChatSettingsContainer extends Component {
 
 const styles = {
     settingsContainer: { 
-        height: '100%', 
+        height: '100%',
         overflow: 'scroll',
-        borderLeft: '1px solid #afafaf', 
-        backgroundColor: 'white'  
+        overflowX: 'hidden',
+        borderLeft: '1px solid #afafaf',
+        backgroundColor: 'white'
     },
     filler: { 
-        display: 'flex', 
-        width: '90%', 
-        paddingLeft: '5%', 
-        borderLeft: '1px solid #afafaf' 
+        display: 'flex',
+        width: '90%',
+        paddingLeft: '5%',
+        borderLeft: '1px solid #afafaf'
     }
 }

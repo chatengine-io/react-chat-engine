@@ -144,6 +144,7 @@ const styles = {
         height: '100%', 
         width: '100%', 
         overflow: 'scroll',
+        overflowX: 'hidden',
         backgroundColor: 'white'
     }
 }

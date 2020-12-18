@@ -214,7 +214,7 @@ export default class App extends Component {
 
         <Row>
 
-          <Col xs={0} sm={3} style={{ height: height ? height : '', overflow: 'scroll' }}>
+          <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
 
             <ChatList 
               creds={this.state.creds} 
@@ -228,7 +228,7 @@ export default class App extends Component {
 
           </Col>
 
-          <Col xs={12} sm={6} style={{ height: height ? height : '', overflow: 'scroll' }}>
+          <Col xs={12} sm={6} style={{ height: height ? height : '' }}>
 
             <ChatFeed 
               creds={this.state.creds} 
@@ -245,7 +245,7 @@ export default class App extends Component {
 
           </Col>
 
-          <Col xs={0} sm={3} style={{ height: height ? height : '', overflow: 'scroll' }}>
+          <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
 
             <ChatSettings 
               creds={this.state.creds} 

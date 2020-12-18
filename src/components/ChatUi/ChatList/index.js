@@ -100,6 +100,7 @@ const styles={
         height: '100%', 
         maxHeight: '100vh', 
         overflow: 'scroll', 
+        overflowX: 'hidden',
         borderRight: '1px solid #afafaf', 
         backgroundColor: 'white' 
     },
