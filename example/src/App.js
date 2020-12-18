@@ -26,7 +26,7 @@ export default class App extends Component {
     const user = users[Math.floor(Math.random() * users.length)]
 
     return (
-      <div style={{ width: '100vw',  backgroundColor: '#e6f7ff', paddingTop: '100vh' }}>
+      <div style={{ width: '100vw',  backgroundColor: '#e6f7ff' }}>
         <ChatEngine
           // Creds
           development
