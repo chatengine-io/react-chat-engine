@@ -82,7 +82,11 @@ export default class ChatFeed extends Component {
     }
 
     componentDidUpdate(){
-        this.scrollToBottom()
+        // Only scroll if messages loaded
+        // TODO: Make more sophisticated
+        if(!_.isEmpty(this.props.messages)) {
+            this.scrollToBottom()
+        }
     }
 
     render() {
@@ -119,7 +123,7 @@ export default class ChatFeed extends Component {
 
                     { this.renderTypers() }
 
-                    <div id='feet-bottom' style={{ height: '54px' }} />
+                    <div style={{ height: '54px' }} />
 
                 </div>
 
