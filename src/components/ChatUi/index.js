@@ -57,7 +57,8 @@ export default class App extends Component {
 
     if (chats) {
       chats[chat.id] = chat
-      this.setState({ chats, activeChat: chat.id })
+      this.setState({ chats })
+      this.setActiveChat(chat.id)
     }
 
     this.props.onNewChat && this.props.onNewChat(chat)
@@ -80,6 +81,9 @@ export default class App extends Component {
     if (chats) {
       chats[chat.id] = undefined
       this.setState({ chats })
+      if (!_.isEmpty(chats)) {
+        this.setActiveChat(parseInt(Object.keys(chats)[0]))
+      }
     }
 
     this.props.onDeleteChat && this.props.onDeleteChat(chat)

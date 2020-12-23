@@ -19,9 +19,9 @@ class ChatList extends Component {
 
     renderChats(chats) {
         return _.map(chats, (chat, index) => {
-            const extraStyle = (chat && this.props.activeChat === chat.id) ? styles.activeChat : {}
-            
-            if (!chat) return <div />
+            if (!chat) return <div key={`chat_${index}`} />
+
+            const extraStyle = this.props.activeChat === chat.id ? styles.activeChat : {}
             
             if (this.props.renderChatCard) {
                 return <div key={`chat_${index}`}>{this.props.renderChatCard(chat, index)}</div>
