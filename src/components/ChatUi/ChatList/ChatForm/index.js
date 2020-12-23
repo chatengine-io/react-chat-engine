@@ -17,11 +17,15 @@ export default class ChatForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        newChat(
+        if (this.state.value.trim().length > 0) {
+          newChat(
             this.props.creds, 
             { title: this.state.value },
-            () => this.setState({ value: '' })
-        )
+            () => {}
+          )
+        }
+
+        this.setState({ value: '' })
     }
   
     render() {
