@@ -29,7 +29,7 @@ export default class App extends Component {
 
   onConnect(creds) {
     this.setState({ creds })
-    getChats(creds, (data) => {})
+    getChats(creds, () => {})
 
     this.props.onConnect && this.props.onConnect(creds)
   }
@@ -42,7 +42,7 @@ export default class App extends Component {
 
   setActiveChat(chatId) {
     this.setState({ activeChat: chatId })
-    getMessages(this.state.creds, chatId, (data) => {})
+    getMessages(this.state.creds, chatId, () => {})
   }
 
   onGetChats(chats) {
@@ -94,7 +94,7 @@ export default class App extends Component {
 
     if (messages.length > 0) {
       const messageId = messages[messages.length - 1].id
-      readMessage(this.state.creds, this.state.activeChat, messageId, (data) => {})
+      readMessage(this.state.creds, this.state.activeChat, messageId, () => {})
     }
     
     this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
