@@ -47,6 +47,8 @@ export default class TheirMessage extends Component {
 
         if (!message) { return <div /> }
 
+        const attachments = this.props.message && this.props.message.attachments
+
         const topLeftRadius = !lastMessage || lastMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
         const bottomLeftRadius = !nextMessage || nextMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
 
@@ -62,13 +64,6 @@ export default class TheirMessage extends Component {
                         { this.renderPersonText(message.sender) }
                     </div>
                 }
-
-                <div style={{ display: 'auto', paddingLeft: '50px' }}>
-                    
-                        { this.renderAttachments() }
-                    
-                </div>
-
             
                 <Row style={{ paddingLeft: '2px' }}>
 
@@ -83,23 +78,32 @@ export default class TheirMessage extends Component {
 
                         </div>
 
-                        <div style={{ paddingLeft: '48px' }}>
+                        <div style={{ display: 'auto', paddingLeft: '50px' }}>
 
-                            <div 
-                                style={{ ...styles.theirMessage, ...{ borderRadius } }}
-                                onMouseEnter={() => this.setState({ selected: true })}
-                                onMouseLeave={() => this.setState({ selected: false })}
-                            >
-                                { message.text }
-                            </div>
-                        
+                            { this.renderAttachments() }
+                            
                         </div>
+
+                        {
+                            !attachments || message.text &&
+                            <div style={{ paddingLeft: '48px' }}>
+                                <div
+                                    onMouseEnter={() => this.setState({ selected: true })}
+                                    onMouseLeave={() => this.setState({ selected: false })}
+                                    style={{ ...styles.theirMessage, ...{ borderRadius } }}
+                                >
+                                    { message.text }
+                                </div>
+                            </div>  
+                        }
 
                     </Col>
 
                     {/* Col is 9 to not slipp into RHS */}
                     <Col xs={9} style={{ marginLeft: '48px' }}>
+
                         { this.renderReads() }
+                        
                     </Col>
                 
                 </Row>

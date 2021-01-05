@@ -37,6 +37,8 @@ export default class Message extends Component {
 
         if (!message) { return <div /> }
 
+        const attachments = this.props.message && this.props.message.attachments
+
         const topRightRadius = !lastMessage || lastMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
         const bottomRightRadius = !nextMessage || nextMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
 
@@ -60,9 +62,12 @@ export default class Message extends Component {
 
                     <Col xs={11} sm={10} md={9}>
 
-                        <div style={{ ...styles.myMessage, ...{ borderRadius } }}>
-                            { message.text }
-                        </div>
+                        {
+                            !attachments || message.text && 
+                            <div style={{ ...styles.myMessage, ...{ borderRadius } }}>
+                                { message.text }
+                            </div>
+                        }
 
                     </Col>
 
