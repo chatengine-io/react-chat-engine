@@ -8,7 +8,8 @@ import ChatSettings from './ChatSettings'
 export default class ChatSettingsContainer extends Component {
 
     render() {
-        const { chat } = this.props
+        const { chats, activeChat } = this.props
+        const chat = chats && chats[activeChat] 
         
         if (!chat) return <div style={styles.filler} />
         

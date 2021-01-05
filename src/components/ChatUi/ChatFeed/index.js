@@ -24,8 +24,8 @@ export default class ChatFeed extends Component {
     }
 
     renderTypers() {
-        const { typingData, chatId } = this.props
-        const typers = typingData[chatId] ? typingData[chatId] : []
+        const { typingData, activeChat } = this.props
+        const typers = typingData[activeChat] ? typingData[activeChat] : []
 
         if (this.props.renderIsTyping) {
             return this.props.renderIsTyping(typers)
@@ -44,8 +44,8 @@ export default class ChatFeed extends Component {
     }
 
     renderMessages() {
-        const { messages, chats, chatId } = this.props
-        const chat = chats && chats[chatId]
+        const { messages, chats, activeChat } = this.props
+        const chat = chats && chats[activeChat]
         const keys = Object.keys(messages)
 
         return keys.map((key, index) => {
@@ -98,8 +98,8 @@ export default class ChatFeed extends Component {
     }
 
     render() {
-        const { chats, creds, chatId } = this.props
-        const chat = chats && chats[chatId] 
+        const { chats, creds, activeChat } = this.props
+        const chat = chats && chats[activeChat] 
 
         if(creds === null) { 
             return <Loading />
@@ -137,8 +137,8 @@ export default class ChatFeed extends Component {
 
                 {
                     this.props.renderNewMessageForm ?
-                    this.props.renderNewMessageForm(this.props, chatId) :
-                    <MessageForm creds={this.props} chatId={chatId} />
+                    this.props.renderNewMessageForm(this.props, activeChat) :
+                    <MessageForm creds={this.props} chatId={activeChat} />
                 }
 
             </div>

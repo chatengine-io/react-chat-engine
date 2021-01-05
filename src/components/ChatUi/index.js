@@ -19,7 +19,7 @@ setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
 export default class App extends Component {
   state = {
-    creds: null,
+    creds: null, // TODO: Remove after fixing fail auth
     chats: null,
     messages: {},
     activeChat: null,
@@ -198,8 +198,8 @@ export default class App extends Component {
     return (
       <div style={{ textAlign: 'left', backgroundColor: 'white' }}>
 
-        <Socket 
-          {...this.props} 
+        <Socket
+          {...this.props}
           // API Hooks
           onConnect={(props) => this.onConnect(props)}
           onFailAuth={(props) => this.onFailAuth(props)}
@@ -222,8 +222,7 @@ export default class App extends Component {
 
             <ChatList 
               {...this.props}
-              chats={this.state.chats}
-              activeChat={this.state.activeChat}
+              {...this.state}
               onChatClick={(chatId) => this.setActiveChat(chatId)}
             />
 
@@ -231,23 +230,13 @@ export default class App extends Component {
 
           <Col xs={12} sm={6} style={{ height: height ? height : '' }}>
 
-            <ChatFeed 
-              {...this.props}
-              creds={this.state.creds} 
-              chats={this.state.chats} 
-              chatId={this.state.activeChat} 
-              messages={this.state.messages} 
-              typingData={this.state.typingData}
-            />
+            <ChatFeed {...this.props} {...this.state} />
 
           </Col>
 
           <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
 
-            <ChatSettings 
-              {...this.props}
-              chat={this.state.chats && this.state.chats[this.state.activeChat]} 
-            />
+            <ChatSettings {...this.props} {...this.state} />
 
           </Col>
 
