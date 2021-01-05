@@ -8,7 +8,7 @@ import ChatSettings from './ChatSettings'
 export default class ChatSettingsContainer extends Component {
 
     render() {
-        const { chat, creds } = this.props
+        const { chat } = this.props
         
         if (!chat) return <div style={styles.filler} />
         
@@ -19,29 +19,29 @@ export default class ChatSettingsContainer extends Component {
 
                     {
                         this.props.renderChatSettings ?
-                        this.props.renderChatSettings(creds, chat) :
-                        <ChatSettings creds={creds} chat={chat} />
+                        this.props.renderChatSettings(this.props, chat) :
+                        <ChatSettings creds={this.props} chat={chat} />
                     }
 
                     {
                         this.props.renderPeopleSettings ?
-                        this.props.renderPeopleSettings(creds, chat) :
-                        <People creds={creds} chat={chat} />
+                        this.props.renderPeopleSettings(this.props, chat) :
+                        <People creds={this.props} chat={chat} />
                     }
 
                     {
                         this.props.renderPhotosSettings ?
                         this.props.renderPhotosSettings(chat) :
-                        <Photos creds={creds} chat={chat} />
+                        <Photos chat={chat} />
                     }
 
                     {
-                        creds && chat && creds.userName === chat.admin.username  &&
+                        this.props && chat && this.props.userName === chat.admin.username  &&
                         <div>
                             {
                                 this.props.renderOptionsSettings ?
-                                this.props.renderOptionsSettings(creds, chat) :
-                                <Options creds={creds} chat={chat} />
+                                this.props.renderOptionsSettings(this.props, chat) :
+                                <Options creds={this.props} chat={chat} />
                             }
                         </div>
                     }
