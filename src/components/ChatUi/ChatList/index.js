@@ -38,7 +38,7 @@ class ChatList extends Component {
                         { chat.title }
                         {' '}
                         {
-                            !this.readLastMessage(this.props.creds, chat) &&
+                            !this.readLastMessage(this.props, chat) &&
                             <div 
                                 style={{ 
                                     float: 'right',
@@ -68,9 +68,7 @@ class ChatList extends Component {
         })
     }
 
-    render() {
-        const { creds } = this.props
-        
+    render() {        
         return (
             <div style={styles.chatListContainer}>
 
@@ -82,9 +80,9 @@ class ChatList extends Component {
 
                     {
                         this.props.renderNewChatForm ?
-                        this.props.renderNewChatForm(creds) :
+                        this.props.renderNewChatForm(this.props) :
                         <div style={ styles.newChatContainer }>
-                            <ChatForm creds={creds} />
+                            <ChatForm creds={this.props} />
                         </div>
                     }
                     

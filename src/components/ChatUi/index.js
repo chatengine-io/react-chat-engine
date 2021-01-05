@@ -222,10 +222,9 @@ export default class App extends Component {
 
             <ChatList 
               {...this.props}
-              creds={this.state.creds} 
-              chats={this.state.chats} 
+              chats={this.state.chats}
               activeChat={this.state.activeChat}
-              onChatClick={(chatId) => this.setActiveChat(chatId)} 
+              onChatClick={(chatId) => this.setActiveChat(chatId)}
             />
 
           </Col>
