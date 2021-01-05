@@ -246,7 +246,6 @@ export default class App extends Component {
 
             <ChatSettings 
               {...this.props}
-              creds={this.state.creds} 
               chat={this.state.chats && this.state.chats[this.state.activeChat]} 
             />
 
