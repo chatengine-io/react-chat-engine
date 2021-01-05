@@ -19,8 +19,8 @@ export default class ChatSettingsContainer extends Component {
                 <div style={{ width: '90%', paddingLeft: '5%' }}>
 
                     {
-                        this.props.renderChatSettings ?
-                        this.props.renderChatSettings(this.props, chat) :
+                        this.props.renderChatSettingsTop ?
+                        this.props.renderChatSettingsTop(this.props, chat) :
                         <ChatSettings creds={this.props} chat={chat} />
                     }
 

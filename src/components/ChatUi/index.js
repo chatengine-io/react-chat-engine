@@ -219,24 +219,36 @@ export default class App extends Component {
         <Row>
 
           <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
-
-            <ChatList 
-              {...this.props}
-              {...this.state}
-              onChatClick={(chatId) => this.setActiveChat(chatId)}
-            />
+            
+            {
+              this.props.renderChatList ?
+              this.props.renderChatList() :
+              <ChatList 
+                {...this.props}
+                {...this.state}
+                onChatClick={(chatId) => this.setActiveChat(chatId)}
+              />
+            }
 
           </Col>
 
           <Col xs={12} sm={6} style={{ height: height ? height : '' }}>
 
-            <ChatFeed {...this.props} {...this.state} />
+            {
+              this.props.renderChatFeed ?
+              this.props.renderChatFeed() :
+              <ChatFeed {...this.props} {...this.state} />
+            }
 
           </Col>
 
           <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
 
-            <ChatSettings {...this.props} {...this.state} />
+            {
+              this.props.renderChatSettings ?
+              this.props.renderChatSettings() :
+              <ChatSettings {...this.props} {...this.state} />
+            }
 
           </Col>
 
