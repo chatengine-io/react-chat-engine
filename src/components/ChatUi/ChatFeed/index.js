@@ -44,7 +44,7 @@ export default class ChatFeed extends Component {
     }
 
     renderMessages() {
-        const { messages, chats, creds, chatId } = this.props
+        const { messages, chats, chatId } = this.props
         const chat = chats && chats[chatId]
         const keys = Object.keys(messages)
 
@@ -56,17 +56,25 @@ export default class ChatFeed extends Component {
             if (this.props.renderMessageBubble) {
                 return (
                     <div key={`message_${index}`}>
-                        { this.props.renderMessageBubble(creds, chat, messages[lastMessageKey], message, messages[nextMessageKey]) }
+                        { 
+                            this.props.renderMessageBubble(
+                                this.props, 
+                                chat, 
+                                messages[lastMessageKey], 
+                                message, 
+                                messages[nextMessageKey]
+                            ) 
+                        }
                     </div>
                 )
             }
             
             return (
                 <Message 
-                    key={`message_${index}`} 
-                    chat={chat} 
-                    creds={creds} 
-                    message={message} 
+                    key={`message_${index}`}
+                    creds={this.props}
+                    chat={chat}
+                    message={message}
                     lastMessage={messages[lastMessageKey]}
                     nextMessage={messages[nextMessageKey]}
                 />
@@ -81,7 +89,7 @@ export default class ChatFeed extends Component {
         })
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         // Only scroll if messages loaded
         // TODO: Make more sophisticated
         if(!_.isEmpty(this.props.messages)) {
@@ -129,8 +137,8 @@ export default class ChatFeed extends Component {
 
                 {
                     this.props.renderNewMessageForm ?
-                    this.props.renderNewMessageForm(creds, chatId) :
-                    <MessageForm chatId={chatId} creds={creds} />
+                    this.props.renderNewMessageForm(this.props, chatId) :
+                    <MessageForm creds={this.props} chatId={chatId} />
                 }
 
             </div>
