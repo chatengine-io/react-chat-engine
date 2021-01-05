@@ -221,13 +221,11 @@ export default class App extends Component {
           <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
 
             <ChatList 
+              {...this.props}
               creds={this.state.creds} 
               chats={this.state.chats} 
               activeChat={this.state.activeChat}
               onChatClick={(chatId) => this.setActiveChat(chatId)} 
-              // Customize UI
-              renderChatCard={this.props.renderChatCard}
-              renderNewChatForm={this.props.renderNewChatForm}
             />
 
           </Col>
@@ -235,16 +233,12 @@ export default class App extends Component {
           <Col xs={12} sm={6} style={{ height: height ? height : '' }}>
 
             <ChatFeed 
+              {...this.props}
               creds={this.state.creds} 
               chats={this.state.chats} 
               chatId={this.state.activeChat} 
               messages={this.state.messages} 
               typingData={this.state.typingData}
-              // Customize UI
-              renderChatHeader={this.props.renderChatHeader}
-              renderMessageBubble={this.props.renderMessageBubble}
-              renderIsTyping={this.props.renderIsTyping}
-              renderNewMessageForm={this.props.renderNewMessageForm}
             />
 
           </Col>
@@ -252,13 +246,9 @@ export default class App extends Component {
           <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
 
             <ChatSettings 
+              {...this.props}
               creds={this.state.creds} 
               chat={this.state.chats && this.state.chats[this.state.activeChat]} 
-              // Customize UI
-              renderChatSettings={this.props.renderChatSettings}
-              renderPeopleSettings={this.props.renderPeopleSettings}
-              renderPhotosSettings={this.props.renderPhotosSettings}
-              renderOptionsSettings={this.props.renderOptionsSettings}
             />
 
           </Col>
