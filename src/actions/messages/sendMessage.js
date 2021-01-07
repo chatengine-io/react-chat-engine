@@ -2,10 +2,11 @@ import axios from 'axios'
 import * as str from '../../actions'
 
 export function sendMessage(props, chatId, data, callback) {
-    
     let formdata = new FormData()
-    for (let i = 0; i < data.files.length; i++) { 
-        formdata.append('attachments', data.files[i], data.files[i].name)
+    if(data.files) {
+        for (let i = 0; i < data.files.length; i++) { 
+            formdata.append('attachments', data.files[i], data.files[i].name)
+        }
     }
     formdata.append('text', data.text)
 
