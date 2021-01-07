@@ -222,10 +222,8 @@ export default class App extends Component {
             
             {
               this.props.renderChatList ?
-              this.props.renderChatList() :
-              <ChatList 
-                {...this.props}
-                {...this.state}
+              this.props.renderChatList({...this.props, ...this.state}) :
+              <ChatList {...this.props} {...this.state}
                 onChatClick={(chatId) => this.setActiveChat(chatId)}
               />
             }
@@ -236,7 +234,7 @@ export default class App extends Component {
 
             {
               this.props.renderChatFeed ?
-              this.props.renderChatFeed() :
+              this.props.renderChatFeed({...this.props, ...this.state}) :
               <ChatFeed {...this.props} {...this.state} />
             }
 
@@ -246,7 +244,7 @@ export default class App extends Component {
 
             {
               this.props.renderChatSettings ?
-              this.props.renderChatSettings() :
+              this.props.renderChatSettings({...this.props, ...this.state}) :
               <ChatSettings {...this.props} {...this.state} />
             }
 
