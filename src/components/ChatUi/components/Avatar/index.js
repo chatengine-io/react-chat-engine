@@ -4,6 +4,14 @@ import { stringToColor } from '../../Utilities/colorMapping'
 
 
 export default class Avatar extends Component {
+    state = { avatar: '' } // State to avoid rerendering
+
+    componentDidUpdate() {
+        const avatar = this.props.person ? this.props.person.avatar : undefined
+        if (avatar && avatar.split('?')[0] !== this.state.avatar.split('?')[0]) {
+            this.setState({ avatar })
+        }
+    }
 
     render() {
         const { person } = this.props
@@ -31,9 +39,9 @@ export default class Avatar extends Component {
                 <div style={{ 
                     ...styles.avatar, 
                     ...customStyle, 
-                    ...{ backgroundColor: person.avatar ? 'white' : color },
                     ...{ 
-                        backgroundImage: person.avatar && `url(${person.avatar})`,
+                        backgroundColor: this.state.avatar ? 'white' : color,
+                        backgroundImage: this.state.avatar && `url(${this.state.avatar})`,
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
                         backgroundSize: '48px'
@@ -42,7 +50,7 @@ export default class Avatar extends Component {
                     
                     <div style={{ color: 'white', paddingTop: '12px', fontSize: '15px', fontWeight: '600' }}>
                     
-                        { person.avatar === null && text }
+                        { !this.state.avatar && text }
                     
                     </div>
                 

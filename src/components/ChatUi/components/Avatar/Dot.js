@@ -4,6 +4,14 @@ import { stringToColor } from '../../Utilities/colorMapping'
 
 
 export default class Dot extends Component {
+    state = { avatar: '' } // State to avoid rerendering
+
+    componentDidUpdate() {
+        const avatar = this.props.person ? this.props.person.avatar : undefined
+        if (avatar && avatar.split('?')[0] !== this.state.avatar.split('?')[0]) {
+            this.setState({ avatar })
+        }
+    }
 
     render() {
         const { person } = this.props
@@ -13,11 +21,11 @@ export default class Dot extends Component {
         return (
             <div
                 style={{
-                    ...styles.avatar,
+                    ...styles.dot,
                     ...customStyle,
-                    ...{ backgroundColor: person.avatar ? 'white' : color },
                     ...{
-                        backgroundImage: person.avatar && `url(${person.avatar})`,
+                        backgroundColor: this.state.avatar ? 'white' : color,
+                        backgroundImage: this.state.avatar && `url(${this.state.avatar})`,
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
                         backgroundSize: '14px'
@@ -29,7 +37,7 @@ export default class Dot extends Component {
 }
 
 const styles = {
-    avatar: {
+    dot: {
         width: '13px',
         height: '13px',
         borderRadius: '13px',
