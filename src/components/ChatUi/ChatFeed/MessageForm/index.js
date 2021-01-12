@@ -100,7 +100,6 @@ const styles = {
     backgroundColor: 'white',
   },
   inputContainer: { 
-    overflow: 'scroll',
     minHeight: '36px',
     paddingTop: '10px',
     paddingBottom: '6px',
