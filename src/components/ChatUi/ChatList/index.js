@@ -32,14 +32,16 @@ class ChatList extends Component {
                     key={`chat_${index}`} 
                     onClick={() => this.props.onChatClick(chat.id)}
                     style={{ ...styles.chatContainer, ...extraStyle }}
+                    className={`ce-chat-card ${this.props.activeChat === chat.id && 'ce-active-chat-card'}`}
                 >
                     
-                    <div style={ styles.titleText }>
+                    <div style={ styles.titleText } className='ce-chat-title-text'>
                         { chat.title }
                         {' '}
                         {
                             !this.readLastMessage(this.props, chat) &&
                             <div 
+                                className='ce-chat-unread-dot'
                                 style={{ 
                                     float: 'right',
                                     width: '12px',
@@ -53,12 +55,15 @@ class ChatList extends Component {
                         
                     </div>
 
-                    <div style={{ width: '100%' }}>
-                        <div style={ styles.messageText }>
+                    <div style={{ width: '100%' }} className='ce-chat-subtitle'>
+                        <div style={styles.messageText} className='ce-chat-subtitle-text ce-chat-subtitle-message'>
                             { chat.last_message.text ? chat.last_message.text : 'Say hello!' }
                         </div>
 
-                        <div style={{ ...styles.messageText, ...{ textAlign: 'right', width: '25%' } }}>
+                        <div 
+                            className='ce-chat-subtitle-text ce-chat-subtitle-date'
+                            style={{ ...styles.messageText, ...{ textAlign: 'right', width: '25%' } }}
+                        >
                             { daySinceSent(chat.last_message.created) }
                         </div>
                     </div>
@@ -70,9 +75,9 @@ class ChatList extends Component {
 
     render() {        
         return (
-            <div style={styles.chatListContainer}>
+            <div style={styles.chatListContainer} className='chat-list'>
 
-                <div style={ styles.chatsContainer }>
+                <div style={styles.chatsContainer} className='chats-container'>
 
                     { this.renderChats(this.props.chats) } 
 
@@ -81,8 +86,8 @@ class ChatList extends Component {
                     {
                         this.props.renderNewChatForm ?
                         this.props.renderNewChatForm(this.props) :
-                        <div style={ styles.newChatContainer }>
-                            <ChatForm creds={this.props} />
+                        <div style={styles.newChatContainer} className='chat-form-container'>
+                            <ChatForm creds={this.props}  className='chat-form' />
                         </div>
                     }
                     

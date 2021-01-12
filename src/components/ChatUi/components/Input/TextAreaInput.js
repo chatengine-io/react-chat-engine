@@ -44,6 +44,7 @@ export default class TextAreaInput extends Component {
         return (
             <textarea 
                 id='msg-textarea'
+                className='ce-input ce-textarea-input'
                 rows='1'
                 style={ styles.input }
                 value={ this.props.value }

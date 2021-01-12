@@ -24,7 +24,8 @@ export default class Avatar extends Component {
 
                 {
                     this.props.show_online !== false && 
-                    <div  
+                    <div  // TODO: Fix this
+                        className='ce-avatar-status'
                         style={{ 
                             width: '8px', 
                             height: '8px', 
@@ -36,19 +37,25 @@ export default class Avatar extends Component {
                     />
                 }
 
-                <div style={{ 
-                    ...styles.avatar, 
-                    ...customStyle, 
-                    ...{ 
-                        backgroundColor: this.state.avatar ? 'white' : color,
-                        backgroundImage: this.state.avatar && `url(${this.state.avatar})`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'center',
-                        backgroundSize: '48px'
-                    }
-                }}>
+                <div 
+                    className='ce-avatar'
+                    style={{ 
+                        ...styles.avatar, 
+                        ...customStyle, 
+                        ...{ 
+                            backgroundColor: this.state.avatar ? 'white' : color,
+                            backgroundImage: this.state.avatar && `url(${this.state.avatar})`,
+                            backgroundRepeat: 'no-repeat',
+                            backgroundPosition: 'center',
+                            backgroundSize: '48px'
+                        }
+                    }}
+                >
                     
-                    <div style={{ color: 'white', paddingTop: '12px', fontSize: '15px', fontWeight: '600' }}>
+                    <div 
+                        className='ce-avatar-text'
+                        style={{ color: 'white', paddingTop: '12px', fontSize: '15px', fontWeight: '600' }}
+                    >
                     
                         { !this.state.avatar && text }
                     

@@ -20,6 +20,7 @@ export default class Dot extends Component {
         
         return (
             <div
+                className='ce-avatar-dot'
                 style={{
                     ...styles.dot,
                     ...customStyle,

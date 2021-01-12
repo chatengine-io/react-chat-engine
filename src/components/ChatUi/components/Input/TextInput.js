@@ -22,6 +22,7 @@ export default class TextInput extends Component {
         return (
             // NOTE: You may need to make a div the searchContainer to put icons in...
             <input 
+                className='ce-input ce-text-input'
                 value={this.props.value} 
                 placeholder={this.props.label}
                 style={{ ...defaultStyle, ...customStyle }}

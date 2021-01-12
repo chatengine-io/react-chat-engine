@@ -47,19 +47,19 @@ export default class AutoComplete extends Component {
 
         return results.map((option, index) => {
             return (
-                <div key={`option_${index}`}>
-
+                <div key={`option_${index}`} className='ce-autocomplete-option'>
                     { this.props.renderOption && this.props.renderOption(option) }
 
                     { 
                         index == results.length - 1 && 
-                        <div style={styles.close} onClick={() => this.onChange('', false)}>
-                            
+                        <div 
+                            style={styles.close} 
+                            className='ce-autocomplete-close'
+                            onClick={() => this.onChange('', false)}
+                        >
                             <CloseOutlined />
-                            
                         </div>
                     }
-
                 </div>
             )
         })
@@ -73,6 +73,7 @@ export default class AutoComplete extends Component {
         return (
             <div>
                 <input 
+                    className='ce-input ce-autocomplete-input'
                     value={this.props.value} 
                     placeholder={this.props.label}
                     style={{ ...defaultStyle, ...customStyle }}
@@ -84,11 +85,13 @@ export default class AutoComplete extends Component {
 
                 {
                     options && options.length > 0 && this.state.showAll &&
-                    <div style={{ borderRadius: '19px', border: '1px solid #afafaf', }}>
+                    <div 
+                        className='ce-autocomplete-options'
+                        style={{ borderRadius: '19px', border: '1px solid #afafaf' }}
+                    >
                         { this.renderOptions(this.props.options) }
                     </div>
                 }
-            
             </div>
         )
     }
@@ -96,13 +99,10 @@ export default class AutoComplete extends Component {
 
 const styles = {
     input: {
-        // Size
         height: '36px',
         fontSize: '15px',
-        // Border
         outline: 'none',
         borderRadius: '24px',
-        // Padding and width
         padding: '0px 12px',
         boxSizing: 'border-box'
     },
