@@ -53,11 +53,14 @@ export default class Message extends Component {
                 style={{ width: '100%', textAlign: 'right', paddingBottom }}
             >
 
-                <div style={{ display: 'auto' }} className='ce-message-attachments-container'>
+                <div 
+                    style={{ display: 'auto' }} 
+                    className='ce-my-message-attachments-container'
+                >
                     { this.renderAttachments() }
                 </div>
 
-                <Row 
+                <Row
                     style={{ paddingRight: '2px' }} 
                     className='ce-message-bubble-row ce-my-message-bubble-row'
                 >
@@ -69,7 +72,7 @@ export default class Message extends Component {
                         {
                             !attachments || message.text && 
                             <div
-                                className='ce-message-bubble ce-my-message-bubble' 
+                                className='ce-message-bubble ce-my-message-bubble'
                                 style={{ ...styles.myMessage, ...{ borderRadius } }}
                             >
                                 { message.text }

@@ -56,21 +56,20 @@ export default class TheirMessage extends Component {
         const paddingBottom = !nextMessage || nextMessage.sender.username !== message.sender.username ? '12px' : '2px'
 
         return (
-            <div style={{ width: '100%', paddingBottom }}>
-
+            <div 
+                style={{ width: '100%', paddingBottom }}
+                className='ce-message-row ce-their-message'
+            >
                 {
                     (!lastMessage || lastMessage.sender.username !== message.sender.username) &&
-                    <div style={ styles.nameText }>
+                    <div style={styles.nameText} className='ce-their-message-sender'>
                         { this.renderPersonText(message.sender) }
                     </div>
                 }
             
-                <Row style={{ paddingLeft: '2px' }}>
-
+                <Row style={{ paddingLeft: '2px' }} className='ce-their-message-row'>
                     <Col xs={11} sm={10} md={9}>
-
-                        <div style={{ height: '0px' }}>
-                            
+                        <div style={{ height: '0px' }} className='ce-their-message-avatar'>
                             {
                                 (!nextMessage || nextMessage.sender.username !== message.sender.username) &&
                                 <Avatar person={message.sender} show_online={false} />
@@ -78,16 +77,18 @@ export default class TheirMessage extends Component {
 
                         </div>
 
-                        <div style={{ display: 'auto', paddingLeft: '50px' }}>
-
+                        <div 
+                            style={{ display: 'auto', paddingLeft: '50px' }}
+                            className='ce-their-message-attachments-container'
+                        >
                             { this.renderAttachments() }
-                            
                         </div>
 
                         {
                             !attachments || message.text &&
                             <div style={{ paddingLeft: '48px' }}>
                                 <div
+                                    className='ce-message-bubble ce-their-message-bubble'
                                     onMouseEnter={() => this.setState({ selected: true })}
                                     onMouseLeave={() => this.setState({ selected: false })}
                                     style={{ ...styles.theirMessage, ...{ borderRadius } }}
@@ -96,18 +97,17 @@ export default class TheirMessage extends Component {
                                 </div>
                             </div>  
                         }
-
                     </Col>
 
                     {/* Col is 9 to not slipp into RHS */}
-                    <Col xs={9} style={{ marginLeft: '48px' }}>
-
+                    <Col 
+                        xs={9} 
+                        style={{ marginLeft: '48px' }} 
+                        className='ce-reads-row ce-their-reads-row'
+                    >
                         { this.renderReads() }
-                        
                     </Col>
-                
                 </Row>
-            
             </div>
         )
     }
