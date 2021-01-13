@@ -3,14 +3,14 @@ import React, { Component } from 'react'
 import { ChatEngine, editMyData } from 'react-chat-engine'
 
 const users = [
-  // {
-  //   userName: 'John_Doe',
-  //   userSecret: 'pass1234',
-  // },
-  // {
-  //   userName: 'Jane_Smith',
-  //   userSecret: 'pass1234',
-  // },
+  {
+    userName: 'John_Doe',
+    userSecret: 'pass1234',
+  },
+  {
+    userName: 'Jane_Smith',
+    userSecret: 'pass1234',
+  },
   {
     userName: 'Adam_La_Morre',
     userSecret: 'pass1234',
