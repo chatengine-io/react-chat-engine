@@ -49,7 +49,7 @@ export default class MessageForm extends React.Component {
                         fontWeight: '600',
                         textAlign: 'center',
                         border: '0px solid white',
-                        width: 'calc(100% - 24px)',
+                        width: '100%',
                     }}
                 />
 

@@ -75,9 +75,9 @@ class ChatList extends Component {
 
     render() {        
         return (
-            <div style={styles.chatListContainer} className='chat-list'>
+            <div style={styles.chatListContainer} className='ce-chat-list'>
 
-                <div style={styles.chatsContainer} className='chats-container'>
+                <div style={styles.chatsContainer} className='ce-chats-container'>
 
                     { this.renderChats(this.props.chats) } 
 
@@ -86,8 +86,8 @@ class ChatList extends Component {
                     {
                         this.props.renderNewChatForm ?
                         this.props.renderNewChatForm(this.props) :
-                        <div style={styles.newChatContainer} className='chat-form-container'>
-                            <ChatForm creds={this.props}  className='chat-form' />
+                        <div style={styles.newChatContainer} className='ce-chat-form-container'>
+                            <ChatForm creds={this.props}  className='ce-chat-form' />
                         </div>
                     }
                     

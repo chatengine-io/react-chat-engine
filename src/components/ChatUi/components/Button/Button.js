@@ -21,7 +21,7 @@ export default class Button extends Component {
                 onMouseEnter={() => this.setState({ hovered: true })}
                 onMouseLeave={() => this.setState({ hovered: false })}
                 style={{ ...themeStyle, ...customStyle, ...hoverStyle }}
-                className={`ce-primary-button ${theme == 'danger' && 'ce-danger-button'}`}
+                className={`ce-primary-button ${theme == 'danger' ? 'ce-danger-button' : ''}`}
             >
 
                 { icon == 'plus' && <PlusOutlined /> }

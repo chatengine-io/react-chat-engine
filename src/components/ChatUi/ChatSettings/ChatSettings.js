@@ -67,7 +67,7 @@ export default class ChatSettings extends Component {
         
         return (
             <div className='ce-chat-settings-container'>
-                <Row>
+                <Row className='ce-chat-avatars-row'>
                     <Col xs={3} />
 
                     { topPeople.length == 1 && this.renderOnePerson(topPeople) }
