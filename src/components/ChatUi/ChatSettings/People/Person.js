@@ -35,20 +35,30 @@ export default class Person extends Component {
 
         return (
             <div 
+                className='ce-person-container'
                 onMouseEnter={() => this.setState({ selected: true })}
                 onMouseLeave={() => this.setState({ selected: false })}
             >
-                <div style={{ padding: '2px', height: '0px' }}>
+                <div 
+                    className='ce-person-avatar'
+                    style={{ padding: '2px', height: '0px' }}
+                >
                     <Avatar person={person} />
                 </div>
 
-                <div style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px', fontSize: '15px' }}>
+                <div
+                    className='ce-person-text'
+                    style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px', fontSize: '15px' }}
+                >
                     { this.renderPersonText(person) }
                 </div>
 
                 {
                     this.state.selected && (creds.userName === admin.username) && (person.username !== admin.username) &&
-                    <div style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}>
+                    <div
+                        className='ce-delete-chat' 
+                        style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}
+                    >
                         <Button 
                             theme='danger'
                             icon='delete'
