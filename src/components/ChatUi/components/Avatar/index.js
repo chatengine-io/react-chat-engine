@@ -4,11 +4,13 @@ import { stringToColor } from '../../Utilities/colorMapping'
 
 
 export default class Avatar extends Component {
-    state = { avatar: '' } // State to avoid rerendering
+    state = { avatar: '' }  // State to avoid img flickering
 
     componentDidUpdate() {
-        const avatar = this.props.person ? this.props.person.avatar : undefined
-        if (avatar && avatar.split('?')[0] !== this.state.avatar.split('?')[0]) {
+        const { person } = this.props
+        const avatar = (person && person.avatar !== null) ? person.avatar : ''
+        
+        if (avatar.split('?')[0] !== this.state.avatar.split('?')[0]) {
             this.setState({ avatar })
         }
     }
