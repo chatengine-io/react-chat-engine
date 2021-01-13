@@ -7,7 +7,7 @@ export default class Thumbnail extends React.Component {
         if (!attachment) { return <div /> }
 
         return (
-            <div style={styles.container}>
+            <div style={styles.container} className='ce-photo-thumbnail'>
                 
                 <div style={{ paddingTop: '100%' }} />
                 
@@ -15,6 +15,7 @@ export default class Thumbnail extends React.Component {
                     alt={attachment.id}
                     style={styles.image}
                     src={attachment.file}
+                    className='ce-photo-img'
                     id={`image-${attachment.id}`}
                 />
                 

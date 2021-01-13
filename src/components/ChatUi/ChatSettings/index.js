@@ -14,9 +14,9 @@ export default class ChatSettingsContainer extends Component {
         if (!chat) return <div style={styles.filler} />
         
         return (
-            <div style={styles.settingsContainer}>
+            <div style={styles.settingsContainer} className='ce-settings'>
 
-                <div style={{ width: '90%', paddingLeft: '5%' }}>
+                <div style={{ width: '90%', paddingLeft: '5%' }} className='ce-settings-container'>
 
                     {
                         this.props.renderChatSettingsTop ?

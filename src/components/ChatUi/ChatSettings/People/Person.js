@@ -38,29 +38,22 @@ export default class Person extends Component {
                 onMouseEnter={() => this.setState({ selected: true })}
                 onMouseLeave={() => this.setState({ selected: false })}
             >
-
                 <div style={{ padding: '2px', height: '0px' }}>
-                    
                     <Avatar person={person} />
-
                 </div>
 
                 <div style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px', fontSize: '15px' }}>
-
                     { this.renderPersonText(person) }
-
                 </div>
 
                 {
                     this.state.selected && (creds.userName === admin.username) && (person.username !== admin.username) &&
                     <div style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}>
-
                         <Button 
                             theme='danger'
                             icon='delete'
                             onClick={() => this.onRemovePerson()}
                         />
-
                     </div>
                 }
             </div>

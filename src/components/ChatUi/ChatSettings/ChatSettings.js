@@ -66,10 +66,8 @@ export default class ChatSettings extends Component {
         const topPeople = chat ? chat.people.slice(0, 3) : []
         
         return (
-            <div>
-
+            <div className='ce-chat-settings-container'>
                 <Row>
-
                     <Col xs={3} />
 
                     { topPeople.length == 1 && this.renderOnePerson(topPeople) }
@@ -77,11 +75,9 @@ export default class ChatSettings extends Component {
                     { topPeople.length == 3 && this.renderThreePeople(topPeople) }
 
                     <Col xs={3} />
-
                 </Row>
 
                 <TitleForm chat={chat} creds={creds} />
-
             </div>
         )
     }
