@@ -1,12 +1,6 @@
 import React, { Component } from 'react'
 
-// import { Row, Col } from 'react-grid-system'
-
 import { timeSinceDate } from '../../Utilities/dateToString'
-
-// import { SettingOutlined } from '@ant-design/icons'
-
-// import ChatListDrawer from './ChatListDrawer'
 
 export default class Title extends Component {
   
@@ -16,20 +10,19 @@ export default class Title extends Component {
         if (!chat) { return <div /> }
 
         return (
-            <div style={{ position: 'absolute', top: '0px', width: '100%', zIndex: '1' }}>
-
-                <div style={ styles.titleContainer }>
-                        
-                    <div style={ styles.titleText }>
+            <div 
+                className='ce-chat-title'
+                style={{ position: 'absolute', top: '0px', width: '100%', zIndex: '1' }}
+            >
+                <div style={styles.titleContainer} className='ce-chat-title-container'>  
+                    <div style={styles.titleText} className='ce-chat-title-text'>
                         { chat && chat.title }
                     </div>
                     
-                    <div style={ styles.subtitleText }>
-                        Active { timeSinceDate(chat.last_message.created) }
+                    <div style={styles.subtitleText} className='ce-chat-subtitle-text'>
+                        Active {timeSinceDate(chat.last_message.created)}
                     </div>
-
                 </div>
-
             </div>
         );
     }

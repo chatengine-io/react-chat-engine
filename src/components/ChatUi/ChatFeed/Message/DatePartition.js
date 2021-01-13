@@ -49,7 +49,7 @@ export default class DatePartition extends Component {
         }
 
         return (
-            <div style={ styles.dateText }>
+            <div style={styles.dateText} className='ce-message-date-text'>
                 { this.formatDate(created) }
             </div>
         )

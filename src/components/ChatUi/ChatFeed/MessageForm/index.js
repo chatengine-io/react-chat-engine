@@ -43,50 +43,34 @@ export default class MessageForm extends React.Component {
 
       this.setState({ value: '', files: [] })
     }
-
-    renderFiles() {
-      return this.state.files.map((file, index) => {
-        return (
-          <div key={`file_${index}`}>
-            <img
-              style={{ maxHeight: '66px', maxWidth: '66px' }}
-              src={URL.createObjectURL(file)}
-              alt={file.name}
-            />
-          </div>
-        )
-      })
-    }
   
     render() {
       return (
-        <div style={ styles.messageFormContainer } id='msg-form-container'>
-
+        <div 
+          id='msg-form-container'
+          style={styles.messageFormContainer}
+          className='ce-message-form-container'
+        >
           <FileRow files={this.state.files} onRemove={(i) => this.onRemove(i)} />
 
           <ImagesInput onSelectFiles={(files) => this.setState({ files })} />
 
-          <form onSubmit={this.handleSubmit.bind(this)}>
-
-            <div style={ styles.inputContainer }>
-
-              <TextAreaInput 
-                label='Send a message...' 
-                value={this.state.value} 
-                handleChange={this.handleChange.bind(this)} 
-                onSubmit={this.handleSubmit.bind(this)} 
+          <form onSubmit={this.handleSubmit.bind(this)} className='ce-message-form'>
+            <div style={styles.inputContainer} className='ce-message-input-form'>
+              <TextAreaInput
+                value={this.state.value}
+                label='Send a message...'
+                handleChange={this.handleChange.bind(this)}
+                onSubmit={this.handleSubmit.bind(this)}
               />
 
               <Button 
-                type="submit" 
-                icon='send' 
-                style={{ position: 'absolute', bottom: '10px', right: '6px' }} 
+                icon='send'
+                type="submit"
+                style={{ position: 'absolute', bottom: '10px', right: '6px' }}
               />
-            
             </div>
-
           </form>
-          
         </div>
       );
     }

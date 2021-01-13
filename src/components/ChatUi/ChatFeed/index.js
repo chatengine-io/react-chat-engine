@@ -85,7 +85,7 @@ export default class ChatFeed extends Component {
     scrollToBottom() {
         animateScroll.scrollToBottom({
             duration: this.state.duration,
-            containerId: "feed-container"
+            containerId: "ce-feed-container"
         })
     }
 
@@ -114,7 +114,10 @@ export default class ChatFeed extends Component {
         }
 
         return (
-            <div style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}>
+            <div 
+                className='ce-chat-feed'
+                style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
+            >
 
                 {
                     this.props.renderChatHeader ? 
@@ -123,15 +126,19 @@ export default class ChatFeed extends Component {
                 }
 
 
-                <div style={ styles.feedContainer } id='feed-container'>
+                <div
+                    id='ce-feed-container'
+                    style={styles.feedContainer} 
+                    className='ce-chat-feed-container'
+                >
 
-                    <div style={{ height: '88px' }} />
+                    <div style={{ height: '88px' }} className='ce-feed-container-top' />
 
                     { this.renderMessages() }
 
                     { this.renderTypers() }
 
-                    <div style={{ height: '54px' }} />
+                    <div style={{ height: '54px' }} className='ce-feed-container-bottom' />
 
                 </div>
 

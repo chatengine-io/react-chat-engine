@@ -47,16 +47,20 @@ export default class Message extends Component {
 
         return (
             <div 
-                style={{ width: '100%', textAlign: 'right', paddingBottom }}
+                className='ce-message-row ce-my-message'
                 onMouseEnter={() => this.setState({ selected: true })}
                 onMouseLeave={() => this.setState({ selected: false })}
+                style={{ width: '100%', textAlign: 'right', paddingBottom }}
             >
 
-                <div style={{ display: 'auto' }}>
+                <div style={{ display: 'auto' }} className='ce-message-attachments-container'>
                     { this.renderAttachments() }
                 </div>
 
-                <Row style={{ paddingRight: '2px' }}>
+                <Row 
+                    style={{ paddingRight: '2px' }} 
+                    className='ce-message-bubble-row ce-my-message-bubble-row'
+                >
 
                     <Col xs={1} sm={2} md={3} />
 
@@ -64,7 +68,10 @@ export default class Message extends Component {
 
                         {
                             !attachments || message.text && 
-                            <div style={{ ...styles.myMessage, ...{ borderRadius } }}>
+                            <div
+                                className='ce-message-bubble ce-my-message-bubble' 
+                                style={{ ...styles.myMessage, ...{ borderRadius } }}
+                            >
                                 { message.text }
                             </div>
                         }
@@ -73,7 +80,7 @@ export default class Message extends Component {
 
                     <Col xs={1} sm={2} md={3} />
 
-                    <Col xs={12}>
+                    <Col xs={12} className='ce-reads-row ce-my-reads-row'>
                         { this.renderReads() }
                     </Col>
             

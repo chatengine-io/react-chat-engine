@@ -15,7 +15,7 @@ export default class Message extends Component {
         if (!message) { return <div /> }
 
         return (
-            <div>
+            <div className='ce-message-and-date'>
 
                 <DatePartition 
                     lastCreated={lastMessage ? lastMessage.created : null} 
