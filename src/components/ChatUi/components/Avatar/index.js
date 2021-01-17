@@ -22,48 +22,41 @@ export default class Avatar extends Component {
         const color = stringToColor(person ? person.username : '')    
                 
         return (
-            <div>
+            <div style={{ width: '48px', height: '48px' }}>
+                <div style={{ height: '0px' }}>
+                    <div 
+                        className='ce-avatar'
+                        style={{ 
+                            ...styles.avatar, 
+                            ...customStyle, 
+                            ...{ 
+                                backgroundColor: this.state.avatar ? 'white' : color,
+                                backgroundImage: this.state.avatar && `url(${this.state.avatar})`,
+                                backgroundRepeat: 'no-repeat',
+                                backgroundPosition: 'center',
+                                backgroundSize: '48px',
+                            }
+                        }}
+                    >   
+                        <div 
+                            className='ce-avatar-text'
+                            style={styles.avatarText}
+                        >
+                            { !this.state.avatar && text }
+                        </div>
+                    </div>
+                </div>
 
                 {
                     this.props.show_online !== false && 
-                    <div  // TODO: Fix this
+                    <div
                         className='ce-avatar-status'
-                        style={{ 
-                            width: '8px', 
-                            height: '8px', 
-                            borderRadius: '100%', 
-                            position: 'absolute', 
-                            border: '2px solid white',
-                            backgroundColor: person.is_online ? '#52c41a' : '#f5222d' 
-                        }} 
+                        style={{
+                            ...styles.status, 
+                            ...{ backgroundColor: person.is_online ? '#52c41a' : '#f5222d' }
+                        }}
                     />
                 }
-
-                <div 
-                    className='ce-avatar'
-                    style={{ 
-                        ...styles.avatar, 
-                        ...customStyle, 
-                        ...{ 
-                            backgroundColor: this.state.avatar ? 'white' : color,
-                            backgroundImage: this.state.avatar && `url(${this.state.avatar})`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundPosition: 'center',
-                            backgroundSize: '48px'
-                        }
-                    }}
-                >
-                    
-                    <div 
-                        className='ce-avatar-text'
-                        style={{ color: 'white', paddingTop: '12px', fontSize: '15px', fontWeight: '600' }}
-                    >
-                    
-                        { !this.state.avatar && text }
-                    
-                    </div>
-                
-                </div>
             </div>
         )
     }
@@ -76,5 +69,17 @@ const styles = {
         borderRadius: '22px',
         color: 'white',
         textAlign: 'center',
+    },
+    avatarText: {
+        color: 'white', 
+        paddingTop: '12px', 
+        fontSize: '15px', 
+        fontWeight: '600'
+    },
+    status: { 
+        width: '8px', 
+        height: '8px', 
+        borderRadius: '100%', 
+        border: '2px solid white',   
     }
 }
