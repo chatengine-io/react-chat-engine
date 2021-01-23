@@ -27,7 +27,7 @@ export default class Thumbnail extends React.Component {
 const styles = {
     container: { 
         position: 'relative', 
-        width: 'calc(33% - 2px)', 
+        width: 'calc(33% - 8px)', 
         border: '1px solid white', 
         display: 'inline-block',
         cursor: 'pointer'
