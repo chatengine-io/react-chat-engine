@@ -27,6 +27,13 @@ class ChatList extends Component {
                 return <div key={`chat_${index}`}>{this.props.renderChatCard(chat, index)}</div>
             }
 
+            let lastMessage = chat.last_message.text
+            if (!lastMessage) {
+                lastMessage = chat.last_message.attachments.length > 0 ?
+                `${chat.last_message.attachments.length} image${chat.last_message.attachments.length > 1 ? 's' : ''}` :
+                'Say hello!'
+            }
+
             return (
                 <div 
                     key={`chat_${index}`} 
@@ -57,7 +64,7 @@ class ChatList extends Component {
 
                     <div style={{ width: '100%' }} className='ce-chat-subtitle'>
                         <div style={styles.messageText} className='ce-chat-subtitle-text ce-chat-subtitle-message'>
-                            { chat.last_message.text ? chat.last_message.text : 'Say hello!' }
+                            { lastMessage }
                         </div>
 
                         <div 
