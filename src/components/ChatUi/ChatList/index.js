@@ -18,7 +18,7 @@ class ChatList extends Component {
     }
 
     renderChats(chats) {
-        return _.map(chats, (chat, index) => {
+        return chats.map((chat, index) => {
             if (!chat) return <div key={`chat_${index}`} />
 
             const extraStyle = this.props.activeChat === chat.id ? styles.activeChat : {}
@@ -80,13 +80,21 @@ class ChatList extends Component {
         })
     }
 
-    render() {        
+    render() {       
+        const chats = this.props.chats ? Object.values(this.props.chats) : []
+        chats.sort((a, b) => { 
+            const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date()
+            const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date()
+            return new Date(bDate) - new Date(aDate); 
+        })
+        console.log('chats', chats)
+
         return (
             <div style={styles.chatListContainer} className='ce-chat-list'>
 
                 <div style={styles.chatsContainer} className='ce-chats-container'>
 
-                    { this.renderChats(this.props.chats) } 
+                    { this.renderChats(chats) } 
 
                     <div style={{ height: '64px' }} />
 
