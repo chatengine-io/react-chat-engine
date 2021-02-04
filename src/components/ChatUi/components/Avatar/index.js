@@ -4,9 +4,9 @@ import { stringToColor } from '../../Utilities/colorMapping'
 
 
 export default class Avatar extends Component {
-    state = { avatar: '' }  // State to avoid img flickering
+    state = { avatar: '' }  
 
-    componentDidUpdate() {
+    updateImg() {
         const { person } = this.props
         const avatar = (person && person.avatar !== null) ? person.avatar : ''
         
@@ -14,6 +14,10 @@ export default class Avatar extends Component {
             this.setState({ avatar })
         }
     }
+
+    componentDidMount() { this.updateImg() }
+
+    componentDidUpdate() { this.updateImg() }
 
     render() {
         const { person } = this.props
