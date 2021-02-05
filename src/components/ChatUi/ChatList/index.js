@@ -87,7 +87,6 @@ class ChatList extends Component {
             const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date()
             return new Date(bDate) - new Date(aDate); 
         })
-        console.log('chats', chats)
 
         return (
             <div style={styles.chatListContainer} className='ce-chat-list'>
