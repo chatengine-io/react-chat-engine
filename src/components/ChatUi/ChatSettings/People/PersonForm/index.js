@@ -38,7 +38,7 @@ export default class PersonForm extends React.Component {
   }
 
   renderOption(option) {
-    return <Option text={option.username} onClick={() => this.addPerson(option)} />
+    return <Option text={option.username} onClick={() => this.addPerson(option.username)} />
   }
 
   render() {

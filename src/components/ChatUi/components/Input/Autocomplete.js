@@ -25,8 +25,8 @@ export default class AutoComplete extends Component {
     }
 
     getNames() {
-        const max = 3 
         let count = 0
+        const max = this.props.max ? this.props.max : 3
         
         const results = []
 
