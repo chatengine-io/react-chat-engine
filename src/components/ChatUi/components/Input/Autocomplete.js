@@ -24,14 +24,14 @@ export default class AutoComplete extends Component {
         this.props.handleChange && this.props.handleChange(value)
     }
 
-    getNames(options) {
+    getNames() {
         const max = 3 
         let count = 0
         
         const results = []
-        
-        options.map(option => {
-            if (option.toLowerCase().indexOf(this.props.value.toLowerCase()) !== -1 && count < max) {
+
+        this.props.options.map(option => {
+            if (JSON.stringify(option).toLowerCase().indexOf(this.props.value.toLowerCase()) !== -1 && count < max) {
                 count = count + 1
                 results.push(option)
             }
@@ -40,10 +40,11 @@ export default class AutoComplete extends Component {
         return results
     }
 
-    renderOptions(options) {
+
+    renderOptions() {
         if(!this.props.value && !this.state.showAll) { return <div /> }
 
-        const results = this.getNames(options)
+        const results = this.getNames()
 
         return results.map((option, index) => {
             return (
@@ -89,7 +90,7 @@ export default class AutoComplete extends Component {
                         className='ce-autocomplete-options'
                         style={{ borderRadius: '19px', border: '1px solid #afafaf' }}
                     >
-                        { this.renderOptions(this.props.options) }
+                        { this.props.options && this.renderOptions() }
                     </div>
                 }
             </div>

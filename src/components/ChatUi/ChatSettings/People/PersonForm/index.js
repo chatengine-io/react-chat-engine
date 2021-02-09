@@ -28,31 +28,22 @@ export default class PersonForm extends React.Component {
     )
   }
 
-  onGetOthers(others) {
-    const usernames = []
-    others.map(other => {
-      usernames.push(other.username)
-    })
-    this.setState({ others: usernames })
-  }
-
   getOthers() {
     getOtherPeople(
       this.props.creds,
       this.props.chat.id,
-      (id, others) => this.onGetOthers(others),
+      (id, others) => this.setState({ others }),
       () => {},
     )
   }
 
   renderOption(option) {
-    return <Option text={option} onClick={() => this.addPerson(option)} />
+    return <Option text={option.username} onClick={() => this.addPerson(option)} />
   }
 
   render() {
     return (
       <div style={{ marginBottom: '12px' }}>
-
         <AutoCompleteInput 
           style={{ width: '100%' }}
           label='Type a username'
@@ -62,7 +53,6 @@ export default class PersonForm extends React.Component {
           handleChange={(value) => this.handleChange(value)} 
           renderOption={(option) => this.renderOption(option)}
         />
-        
       </div>
     );
   }
