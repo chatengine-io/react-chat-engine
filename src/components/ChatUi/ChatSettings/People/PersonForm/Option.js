@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Avatar from '../../../components/Avatar'
+
 
 export default class Option extends React.Component {
     state = {
@@ -14,7 +16,13 @@ export default class Option extends React.Component {
                 onClick={() => this.props.onClick && this.props.onClick()}
                 style={{ ...styles.option, ...{ backgroundColor: this.state.focused ? '#f5f5f5' : 'white'} }}
             >
-                {this.props.text}
+                <div>
+                    <Avatar person={this.props.person} />
+                </div>
+
+                <div style={{ display: 'flex', padding: '12px 4px' }}>
+                    {this.props.person.username}
+                </div>
             </div>
         );
     }
@@ -22,9 +30,9 @@ export default class Option extends React.Component {
 
 const styles = {
   option: {
-    borderRadius: '24px',
-    padding: '8px 16px',
+    padding: '4px 16px',
     cursor: 'pointer',
-    fontSize: '15px'
+    fontSize: '15px',
+    display: 'flex'
   },
 }

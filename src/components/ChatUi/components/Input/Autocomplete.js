@@ -88,7 +88,7 @@ export default class AutoComplete extends Component {
                     options && options.length > 0 && this.state.showAll &&
                     <div 
                         className='ce-autocomplete-options'
-                        style={{ borderRadius: '19px', border: '1px solid #afafaf' }}
+                        style={{ borderRadius: '19px', border: '1px solid #afafaf', overflow: 'hidden' }}
                     >
                         { this.props.options && this.renderOptions() }
                     </div>
