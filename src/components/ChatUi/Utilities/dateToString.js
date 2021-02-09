@@ -6,6 +6,7 @@ export function timeSinceDate(date) {
 }
 
 export function daySinceSent(date) {
+    if (!date) return ''
     const sent = Date(date)
     return sent.substr(4, 6)
 }

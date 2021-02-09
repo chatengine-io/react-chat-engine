@@ -153,8 +153,9 @@ const styles={
     newChatContainer: { 
         position: 'absolute', 
         bottom: '0px', 
-        width: '100%', 
-        padding: '12px', 
+        padding: '12px',
+        width: 'calc(100% - 25px)',
+        backgroundColor: 'white'
     }
 }
 
