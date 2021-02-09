@@ -10,54 +10,43 @@ export default class ChatSettings extends Component {
 
     renderOnePerson(people) {
         return (
-            <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
-                <div style={{ margin: 'auto', width: '33%' }}>
+            <div style={{ width: '100%', paddingTop: '14px' }}>
+                <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 22px)' }}>
                     <Avatar show_online={false} person={people[0].person} />
                 </div>
-            </Col>
+            </div>
         )
     }
 
     renderTwoPeople(people) {
         return (
-            <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
-                <div style={{ margin: 'auto', width: '50%' }}>
-                    <Avatar 
-                        show_online={false}
-                        person={people[0].person} 
-                        style={{ float: 'left', position: 'relative', right: '5px' }}
-                    />
-                    <Avatar 
-                        show_online={false}
-                        person={people[1].person} 
-                        style={{ float: 'right', position: 'relative', left: '5px', bottom: '44px', zIndex: 11 }}
-                    />
+            <div style={{ width: '100%', paddingTop: '14px' }}>
+                <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 22px - 15px)' }}>
+                    <Avatar show_online={false} person={people[0].person} />
                 </div>
-            </Col>
+
+                <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 44px - 22px + 15px)' }}>
+                    <Avatar show_online={false} person={people[1].person} />
+                </div>
+            </div>
         )
     }
 
     renderThreePeople(people) {
         return (
-            <Col xs={6} style={{ paddingTop: '22px', height: '80px' }}>
-                <div style={{ margin: 'auto', width: '50%' }}>
-                    <Avatar 
-                        show_online={false}
-                        person={people[0].person} 
-                        style={{ float: 'right', position: 'relative', right: '28px', top: '10px', zIndex: 11 }}
-                    />
-                    <Avatar 
-                        show_online={false}
-                        person={people[1].person} 
-                        style={{ float: 'right', position: 'relative', right: '14px', bottom: '56px', zIndex: 11 }}
-                    />
-                    <Avatar 
-                        show_online={false}
-                        person={people[2].person} 
-                        style={{ float: 'right', position: 'relative', left: '5px', bottom: '78px', zIndex: 11 }}
-                    />
+            <div style={{ width: '100%', paddingTop: '14px' }}>
+                <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 22px - 24px)' }}>
+                    <Avatar show_online={false} person={people[0].person} />
                 </div>
-            </Col>
+
+                <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 24px - 44px)' }}>
+                    <Avatar show_online={false} person={people[1].person} />
+                </div>
+
+                <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 22px - 44px - 44px + 24px)' }}>
+                    <Avatar show_online={false} person={people[2].person} />
+                </div>
+            </div>
         )
     }
 
@@ -67,15 +56,13 @@ export default class ChatSettings extends Component {
         
         return (
             <div className='ce-chat-settings-container'>
-                <Row className='ce-chat-avatars-row'>
-                    <Col xs={3} />
-
+                <div className='ce-chat-avatars-row'>
                     { topPeople.length == 1 && this.renderOnePerson(topPeople) }
+                    
                     { topPeople.length == 2 && this.renderTwoPeople(topPeople) }
-                    { topPeople.length == 3 && this.renderThreePeople(topPeople) }
 
-                    <Col xs={3} />
-                </Row>
+                    { topPeople.length == 3 && this.renderThreePeople(topPeople) }
+                </div>
 
                 <TitleForm chat={chat} creds={creds} />
             </div>
