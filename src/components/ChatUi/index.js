@@ -27,6 +27,14 @@ export default class App extends Component {
     typingData: {},
   }
 
+  sortChats(chats) {
+    return Object.values(chats).sort((a, b) => { 
+      const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date()
+      const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date()
+      return new Date(bDate) - new Date(aDate); 
+    })
+  }
+
   onConnect(creds) {
     this.setState({ creds })
     getChats(creds, () => {})
@@ -46,6 +54,8 @@ export default class App extends Component {
   }
 
   onGetChats(chats) {
+    chats = this.sortChats(chats)
+
     if (chats.length > 0) { this.setActiveChat(chats[0].id) }
     this.setState({ chats: _.mapKeys(chats, 'id') })
 
@@ -77,12 +87,14 @@ export default class App extends Component {
 
   onDeleteChat(chat) {
     const { chats } = this.state
+    
 
     if (chats) {
       chats[chat.id] = undefined
       this.setState({ chats })
       if (!_.isEmpty(chats)) {
-        this.setActiveChat(parseInt(Object.keys(chats)[0]))
+        const sortedChats = this.sortChats(chats)
+        this.setActiveChat(parseInt(sortedChats[0].id))
       }
     }
 

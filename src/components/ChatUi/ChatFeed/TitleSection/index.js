@@ -20,7 +20,10 @@ export default class Title extends Component {
                     </div>
                     
                     <div style={styles.subtitleText} className='ce-chat-subtitle-text'>
-                        Active {timeSinceDate(chat.last_message.created)}
+                        {
+                            chat.last_message.created && chat.last_message.created.length > 0 &&
+                            `Active ${timeSinceDate(chat.last_message.created)}`
+                        }
                     </div>
                 </div>
             </div>
