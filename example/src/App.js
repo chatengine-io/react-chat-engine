@@ -30,8 +30,8 @@ export default class App extends Component {
         <ChatEngine
           // Creds
           development
-          projectID='1ed59673-1fd6-46ed-9eb9-56239a6a4f82'
-          userName={user.userName}
+          projectID='f201552a-846d-459d-b863-1ac6be77b5a4'
+          userName='adam_lamorre'
           userSecret={user.userSecret}
           // Hooks
           // onConnect={(props) => this.onConnect(props)}
