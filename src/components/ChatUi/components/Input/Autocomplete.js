@@ -52,7 +52,7 @@ export default class AutoComplete extends Component {
                     { this.props.renderOption && this.props.renderOption(option) }
 
                     { 
-                        index == results.length - 1 && 
+                        index === results.length - 1 && 
                         <div 
                             style={styles.close} 
                             className='ce-autocomplete-close'

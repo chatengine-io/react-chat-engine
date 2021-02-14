@@ -12,7 +12,7 @@ export default class Button extends Component {
 
         const customStyle = style ? style : {}
         const hoverStyle = this.state.hovered ? styles.hoverButton : {}
-        const themeStyle = theme == 'danger' ? styles.dangerButton : styles.button
+        const themeStyle = theme === 'danger' ? styles.dangerButton : styles.button
 
         return (
             <button 
@@ -21,13 +21,13 @@ export default class Button extends Component {
                 onMouseEnter={() => this.setState({ hovered: true })}
                 onMouseLeave={() => this.setState({ hovered: false })}
                 style={{ ...themeStyle, ...customStyle, ...hoverStyle }}
-                className={`ce-primary-button ${theme == 'danger' ? 'ce-danger-button' : ''}`}
+                className={`ce-primary-button ${theme === 'danger' ? 'ce-danger-button' : ''}`}
             >
 
-                { icon == 'plus' && <PlusOutlined /> }
-                { icon == 'send'  && <ArrowUpOutlined /> }
-                { icon == 'delete'  && <DeleteOutlined /> }
-                { icon == 'user-add'  && <UserAddOutlined /> }
+                { icon === 'plus' && <PlusOutlined /> }
+                { icon === 'send'  && <ArrowUpOutlined /> }
+                { icon === 'delete'  && <DeleteOutlined /> }
+                { icon === 'user-add'  && <UserAddOutlined /> }
 
                 { value && icon ? ` ${value}` : value}  
 

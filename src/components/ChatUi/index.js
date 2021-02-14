@@ -94,7 +94,7 @@ export default class App extends Component {
       this.setState({ chats })
       if (!_.isEmpty(chats)) {
         const sortedChats = this.sortChats(chats)
-        this.setActiveChat(parseInt(sortedChats[0].id))
+        this.setActiveChat(sortedChats[0] ? parseInt(sortedChats[0].id) : 0)
       }
     }
 

@@ -50,8 +50,8 @@ export default class ChatFeed extends Component {
 
         return keys.map((key, index) => {
             const message = messages[key]
-            const lastMessageKey = index == 0 ? null : keys[index - 1]
-            const nextMessageKey = index == keys.length - 1 ? null : keys[index + 1]
+            const lastMessageKey = index === 0 ? null : keys[index - 1]
+            const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
 
             if (this.props.renderMessageBubble) {
                 return (

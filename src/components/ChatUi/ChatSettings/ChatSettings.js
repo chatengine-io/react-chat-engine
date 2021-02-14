@@ -81,11 +81,11 @@ export default class ChatSettings extends Component {
         return (
             <div className='ce-chat-settings-container'>
                 <div className='ce-chat-avatars-row'>
-                    { topPeople.length == 1 && this.renderOnePerson(topPeople) }
+                    { topPeople.length === 1 && this.renderOnePerson(topPeople) }
                     
-                    { topPeople.length == 2 && this.renderTwoPeople(topPeople) }
+                    { topPeople.length === 2 && this.renderTwoPeople(topPeople) }
 
-                    { topPeople.length == 3 && this.renderThreePeople(topPeople) }
+                    { topPeople.length === 3 && this.renderThreePeople(topPeople) }
                 </div>
 
                 <TitleForm chat={chat} creds={creds} />

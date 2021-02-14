@@ -9,7 +9,7 @@ export default class Thumbnail extends Component {
             <img 
                 style={ styles.thumbnail }
                 src={attachment.file}
-                alt={'image'}
+                alt={'thumb-nail'}
             />
         )
     }

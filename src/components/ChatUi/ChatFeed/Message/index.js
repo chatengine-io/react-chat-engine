@@ -22,7 +22,7 @@ export default class Message extends Component {
                 />
 
                 {
-                    message.sender_username == creds.userName ?
+                    message.sender_username === creds.userName ?
                     <MyMessage 
                         chat={chat} 
                         creds={creds} 

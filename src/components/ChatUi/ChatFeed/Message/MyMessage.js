@@ -19,7 +19,7 @@ export default class Message extends Component {
         if(!chat) { return <div /> }
 
         return chat.people.map((chatPerson, index) => {
-            if (message.id == chatPerson.last_read) {
+            if (message.id === chatPerson.last_read) {
                 return (
                     <Dot 
                         key={`read_${index}`}
@@ -29,6 +29,7 @@ export default class Message extends Component {
                     />
                 )
             }
+            return <div />
         })
     }
 
