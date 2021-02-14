@@ -9,6 +9,7 @@ import { getMessages, sendMessage, editMessage, deleteMessage } from './actions/
 
 import { Avatar, Dot } from './components/ChatUi/components/Avatar'
 import { Button } from './components/ChatUi/components/Button'
+import { TextInput, TextAreaInput } from './components/ChatUi/components/Input'
 
 const ChatEngine = (props) => {
   return <SocketConnector {...props} />
@@ -19,6 +20,7 @@ export {
 
   Avatar, Dot,
   Button,
+  TextInput, TextAreaInput,
   
   getChats,
   newChat,

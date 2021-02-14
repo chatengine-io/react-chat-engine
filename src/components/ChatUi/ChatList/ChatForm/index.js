@@ -2,8 +2,7 @@ import React from 'react';
 
 import { newChat } from 'react-chat-engine'
 
-import { Button } from 'react-chat-engine'
-import { TextInput } from '../../components/Input'
+import { Button, TextInput } from 'react-chat-engine'
 
 export default class ChatForm extends React.Component {
     state = {

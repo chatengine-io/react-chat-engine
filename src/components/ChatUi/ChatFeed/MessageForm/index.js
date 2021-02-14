@@ -5,9 +5,7 @@ import { sendMessage, isTyping } from 'react-chat-engine'
 import FileRow from './FileRow'
 import ImagesInput from './ImagesInput'
 
-import { Button } from 'react-chat-engine'
-import { TextAreaInput } from '../../components/Input'
-
+import { Button, TextAreaInput } from 'react-chat-engine'
 export default class MessageForm extends React.Component {
     state = {
       value: '',

@@ -2,8 +2,7 @@ import React from 'react';
 
 import { editMessage } from 'react-chat-engine'
 
-import { Button } from 'react-chat-engine'
-import { TextInput } from '../../components/Input'
+import { Button, TextInput } from 'react-chat-engine'
 
 export default class MessageEditForm extends React.Component {
     state = {

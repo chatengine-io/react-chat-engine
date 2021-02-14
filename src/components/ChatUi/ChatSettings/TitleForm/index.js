@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { editChat } from 'react-chat-engine'
-
-import { TextInput } from '../../components/Input'
+import { editChat, TextInput } from 'react-chat-engine'
 
 export default class MessageForm extends React.Component {
     state = {
