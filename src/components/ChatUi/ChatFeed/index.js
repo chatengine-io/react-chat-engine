@@ -25,7 +25,7 @@ export default class ChatFeed extends Component {
 
     renderTypers() {
         const { typingData, activeChat } = this.props
-        const typers = typingData[activeChat] ? typingData[activeChat] : []
+        const typers = typingData && typingData[activeChat] ? typingData[activeChat] : []
 
         if (this.props.renderIsTyping) {
             return this.props.renderIsTyping(typers)
