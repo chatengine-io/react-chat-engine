@@ -16,7 +16,6 @@ export default class Message extends Component {
 
         return (
             <div className='ce-message-and-date'>
-
                 <DatePartition 
                     lastCreated={lastMessage ? lastMessage.created : null} 
                     created={message.created} 
@@ -39,7 +38,6 @@ export default class Message extends Component {
                         nextMessage={nextMessage} 
                     />
                 }
-                
             </div>
         ) 
     }

@@ -43,7 +43,11 @@ export default class Person extends Component {
                     className='ce-person-avatar'
                     style={{ padding: '2px', height: '0px' }}
                 >
-                    <Avatar username={person.username} avatar={person.avatar} />
+                    <Avatar 
+                        avatar={person.avatar} 
+                        username={person.username} 
+                        is_online={person.is_online}
+                    />
                 </div>
 
                 <div
