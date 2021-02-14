@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 
 import Thumbnail from './Thumbnail'
 
-import Dot from '../../components/Avatar/Dot'
-import Avatar from '../../components/Avatar'
+import { Avatar, Dot } from 'react-chat-engine'
 
 import { Row, Col, setConfiguration } from 'react-grid-system'
 

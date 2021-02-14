@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 
-import { Row, Col } from 'react-grid-system'
-
-import Avatar from '../components/Avatar'
+import { Avatar } from 'react-chat-engine'
 
 import TitleForm from './TitleForm'
 

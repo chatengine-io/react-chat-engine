@@ -8,7 +8,7 @@ export default class Dot extends Component {
 
     updateImg() {
         let { avatar } = this.props
-        avatar = avatar !== null ? avatar : ''
+        avatar = avatar && avatar !== null ? avatar : ''
         
         if (avatar.split('?')[0] !== this.state.avatar.split('?')[0]) {
             this.setState({ avatar })

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Avatar from '../../../components/Avatar'
+import { Avatar } from 'react-chat-engine'
 
 
 export default class Option extends React.Component {

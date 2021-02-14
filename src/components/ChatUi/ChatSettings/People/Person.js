@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { removePerson } from 'react-chat-engine'
 
-import Avatar from '../../components/Avatar'
+import { Avatar } from 'react-chat-engine'
 import { Button } from '../../components/Button'
 
 export default class Person extends Component {
