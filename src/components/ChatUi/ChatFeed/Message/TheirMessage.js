@@ -34,13 +34,13 @@ export default class TheirMessage extends Component {
         })
     }
 
-    renderPersonText(person) {
-        if (person.first_name !== null) {
-            return `${person.first_name}${person.last_name ? ` ${person.last_name}` : ''}`
-        } else {
-            return person.username
-        }
-    }
+    // renderPersonText(person) {
+    //     if (person.first_name !== null) {
+    //         return `${person.first_name}${person.last_name ? ` ${person.last_name}` : ''}`
+    //     } else {
+    //         return person.username
+    //     }
+    // }
 
     render() {
         const { lastMessage, message, nextMessage } = this.props
@@ -49,11 +49,11 @@ export default class TheirMessage extends Component {
 
         const attachments = this.props.message && this.props.message.attachments
 
-        const topLeftRadius = !lastMessage || lastMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
-        const bottomLeftRadius = !nextMessage || nextMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
+        const topLeftRadius = !lastMessage || lastMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
+        const bottomLeftRadius = !nextMessage || nextMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
 
         const borderRadius = `${topLeftRadius} 1.3em 1.3em ${bottomLeftRadius}`
-        const paddingBottom = !nextMessage || nextMessage.sender.username !== message.sender.username ? '12px' : '2px'
+        const paddingBottom = !nextMessage || nextMessage.sender_username !== message.sender_username ? '12px' : '2px'
 
         return (
             <div 
@@ -61,19 +61,19 @@ export default class TheirMessage extends Component {
                 className='ce-message-row ce-their-message'
             >
                 {
-                    (!lastMessage || lastMessage.sender.username !== message.sender.username) &&
+                    (!lastMessage || lastMessage.sender_username !== message.sender_username) &&
                     <div style={styles.nameText} className='ce-their-message-sender'>
-                        { this.renderPersonText(message.sender) }
+                        { message.sender_username }
                     </div>
                 }
             
                 <Row style={{ paddingLeft: '2px' }} className='ce-their-message-row'>
                     <Col xs={11} sm={10} md={9}>
                         <div style={{ height: '0px' }} className='ce-their-message-avatar'>
-                            {
-                                (!nextMessage || nextMessage.sender.username !== message.sender.username) &&
+                            {/* {
+                                (!nextMessage || nextMessage.sender_username !== message.sender_username) &&
                                 <Avatar person={message.sender} show_online={false} />
-                            }
+                            } */}
 
                         </div>
 

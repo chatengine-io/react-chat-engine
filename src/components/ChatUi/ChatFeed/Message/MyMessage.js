@@ -39,11 +39,11 @@ export default class Message extends Component {
 
         const attachments = this.props.message && this.props.message.attachments
 
-        const topRightRadius = !lastMessage || lastMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
-        const bottomRightRadius = !nextMessage || nextMessage.sender.username !== message.sender.username ? '1.3em' : '0.3em'
+        const topRightRadius = !lastMessage || lastMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
+        const bottomRightRadius = !nextMessage || nextMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
 
         const borderRadius = `1.3em ${topRightRadius} ${bottomRightRadius} 1.3em`
-        const paddingBottom = !nextMessage || nextMessage.sender.username !== message.sender.username ? '12px' : '2px'
+        const paddingBottom = !nextMessage || nextMessage.sender_username !== message.sender_username ? '12px' : '2px'
 
         return (
             <div 
