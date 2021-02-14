@@ -8,6 +8,7 @@ import { addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveCh
 import { getMessages, sendMessage, editMessage, deleteMessage } from './actions/messages'
 
 import { Avatar, Dot } from './components/ChatUi/components/Avatar'
+import { Button } from './components/ChatUi/components/Button'
 
 const ChatEngine = (props) => {
   return <SocketConnector {...props} />
@@ -16,8 +17,8 @@ const ChatEngine = (props) => {
 export {
   ChatEngine,
 
-  Avatar,
-  Dot,
+  Avatar, Dot,
+  Button,
   
   getChats,
   newChat,

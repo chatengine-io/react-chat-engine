@@ -1,8 +1,6 @@
 import React from 'react'
 
-import { Button } from '../../components/Button'
-
-import { deleteChat } from 'react-chat-engine'
+import { Button, deleteChat } from 'react-chat-engine'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 

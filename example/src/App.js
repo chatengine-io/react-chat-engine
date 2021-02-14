@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { ChatEngine, Avatar, Dot, editMyData } from 'react-chat-engine'
+import { ChatEngine, editMyData } from 'react-chat-engine'
 
 const users = [
   {
