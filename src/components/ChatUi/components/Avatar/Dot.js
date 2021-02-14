@@ -7,8 +7,8 @@ export default class Dot extends Component {
     state = { avatar: '' }
 
     updateImg() {
-        const { person } = this.props
-        const avatar = (person && person.avatar !== null) ? person.avatar : ''
+        let { avatar } = this.props
+        avatar = avatar !== null ? avatar : ''
         
         if (avatar.split('?')[0] !== this.state.avatar.split('?')[0]) {
             this.setState({ avatar })
@@ -20,8 +20,8 @@ export default class Dot extends Component {
     componentDidUpdate() { this.updateImg() }
 
     render() {
-        const { person } = this.props
-        const color = stringToColor(person.username)
+        const { username } = this.props
+        const color = stringToColor(username)
         const customStyle = this.props.style ? this.props.style : {}
         
         return (

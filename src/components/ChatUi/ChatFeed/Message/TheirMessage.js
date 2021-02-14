@@ -22,7 +22,14 @@ export default class TheirMessage extends Component {
 
         return chat.people.map((person, index) => {
             if (message.id == person.last_read) {
-                return <Dot key={`read_${index}`} person={person.person} style={{ float: 'left', marginLeft: '4px' }} />
+                return (
+                    <Dot 
+                        key={`read_${index}`} 
+                        avatar={person.person.avatar}
+                        username={person.person.username}
+                        style={{ float: 'left', marginLeft: '4px' }}
+                    />
+                )
             }
         })
     }
@@ -70,10 +77,14 @@ export default class TheirMessage extends Component {
                 <Row style={{ paddingLeft: '2px' }} className='ce-their-message-row'>
                     <Col xs={11} sm={10} md={9}>
                         <div style={{ height: '0px' }} className='ce-their-message-avatar'>
-                            {/* {
+                            {
                                 (!nextMessage || nextMessage.sender_username !== message.sender_username) &&
-                                <Avatar person={message.sender} show_online={false} />
-                            } */}
+                                <Avatar
+                                    show_online={false}
+                                    username={message.sender_username}
+                                    avatar={message.sender_avatar}
+                                />
+                            }
 
                         </div>
 

@@ -7,8 +7,8 @@ export default class Avatar extends Component {
     state = { avatar: '' }  
 
     updateImg() {
-        const { person } = this.props
-        const avatar = (person && person.avatar !== null) ? person.avatar : ''
+        let { avatar } = this.props
+        avatar = avatar !== null ? avatar : ''
         
         if (avatar.split('?')[0] !== this.state.avatar.split('?')[0]) {
             this.setState({ avatar })
@@ -20,10 +20,10 @@ export default class Avatar extends Component {
     componentDidUpdate() { this.updateImg() }
 
     render() {
-        const { person } = this.props
+        const { username, is_online } = this.props
         const customStyle = this.props.style ? this.props.style : {}
-        const text = person.username ? person.username.substring(0, 2).toUpperCase() : ''
-        const color = stringToColor(person ? person.username : '')    
+        const text = username ? username.substring(0, 2).toUpperCase() : ''
+        const color = stringToColor(username)    
                 
         return (
             <div style={{ width: '48px', height: '48px' }}>
@@ -57,7 +57,7 @@ export default class Avatar extends Component {
                         className='ce-avatar-status'
                         style={{
                             ...styles.status, 
-                            ...{ backgroundColor: person.is_online ? '#52c41a' : '#f5222d' }
+                            ...{ backgroundColor: is_online ? '#52c41a' : '#f5222d' }
                         }}
                     />
                 }

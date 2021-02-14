@@ -9,6 +9,8 @@ export default class Option extends React.Component {
     }
 
     render() {
+        const { avatar, username } = this.props.person 
+
         return (
             <div 
                 onMouseEnter={() => this.setState({ focused: true })}
@@ -17,7 +19,7 @@ export default class Option extends React.Component {
                 style={{ ...styles.option, ...{ backgroundColor: this.state.focused ? '#f5f5f5' : 'white'} }}
             >
                 <div>
-                    <Avatar person={this.props.person} />
+                    <Avatar username={username} avatar={avatar} />
                 </div>
 
                 <div style={{ display: 'flex', padding: '12px 4px' }}>

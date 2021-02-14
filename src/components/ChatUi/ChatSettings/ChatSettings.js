@@ -12,7 +12,11 @@ export default class ChatSettings extends Component {
         return (
             <div style={{ width: '100%', paddingTop: '14px' }}>
                 <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 22px)' }}>
-                    <Avatar show_online={false} person={people[0].person} />
+                    <Avatar 
+                        show_online={false} 
+                        username={people[0].person.username} 
+                        avatar={people[0].person.avatar}
+                    />
                 </div>
             </div>
         )
@@ -22,11 +26,19 @@ export default class ChatSettings extends Component {
         return (
             <div style={{ width: '100%', paddingTop: '14px' }}>
                 <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 22px - 15px)' }}>
-                    <Avatar show_online={false} person={people[0].person} />
+                    <Avatar 
+                        show_online={false} 
+                        username={people[0].person.username} 
+                        avatar={people[0].person.avatar}
+                    />
                 </div>
 
                 <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 44px - 22px + 15px)' }}>
-                    <Avatar show_online={false} person={people[1].person} />
+                    <Avatar 
+                        show_online={false} 
+                        username={people[1].person.username} 
+                        avatar={people[1].person.avatar}
+                    />
                 </div>
             </div>
         )
@@ -36,15 +48,27 @@ export default class ChatSettings extends Component {
         return (
             <div style={{ width: '100%', paddingTop: '14px' }}>
                 <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 22px - 24px)' }}>
-                    <Avatar show_online={false} person={people[0].person} />
+                    <Avatar 
+                        show_online={false} 
+                        username={people[0].person.username}
+                        avatar={people[0].person.avatar}
+                    />
                 </div>
 
                 <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 24px - 44px)' }}>
-                    <Avatar show_online={false} person={people[1].person} />
+                    <Avatar 
+                        show_online={false} 
+                        username={people[1].person.username} 
+                        avatar={people[1].person.avatar}
+                    />
                 </div>
 
                 <div style={{ float: 'left', position: 'relative', left: 'calc(50% - 22px - 44px - 44px + 24px)' }}>
-                    <Avatar show_online={false} person={people[2].person} />
+                    <Avatar 
+                        show_online={false} 
+                        username={people[2].person.username}
+                        avatar={people[2].person.avatar}
+                    />
                 </div>
             </div>
         )

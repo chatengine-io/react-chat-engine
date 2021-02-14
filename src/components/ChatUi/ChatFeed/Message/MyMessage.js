@@ -20,7 +20,14 @@ export default class Message extends Component {
 
         return chat.people.map((chatPerson, index) => {
             if (message.id == chatPerson.last_read) {
-                return <Dot key={`read_${index}`} person={chatPerson.person} style={{ float: 'right', marginLeft: '4px' }} />
+                return (
+                    <Dot 
+                        key={`read_${index}`}
+                        avatar={chatPerson.person.avatar}
+                        username={chatPerson.person.username}
+                        style={{ float: 'right', marginLeft: '4px' }} 
+                    />
+                )
             }
         })
     }
