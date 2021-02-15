@@ -82,7 +82,7 @@ export default class TheirMessage extends Component {
                                 <Avatar
                                     show_online={false}
                                     username={message.sender_username}
-                                    avatar={message.sender_avatar}
+                                    avatar={message.sender && message.sender.avatar}
                                 />
                             }
 
