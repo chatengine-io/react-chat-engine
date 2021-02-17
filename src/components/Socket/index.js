@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 
-import Websocket from 'react-websocket';
+// import Websocket from 'react-websocket'
+// var WebSocketClient = require('websocket').client
 
 export default class Socket extends Component {
+    state = {
+        props: null
+    }
+
     handleEvent(event) {
         const { props } = this
         const eventJSON = JSON.parse(event)
@@ -47,9 +52,7 @@ export default class Socket extends Component {
         }
     }
 
-    onClose() {
-        this.props.onFailAuth && this.props.onFailAuth(this.props)
-    }
+    onClose() { this.props.onFailAuth && this.props.onFailAuth(this.props) }
 
     render() {
         const { 
@@ -59,17 +62,25 @@ export default class Socket extends Component {
             development 
         } = this.props 
         
-        const wsStart = development ? 'ws://' : 'wss://'
-        const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
-        
+        const rootHost = development ? 'ws://127.0.0.1:8000' : 'wss://api.chatengine.io'
         const project = publicKey ? publicKey : projectID
         const secret = userPassword ? userPassword : userSecret
 
-        return <Websocket 
-            url={`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`}
-            onOpen={() => this.props.onConnect && this.props.onConnect(this.props)}
-            onClose={this.onClose.bind(this)}
-            onMessage={this.handleEvent.bind(this)}
-        />
+        var W3CWebSocket = require('websocket').w3cwebsocket;
+
+        var client = new W3CWebSocket(`${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`);
+
+        client.onerror = () => console.log('Error')
+        client.onopen = () => this.props.onConnect && this.props.onConnect(this.props)
+        client.onclose = this.onClose.bind(this)
+        client.onmessage = this.handleEvent.bind(this)
+
+        return <div />
+        // return <Websocket 
+        //     url={`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`}
+        //     onOpen={() => this.props.onConnect && this.props.onConnect(this.props)}
+        //     onClose={this.onClose.bind(this)}
+        //     onMessage={this.handleEvent.bind(this)}
+        // />
     }
 }
