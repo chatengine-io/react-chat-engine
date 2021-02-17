@@ -23,14 +23,14 @@ export default class TheirMessage extends Component {
             if (message.id === person.last_read) {
                 return (
                     <Dot 
-                        key={`read_${index}`} 
+                        key={`read_${index}`}
                         avatar={person.person.avatar}
                         username={person.person.username}
                         style={{ float: 'left', marginLeft: '4px' }}
                     />
                 )
             }
-            return <div />
+            return <div key={`read_${index}`} />
         })
     }
 

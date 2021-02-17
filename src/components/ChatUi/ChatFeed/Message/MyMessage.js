@@ -29,7 +29,7 @@ export default class Message extends Component {
                     />
                 )
             }
-            return <div />
+            return <div key={`read_${index}`} />
         })
     }
 
