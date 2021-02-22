@@ -30,8 +30,8 @@ export default class App extends Component {
 
   sortChats(chats) {
     return Object.values(chats).sort((a, b) => { 
-      const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date()
-      const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date()
+      const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
+      const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
       return new Date(bDate) - new Date(aDate); 
     })
   }
