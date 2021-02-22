@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-import { MenuOutlined, CloseOutlined } from '@ant-design/icons'
+import { SettingOutlined, CloseOutlined } from '@ant-design/icons'
 
-import ChatList from '../../ChatList'
+import ChatSettings from '../../ChatSettings'
 
-export default class ChatListDrawer extends Component {
+export default class ChatSettingsDrawer extends Component {
     state = {
         isOpen: false
     }
@@ -13,7 +13,7 @@ export default class ChatListDrawer extends Component {
         const chatLength = Object.keys(this.props.chats) && Object.keys(this.props.chats).length
         return (
             <div> 
-                <MenuOutlined
+                <SettingOutlined
                     onClick={() => this.setState({ isOpen: true })}
                     style={{ color: 'rgb(24, 144, 255)', outline: 'none' }} 
                 />
@@ -28,17 +28,11 @@ export default class ChatListDrawer extends Component {
 
                         <div style={styles.titleContainer}>
                             <div style={styles.titleText}>
-                                My Chats
+                                Chat Settings
                             </div>
                         </div>
 
-                        <ChatList 
-                            {...this.props} 
-                            onChatClick={(chatId) => {
-                                this.props.onChatClick && this.props.onChatClick(chatId)
-                                this.setState({ isOpen: false })
-                            }}
-                        />
+                        <ChatSettings {...this.props} />
                     </div>
                 }
             </div>
@@ -71,5 +65,5 @@ const styles = {
     titleText: {
         fontSize: '24px',
         fontWeight: '600',
-    }
+    },
 }

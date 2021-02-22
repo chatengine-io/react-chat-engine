@@ -3,10 +3,12 @@ import React, { Component } from 'react'
 import { timeSinceDate } from '../../Utilities/dateToString'
 
 import ChatListDrawer from './ChatListDrawer'
+import ChatSettingsDrawer from './ChatSettingsDrawer'
 
 import { Row, Col } from 'react-grid-system'
 
 import { setConfiguration } from 'react-grid-system';
+import ChatSettings from '../../ChatSettings/ChatSettings'
  
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
@@ -25,8 +27,8 @@ export default class Title extends Component {
                 <Col 
                     xs={2} 
                     sm={0} 
-                    className='ce-mobile-chats-option'
-                    style={styles.mobileOptiom}
+                    style={{ ...styles.mobileOptiom, ...{ left: '6px' } }}
+                    className='ce-chat-list-mobile-option'
                 >
                     <ChatListDrawer {...this.props} />
                 </Col>
@@ -49,9 +51,14 @@ export default class Title extends Component {
                     </div>
                 </Col>
 
-                {/* <Col xs={2} sm={0} style={styles.titleContainer}>
-                    <div>yyy</div>
-                </Col> */}
+                <Col 
+                    xs={2} 
+                    sm={0} 
+                    style={{ ...styles.mobileOptiom, ...{ right: '6px' } }}
+                    className='ce-chat-settings-mobile-option'
+                >
+                    <ChatSettingsDrawer {...this.props} />
+                </Col>
             </Row>
         );
     }
@@ -68,7 +75,6 @@ const styles = {
     mobileOptiom: {
         width: '100%',
         top: '32px',
-        left: '6px',
         textAlign: 'center',
         color: 'rgb(24, 144, 255)',
         overflow: 'hidden'
