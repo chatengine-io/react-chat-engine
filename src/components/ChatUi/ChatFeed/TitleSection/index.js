@@ -2,6 +2,14 @@ import React, { Component } from 'react'
 
 import { timeSinceDate } from '../../Utilities/dateToString'
 
+import ChatListDrawer from './ChatListDrawer'
+
+import { Row, Col } from 'react-grid-system'
+
+import { setConfiguration } from 'react-grid-system';
+ 
+setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
+
 export default class Title extends Component {
   
     render() {
@@ -10,11 +18,25 @@ export default class Title extends Component {
         if (!chat) { return <div /> }
 
         return (
-            <div 
+            <Row 
                 className='ce-chat-title'
-                style={{ position: 'absolute', top: '0px', width: '100%', zIndex: '1' }}
+                style={styles.titleSection}
             >
-                <div style={styles.titleContainer} className='ce-chat-title-container'>  
+                <Col 
+                    xs={2} 
+                    sm={0} 
+                    className='ce-mobile-chats-option'
+                    style={styles.mobileOptiom}
+                >
+                    <ChatListDrawer />
+                </Col>
+
+                <Col 
+                    xs={8}
+                    sm={12}
+                    style={styles.titleContainer} 
+                    className='ce-chat-title-container'
+                >
                     <div style={styles.titleText} className='ce-chat-title-text'>
                         { chat && chat.title }
                     </div>
@@ -25,25 +47,37 @@ export default class Title extends Component {
                             `Active ${timeSinceDate(chat.last_message.created)}`
                         }
                     </div>
-                </div>
-            </div>
+                </Col>
+
+                {/* <Col xs={2} sm={0} style={styles.titleContainer}>
+                    <div>yyy</div>
+                </Col> */}
+            </Row>
         );
     }
 }
 
 const styles = {
-    mobileSection: {
-        textAlign: 'center', 
-        padding: '30px 0px', 
-        backgroundColor: 'rgb(256, 256, 256, 0.92)',
-        border: '1px solid rgb(256, 256, 256, 0.92)'
+    titleSection: { 
+        position: 'absolute',
+        top: '0px',
+        width: '100%',
+        zIndex: '1',
+        backgroundColor: 'rgb(256, 256, 256, 0.92)'
+    },
+    mobileOptiom: {
+        width: '100%',
+        top: '32px',
+        left: '6px',
+        textAlign: 'center',
+        color: 'rgb(24, 144, 255)',
+        overflow: 'hidden'
     },
     titleContainer: {
         width: '100%',
         padding: '18px 0px',
         textAlign: 'center',
         color: 'rgb(24, 144, 255)',
-        backgroundColor: 'rgb(256, 256, 256, 0.92)'
     },
     titleText: {
         fontSize: '24px',
