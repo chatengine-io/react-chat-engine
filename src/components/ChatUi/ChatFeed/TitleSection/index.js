@@ -45,8 +45,9 @@ export default class Title extends Component {
                     
                     <div style={styles.subtitleText} className='ce-chat-subtitle-text'>
                         {
-                            chat.last_message.created && chat.last_message.created.length > 0 &&
-                            `Active ${timeSinceDate(chat.last_message.created)}`
+                            chat.last_message.created && chat.last_message.created.length > 0 ?
+                            `Active ${timeSinceDate(chat.last_message.created)}` :
+                            'Say hello!'
                         }
                     </div>
                 </Col>
