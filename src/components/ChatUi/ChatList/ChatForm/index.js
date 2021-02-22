@@ -18,7 +18,7 @@ export default class ChatForm extends React.Component {
 
         if (this.state.value.trim().length > 0) {
           newChat(
-            this.props.creds, 
+            this.props, 
             { title: this.state.value },
             () => {}
           )

@@ -28,7 +28,7 @@ export default class Title extends Component {
                     className='ce-mobile-chats-option'
                     style={styles.mobileOptiom}
                 >
-                    <ChatListDrawer />
+                    <ChatListDrawer {...this.props} />
                 </Col>
 
                 <Col 

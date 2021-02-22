@@ -101,7 +101,7 @@ class ChatList extends Component {
                         this.props.renderNewChatForm ?
                         this.props.renderNewChatForm(this.props) :
                         <div style={styles.newChatContainer} className='ce-chat-form-container'>
-                            <ChatForm creds={this.props}  className='ce-chat-form' />
+                            <ChatForm {...this.props}  className='ce-chat-form' />
                         </div>
                     }
                     
