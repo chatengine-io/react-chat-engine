@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
-
-// import Websocket from 'react-websocket'
-// var WebSocketClient = require('websocket').client
-
 export default class Socket extends Component {
     state = {
+        client: undefined,
         props: null
     }
 
     handleEvent(event) {
         const { props } = this
-        const eventJSON = JSON.parse(event)
+        const eventJSON = JSON.parse(event.data)
 
         if (eventJSON.action === 'login_error') {
             console.log(
@@ -66,14 +63,19 @@ export default class Socket extends Component {
         const project = publicKey ? publicKey : projectID
         const secret = userPassword ? userPassword : userSecret
 
-        var W3CWebSocket = require('websocket').w3cwebsocket;
-
-        var client = new W3CWebSocket(`${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`);
-
-        client.onerror = () => console.log('Error')
-        client.onopen = () => this.props.onConnect && this.props.onConnect(this.props)
-        client.onclose = this.onClose.bind(this)
-        client.onmessage = this.handleEvent.bind(this)
+        if (!this.state.client) {
+            console.log(`${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`)
+            var W3CWebSocket = require('websocket').w3cwebsocket;
+            console.log('here')
+            var client = new W3CWebSocket(`${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`);
+            console.log('1')
+            client.onerror = () => console.log('Error')
+            client.onopen = () => this.props.onConnect && this.props.onConnect(this.props)
+            client.onclose = this.onClose.bind(this)
+            client.onmessage = this.handleEvent.bind(this)
+            this.setState({ client })
+            console.log(client)
+        }
 
         return <div />
         // return <Websocket 
