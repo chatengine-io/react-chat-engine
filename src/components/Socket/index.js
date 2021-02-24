@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 
-import Websocket from 'react-websocket';
-
+import { WebSocket } from 'nextjs-websocket'
 export default class Socket extends Component {
+    state = {
+        client: undefined,
+        props: null
+    }
+
     handleEvent(event) {
         const { props } = this
         const eventJSON = JSON.parse(event)
@@ -47,9 +51,7 @@ export default class Socket extends Component {
         }
     }
 
-    onClose() {
-        this.props.onFailAuth && this.props.onFailAuth(this.props)
-    }
+    onClose() { this.props.onFailAuth && this.props.onFailAuth(this.props) }
 
     render() {
         const { 
@@ -65,7 +67,7 @@ export default class Socket extends Component {
         const project = publicKey ? publicKey : projectID
         const secret = userPassword ? userPassword : userSecret
 
-        return <Websocket 
+        return <WebSocket 
             url={`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`}
             onOpen={() => this.props.onConnect && this.props.onConnect(this.props)}
             onClose={this.onClose.bind(this)}

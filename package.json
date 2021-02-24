@@ -1,6 +1,6 @@
 {
   "name": "react-chat-engine",
-  "version": "1.5.14",
+  "version": "1.6.0",
   "description": "Cheap and easy chat API",
   "author": "alamorre",
   "license": "MIT",
@@ -53,8 +53,10 @@
     "@ant-design/icons": "^4.2.2",
     "axios": "^0.21.1",
     "lodash": "^4.17.20",
+    "nextjs-websocket": "^1.0.0",
     "react-grid-system": "^7.1.1",
     "react-scroll": "^1.8.1",
-    "react-websocket": "^2.1.0"
+    "react-websocket": "^2.1.0",
+    "websocket": "^1.0.33"
   }
 }
