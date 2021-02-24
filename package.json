@@ -56,7 +56,6 @@
     "nextjs-websocket": "^1.0.0",
     "react-grid-system": "^7.1.1",
     "react-scroll": "^1.8.1",
-    "react-websocket": "^2.1.0",
     "websocket": "^1.0.33"
   }
 }

@@ -10106,11 +10106,6 @@ react-scroll@^1.8.1:
     lodash.throttle "^4.1.1"
     prop-types "^15.7.2"
 
-react-websocket@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-websocket/-/react-websocket-2.1.0.tgz#1150ce55aaa38e845f5711684266a823781ee2e4"
-  integrity sha512-VstINrNXmp08aol9TQt1LZQgtzmad6CjTvEX8TYAFxU7K0ByMtDP7T2WMtgNEttWtPThVA7TDhHNu+fGTaAExQ==
-
 react@^16.13.1:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
