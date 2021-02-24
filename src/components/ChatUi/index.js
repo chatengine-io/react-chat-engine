@@ -25,12 +25,13 @@ export default class App extends Component {
     activeChat: null,
     typingCounter: {},
     typingData: {},
+    onChatClick: (chatId) => this.setActiveChat(chatId)
   }
 
   sortChats(chats) {
     return Object.values(chats).sort((a, b) => { 
-      const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date()
-      const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date()
+      const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
+      const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
       return new Date(bDate) - new Date(aDate); 
     })
   }
@@ -209,7 +210,6 @@ export default class App extends Component {
 
     return (
       <div style={{ textAlign: 'left', backgroundColor: 'white' }}>
-
         <Socket
           {...this.props}
           // API Hooks
@@ -229,41 +229,30 @@ export default class App extends Component {
         />
 
         <Row>
-
           <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
-            
             {
               this.props.renderChatList ?
               this.props.renderChatList({...this.props, ...this.state}) :
-              <ChatList {...this.props} {...this.state}
-                onChatClick={(chatId) => this.setActiveChat(chatId)}
-              />
+              <ChatList {...this.props} {...this.state} />
             }
-
           </Col>
 
           <Col xs={12} sm={6} style={{ height: height ? height : '' }}>
-
             {
               this.props.renderChatFeed ?
               this.props.renderChatFeed({...this.props, ...this.state}) :
               <ChatFeed {...this.props} {...this.state} />
             }
-
           </Col>
 
           <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
-
             {
               this.props.renderChatSettings ?
               this.props.renderChatSettings({...this.props, ...this.state}) :
               <ChatSettings {...this.props} {...this.state} />
             }
-
           </Col>
-
         </Row>
-
       </div>
     )
   }

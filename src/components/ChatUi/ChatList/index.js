@@ -83,8 +83,8 @@ class ChatList extends Component {
     render() {       
         const chats = this.props.chats ? Object.values(this.props.chats) : []
         chats.sort((a, b) => { 
-            const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date()
-            const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date()
+            const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
+            const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
             return new Date(bDate) - new Date(aDate); 
         })
 
@@ -101,7 +101,7 @@ class ChatList extends Component {
                         this.props.renderNewChatForm ?
                         this.props.renderNewChatForm(this.props) :
                         <div style={styles.newChatContainer} className='ce-chat-form-container'>
-                            <ChatForm creds={this.props}  className='ce-chat-form' />
+                            <ChatForm {...this.props}  className='ce-chat-form' />
                         </div>
                     }
                     

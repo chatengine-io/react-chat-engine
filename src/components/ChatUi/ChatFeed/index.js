@@ -122,7 +122,7 @@ export default class ChatFeed extends Component {
                 {
                     this.props.renderChatHeader ? 
                     this.props.renderChatHeader(chat) :
-                    <Title chat={chat} />
+                    <Title chat={chat} {...this.props} />
                 }
 
 
