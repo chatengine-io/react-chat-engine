@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+
+import { WebSocket } from 'nextjs-websocket'
 export default class Socket extends Component {
     state = {
         client: undefined,
@@ -7,7 +9,7 @@ export default class Socket extends Component {
 
     handleEvent(event) {
         const { props } = this
-        const eventJSON = JSON.parse(event.data)
+        const eventJSON = JSON.parse(event)
 
         if (eventJSON.action === 'login_error') {
             console.log(
@@ -59,30 +61,17 @@ export default class Socket extends Component {
             development 
         } = this.props 
         
-        const rootHost = development ? 'ws://127.0.0.1:8000' : 'wss://api.chatengine.io'
+        const wsStart = development ? 'ws://' : 'wss://'
+        const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
+        
         const project = publicKey ? publicKey : projectID
         const secret = userPassword ? userPassword : userSecret
 
-        if (!this.state.client) {
-            console.log(`${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`)
-            var W3CWebSocket = require('websocket').w3cwebsocket;
-            console.log('here')
-            var client = new W3CWebSocket(`${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`);
-            console.log('1')
-            client.onerror = () => console.log('Error')
-            client.onopen = () => this.props.onConnect && this.props.onConnect(this.props)
-            client.onclose = this.onClose.bind(this)
-            client.onmessage = this.handleEvent.bind(this)
-            this.setState({ client })
-            console.log(client)
-        }
-
-        return <div />
-        // return <Websocket 
-        //     url={`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`}
-        //     onOpen={() => this.props.onConnect && this.props.onConnect(this.props)}
-        //     onClose={this.onClose.bind(this)}
-        //     onMessage={this.handleEvent.bind(this)}
-        // />
+        return <WebSocket 
+            url={`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`}
+            onOpen={() => this.props.onConnect && this.props.onConnect(this.props)}
+            onClose={this.onClose.bind(this)}
+            onMessage={this.handleEvent.bind(this)}
+        />
     }
 }
