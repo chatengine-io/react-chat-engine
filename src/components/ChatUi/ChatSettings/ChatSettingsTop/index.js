@@ -73,8 +73,7 @@ export default class ChatSettingsTop extends Component {
     }
 
     getOtherPerson(people) {
-        const found = people.find(person => person.person.username !== this.props.creds.userName);
-        return found
+        return people.find(person => person.person.username !== this.props.creds.userName);
     }
 
     render() {

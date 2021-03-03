@@ -12,11 +12,12 @@ import { setConfiguration } from 'react-grid-system';
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
 export default class Title extends Component {
-  
     render() {
         const { chat } = this.props
 
         if (!chat) { return <div /> }
+
+        const otherPerson = chat.people.find(person => person.person.username !== this.props.creds.userName);
 
         return (
             <Row 
@@ -39,7 +40,7 @@ export default class Title extends Component {
                     className='ce-chat-title-container'
                 >
                     <div style={styles.titleText} className='ce-chat-title-text'>
-                        { chat && chat.title }
+                        { chat.is_direct_chat ? otherPerson.person.username : chat.title }
                     </div>
                     
                     <div style={styles.subtitleText} className='ce-chat-subtitle-text'>

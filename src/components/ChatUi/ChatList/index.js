@@ -17,11 +17,12 @@ class ChatList extends Component {
         return readLastMessage
     }
 
-    renderChats(chats) {
+    renderChats(chats) {        
         return chats.map((chat, index) => {
             if (!chat) return <div key={`chat_${index}`} />
 
             const extraStyle = this.props.activeChat === chat.id ? styles.activeChat : {}
+            const otherPerson = chat.people.find(person => person.person.username !== this.props.creds.userName);
             
             if (this.props.renderChatCard) {
                 return <div key={`chat_${index}`}>{this.props.renderChatCard(chat, index)}</div>
@@ -43,7 +44,7 @@ class ChatList extends Component {
                 >
                     
                     <div style={ styles.titleText } className='ce-chat-title-text'>
-                        { chat.title }
+                        { chat.is_direct_chat ? otherPerson.person.username : chat.title }
                         {' '}
                         {
                             !this.readLastMessage(this.props, chat) &&

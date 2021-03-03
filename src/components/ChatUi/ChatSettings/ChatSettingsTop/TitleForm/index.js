@@ -36,7 +36,6 @@ export default class MessageForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit.bind(this)} className='ce-chat-title-form'>
-
                 <TextInput 
                     label="Rename this Chat" 
                     value={this.state.value} 
@@ -50,7 +49,6 @@ export default class MessageForm extends React.Component {
                         width: '100%',
                     }}
                 />
-
             </form>
         );
     }
