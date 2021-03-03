@@ -72,21 +72,46 @@ export default class ChatSettingsTop extends Component {
         )
     }
 
+    getOtherPerson(people) {
+        const found = people.find(person => person.person.username !== this.props.creds.userName);
+        return found
+    }
+
     render() {
         const { chat, creds } = this.props
-        const topPeople = chat ? chat.people.slice(0, 3) : []
+
+        if (!chat) { return <div /> }
+
+        const topPeople = chat.people.slice(0, 3)
+        const otherPerson = this.getOtherPerson(chat.people)
         
         return (
             <div className='ce-chat-settings-container'>
                 <div className='ce-chat-avatars-row'>
                     { topPeople.length === 1 && this.renderOnePerson(topPeople) }
                     
-                    { topPeople.length === 2 && this.renderTwoPeople(topPeople) }
+                    { chat.is_direct_chat && this.renderOnePerson([otherPerson]) }
 
-                    { topPeople.length === 3 && this.renderThreePeople(topPeople) }
+                    { !chat.is_direct_chat && topPeople.length === 2 && this.renderTwoPeople(topPeople) }
+
+                    { !chat.is_direct_chat && topPeople.length === 3 && this.renderThreePeople(topPeople) }
                 </div>
 
-                <TitleForm chat={chat} creds={creds} />
+                {
+                    chat.is_direct_chat ?
+                    <div style={{ 
+                        paddingTop: '55px',
+                        paddingBottom: '7px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                        textAlign: 'center',
+                        border: '0px solid white',
+                        width: '100%',
+                    }}>
+                        { otherPerson.person.username }
+                    </div> :
+                    <TitleForm chat={chat} creds={creds} />
+                }
             </div>
         )
     }
