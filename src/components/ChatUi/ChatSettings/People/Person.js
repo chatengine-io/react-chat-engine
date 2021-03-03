@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import { removePerson } from 'react-chat-engine'
+import { removePerson } from '../ChatSettingsTop/TitleForm/node_modules/react-chat-engine'
 
-import { Avatar, Button } from 'react-chat-engine'
+import { Avatar, Button } from '../ChatSettingsTop/TitleForm/node_modules/react-chat-engine'
 
 export default class Person extends Component {
     state = {
