@@ -8,7 +8,6 @@ import ChatSettingsDrawer from './ChatSettingsDrawer'
 import { Row, Col } from 'react-grid-system'
 
 import { setConfiguration } from 'react-grid-system';
-import ChatSettings from '../../ChatSettings/ChatSettings'
  
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 

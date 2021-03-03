@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { newChat } from '../../ChatSettings/ChatSettingsTop/TitleForm/node_modules/react-chat-engine'
+import { newChat } from 'react-chat-engine'
 
-import { Button, TextInput } from '../../ChatSettings/ChatSettingsTop/TitleForm/node_modules/react-chat-engine'
+import { Button, TextInput } from 'react-chat-engine'
 
 export default class ChatForm extends React.Component {
     state = {

@@ -27,7 +27,7 @@ export default class PeopleList extends React.Component {
     render() {
         const { creds, chat } = this.props 
 
-        if (!chat) { return <div /> }
+        if (!chat || chat.is_direct_chat) { return <div /> }
 
         return (
             <div style={{ borderTop: '1px solid #f0f0f0' }}>

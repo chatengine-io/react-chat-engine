@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Avatar } from './TitleForm/node_modules/react-chat-engine'
+import { Avatar } from 'react-chat-engine'
 
 import TitleForm from './TitleForm'
 

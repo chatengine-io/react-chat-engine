@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { addPerson, getOtherPeople } from '../../ChatSettingsTop/TitleForm/node_modules/react-chat-engine'
+import { addPerson, getOtherPeople } from 'react-chat-engine'
 
-import { AutoCompleteInput } from '../../../components/Input'
+import { AutoCompleteInput } from 'react-chat-engine'
 
 import Option from './Option'
 

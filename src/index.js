@@ -9,7 +9,7 @@ import { getMessages, sendMessage, editMessage, deleteMessage } from './actions/
 
 import { Avatar, Dot } from './components/ChatUi/components/Avatar'
 import { Button } from './components/ChatUi/components/Button'
-import { TextInput, TextAreaInput } from './components/ChatUi/components/Input'
+import { TextInput, TextAreaInput, AutoCompleteInput } from './components/ChatUi/components/Input'
 
 import ChatFeed from './components/ChatUi/ChatFeed'
 
@@ -22,7 +22,7 @@ export {
 
   Avatar, Dot,
   Button,
-  TextInput, TextAreaInput,
+  TextInput, TextAreaInput, AutoCompleteInput,
   
   ChatFeed,
   

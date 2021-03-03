@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import People from './People'
 import Photos from './Photos'
 import Options from './Options'
-import ChatSettings from './ChatSettings'
+import ChatSettingsTop from './ChatSettingsTop'
 
 export default class ChatSettingsContainer extends Component {
 
@@ -21,7 +21,7 @@ export default class ChatSettingsContainer extends Component {
                     {
                         this.props.renderChatSettingsTop ?
                         this.props.renderChatSettingsTop(this.props, chat) :
-                        <ChatSettings creds={this.props} chat={chat} />
+                        <ChatSettingsTop creds={this.props} chat={chat} />
                     }
 
                     {
