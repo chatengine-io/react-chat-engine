@@ -20,6 +20,7 @@ export default class Socket extends Component {
                 Double check these credentials to make sure they're correct.\n
                 If all three are correct, try resetting the username and secret in the Online Dashboard or Private API.`
             )
+            this.props.onFailAuth && this.props.onFailAuth(this.props)
 
         } else if (eventJSON.action === 'is_typing') {
             props.onTyping && props.onTyping(eventJSON.data.id, eventJSON.data.person)
@@ -51,7 +52,7 @@ export default class Socket extends Component {
         }
     }
 
-    onClose() { this.props.onFailAuth && this.props.onFailAuth(this.props) }
+    onClose() { this.props.onDisconnect && this.props.onDisconnect() }
 
     render() {
         const { 

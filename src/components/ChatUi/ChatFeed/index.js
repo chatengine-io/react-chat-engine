@@ -101,9 +101,9 @@ export default class ChatFeed extends Component {
         const { chats, creds, activeChat } = this.props
         const chat = chats && chats[activeChat] 
 
-        if(creds === null) { 
-            return <Loading />
-        }
+        // if(creds === null) { 
+        //     return <Loading />
+        // }
 
         if(creds === undefined) {
             return <AuthFail />

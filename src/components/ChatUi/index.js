@@ -214,6 +214,7 @@ export default class App extends Component {
           {...this.props}
           // API Hooks
           onConnect={(props) => this.onConnect(props)}
+          onDisconnect={() => this.setState({ creds: null })}
           onFailAuth={(props) => this.onFailAuth(props)}
           onGetChats={(chats) => this.onGetChats(chats)}
           onNewChat={(chat) => this.onNewChat(chat)}
