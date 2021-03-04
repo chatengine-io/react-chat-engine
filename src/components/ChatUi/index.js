@@ -19,7 +19,7 @@ setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
 export default class App extends Component {
   state = {
-    creds: null, // TODO: Remove after fixing fail auth
+    props: null, // TODO: Remove after fixing fail auth
     chats: null,
     messages: {},
     activeChat: null,
@@ -36,22 +36,22 @@ export default class App extends Component {
     })
   }
 
-  onConnect(creds) {
-    this.setState({ creds })
-    getChats(creds, () => {})
+  onConnect(props) {
+    this.setState({ props })
+    getChats(props, () => {})
 
-    this.props.onConnect && this.props.onConnect(creds)
+    this.props.onConnect && this.props.onConnect(props)
   }
 
-  onFailAuth(creds) {
-    this.setState({ creds: undefined })
+  onFailAuth(props) {
+    this.setState({ props: undefined })
 
-    this.props.onFailAuth && this.props.onFailAuth(creds)
+    this.props.onFailAuth && this.props.onFailAuth(props)
   }
 
   setActiveChat(chatId) {
     this.setState({ activeChat: chatId })
-    getMessages(this.state.creds, chatId, () => {})
+    getMessages(this.state.props, chatId, () => {})
   }
 
   onGetChats(chats) {
@@ -107,7 +107,7 @@ export default class App extends Component {
 
     if (messages.length > 0) {
       const messageId = messages[messages.length - 1].id
-      readMessage(this.state.creds, this.state.activeChat, messageId, () => {})
+      readMessage(this.state.props, this.state.activeChat, messageId, () => {})
     }
     
     this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
@@ -120,7 +120,7 @@ export default class App extends Component {
       this.setState({ messages })
     }
 
-    readMessage(this.state.creds, this.state.activeChat, message.id)
+    readMessage(this.state.props, this.state.activeChat, message.id)
 
     this.props.onNewMessage && this.props.onNewMessage(chatId, message)
   }
@@ -214,6 +214,7 @@ export default class App extends Component {
           {...this.props}
           // API Hooks
           onConnect={(props) => this.onConnect(props)}
+          onDisconnect={() => this.setState({ props: null })}
           onFailAuth={(props) => this.onFailAuth(props)}
           onGetChats={(chats) => this.onGetChats(chats)}
           onNewChat={(chat) => this.onNewChat(chat)}

@@ -17,7 +17,7 @@ export default class Title extends Component {
 
         if (!chat) { return <div /> }
 
-        const otherPerson = chat.people.find(person => person.person.username !== this.props.creds.userName);
+        const otherPerson = chat.people.find(person => person.person.username !== this.props.userName);
 
         return (
             <Row 

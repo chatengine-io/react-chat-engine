@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import Title from './TitleSection'
-import { Loading, AuthFail, Welcome } from './Steps'
+import { AuthFail, Loading, Welcome } from './Steps'
 
 import Message from './Message'
 import MessageForm from './MessageForm'
@@ -98,18 +98,14 @@ export default class ChatFeed extends Component {
     }
 
     render() {
-        const { chats, creds, activeChat } = this.props
+        const { chats, props, activeChat } = this.props
         const chat = chats && chats[activeChat] 
 
-        if(creds === null) { 
-            return <Loading />
-        }
-
-        if(creds === undefined) {
+        if(props === undefined) {
             return <AuthFail />
         }
 
-        if(creds && chats !== null && _.isEmpty(chats)) {
+        if(props && chats !== null && _.isEmpty(chats)) {
             return <Welcome />
         }
 
@@ -118,6 +114,10 @@ export default class ChatFeed extends Component {
                 className='ce-chat-feed'
                 style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
             >
+                {
+                    props === null &&
+                    <Loading />
+                }
 
                 {
                     this.props.renderChatHeader ? 
@@ -160,6 +160,7 @@ const styles = {
         width: '100%', 
         overflow: 'scroll',
         overflowX: 'hidden',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        borderRight: '1px solid rgb(175, 175, 175)'
     }
 }
