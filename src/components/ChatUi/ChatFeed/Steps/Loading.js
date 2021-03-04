@@ -11,10 +11,11 @@ export default class Loading extends Component {
                     bottom: '66px', 
                     left: 'calc(50% - 78px)',
                     position: 'absolute', 
+                    fontSize: '15px',
                     padding: '10px 22px', 
                     color: 'white',
                     backgroundColor: '#fa8c16',
-                    borderRadius: '33px',
+                    borderRadius: '1.3em',
                 }}
                 id='ce-connecting-popup'
             >
