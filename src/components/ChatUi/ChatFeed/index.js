@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import Title from './TitleSection'
-import { Loading, AuthFail, Welcome } from './Steps'
+import { AuthFail, Welcome } from './Steps'
 
 import Message from './Message'
 import MessageForm from './MessageForm'
@@ -98,18 +98,18 @@ export default class ChatFeed extends Component {
     }
 
     render() {
-        const { chats, creds, activeChat } = this.props
+        const { chats, props, activeChat } = this.props
         const chat = chats && chats[activeChat] 
 
         // if(creds === null) { 
         //     return <Loading />
         // }
 
-        if(creds === undefined) {
+        if(props === undefined) {
             return <AuthFail />
         }
 
-        if(creds && chats !== null && _.isEmpty(chats)) {
+        if(props && chats !== null && _.isEmpty(chats)) {
             return <Welcome />
         }
 
