@@ -7,22 +7,22 @@ import { daySinceSent } from '../Utilities/dateToString'
 import ChatForm from './ChatForm'
 
 class ChatList extends Component {
-    readLastMessage(creds, chat) {
+    readLastMessage(chat) {
         let readLastMessage = true
         chat.people.map(chat_person => {
-            if(creds && creds.userName === chat_person.person.username) {
+            if(this.props.userName === chat_person.person.username) {
                 readLastMessage = chat.last_message.id === chat_person.last_read
             }
         })
         return readLastMessage
     }
 
-    renderChats(chats) {        
+    renderChats(chats) {
         return chats.map((chat, index) => {
             if (!chat) return <div key={`chat_${index}`} />
 
             const extraStyle = this.props.activeChat === chat.id ? styles.activeChat : {}
-            const otherPerson = chat.people.find(person => person.person.username !== this.props.creds.userName);
+            const otherPerson = chat.people.find(person => person.person.username !== this.props.userName);
             
             if (this.props.renderChatCard) {
                 return <div key={`chat_${index}`}>{this.props.renderChatCard(chat, index)}</div>
@@ -42,12 +42,11 @@ class ChatList extends Component {
                     style={{ ...styles.chatContainer, ...extraStyle }}
                     className={`ce-chat-card ${this.props.activeChat === chat.id && 'ce-active-chat-card'}`}
                 >
-                    
                     <div style={ styles.titleText } className='ce-chat-title-text'>
                         { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
                         
                         {
-                            !this.readLastMessage(this.props, chat) &&
+                            !this.readLastMessage(chat) &&
                             <div 
                                 className='ce-chat-unread-dot'
                                 style={{ 
@@ -75,7 +74,6 @@ class ChatList extends Component {
                             { daySinceSent(chat.last_message.created) }
                         </div>
                     </div>
-
                 </div>
             )
         })
