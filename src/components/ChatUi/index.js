@@ -19,7 +19,7 @@ setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
 export default class App extends Component {
   state = {
-    props: null, // TODO: Remove after fixing fail auth
+    props: null,
     chats: null,
     messages: {},
     activeChat: null,
@@ -38,8 +38,6 @@ export default class App extends Component {
 
   onConnect(props) {
     this.setState({ props })
-    getChats(props, () => {})
-
     this.props.onConnect && this.props.onConnect(props)
   }
 
@@ -187,6 +185,8 @@ export default class App extends Component {
     }, 1250);
   }
 
+  componentDidMount() { getChats(this.props) }
+
   componentDidUpdate() {
     const { typingCounter, typingData } = this.state
 
@@ -204,6 +204,8 @@ export default class App extends Component {
       }
     })
   }
+
+  componentDidMount() { getChats(this.props, (chats) => this.onGetChats(chats)) }
 
   render() {
     const { height } = this.props
