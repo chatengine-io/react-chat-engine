@@ -44,8 +44,8 @@ class ChatList extends Component {
                 >
                     
                     <div style={ styles.titleText } className='ce-chat-title-text'>
-                        { chat.is_direct_chat ? otherPerson.person.username : chat.title }
-                        {' '}
+                        { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
+                        
                         {
                             !this.readLastMessage(this.props, chat) &&
                             <div 

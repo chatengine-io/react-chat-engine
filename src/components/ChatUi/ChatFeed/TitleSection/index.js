@@ -40,7 +40,7 @@ export default class Title extends Component {
                     className='ce-chat-title-container'
                 >
                     <div style={styles.titleText} className='ce-chat-title-text'>
-                        { chat.is_direct_chat ? otherPerson.person.username : chat.title }
+                        { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
                     </div>
                     
                     <div style={styles.subtitleText} className='ce-chat-subtitle-text'>

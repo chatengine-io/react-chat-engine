@@ -89,15 +89,15 @@ export default class ChatSettingsTop extends Component {
                 <div className='ce-chat-avatars-row'>
                     { topPeople.length === 1 && this.renderOnePerson(topPeople) }
                     
-                    { chat.is_direct_chat && this.renderOnePerson([otherPerson]) }
+                    { chat.is_direct_chat && otherPerson && this.renderOnePerson([otherPerson]) }
 
-                    { !chat.is_direct_chat && topPeople.length === 2 && this.renderTwoPeople(topPeople) }
+                    { !chat.is_direct_chat && otherPerson && topPeople.length === 2 && this.renderTwoPeople(topPeople) }
 
-                    { !chat.is_direct_chat && topPeople.length === 3 && this.renderThreePeople(topPeople) }
+                    { !chat.is_direct_chat && otherPerson && topPeople.length === 3 && this.renderThreePeople(topPeople) }
                 </div>
 
                 {
-                    chat.is_direct_chat ?
+                    chat.is_direct_chat && otherPerson ?
                     <div style={{ 
                         paddingTop: '55px',
                         paddingBottom: '7px',
