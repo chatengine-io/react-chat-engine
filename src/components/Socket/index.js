@@ -73,6 +73,7 @@ export default class Socket extends Component {
             onOpen={() => this.props.onConnect && this.props.onConnect(this.props)}
             onClose={this.onClose.bind(this)}
             onMessage={this.handleEvent.bind(this)}
+            reconnectIntervalInMilliSeconds={3000}
         />
     }
 }

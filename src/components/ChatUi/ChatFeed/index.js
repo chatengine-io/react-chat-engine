@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import Title from './TitleSection'
-import { AuthFail, Welcome } from './Steps'
+import { AuthFail, Loading, Welcome } from './Steps'
 
 import Message from './Message'
 import MessageForm from './MessageForm'
@@ -116,7 +116,7 @@ export default class ChatFeed extends Component {
             >
                 {
                     props === null &&
-                    <div>okokokoko</div>
+                    <Loading />
                 }
 
                 {
