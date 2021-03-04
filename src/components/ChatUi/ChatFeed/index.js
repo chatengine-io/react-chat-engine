@@ -101,10 +101,6 @@ export default class ChatFeed extends Component {
         const { chats, props, activeChat } = this.props
         const chat = chats && chats[activeChat] 
 
-        // if(creds === null) { 
-        //     return <Loading />
-        // }
-
         if(props === undefined) {
             return <AuthFail />
         }
@@ -118,6 +114,10 @@ export default class ChatFeed extends Component {
                 className='ce-chat-feed'
                 style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
             >
+                {
+                    props === null &&
+                    <div>okokokoko</div>
+                }
 
                 {
                     this.props.renderChatHeader ? 
@@ -160,6 +160,7 @@ const styles = {
         width: '100%', 
         overflow: 'scroll',
         overflowX: 'hidden',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        borderRight: '1px solid rgb(175, 175, 175)'
     }
 }
