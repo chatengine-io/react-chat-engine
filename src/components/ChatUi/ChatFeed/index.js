@@ -98,14 +98,14 @@ export default class ChatFeed extends Component {
     }
 
     render() {
-        const { chats, props, activeChat } = this.props
+        const { chats, creds, activeChat } = this.props
         const chat = chats && chats[activeChat] 
 
-        if(props === undefined) {
+        if(creds === undefined) {
             return <AuthFail />
         }
 
-        if(props && chats !== null && _.isEmpty(chats)) {
+        if(creds && chats !== null && _.isEmpty(chats)) {
             return <Welcome />
         }
 
@@ -115,7 +115,7 @@ export default class ChatFeed extends Component {
                 style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
             >
                 {
-                    props === null &&
+                    this.props.connecting &&
                     <Loading />
                 }
 
