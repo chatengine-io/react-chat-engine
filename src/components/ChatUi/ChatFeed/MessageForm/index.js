@@ -8,6 +8,8 @@ import ImagesInput from './ImagesInput'
 import { Button, TextAreaInput } from 'react-chat-engine'
 export default class MessageForm extends React.Component {
     state = {
+      trigger: 0,
+      mod: 3,
       value: '',
       files: []
     }
@@ -19,9 +21,14 @@ export default class MessageForm extends React.Component {
     }
   
     handleChange(event) {
-      this.setState({value: event.target.value});
-
-      isTyping(this.props.creds, this.props.chatId)
+      this.setState({
+        value: event.target.value,
+        trigger: (this.state.trigger + 1) % this.state.mod
+      });
+      
+      if (this.state.trigger === 1) {
+        isTyping(this.props.creds, this.props.chatId)
+      }
     }
   
     handleSubmit(event) {

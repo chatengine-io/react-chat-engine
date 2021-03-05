@@ -187,7 +187,7 @@ export default class App extends Component {
           }
         }
       })
-    }, 1250);
+    }, 2500);
   }
 
   componentDidMount() { getChats(this.props) }
