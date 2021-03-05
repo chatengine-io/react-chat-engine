@@ -58,7 +58,9 @@ export default class App extends Component {
   onGetChats(chats) {
     chats = this.sortChats(chats)
 
-    if (chats.length > 0) { this.setActiveChat(chats[0].id) }
+    if (chats.length > 0 && this.state.activeChat === null) {
+      this.setActiveChat(chats[0].id) 
+    }
     this.setState({ chats: _.mapKeys(chats, 'id') })
 
     this.props.onGetChats && this.props.onGetChats(chats)
