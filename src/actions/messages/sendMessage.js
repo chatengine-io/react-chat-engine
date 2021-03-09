@@ -9,7 +9,8 @@ export function sendMessage(props, chatId, data, callback) {
         }
     }
     formdata.append('text', data.text)
-
+    formdata.append('custom_json', JSON.stringify(data.custom_json ? data.custom_json : {}))
+    
     axios.post(
         `${str.getApiUrl(props)}/chats/${chatId}/messages/`,
         formdata,

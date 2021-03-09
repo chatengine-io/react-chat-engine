@@ -131,7 +131,6 @@ export default class ChatFeed extends Component {
                     style={styles.feedContainer} 
                     className='ce-chat-feed-container'
                 >
-
                     <div style={{ height: '88px' }} className='ce-feed-container-top' />
 
                     { this.renderMessages() }
@@ -139,13 +138,12 @@ export default class ChatFeed extends Component {
                     { this.renderTypers() }
 
                     <div style={{ height: '54px' }} className='ce-feed-container-bottom' />
-
                 </div>
 
                 {
                     this.props.renderNewMessageForm ?
                     this.props.renderNewMessageForm(this.props, activeChat) :
-                    <MessageForm creds={this.props} chatId={activeChat} />
+                    <MessageForm chatId={activeChat} {...this.props} />
                 }
 
             </div>

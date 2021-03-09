@@ -27,24 +27,34 @@ export default class MessageForm extends React.Component {
       });
       
       if (this.state.trigger === 1) {
-        isTyping(this.props.creds, this.props.chatId)
+        isTyping(this.props, this.props.chatId)
       }
+    }
+
+    uuid() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
     }
   
     handleSubmit(event) {
       event.preventDefault();
-
       const { files } = this.state
       const text = this.state.value.trim()
+      const custom_json = { sender_id: this.uuid() }
+      const data = { text, files, custom_json }
 
       if (text.length > 0 || files.length > 0) {
         sendMessage(
-          this.props.creds, 
+          this.props, 
           this.props.chatId, 
-          { text, files },
+          data,
           (data) => {}
         )
       }
+
+      this.props.sendingMessage && this.props.sendingMessage(data)
 
       this.setState({ value: '', files: [] })
     }

@@ -23,10 +23,12 @@ export default class App extends Component {
     creds: null,
     chats: null,
     messages: {},
+    sendingMessages: {},
     activeChat: null,
     typingCounter: {},
     typingData: {},
-    onChatClick: (chatId) => this.setActiveChat(chatId)
+    onChatClick: (chatId) => this.setActiveChat(chatId),
+    sendingMessage: (chatId) => this.sendingMessage(chatId),
   }
 
   sortChats(chats) {
@@ -114,6 +116,16 @@ export default class App extends Component {
     }
     
     this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
+  }
+
+  sendingMessage(message) {
+    console.log('message', message)
+    this.setState({
+      sendingMessages: {
+        ...this.state.sendingMessages,
+        [message.custom_json.sender_id]: message
+      }
+    })
   }
 
   onNewMessage(chatId, message) {
