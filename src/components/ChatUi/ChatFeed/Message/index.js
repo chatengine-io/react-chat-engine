@@ -10,7 +10,7 @@ export default class Message extends Component {
     }
 
     render() {
-        const { creds, chat, lastMessage, message, nextMessage } = this.props
+        const { creds, chat, lastMessage, message, sending, nextMessage } = this.props
 
         if (!message) { return <div /> }
 
@@ -22,8 +22,9 @@ export default class Message extends Component {
                 />
 
                 {
-                    message.sender_username === creds.userName ?
+                    sending || message.sender_username === creds.userName ?
                     <MyMessage 
+                        sending={sending}
                         chat={chat} 
                         creds={creds} 
                         lastMessage={lastMessage} 

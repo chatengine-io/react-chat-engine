@@ -34,28 +34,20 @@ export default class TheirMessage extends Component {
         })
     }
 
-    renderAttachments(borderRadius) {
+    renderAttachments() {
         const { message } = this.props
         const attachments = message && message.attachments ? this.props.message.attachments : []
         return attachments.map((attachment, index) => {
-            return <Thumbnail attachment={attachment} key={`attachment_${index}`} borderRadius={borderRadius} />
+            return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
         })
     }
-
-    // renderPersonText(person) {
-    //     if (person.first_name !== null) {
-    //         return `${person.first_name}${person.last_name ? ` ${person.last_name}` : ''}`
-    //     } else {
-    //         return person.username
-    //     }
-    // }
 
     render() {
         const { lastMessage, message, nextMessage } = this.props
 
         if (!message) { return <div /> }
 
-        const attachments = this.props.message && this.props.message.attachments
+        const attachments = message && message.attachments && message.attachments
 
         const topLeftRadius = !lastMessage || lastMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
         const bottomLeftRadius = !nextMessage || nextMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'

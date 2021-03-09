@@ -33,10 +33,11 @@ export default class Message extends Component {
         })
     }
 
-    renderAttachments(borderRadius) {
-        const attachments = this.props.message ? this.props.message.attachments : []
+    renderAttachments(attachments) {
+        const { message } = this.props
+        const attachments = message && message.attachments ? message.attachments : []
         return attachments.map((attachment, index) => {
-            return <Thumbnail attachment={attachment} key={`attachment_${index}`} borderRadius={borderRadius} />
+            return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
         })
     }
 
@@ -45,7 +46,9 @@ export default class Message extends Component {
 
         if (!message) { return <div /> }
 
-        const attachments = this.props.message && this.props.message.attachments
+        const attachments = message && message.attachments && message.attachments
+
+        if(this.props.sending){ console.log(this.props.sending, message.text, !attachments) }
 
         const topRightRadius = !lastMessage || lastMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
         const bottomRightRadius = !nextMessage || nextMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
@@ -60,7 +63,6 @@ export default class Message extends Component {
                 onMouseLeave={() => this.setState({ selected: false })}
                 style={{ width: '100%', textAlign: 'right', paddingBottom }}
             >
-
                 <div 
                     style={{ display: 'auto' }} 
                     className='ce-my-message-attachments-container'
@@ -72,11 +74,9 @@ export default class Message extends Component {
                     style={{ paddingRight: '2px' }} 
                     className='ce-message-bubble-row ce-my-message-bubble-row'
                 >
-
                     <Col xs={1} sm={2} md={3} />
 
                     <Col xs={11} sm={10} md={9}>
-
                         {
                             !attachments || message.text && 
                             <div
@@ -86,7 +86,6 @@ export default class Message extends Component {
                                 { message.text }
                             </div>
                         }
-
                     </Col>
 
                     <Col xs={1} sm={2} md={3} />
@@ -94,9 +93,7 @@ export default class Message extends Component {
                     <Col xs={12} className='ce-reads-row ce-my-reads-row'>
                         { this.renderReads() }
                     </Col>
-            
                 </Row>
-                
             </div>
         )
     }

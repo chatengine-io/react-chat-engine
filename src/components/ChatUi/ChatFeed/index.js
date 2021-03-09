@@ -96,7 +96,7 @@ export default class ChatFeed extends Component {
                 return (
                     <Message 
                         key={`sending-msg-${index}`}
-                        loading={true}
+                        sending={true}
                         creds={this.props}
                         chat={chat}
                         message={message}
