@@ -143,7 +143,7 @@ export default class ChatFeed extends Component {
                 {
                     this.props.renderNewMessageForm ?
                     this.props.renderNewMessageForm(this.props, activeChat) :
-                    <MessageForm chatId={activeChat} {...this.props} />
+                    <MessageForm {...this.props} chatId={activeChat}/>
                 }
             </div>
         )
