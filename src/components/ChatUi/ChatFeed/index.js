@@ -82,6 +82,21 @@ export default class ChatFeed extends Component {
         })
     }
 
+    renderSendingMessages() {
+        const { sendingMessages } = this.props
+        const keys = Object.keys(sendingMessages)
+
+        return keys.map((key, index) => {
+            const message = sendingMessages[key]
+            
+            return (
+                <div key={`sending-msg-${index}`}>
+                    { message.text }
+                </div>
+            )
+        })
+    }
+
     scrollToBottom() {
         animateScroll.scrollToBottom({
             duration: this.state.duration,
@@ -134,6 +149,8 @@ export default class ChatFeed extends Component {
                     <div style={{ height: '88px' }} className='ce-feed-container-top' />
 
                     { this.renderMessages() }
+
+                    { this.renderSendingMessages() }
 
                     { this.renderTypers() }
 

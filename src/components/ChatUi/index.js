@@ -119,7 +119,6 @@ export default class App extends Component {
   }
 
   sendingMessage(message) {
-    console.log('message', message)
     this.setState({
       sendingMessages: {
         ...this.state.sendingMessages,
