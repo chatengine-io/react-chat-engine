@@ -128,8 +128,12 @@ export default class App extends Component {
   }
 
   onNewMessage(chatId, message) {
+    const { sendingMessages, messages } = this.state
+
+    sendingMessages[JSON.parse(message.custom_json).sender_id] = undefined
+    this.setState({ sendingMessages })
+
     if (chatId === this.state.activeChat) {
-      const { messages } = this.state
       messages[message.id] = message
       this.setState({ messages })
     }

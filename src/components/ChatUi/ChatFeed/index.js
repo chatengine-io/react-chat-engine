@@ -83,17 +83,28 @@ export default class ChatFeed extends Component {
     }
 
     renderSendingMessages() {
-        const { sendingMessages } = this.props
+        const { sendingMessages, chats, activeChat } = this.props
         const keys = Object.keys(sendingMessages)
+        const chat = chats && chats[activeChat]
 
         return keys.map((key, index) => {
             const message = sendingMessages[key]
-            
-            return (
-                <div key={`sending-msg-${index}`}>
-                    { message.text }
-                </div>
-            )
+            const lastMessageKey = index === 0 ? null : keys[index - 1]
+            const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
+
+            if(message && message.chat === this.props.activeChat) {
+                return (
+                    <Message 
+                        key={`sending-msg-${index}`}
+                        loading={true}
+                        creds={this.props}
+                        chat={chat}
+                        message={message}
+                        lastMessage={sendingMessages[lastMessageKey]}
+                        nextMessage={sendingMessages[nextMessageKey]}
+                    />
+                )
+            }
         })
     }
 

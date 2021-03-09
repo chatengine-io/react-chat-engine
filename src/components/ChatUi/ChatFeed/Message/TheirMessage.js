@@ -35,7 +35,8 @@ export default class TheirMessage extends Component {
     }
 
     renderAttachments(borderRadius) {
-        const attachments = this.props.message ? this.props.message.attachments : []
+        const { message } = this.props
+        const attachments = message && message.attachments ? this.props.message.attachments : []
         return attachments.map((attachment, index) => {
             return <Thumbnail attachment={attachment} key={`attachment_${index}`} borderRadius={borderRadius} />
         })

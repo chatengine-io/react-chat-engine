@@ -17,6 +17,8 @@ export default class DatePartition extends Component {
     }
 
     formatDate(date_time) {
+        if (!date_time) return ''
+        
         const year = date_time.substr(0, 4)
         const month = months[parseInt(date_time.substr(5, 2)) - 1]
         const day = date_time.substr(8, 2)
