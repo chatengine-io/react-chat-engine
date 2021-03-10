@@ -36,7 +36,8 @@ export default class MessageForm extends React.Component {
       const { files } = this.state
       const text = this.state.value.trim()
       const custom_json = { sender_id: Date.now().toString() }
-      const data = { text, files, custom_json, chat: this.props.chatId }
+      const sender_username = this.props.userName
+      const data = { text, files, custom_json, sender_username, chat: this.props.chatId }
 
       if (text.length > 0 || files.length > 0) {
         sendMessage(
