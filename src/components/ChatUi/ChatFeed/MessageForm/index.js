@@ -11,13 +11,13 @@ export default class MessageForm extends React.Component {
       trigger: 0,
       mod: 3,
       value: '',
-      files: []
+      attachments: []
     }
 
     onRemove(index) {
-      let { files } = this.state 
-      files.splice(index, 1)
-      this.setState({ files })
+      let { attachments } = this.state 
+      attachments.splice(index, 1)
+      this.setState({ attachments })
     }
   
     handleChange(event) {
@@ -33,13 +33,13 @@ export default class MessageForm extends React.Component {
   
     handleSubmit(event) {
       event.preventDefault();
-      const { files } = this.state
+      const { attachments } = this.state
       const text = this.state.value.trim()
       const custom_json = { sender_id: Date.now().toString() }
       const sender_username = this.props.userName
-      const data = { text, attachments: files, files, custom_json, sender_username, chat: this.props.chatId }
+      const data = { text, attachments, custom_json, sender_username, chat: this.props.chatId }
 
-      if (text.length > 0 || files.length > 0) {
+      if (text.length > 0 || attachments.length > 0) {
         sendMessage(
           this.props, 
           this.props.chatId, 
@@ -50,7 +50,7 @@ export default class MessageForm extends React.Component {
 
       this.props.sendingMessage && this.props.sendingMessage(data)
 
-      this.setState({ value: '', files: [] })
+      this.setState({ value: '', attachments: [] })
     }
   
     render() {
@@ -60,9 +60,9 @@ export default class MessageForm extends React.Component {
           style={styles.messageFormContainer}
           className='ce-message-form-container'
         >
-          <FileRow files={this.state.files} onRemove={(i) => this.onRemove(i)} />
+          <FileRow files={this.state.attachments} onRemove={(i) => this.onRemove(i)} />
 
-          <ImagesInput onSelectFiles={(files) => this.setState({ files })} />
+          <ImagesInput onSelectFiles={(attachments) => this.setState({ attachments })} />
 
           <form onSubmit={this.handleSubmit.bind(this)} className='ce-message-form'>
             <div style={styles.inputContainer} className='ce-message-input-form'>
