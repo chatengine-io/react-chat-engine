@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import Thumbnail from './Thumbnail'
+
 import Dot from '../../components/Avatar/Dot'
 
 import { Row, Col, setConfiguration } from 'react-grid-system'
@@ -31,12 +33,18 @@ export default class SendingMessage extends Component {
         })
     }
 
+    renderAttachments(attachments) {
+        return attachments.map((a, index) => {
+            return <Thumbnail key={`sending-file-${index}`} />
+        })
+    }
+
     render() {
         const { lastMessage, message, nextMessage } = this.props
 
         if (!message) { return <div /> }
 
-        const attachments = message && message.attachments && message.attachments
+        const attachments = message && message.attachments ? message.attachments : []
 
         const topRightRadius = !lastMessage || lastMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
         const bottomRightRadius = !nextMessage || nextMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
@@ -51,6 +59,13 @@ export default class SendingMessage extends Component {
                 onMouseLeave={() => this.setState({ selected: false })}
                 style={{ width: '100%', textAlign: 'right', paddingBottom }}
             >
+                <div 
+                    style={{ display: 'auto' }} 
+                    className='ce-my-message-attachments-container'
+                >
+                    { this.renderAttachments(attachments) }
+                </div>
+
                 <Row
                     style={{ paddingRight: '2px' }} 
                     className='ce-message-bubble-row ce-my-message-bubble-row ce-my-message-sending-row'
