@@ -58,12 +58,15 @@ export default class SendingMessage extends Component {
                     <Col xs={1} sm={2} md={3} />
 
                     <Col xs={11} sm={10} md={9}>
+                        {
+                            message.text &&
                             <div
                                 className='ce-message-bubble ce-my-message-bubble'
                                 style={{ ...styles.myMessage, ...{ borderRadius } }}
                             >
                                 { message.text }
                             </div>
+                        }
                     </Col>
                     
                     <Col xs={1} sm={2} md={3} />
