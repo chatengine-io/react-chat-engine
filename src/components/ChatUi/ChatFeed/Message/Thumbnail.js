@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
 
+import { LoadingOutlined } from '@ant-design/icons'
+
 export default class Thumbnail extends Component {
 
     render() {
         const { attachment } = this.props
 
+        if (!attachment) {
+            return (
+                <div style={styles.loadingContainer}>
+                    <LoadingOutlined  style={{ color: 'white', padding: '4px', fontSize: '28px' }} />
+                </div>
+            )
+        }
+
         return (
             <img 
-                style={ styles.thumbnail }
+                style={styles.thumbnail}
                 src={attachment.file}
                 alt={'thumb-nail'}
             />
@@ -16,6 +26,23 @@ export default class Thumbnail extends Component {
 }
 
 const styles = {
+    loadingContainer: {
+        width: '100%', 
+        cursor: 'pointer',
+        textAlign: 'right', 
+        display: 'inline-block', 
+        objectFit: 'cover',
+        borderRadius: '0.3em',
+        marginRight: '2px',
+
+        height: '30vw', 
+        width: '30vw', 
+        maxHeight: '200px',
+        maxWidth: '200px',
+        minHeight: '100px',
+        minWidth: '100px',
+        backgroundColor: '#d9d9d9',
+    },
     thumbnail: { 
         width: '100%', 
         cursor: 'pointer',

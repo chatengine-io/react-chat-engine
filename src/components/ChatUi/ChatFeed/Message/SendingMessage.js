@@ -8,7 +8,7 @@ import { Row, Col, setConfiguration } from 'react-grid-system'
 
 setConfiguration({ maxScreenClass: 'xl' })
 
-export default class Message extends Component {
+export default class SendingMessage extends Component {
     state = {
         selected: false
     }
@@ -33,11 +33,9 @@ export default class Message extends Component {
         })
     }
 
-    renderAttachments() {
-        const { message } = this.props
-        const attachments = message && message.attachments ? message.attachments : []
-        return attachments.map((attachment, index) => {
-            return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
+    renderAttachments(attachments) {
+        return attachments.map((a, index) => {
+            return <Thumbnail key={`sending-file-${index}`} />
         })
     }
 
@@ -46,7 +44,7 @@ export default class Message extends Component {
 
         if (!message) { return <div /> }
 
-        const attachments = message && message.attachments && message.attachments
+        const attachments = message && message.attachments ? message.attachments : []
 
         const topRightRadius = !lastMessage || lastMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
         const bottomRightRadius = !nextMessage || nextMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
@@ -56,7 +54,7 @@ export default class Message extends Component {
 
         return (
             <div 
-                className='ce-message-row ce-my-message'
+                className='ce-message-row ce-my-message ce-my-message-sending'
                 onMouseEnter={() => this.setState({ selected: true })}
                 onMouseLeave={() => this.setState({ selected: false })}
                 style={{ width: '100%', textAlign: 'right', paddingBottom }}
@@ -65,18 +63,18 @@ export default class Message extends Component {
                     style={{ display: 'auto' }} 
                     className='ce-my-message-attachments-container'
                 >
-                    { this.renderAttachments() }
+                    { this.renderAttachments(attachments) }
                 </div>
 
                 <Row
                     style={{ paddingRight: '2px' }} 
-                    className='ce-message-bubble-row ce-my-message-bubble-row'
+                    className='ce-message-bubble-row ce-my-message-bubble-row ce-my-message-sending-row'
                 >
                     <Col xs={1} sm={2} md={3} />
 
                     <Col xs={11} sm={10} md={9}>
                         {
-                            !attachments || message.text && 
+                            message.text &&
                             <div
                                 className='ce-message-bubble ce-my-message-bubble'
                                 style={{ ...styles.myMessage, ...{ borderRadius } }}
@@ -85,12 +83,8 @@ export default class Message extends Component {
                             </div>
                         }
                     </Col>
-
+                    
                     <Col xs={1} sm={2} md={3} />
-
-                    <Col xs={12} className='ce-reads-row ce-my-reads-row'>
-                        { this.renderReads() }
-                    </Col>
                 </Row>
             </div>
         )
@@ -105,6 +99,6 @@ const styles = {
         padding: '12px',
         fontSize: '15px',
         whiteSpace: 'pre-line',
-        backgroundColor: 'rgb(24, 144, 255)', 
+        backgroundColor: '#40a9ff', 
     }
 }

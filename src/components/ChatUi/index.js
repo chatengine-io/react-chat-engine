@@ -23,10 +23,12 @@ export default class App extends Component {
     creds: null,
     chats: null,
     messages: {},
+    sendingMessages: {},
     activeChat: null,
     typingCounter: {},
     typingData: {},
-    onChatClick: (chatId) => this.setActiveChat(chatId)
+    onChatClick: (chatId) => this.setActiveChat(chatId),
+    sendingMessage: (chatId) => this.sendingMessage(chatId),
   }
 
   sortChats(chats) {
@@ -58,7 +60,9 @@ export default class App extends Component {
   onGetChats(chats) {
     chats = this.sortChats(chats)
 
-    if (chats.length > 0) { this.setActiveChat(chats[0].id) }
+    if (chats.length > 0 && this.state.activeChat === null) {
+      this.setActiveChat(chats[0].id) 
+    }
     this.setState({ chats: _.mapKeys(chats, 'id') })
 
     this.props.onGetChats && this.props.onGetChats(chats)
@@ -114,9 +118,22 @@ export default class App extends Component {
     this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
   }
 
+  sendingMessage(message) {
+    this.setState({
+      sendingMessages: {
+        ...this.state.sendingMessages,
+        [message.custom_json.sender_id]: message
+      }
+    })
+  }
+
   onNewMessage(chatId, message) {
+    const { sendingMessages, messages } = this.state
+
+    sendingMessages[JSON.parse(message.custom_json).sender_id] = undefined
+    this.setState({ sendingMessages })
+
     if (chatId === this.state.activeChat) {
-      const { messages } = this.state
       messages[message.id] = message
       this.setState({ messages })
     }
@@ -185,7 +202,7 @@ export default class App extends Component {
           }
         }
       })
-    }, 1250);
+    }, 2500);
   }
 
   componentDidMount() { getChats(this.props) }

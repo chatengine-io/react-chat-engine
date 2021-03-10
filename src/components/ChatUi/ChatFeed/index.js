@@ -82,6 +82,32 @@ export default class ChatFeed extends Component {
         })
     }
 
+    renderSendingMessages() {
+        const { sendingMessages, chats, activeChat } = this.props
+        const keys = Object.keys(sendingMessages)
+        const chat = chats && chats[activeChat]
+
+        return keys.map((key, index) => {
+            const message = sendingMessages[key]
+            const lastMessageKey = index === 0 ? null : keys[index - 1]
+            const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
+
+            if(message && message.chat === this.props.activeChat) {
+                return (
+                    <Message 
+                        key={`sending-msg-${index}`}
+                        sending={true}
+                        creds={this.props}
+                        chat={chat}
+                        message={message}
+                        lastMessage={sendingMessages[lastMessageKey]}
+                        nextMessage={sendingMessages[nextMessageKey]}
+                    />
+                )
+            }
+        })
+    }
+
     scrollToBottom() {
         animateScroll.scrollToBottom({
             duration: this.state.duration,
@@ -131,23 +157,22 @@ export default class ChatFeed extends Component {
                     style={styles.feedContainer} 
                     className='ce-chat-feed-container'
                 >
-
                     <div style={{ height: '88px' }} className='ce-feed-container-top' />
 
                     { this.renderMessages() }
 
+                    { this.renderSendingMessages() }
+
                     { this.renderTypers() }
 
                     <div style={{ height: '54px' }} className='ce-feed-container-bottom' />
-
                 </div>
 
                 {
                     this.props.renderNewMessageForm ?
                     this.props.renderNewMessageForm(this.props, activeChat) :
-                    <MessageForm creds={this.props} chatId={activeChat} />
+                    <MessageForm {...this.props} chatId={activeChat}/>
                 }
-
             </div>
         )
     }
