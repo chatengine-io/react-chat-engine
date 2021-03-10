@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import DatePartition from './DatePartition'
 import MyMessage from './MyMessage'
 import TheirMessage from './TheirMessage'
+import SendingMessage from './SendingMessage'
 
 export default class Message extends Component {
     state = {
@@ -22,22 +23,33 @@ export default class Message extends Component {
                 />
 
                 {
-                    sending || message.sender_username === creds.userName ?
-                    <MyMessage 
-                        sending={sending}
+                    sending ? 
+                    <SendingMessage 
                         chat={chat} 
                         creds={creds} 
                         lastMessage={lastMessage} 
                         message={message} 
                         nextMessage={nextMessage} 
                     /> :
-                    <TheirMessage 
-                        chat={chat} 
-                        creds={creds} 
-                        lastMessage={lastMessage} 
-                        message={message} 
-                        nextMessage={nextMessage} 
-                    />
+                    <div>
+                        {
+                            !sending && message.sender_username === creds.userName ?
+                            <MyMessage 
+                                chat={chat} 
+                                creds={creds} 
+                                lastMessage={lastMessage} 
+                                message={message} 
+                                nextMessage={nextMessage} 
+                            /> :
+                            <TheirMessage 
+                                chat={chat} 
+                                creds={creds} 
+                                lastMessage={lastMessage} 
+                                message={message} 
+                                nextMessage={nextMessage} 
+                            />
+                        }
+                    </div>
                 }
             </div>
         ) 
