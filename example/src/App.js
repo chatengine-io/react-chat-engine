@@ -1,45 +1,37 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-import { ChatEngine, editMyData } from 'react-chat-engine'
+import './App.css';
+import RootPage from './Pages';
 
-const users = [
-  {
-    userName: 'John_Doe',
-    userSecret: 'pass1234',
-  },
-  {
-    userName: 'Jane_Smith',
-    userSecret: 'pass1234',
-  },
-  {
-    userName: 'Adam_La_Morre',
-    userSecret: 'pass1234',
-  }
-]
+import thunk from "redux-thunk";
+import promise from 'redux-promise';
+import rootReducer from './Reducers';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
 
-export default class App extends Component {
-  onConnect(props) {
-    editMyData(props, { is_online: true }, () => {})
-  }
+import storage from 'redux-persist/lib/storage';
+import { persistStore, persistReducer } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 
-  render() {
-    const user = users[Math.floor(Math.random() * users.length)]
+const persistConfig = { key: '2', storage };
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-    return (
-      <div style={{ width: '100vw',  backgroundColor: '#e6f7ff' }}>
-        <ChatEngine
-          // Creds
-          development
-          projectID='1ed59673-1fd6-46ed-9eb9-56239a6a4f82'
-          userName={user.userName}
-          userSecret={user.userSecret}
-          // Hooks
-          // onConnect={(props) => this.onConnect(props)}
-          // Custom UI
-          height='100vh'
-          // renderPeopleSettings={(chatId) => {}} 
-        />
-      </div>
-    )
-  }
+const createStoreWithMiddleware = applyMiddleware(promise, thunk)(createStore);
+export const store = createStoreWithMiddleware(persistedReducer);
+const persistor = persistStore(
+  store,
+  {},
+  () => { console.log('Getting persisted state from store') }
+);
+
+function App() {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RootPage />
+      </PersistGate>
+    </Provider>
+  );
 }
+
+export default App;
