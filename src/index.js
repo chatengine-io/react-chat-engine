@@ -12,6 +12,7 @@ import { Button } from './components/ChatUi/components/Button'
 import { TextInput, TextAreaInput, AutoCompleteInput } from './components/ChatUi/components/Input'
 
 import ChatFeed from './components/ChatUi/ChatFeed'
+import MessageForm from './components/ChatUi/ChatFeed/MessageForm'
 
 const ChatEngine = (props) => {
   return <SocketConnector {...props} />
@@ -24,7 +25,7 @@ export {
   Button,
   TextInput, TextAreaInput, AutoCompleteInput,
   
-  ChatFeed,
+  ChatFeed, MessageForm,
   
   getChats,
   newChat,
