@@ -2,7 +2,7 @@ import React from 'react';
 
 import { editChat, TextInput } from 'react-chat-engine'
 
-export default class MessageForm extends React.Component {
+export default class NewMessageForm extends React.Component {
     state = {
         activeChat: null,
         value: ''

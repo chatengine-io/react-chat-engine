@@ -17,7 +17,9 @@ import NewChatForm from './components/ChatUi/ChatList/NewChatForm'
 
 import ChatFeed from './components/ChatUi/ChatFeed'
 import ChatHeader from './components/ChatUi/ChatFeed/ChatHeader'
-import MessageForm from './components/ChatUi/ChatFeed/MessageForm'
+import MessageBubble from './components/ChatUi/ChatFeed/MessageBubble'
+import IsTyping from './components/ChatUi/ChatFeed/IsTyping'
+import NewMessageForm from './components/ChatUi/ChatFeed/NewMessageForm'
 
 const ChatEngine = (props) => {
   return <SocketConnector {...props} />
@@ -31,7 +33,7 @@ export {
   TextInput, TextAreaInput, AutoCompleteInput,
   
   ChatList, ChatCard, NewChatForm,
-  ChatFeed, ChatHeader, MessageForm,
+  ChatFeed, ChatHeader, MessageBubble, IsTyping, NewMessageForm,
   
   getChats,
   newChat,

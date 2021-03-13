@@ -6,7 +6,7 @@ import FileRow from './FileRow'
 import ImagesInput from './ImagesInput'
 
 import { Button, TextAreaInput } from 'react-chat-engine'
-export default class MessageForm extends React.Component {
+export default class NewMessageForm extends React.Component {
     state = {
       trigger: 0,
       mod: 3,
@@ -27,7 +27,7 @@ export default class MessageForm extends React.Component {
       });
       
       if (this.state.trigger === 1) {
-        isTyping(this.props, this.props.chatId)
+        isTyping(this.props, this.props.activeChat)
       }
     }
   
@@ -37,12 +37,12 @@ export default class MessageForm extends React.Component {
       const text = this.state.value.trim()
       const custom_json = { sender_id: Date.now().toString() }
       const sender_username = this.props.userName
-      const data = { text, attachments, custom_json, sender_username, chat: this.props.chatId }
+      const data = { text, attachments, custom_json, sender_username, chat: this.props.activeChat }
 
       if (text.length > 0 || attachments.length > 0) {
         sendMessage(
           this.props, 
-          this.props.chatId, 
+          this.props.activeChat, 
           data,
           (data) => {}
         )
@@ -57,7 +57,7 @@ export default class MessageForm extends React.Component {
       return (
         <div 
           id='msg-form-container'
-          style={styles.messageFormContainer}
+          style={styles.NewMessageFormContainer}
           className='ce-message-form-container'
         >
           <FileRow files={this.state.attachments} onRemove={(i) => this.onRemove(i)} />
@@ -86,7 +86,7 @@ export default class MessageForm extends React.Component {
 }
 
 const styles = {
-  messageFormContainer: { 
+  NewMessageFormContainer: { 
     position: 'absolute', 
     bottom: '0px', 
     width: '100%', 
