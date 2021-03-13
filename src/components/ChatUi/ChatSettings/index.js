@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import People from './People'
-import Photos from './Photos'
-import Options from './Options'
+import PeopleSettings from './PeopleSettings'
+import PhotosSettings from './PhotosSettings'
+import OptionsSettings from './OptionsSettings'
 import ChatSettingsTop from './ChatSettingsTop'
 
 export default class ChatSettingsContainer extends Component {
@@ -27,13 +27,13 @@ export default class ChatSettingsContainer extends Component {
                     {
                         this.props.renderPeopleSettings ?
                         this.props.renderPeopleSettings(this.props, chat) :
-                        <People creds={this.props} chat={chat} />
+                        <PeopleSettings creds={this.props} chat={chat} />
                     }
 
                     {
                         this.props.renderPhotosSettings ?
                         this.props.renderPhotosSettings(chat) :
-                        <Photos chat={chat} />
+                        <PhotosSettings chat={chat} />
                     }
 
                     {
@@ -42,7 +42,7 @@ export default class ChatSettingsContainer extends Component {
                             {
                                 this.props.renderOptionsSettings ?
                                 this.props.renderOptionsSettings(this.props, chat) :
-                                <Options creds={this.props} chat={chat} />
+                                <OptionsSettings creds={this.props} chat={chat} />
                             }
                         </div>
                     }

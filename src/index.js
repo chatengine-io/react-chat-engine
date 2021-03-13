@@ -21,6 +21,12 @@ import MessageBubble from './components/ChatUi/ChatFeed/MessageBubble'
 import IsTyping from './components/ChatUi/ChatFeed/IsTyping'
 import NewMessageForm from './components/ChatUi/ChatFeed/NewMessageForm'
 
+import ChatSettings from './components/ChatUi/ChatSettings'
+import ChatSettingsTop from './components/ChatUi/ChatSettings/ChatSettingsTop'
+import PeopleSettings from './components/ChatUi/ChatSettings/PeopleSettings'
+import PhotosSettings from './components/ChatUi/ChatSettings/PhotosSettings'
+import OptionsSettings from './components/ChatUi/ChatSettings/OptionsSettings'
+
 const ChatEngine = (props) => {
   return <SocketConnector {...props} />
 }
@@ -34,6 +40,7 @@ export {
   
   ChatList, ChatCard, NewChatForm,
   ChatFeed, ChatHeader, MessageBubble, IsTyping, NewMessageForm,
+  ChatSettings, ChatSettingsTop, PeopleSettings, PhotosSettings, OptionsSettings,
   
   getChats,
   newChat,
