@@ -17,9 +17,11 @@ export default class Photos extends React.Component {
     }
   
     render() {
-        const { chat } = this.props 
+        const { chats, activeChat } = this.props
 
-        if (!chat) { return <div /> }
+        if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
+
+        const chat = chats[activeChat]
 
         return (
             <div style={{ borderTop: '1px solid #f0f0f0' }} className='ce-photo-section'>

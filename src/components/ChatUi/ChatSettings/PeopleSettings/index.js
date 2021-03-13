@@ -11,23 +11,25 @@ export default class PeopleList extends React.Component {
         hovered: false
     }
 
-    renderChatPeople(people) {
+    renderChatPeople(people, chat) {
         return people.map((chatPerson, index) => {
             return (
                 <Person 
                     key={`person_${index}`} 
                     person={chatPerson.person}
-                    creds={this.props.creds} 
-                    chat={this.props.chat} 
+                    creds={this.props} 
+                    chat={chat} 
                 />
             )
         })
     }
   
     render() {
-        const { creds, chat } = this.props 
+        const { chats, activeChat } = this.props
 
-        if (!chat || chat.is_direct_chat) { return <div /> }
+        if (!chats || !activeChat || !chats[activeChat] || chats[activeChat].is_direct_chat) { return <div /> }
+
+        const chat = chats[activeChat]
 
         return (
             <div style={{ borderTop: '1px solid #f0f0f0' }}>
@@ -56,13 +58,13 @@ export default class PeopleList extends React.Component {
                     <div>
                         <div style={{ height: '12px' }} />
 
-                        { this.renderChatPeople(chat.people) }
+                        { this.renderChatPeople(chat.people, chat) }
 
                         <div style={{ height: '12px' }} />
 
                         {
-                            creds && chat && creds.userName === chat.admin.username &&
-                            <PersonForm creds={creds} chat={chat} />
+                            this.props && chat && this.props.userName === chat.admin.username &&
+                            <PersonForm creds={this.props} chat={chat} />
                         }
                     </div>
                 }

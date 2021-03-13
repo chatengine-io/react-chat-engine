@@ -11,9 +11,11 @@ export default class Options extends React.Component {
     }
   
     render() {
-        const { chat, creds } = this.props 
+        const { chats, activeChat } = this.props
 
-        if (!chat) { return <div /> }
+        if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
+
+        const chat = chats[activeChat]
 
         return (
             <div style={{ borderTop: '1px solid #f0f0f0' }}>
@@ -47,7 +49,7 @@ export default class Options extends React.Component {
                             value="Delete" 
                             theme='danger'
                             icon='delete'
-                            onClick={() => deleteChat(creds, chat.id, (data) => {})}
+                            onClick={() => deleteChat(this.props, chat.id, (data) => {})}
                             style={{ width: '100%', marginBottom: '12px' }}
                         />
 

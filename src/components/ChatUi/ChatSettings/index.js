@@ -21,19 +21,19 @@ export default class ChatSettingsContainer extends Component {
                     {
                         this.props.renderChatSettingsTop ?
                         this.props.renderChatSettingsTop(this.props, chat) :
-                        <ChatSettingsTop creds={this.props} chat={chat} />
+                        <ChatSettingsTop {...this.props} />
                     }
 
                     {
                         this.props.renderPeopleSettings ?
                         this.props.renderPeopleSettings(this.props, chat) :
-                        <PeopleSettings creds={this.props} chat={chat} />
+                        <PeopleSettings {...this.props} />
                     }
 
                     {
                         this.props.renderPhotosSettings ?
                         this.props.renderPhotosSettings(chat) :
-                        <PhotosSettings chat={chat} />
+                        <PhotosSettings {...this.props} />
                     }
 
                     {
@@ -42,7 +42,7 @@ export default class ChatSettingsContainer extends Component {
                             {
                                 this.props.renderOptionsSettings ?
                                 this.props.renderOptionsSettings(this.props, chat) :
-                                <OptionsSettings creds={this.props} chat={chat} />
+                                <OptionsSettings {...this.props} />
                             }
                         </div>
                     }
