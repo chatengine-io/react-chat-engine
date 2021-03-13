@@ -11,12 +11,13 @@ import { setConfiguration } from 'react-grid-system';
  
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
-export default class Title extends Component {
+export default class ChatHeader extends Component {
     render() {
-        const { chat } = this.props
+        const { chats, activeChat } = this.props
 
-        if (!chat) { return <div /> }
+        if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
 
+        const chat = chats[activeChat]
         const otherPerson = chat.people.find(person => person.person.username !== this.props.userName);
 
         return (

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
-import Title from './TitleSection'
+import ChatHeader from './ChatHeader'
 import { AuthFail, Loading, Welcome } from './Steps'
 
-import Message from './Message'
+import MessageBubble from './MessageBubble'
 import MessageForm from './MessageForm'
 
 import _ from 'lodash'
@@ -70,7 +70,7 @@ export default class ChatFeed extends Component {
             }
             
             return (
-                <Message 
+                <MessageBubble 
                     key={`message_${index}`}
                     creds={this.props}
                     chat={chat}
@@ -94,7 +94,7 @@ export default class ChatFeed extends Component {
 
             if(message && message.chat === this.props.activeChat) {
                 return (
-                    <Message 
+                    <MessageBubble 
                         key={`sending-msg-${index}`}
                         sending={true}
                         creds={this.props}
@@ -148,7 +148,7 @@ export default class ChatFeed extends Component {
                 {
                     this.props.renderChatHeader ? 
                     this.props.renderChatHeader(chat) :
-                    <Title chat={chat} {...this.props} />
+                    <ChatHeader {...this.props} />
                 }
 
 

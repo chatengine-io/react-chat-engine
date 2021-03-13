@@ -11,7 +11,12 @@ import { Avatar, Dot } from './components/ChatUi/components/Avatar'
 import { Button } from './components/ChatUi/components/Button'
 import { TextInput, TextAreaInput, AutoCompleteInput } from './components/ChatUi/components/Input'
 
+import ChatList from './components/ChatUi/ChatList'
+import ChatCard from './components/ChatUi/ChatList/ChatCard'
+import NewChatForm from './components/ChatUi/ChatList/NewChatForm'
+
 import ChatFeed from './components/ChatUi/ChatFeed'
+import ChatHeader from './components/ChatUi/ChatFeed/ChatHeader'
 import MessageForm from './components/ChatUi/ChatFeed/MessageForm'
 
 const ChatEngine = (props) => {
@@ -25,7 +30,8 @@ export {
   Button,
   TextInput, TextAreaInput, AutoCompleteInput,
   
-  ChatFeed, MessageForm,
+  ChatList, ChatCard, NewChatForm,
+  ChatFeed, ChatHeader, MessageForm,
   
   getChats,
   newChat,
