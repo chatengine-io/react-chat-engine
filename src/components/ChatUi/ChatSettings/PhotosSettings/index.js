@@ -1,32 +1,42 @@
 import React from 'react'
 
-import { Button, deleteChat } from 'react-chat-engine'
+import Thumbnail from './Thumbnail'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 
-export default class Options extends React.Component {
+export default class Photos extends React.Component {
     state = {
         collapsed: true,
         hovered: false
     }
+
+    renderPhotos(attachments) {
+        return attachments.map((attachment, index) => {
+            return <Thumbnail key={`person_${index}`} attachment={attachment} />
+        })
+    }
   
     render() {
-        const { chat, creds } = this.props 
+        const { chats, activeChat } = this.props
 
-        if (!chat) { return <div /> }
+        if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
+
+        const chat = chats[activeChat]
 
         return (
-            <div style={{ borderTop: '1px solid #f0f0f0' }}>
-
+            <div style={{ borderTop: '1px solid #f0f0f0' }} className='ce-photo-section'>
                 <div 
                     onMouseEnter={() => this.setState({ hovered: true })}
                     onMouseLeave={() => this.setState({ hovered: false })}
                     onClick={() => this.setState({ collapsed: !this.state.collapsed })}
                     style={this.state.hovered ? { backgroundColor: '#f0f0f0', cursor: 'pointer' } : {}}
+                    className='ce-section-title-container ce-photo-title-container'
                 >
-
-                    <div style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}>
-                        Options
+                    <div 
+                        className='ce-section-title ce-photo-title'
+                        style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}
+                    >
+                        Photos
                     </div>
 
                     {
@@ -34,26 +44,16 @@ export default class Options extends React.Component {
                         <LeftOutlined style={styles.collapseIcon} /> :
                         <DownOutlined style={styles.collapseIcon} />
                     }
-
                 </div>
-                
+
                 {
                     !this.state.collapsed &&
-                    <div>
-
+                    <div className='ce-photo-feed'>
                         <div style={{ height: '12px' }} />
 
-                        <Button 
-                            value="Delete" 
-                            theme='danger'
-                            icon='delete'
-                            onClick={() => deleteChat(creds, chat.id, (data) => {})}
-                            style={{ width: '100%', marginBottom: '12px' }}
-                        />
-
+                        { this.renderPhotos(chat.attachments) }
                     </div>
                 }
-            
             </div>
         )
     }

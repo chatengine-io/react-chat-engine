@@ -73,14 +73,15 @@ export default class ChatSettingsTop extends Component {
     }
 
     getOtherPerson(people) {
-        return people.find(person => person.person.username !== this.props.creds.userName);
+        return people.find(person => person.person.username !== this.props.userName);
     }
 
     render() {
-        const { chat, creds } = this.props
+        const { chats, activeChat } = this.props
 
-        if (!chat) { return <div /> }
+        if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
 
+        const chat = chats[activeChat]
         const topPeople = chat.people.slice(0, 3)
         const otherPerson = this.getOtherPerson(chat.people)
         
@@ -109,7 +110,7 @@ export default class ChatSettingsTop extends Component {
                     }}>
                         { otherPerson.person.username }
                     </div> :
-                    <TitleForm chat={chat} creds={creds} />
+                    <TitleForm chat={chat} creds={this.props} />
                 }
             </div>
         )

@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
 
-import Title from './TitleSection'
+import ChatHeader from './ChatHeader'
 import { AuthFail, Loading, Welcome } from './Steps'
 
-import Message from './Message'
-import MessageForm from './MessageForm'
+import MessageBubble from './MessageBubble'
+import NewMessageForm from './NewMessageForm'
+import IsTyping from './IsTyping'
 
 import _ from 'lodash'
 
 import { animateScroll } from "react-scroll"
-
-import { stringToColor } from '../Utilities/colorMapping'
 
 export default class ChatFeed extends Component {
     state = {
@@ -31,16 +30,7 @@ export default class ChatFeed extends Component {
             return this.props.renderIsTyping(typers)
         }
 
-        return typers.map((typer, index) => {
-            return (
-                <div 
-                    key={`typer_${index}`} 
-                    style={{ color: stringToColor(typer), padding: '2px', paddingLeft: '12px' }}
-                >
-                    {`${typer} is typing...`}
-                </div>
-            )
-        })
+        return typers.map((username, index) => <IsTyping key={`typer_${index}`} username={username} />)
     }
 
     renderMessages() {
@@ -70,9 +60,9 @@ export default class ChatFeed extends Component {
             }
             
             return (
-                <Message 
+                <MessageBubble 
                     key={`message_${index}`}
-                    creds={this.props}
+                    {...this.props}
                     chat={chat}
                     message={message}
                     lastMessage={messages[lastMessageKey]}
@@ -94,10 +84,10 @@ export default class ChatFeed extends Component {
 
             if(message && message.chat === this.props.activeChat) {
                 return (
-                    <Message 
+                    <MessageBubble 
+                        sending
                         key={`sending-msg-${index}`}
-                        sending={true}
-                        creds={this.props}
+                        {...this.props}
                         chat={chat}
                         message={message}
                         lastMessage={sendingMessages[lastMessageKey]}
@@ -148,7 +138,7 @@ export default class ChatFeed extends Component {
                 {
                     this.props.renderChatHeader ? 
                     this.props.renderChatHeader(chat) :
-                    <Title chat={chat} {...this.props} />
+                    <ChatHeader {...this.props} />
                 }
 
 
@@ -171,7 +161,7 @@ export default class ChatFeed extends Component {
                 {
                     this.props.renderNewMessageForm ?
                     this.props.renderNewMessageForm(this.props, activeChat) :
-                    <MessageForm {...this.props} chatId={activeChat}/>
+                    <NewMessageForm {...this.props} />
                 }
             </div>
         )

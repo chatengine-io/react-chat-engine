@@ -11,9 +11,12 @@ export default class Message extends Component {
     }
 
     render() {
-        const { creds, chat, lastMessage, message, sending, nextMessage } = this.props
+        const { lastMessage, message, sending, nextMessage } = this.props
+        const { chats, activeChat } = this.props
 
-        if (!message) { return <div /> }
+        if (!message || !chats || !activeChat || !chats[activeChat]) { return <div /> }
+
+        const chat = chats[activeChat]
 
         return (
             <div className='ce-message-and-date'>
@@ -29,24 +32,24 @@ export default class Message extends Component {
                     sending ? 
                     <SendingMessage 
                         chat={chat} 
-                        creds={creds} 
+                        creds={this.props} 
                         lastMessage={lastMessage} 
                         message={message} 
                         nextMessage={nextMessage} 
                     /> :
                     <div>
                         {
-                            !sending && message.sender_username === creds.userName ?
+                            !sending && message.sender_username === this.props.userName ?
                             <MyMessage 
                                 chat={chat} 
-                                creds={creds} 
+                                creds={this.props} 
                                 lastMessage={lastMessage} 
                                 message={message} 
                                 nextMessage={nextMessage} 
                             /> :
                             <TheirMessage 
                                 chat={chat} 
-                                creds={creds} 
+                                creds={this.props} 
                                 lastMessage={lastMessage} 
                                 message={message} 
                                 nextMessage={nextMessage} 
