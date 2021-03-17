@@ -1,6 +1,6 @@
-import React from 'react'
+import ChatEngine from './components'
 
-import SocketConnector from './components'
+import Socket from './components/Socket'
 
 import { isTyping } from './actions/typing'
 import { getChats, newChat, editChat, deleteChat } from './actions/chats'
@@ -27,12 +27,8 @@ import PeopleSettings from './components/ChatUi/ChatSettings/PeopleSettings'
 import PhotosSettings from './components/ChatUi/ChatSettings/PhotosSettings'
 import OptionsSettings from './components/ChatUi/ChatSettings/OptionsSettings'
 
-const ChatEngine = (props) => {
-  return <SocketConnector {...props} />
-}
-
 export {
-  ChatEngine,
+  ChatEngine, Socket,
 
   Avatar, Dot,
   Button,
@@ -42,22 +38,8 @@ export {
   ChatFeed, ChatHeader, MessageBubble, IsTyping, NewMessageForm,
   ChatSettings, ChatSettingsTop, PeopleSettings, PhotosSettings, OptionsSettings,
   
-  getChats,
-  newChat,
-  editChat,
-  deleteChat,
-
-  addPerson,
-  removePerson,
-  getOtherPeople,
-  getMyData,
-  editMyData,
-  leaveChat,
-
-  getMessages,
-  sendMessage,
-  editMessage,
-  deleteMessage,
-
+  getChats, newChat, editChat, deleteChat,
+  addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat,
+  getMessages, sendMessage, editMessage, deleteMessage,
   isTyping,
 }

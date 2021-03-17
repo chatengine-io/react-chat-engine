@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 
 import history from '../Utilities/history'
 
+import ChatWithMePage from './ChatWithMePage'
 import HomePage from './HomePage'
 
 class RootPage extends Component {
@@ -12,6 +13,7 @@ class RootPage extends Component {
     return (
       <Router history={history}>
         <Switch>
+          <Route path='/with_me' component={ChatWithMePage} />
           <Route path='/' component={HomePage} />
         </Switch>
       </Router>

@@ -12,7 +12,6 @@ import ChatFeed from './ChatFeed'
 import ChatSettings from './ChatSettings'
 
 import { Row, Col } from 'react-grid-system'
-
 import { setConfiguration } from 'react-grid-system';
  
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
@@ -20,7 +19,7 @@ setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 export default class App extends Component {
   state = {
     connecting: true,
-    creds: null,
+    conn: null,
     chats: null,
     messages: {},
     sendingMessages: {},
@@ -39,22 +38,22 @@ export default class App extends Component {
     })
   }
 
-  onConnect(creds) {
-    this.setState({ creds, connecting: false })
-    getChats(creds, () => {})
+  onConnect(conn) {
+    this.setState({ conn, connecting: false })
+    getChats(conn, () => {})
 
-    this.props.onConnect && this.props.onConnect(creds)
+    this.props.onConnect && this.props.onConnect(conn)
   }
 
-  onFailAuth(creds) {
-    this.setState({ creds: undefined })
+  onFailAuth(conn) {
+    this.setState({ conn: undefined })
 
-    this.props.onFailAuth && this.props.onFailAuth(creds)
+    this.props.onFailAuth && this.props.onFailAuth(conn)
   }
 
   setActiveChat(chatId) {
     this.setState({ activeChat: chatId })
-    getMessages(this.state.creds, chatId, () => {})
+    getMessages(this.state.conn, chatId, () => {})
   }
 
   onGetChats(chats) {
@@ -112,7 +111,7 @@ export default class App extends Component {
 
     if (messages.length > 0) {
       const messageId = messages[messages.length - 1].id
-      readMessage(this.state.creds, this.state.activeChat, messageId, () => {})
+      readMessage(this.state.conn, this.state.activeChat, messageId, () => {})
     }
     
     this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
@@ -140,7 +139,7 @@ export default class App extends Component {
       this.setState({ messages })
     }
 
-    readMessage(this.state.creds, this.state.activeChat, message.id)
+    readMessage(this.state.conn, this.state.activeChat, message.id)
 
     this.props.onNewMessage && this.props.onNewMessage(chatId, message)
   }
@@ -236,7 +235,6 @@ export default class App extends Component {
       <div style={{ textAlign: 'left', backgroundColor: 'white' }}>
         <Socket
           {...this.props}
-          // API Hooks
           onConnect={(props) => this.onConnect(props)}
           onDisconnect={() => this.setState({ connecting: true })}
           onFailAuth={(props) => this.onFailAuth(props)}

@@ -19,12 +19,10 @@ class HomePage extends Component {
 
     submit(){
         this.setState({ loading: true })
-        console.log('this.state', this.state)
-
         this.props.login(
             this.state, 
-            () => console.log('Logged in'), // Jimmy the rig
-            (e) => console.log('e', e)
+            () => console.log('Logged in'),
+            (error) => console.log(error)
         )
     }
     

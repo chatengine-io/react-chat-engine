@@ -18,7 +18,7 @@ export default class PersonForm extends React.Component {
 
   addPerson(name) {
     addPerson(
-      this.props.creds,
+      this.props.conn,
       this.props.chat.id,
       name,
       () => { 
@@ -30,7 +30,7 @@ export default class PersonForm extends React.Component {
 
   getOthers() {
     getOtherPeople(
-      this.props.creds,
+      this.props.conn,
       this.props.chat.id,
       (id, others) => this.setState({ others }),
       () => {},

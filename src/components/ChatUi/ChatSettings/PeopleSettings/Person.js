@@ -11,7 +11,7 @@ export default class Person extends Component {
 
     onRemovePerson() {
         removePerson(
-            this.props.creds,
+            this.props.conn,
             this.props.chat.id,
             this.props.person.username
         )
@@ -26,7 +26,7 @@ export default class Person extends Component {
     }
 
     render() {
-        const { person, chat, creds } = this.props
+        const { person, chat, conn } = this.props
 
         if (!person || !chat) { return <div /> }
 
@@ -57,7 +57,7 @@ export default class Person extends Component {
                 </div>
 
                 {
-                    this.state.selected && (creds.userName === admin.username) && (person.username !== admin.username) &&
+                    this.state.selected && (conn.userName === admin.username) && (person.username !== admin.username) &&
                     <div
                         className='ce-delete-chat' 
                         style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}

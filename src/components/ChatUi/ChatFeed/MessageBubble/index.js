@@ -32,7 +32,7 @@ export default class Message extends Component {
                     sending ? 
                     <SendingMessage 
                         chat={chat} 
-                        creds={this.props} 
+                        conn={this.props} 
                         lastMessage={lastMessage} 
                         message={message} 
                         nextMessage={nextMessage} 
@@ -42,14 +42,14 @@ export default class Message extends Component {
                             !sending && message.sender_username === this.props.userName ?
                             <MyMessage 
                                 chat={chat} 
-                                creds={this.props} 
+                                conn={this.props} 
                                 lastMessage={lastMessage} 
                                 message={message} 
                                 nextMessage={nextMessage} 
                             /> :
                             <TheirMessage 
                                 chat={chat} 
-                                creds={this.props} 
+                                conn={this.props} 
                                 lastMessage={lastMessage} 
                                 message={message} 
                                 nextMessage={nextMessage} 

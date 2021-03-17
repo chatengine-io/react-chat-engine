@@ -110,7 +110,7 @@ export default class ChatSettingsTop extends Component {
                     }}>
                         { otherPerson.person.username }
                     </div> :
-                    <TitleForm chat={chat} creds={this.props} />
+                    <TitleForm chat={chat} conn={this.props} />
                 }
             </div>
         )
