@@ -17,7 +17,7 @@ export default class PeopleList extends React.Component {
                 <Person 
                     key={`person_${index}`} 
                     person={chatPerson.person}
-                    creds={this.props} 
+                    conn={this.props} 
                     chat={chat} 
                 />
             )
@@ -64,7 +64,7 @@ export default class PeopleList extends React.Component {
 
                         {
                             this.props && chat && this.props.userName === chat.admin.username &&
-                            <PersonForm creds={this.props} chat={chat} />
+                            <PersonForm conn={this.props} chat={chat} />
                         }
                     </div>
                 }

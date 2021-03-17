@@ -16,7 +16,7 @@ export default class NewMessageForm extends React.Component {
         event.preventDefault();
 
         editChat(
-            this.props.creds, 
+            this.props.conn, 
             this.props.chat.id,
             { title: this.state.value },
             (data) => {}

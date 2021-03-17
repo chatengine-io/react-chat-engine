@@ -43,16 +43,15 @@ import React from 'react'
 import { ChatEngine } from 'react-chat-engine'
 
 export function App() {
-    return (
-        <ChatEngine
-            publicKey={'b75e5bd5-cd84-404c-b820-06feff8c98c0'}
-            userName={'john_smith'}
-            userSecret={'secret_1234'}
-        />
-    )
+  return (
+    <ChatEngine
+      publicKey={'b75e5bd5-cd84-404c-b820-06feff8c98c0'}
+      userName={'john_smith'}
+      userSecret={'secret_1234'}
+    />
+  )
 }
 ```
-
 
 ## Features
 
@@ -88,20 +87,19 @@ import { functionName } from 'react-chat-engine'
 
 ...
 
-functionName(creds, args)
+functionName(conn, args)
 ```
 
-- **`getChats`** _(creds) => void_ - Get a person's array of chats
-- **`newChat`** _(creds, title) => void_ - Create a new chat with this person as admin
-- **`editChat`** _(creds, chatId, chatObj) => void_ - Edit the title of an existing chat
-- **`deleteChat`** _(creds, chatId) => void_ - If you're admin, delete this existing chat
+- **`getChats`** _(conn) => void_ - Get a person's array of chats
+- **`newChat`** _(conn, title) => void_ - Create a new chat with this person as admin
+- **`editChat`** _(conn, chatId, chatObj) => void_ - Edit the title of an existing chat
+- **`deleteChat`** _(conn, chatId) => void_ - If you're admin, delete this existing chat
 - **`addPerson`** _(props, chatId, userName) => void_ - Add an existing person (in the project) to an existing chat
 - **`removePerson`** _(props, chatId, userName) => void_ - If you're admin, remove this user from an existing chat
 - **`getMessages`** _(props, chatId) => void_ - Get the messages for an existing chat
 - **`sendMessage`** _(props, chatId, messageObj) => void_ - Send a new message object into this chat
 - **`editMessage`** _(props, chatId, messageId, messageObj) => void_ - Edit an exiting message object in this chat
 - **`deleteMessage`** _(props, chatId, messageId) => void_ - Delete an exiting message object from this chat
-
 
 ## Objects
 

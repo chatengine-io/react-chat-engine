@@ -17,7 +17,7 @@ export default class MessageEditForm extends React.Component {
         event.preventDefault();
         
         editMessage(
-            this.props.creds, 
+            this.props.conn, 
             this.props.chatId, 
             this.props.message.id,
             { text: this.state.value },
