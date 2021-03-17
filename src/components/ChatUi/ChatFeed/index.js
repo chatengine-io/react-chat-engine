@@ -130,10 +130,7 @@ export default class ChatFeed extends Component {
                 className='ce-chat-feed'
                 style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
             >
-                {
-                    this.props.connecting &&
-                    <Loading />
-                }
+                { this.props.connecting && <Loading /> }
 
                 {
                     this.props.renderChatHeader ? 
