@@ -12,7 +12,6 @@ import ChatFeed from './ChatFeed'
 import ChatSettings from './ChatSettings'
 
 import { Row, Col } from 'react-grid-system'
-
 import { setConfiguration } from 'react-grid-system';
  
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
@@ -236,7 +235,6 @@ export default class App extends Component {
       <div style={{ textAlign: 'left', backgroundColor: 'white' }}>
         <Socket
           {...this.props}
-          // API Hooks
           onConnect={(props) => this.onConnect(props)}
           onDisconnect={() => this.setState({ connecting: true })}
           onFailAuth={(props) => this.onFailAuth(props)}
