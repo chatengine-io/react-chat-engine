@@ -38,22 +38,8 @@ export {
   ChatFeed, ChatHeader, MessageBubble, IsTyping, NewMessageForm,
   ChatSettings, ChatSettingsTop, PeopleSettings, PhotosSettings, OptionsSettings,
   
-  getChats,
-  newChat,
-  editChat,
-  deleteChat,
-
-  addPerson,
-  removePerson,
-  getOtherPeople,
-  getMyData,
-  editMyData,
-  leaveChat,
-
-  getMessages,
-  sendMessage,
-  editMessage,
-  deleteMessage,
-
+  getChats, newChat, editChat, deleteChat,
+  addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat,
+  getMessages, sendMessage, editMessage, deleteMessage,
   isTyping,
 }
