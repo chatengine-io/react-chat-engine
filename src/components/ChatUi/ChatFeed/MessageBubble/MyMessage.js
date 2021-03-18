@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import Thumbnail from './Thumbnail'
 
@@ -8,13 +8,9 @@ import { Row, Col, setConfiguration } from 'react-grid-system'
 
 setConfiguration({ maxScreenClass: 'xl' })
 
-export default class Message extends Component {
-    state = {
-        selected: false
-    }
-
-    renderReads() {
-        const { chat, message } = this.props
+const Message = props => {
+    function renderReads() {
+        const { chat, message } = props
 
         if(!chat) { return <div /> }
 
@@ -33,69 +29,68 @@ export default class Message extends Component {
         })
     }
 
-    renderAttachments() {
-        const { message } = this.props
+    function renderAttachments() {
+        const { message } = props
         const attachments = message && message.attachments ? message.attachments : []
         return attachments.map((attachment, index) => {
             return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
         })
     }
 
-    render() {
-        const { lastMessage, message, nextMessage } = this.props
+    
+    const { lastMessage, message, nextMessage } = props
 
-        if (!message) { return <div /> }
+    if (!message) { return <div /> }
 
-        const attachments = message && message.attachments && message.attachments
+    const attachments = message && message.attachments && message.attachments
 
-        const topRightRadius = !lastMessage || lastMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
-        const bottomRightRadius = !nextMessage || nextMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
+    const topRightRadius = !lastMessage || lastMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
+    const bottomRightRadius = !nextMessage || nextMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
 
-        const borderRadius = `1.3em ${topRightRadius} ${bottomRightRadius} 1.3em`
-        const paddingBottom = !nextMessage || nextMessage.sender_username !== message.sender_username ? '12px' : '2px'
+    const borderRadius = `1.3em ${topRightRadius} ${bottomRightRadius} 1.3em`
+    const paddingBottom = !nextMessage || nextMessage.sender_username !== message.sender_username ? '12px' : '2px'
 
-        return (
+    return (
+        <div 
+            className='ce-message-row ce-my-message'
+            style={{ width: '100%', textAlign: 'right', paddingBottom }}
+        >
             <div 
-                className='ce-message-row ce-my-message'
-                onMouseEnter={() => this.setState({ selected: true })}
-                onMouseLeave={() => this.setState({ selected: false })}
-                style={{ width: '100%', textAlign: 'right', paddingBottom }}
+                style={{ display: 'auto' }} 
+                className='ce-my-message-attachments-container'
             >
-                <div 
-                    style={{ display: 'auto' }} 
-                    className='ce-my-message-attachments-container'
-                >
-                    { this.renderAttachments() }
-                </div>
-
-                <Row
-                    style={{ paddingRight: '2px' }} 
-                    className='ce-message-bubble-row ce-my-message-bubble-row'
-                >
-                    <Col xs={1} sm={2} md={3} />
-
-                    <Col xs={11} sm={10} md={9}>
-                        {
-                            !attachments || message.text && 
-                            <div
-                                className='ce-message-bubble ce-my-message-bubble'
-                                style={{ ...styles.myMessage, ...{ borderRadius } }}
-                            >
-                                { message.text }
-                            </div>
-                        }
-                    </Col>
-
-                    <Col xs={1} sm={2} md={3} />
-
-                    <Col xs={12} className='ce-reads-row ce-my-reads-row'>
-                        { this.renderReads() }
-                    </Col>
-                </Row>
+                { renderAttachments() }
             </div>
-        )
-    }
+
+            <Row
+                style={{ paddingRight: '2px' }} 
+                className='ce-message-bubble-row ce-my-message-bubble-row'
+            >
+                <Col xs={1} sm={2} md={3} />
+
+                <Col xs={11} sm={10} md={9}>
+                    {
+                        !attachments || message.text && 
+                        <div
+                            className='ce-message-bubble ce-my-message-bubble'
+                            style={{ ...styles.myMessage, ...{ borderRadius } }}
+                        >
+                            { message.text }
+                        </div>
+                    }
+                </Col>
+
+                <Col xs={1} sm={2} md={3} />
+
+                <Col xs={12} className='ce-reads-row ce-my-reads-row'>
+                    { renderReads() }
+                </Col>
+            </Row>
+        </div>
+    )
 }
+
+export default Message
 
 const styles = {
     myMessage: {
