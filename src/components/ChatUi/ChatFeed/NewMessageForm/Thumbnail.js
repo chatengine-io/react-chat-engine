@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { CloseCircleTwoTone } from '@ant-design/icons'
 
-const FileRow = props => {
+const Thumbnail = props => {
     const [hovered, setHovered] = useState(false)
 
     return (
@@ -29,7 +29,7 @@ const FileRow = props => {
     )
 }
 
-export default FileRow
+export default Thumbnail
 
 const styles = {
     imageSquare: { 
