@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import _ from 'lodash'
 
-import { ChatEngineProvider } from './context'
 
 import { getChats } from '../../actions/chats'
 import { getMessages, readMessage } from '../../actions/messages'
@@ -234,7 +233,7 @@ export default class App extends Component {
     const { height } = this.props
 
     return (
-      <ChatEngineProvider style={{ textAlign: 'left', backgroundColor: 'white' }}>
+      <div style={{ textAlign: 'left', backgroundColor: 'white' }}>
         <Socket
           {...this.props}
           onConnect={(props) => this.onConnect(props)}
@@ -278,7 +277,7 @@ export default class App extends Component {
             }
           </Col>
         </Row>
-      </ChatEngineProvider>
+      </div>
     )
   }
 }
