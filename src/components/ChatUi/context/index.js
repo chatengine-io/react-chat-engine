@@ -12,13 +12,12 @@ export const ChatEngineProvider = props => {
         activeChat: null,
         typingCounter: {},
         typingData: {},
-        this: 'that'
         // onChatClick: (chatId) => this.setActiveChat(chatId),
         // sendingMessage: (chatId) => this.sendingMessage(chatId),
     })
 
     return (
-        <ChatEngineContext.Provider>
+        <ChatEngineContext.Provider value={[state, setState]}>
             {props.children}
         </ChatEngineContext.Provider>
 

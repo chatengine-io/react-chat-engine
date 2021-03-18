@@ -5,7 +5,6 @@ import { MenuOutlined, CloseOutlined } from '@ant-design/icons'
 import ChatList from '../../ChatList'
 
 const ChatListDrawer = props => {
-
     const [isOpen, setIsOpen] = useState(false)
 
     return (

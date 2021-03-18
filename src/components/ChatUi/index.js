@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import _ from 'lodash'
 
+import { ChatEngineProvider } from './context'
+
 import { getChats } from '../../actions/chats'
 import { getMessages, readMessage } from '../../actions/messages'
 
@@ -10,8 +12,6 @@ import Socket from '../Socket'
 import ChatList from './ChatList'
 import ChatFeed from './ChatFeed'
 import ChatSettings from './ChatSettings'
-
-import { ChatEngineProvider } from './context'
 
 import { Row, Col } from 'react-grid-system'
 import { setConfiguration } from 'react-grid-system';
