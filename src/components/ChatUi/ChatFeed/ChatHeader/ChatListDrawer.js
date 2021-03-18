@@ -1,50 +1,48 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons'
 
 import ChatList from '../../ChatList'
 
-export default class ChatListDrawer extends Component {
-    state = {
-        isOpen: false
-    }
+const ChatListDrawer = props => {
 
-    render() {
-        const chatLength = Object.keys(this.props.chats) && Object.keys(this.props.chats).length
-        return (
-            <div> 
-                <MenuOutlined
-                    onClick={() => this.setState({ isOpen: true })}
-                    style={{ color: 'rgb(24, 144, 255)', outline: 'none' }} 
-                />
+    const [isOpen, setIsOpen] = useState(false)
 
-                { 
-                    this.state.isOpen &&
-                    <div style={styles.drawerContainer}>
-                        <CloseOutlined
-                            style={styles.closeIcon}
-                            onClick={() => this.setState({ isOpen: false })}
-                        />
+    return (
+        <div> 
+            <MenuOutlined
+                onClick={() => setIsOpen(true)}
+                style={{ color: 'rgb(24, 144, 255)', outline: 'none' }} 
+            />
 
-                        <div style={styles.titleContainer}>
-                            <div style={styles.titleText}>
-                                My Chats
-                            </div>
+            { 
+                isOpen &&
+                <div style={styles.drawerContainer}>
+                    <CloseOutlined
+                        style={styles.closeIcon}
+                        onClick={() => setIsOpen(false)}
+                    />
+
+                    <div style={styles.titleContainer}>
+                        <div style={styles.titleText}>
+                            My Chats
                         </div>
-
-                        <ChatList 
-                            {...this.props} 
-                            onChatClick={(chatId) => {
-                                this.props.onChatClick && this.props.onChatClick(chatId)
-                                this.setState({ isOpen: false })
-                            }}
-                        />
                     </div>
-                }
-            </div>
-        );
-    }
+
+                    <ChatList 
+                        {...props} 
+                        onChatClick={(chatId) => {
+                            props.onChatClick && props.onChatClick(chatId)
+                            setIsOpen(false)
+                        }}
+                    />
+                </div>
+            }
+        </div>
+    )
 }
+
+export default ChatListDrawer
 
 const styles = {
     drawerContainer: { 
