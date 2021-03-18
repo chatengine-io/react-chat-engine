@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import { timeSinceDate } from '../../Utilities/dateToString'
 
@@ -11,60 +11,60 @@ import { setConfiguration } from 'react-grid-system';
  
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
-export default class ChatHeader extends Component {
-    render() {
-        const { chats, activeChat } = this.props
+const ChatHeader = props => {
+    const { chats, activeChat } = props
 
-        if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
+    if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
 
-        const chat = chats[activeChat]
-        const otherPerson = chat.people.find(person => person.person.username !== this.props.userName);
+    const chat = chats[activeChat]
+    const otherPerson = chat.people.find(person => person.person.username !== props.userName);
 
-        return (
-            <Row 
-                className='ce-chat-title'
-                style={styles.titleSection}
+    return (
+        <Row 
+            className='ce-chat-title'
+            style={styles.titleSection}
+        >
+            <Col 
+                xs={2} 
+                sm={0} 
+                style={{ ...styles.mobileOptiom, ...{ left: '6px' } }}
+                className='ce-chat-list-mobile-option'
             >
-                <Col 
-                    xs={2} 
-                    sm={0} 
-                    style={{ ...styles.mobileOptiom, ...{ left: '6px' } }}
-                    className='ce-chat-list-mobile-option'
-                >
-                    <ChatListDrawer {...this.props} />
-                </Col>
+                <ChatListDrawer {...props} />
+            </Col>
 
-                <Col 
-                    xs={8}
-                    sm={12}
-                    style={styles.titleContainer} 
-                    className='ce-chat-title-container'
-                >
-                    <div style={styles.titleText} className='ce-chat-title-text'>
-                        { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
-                    </div>
-                    
-                    <div style={styles.subtitleText} className='ce-chat-subtitle-text'>
-                        {
-                            chat.last_message.created && chat.last_message.created.length > 0 ?
-                            `Active ${timeSinceDate(chat.last_message.created)}` :
-                            'Say hello!'
-                        }
-                    </div>
-                </Col>
+            <Col 
+                xs={8}
+                sm={12}
+                style={styles.titleContainer} 
+                className='ce-chat-title-container'
+            >
+                <div style={styles.titleText} className='ce-chat-title-text'>
+                    { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
+                </div>
+                
+                <div style={styles.subtitleText} className='ce-chat-subtitle-text'>
+                    {
+                        chat.last_message.created && chat.last_message.created.length > 0 ?
+                        `Active ${timeSinceDate(chat.last_message.created)}` :
+                        'Say hello!'
+                    }
+                </div>
+            </Col>
 
-                <Col 
-                    xs={2} 
-                    sm={0} 
-                    style={{ ...styles.mobileOptiom, ...{ right: '6px' } }}
-                    className='ce-chat-settings-mobile-option'
-                >
-                    <ChatSettingsDrawer {...this.props} />
-                </Col>
-            </Row>
-        );
-    }
+            <Col 
+                xs={2} 
+                sm={0} 
+                style={{ ...styles.mobileOptiom, ...{ right: '6px' } }}
+                className='ce-chat-settings-mobile-option'
+            >
+                <ChatSettingsDrawer {...props} />
+            </Col>
+        </Row>
+    );
 }
+
+export default ChatHeader
 
 const styles = {
     titleSection: { 
