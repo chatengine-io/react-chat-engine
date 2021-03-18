@@ -11,6 +11,8 @@ import ChatList from './ChatList'
 import ChatFeed from './ChatFeed'
 import ChatSettings from './ChatSettings'
 
+import { ChatEngineProvider } from './context'
+
 import { Row, Col } from 'react-grid-system'
 import { setConfiguration } from 'react-grid-system';
  
@@ -232,7 +234,7 @@ export default class App extends Component {
     const { height } = this.props
 
     return (
-      <div style={{ textAlign: 'left', backgroundColor: 'white' }}>
+      <ChatEngineProvider style={{ textAlign: 'left', backgroundColor: 'white' }}>
         <Socket
           {...this.props}
           onConnect={(props) => this.onConnect(props)}
@@ -276,7 +278,7 @@ export default class App extends Component {
             }
           </Col>
         </Row>
-      </div>
+      </ChatEngineProvider>
     )
   }
 }
