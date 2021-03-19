@@ -1,77 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Person from './Person'
 import PersonForm from './PersonForm'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 
-export default class PeopleList extends React.Component {
-    state = {
+const PeopleSettings = props => {
+    const [state, setState] = useState({
         collapsed: false,
         hovered: false
-    }
+    })
 
-    renderChatPeople(people, chat) {
+    function renderChatPeople(people, chat) {
         return people.map((chatPerson, index) => {
             return (
                 <Person 
                     key={`person_${index}`} 
                     person={chatPerson.person}
-                    conn={this.props} 
+                    conn={props} 
                     chat={chat} 
                 />
             )
         })
     }
-  
-    render() {
-        const { chats, activeChat } = this.props
 
-        if (!chats || !activeChat || !chats[activeChat] || chats[activeChat].is_direct_chat) { return <div /> }
+    const { chats, activeChat } = props
 
-        const chat = chats[activeChat]
+    if (!chats || !activeChat || !chats[activeChat] || chats[activeChat].is_direct_chat) { return <div /> }
 
-        return (
-            <div style={{ borderTop: '1px solid #f0f0f0' }}>
-                <div 
-                    onMouseEnter={() => this.setState({ hovered: true })}
-                    onMouseLeave={() => this.setState({ hovered: false })}
-                    onClick={() => this.setState({ collapsed: !this.state.collapsed })}
-                    style={this.state.hovered ? { backgroundColor: '#f0f0f0', cursor: 'pointer' } : {}}
-                    className='ce-section-title-container ce-person-title-container'
-                >
-                    <div
-                        className='ce-section-title ce-people-title'
-                        style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}>
-                        People
-                    </div>
+    const chat = chats[activeChat]
 
-                    {
-                        this.state.collapsed ?
-                        <LeftOutlined style={styles.collapseIcon} /> :
-                        <DownOutlined style={styles.collapseIcon} />
-                    }
+    return (
+        <div style={{ borderTop: '1px solid #f0f0f0' }}>
+            <div 
+                onMouseEnter={() => setState({ ...state, hovered: true })}
+                onMouseLeave={() => setState({ ...state, hovered: false })}
+                onClick={() => setState({ ...state, collapsed: !state.collapsed })}
+                style={state.hovered ? { backgroundColor: '#f0f0f0', cursor: 'pointer' } : {}}
+                className='ce-section-title-container ce-person-title-container'
+            >
+                <div
+                    className='ce-section-title ce-people-title'
+                    style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}>
+                    People
                 </div>
 
                 {
-                    !this.state.collapsed &&
-                    <div>
-                        <div style={{ height: '12px' }} />
-
-                        { this.renderChatPeople(chat.people, chat) }
-
-                        <div style={{ height: '12px' }} />
-
-                        {
-                            this.props && chat && this.props.userName === chat.admin.username &&
-                            <PersonForm conn={this.props} chat={chat} />
-                        }
-                    </div>
+                    state.collapsed ?
+                    <LeftOutlined style={styles.collapseIcon} /> :
+                    <DownOutlined style={styles.collapseIcon} />
                 }
             </div>
-        )
-    }
+
+            {
+                !state.collapsed &&
+                <div>
+                    <div style={{ height: '12px' }} />
+
+                    { renderChatPeople(chat.people, chat) }
+
+                    <div style={{ height: '12px' }} />
+
+                    {
+                        props && chat && props.userName === chat.admin.username &&
+                        <PersonForm conn={props} chat={chat} />
+                    }
+                </div>
+            }
+        </div>
+    )
 }
+
+export default PeopleSettings
 
 const styles = {
     collapseIcon: {

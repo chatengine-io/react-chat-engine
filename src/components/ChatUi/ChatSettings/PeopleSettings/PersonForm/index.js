@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { addPerson, getOtherPeople } from 'react-chat-engine'
 
@@ -6,54 +6,54 @@ import { AutoCompleteInput } from 'react-chat-engine'
 
 import Option from './Option'
 
-export default class PersonForm extends React.Component {
-  state = {
+const PersonForm = props => {
+  const [state, setState] = useState({
     value: '',
     others: []
+  })
+
+  function handleChange(value) {
+    setState({ ...state, value });
   }
 
-  handleChange(value) {
-    this.setState({ value });
-  }
-
-  addPerson(name) {
+  function invitePerson(name) {
     addPerson(
-      this.props.conn,
-      this.props.chat.id,
+      props.conn,
+      props.chat.id,
       name,
       () => { 
-        this.setState({ value: '' }); 
-        this.getOthers(); 
+        setState({ ...state, value: '' }); 
+        getOthers(); 
       }
     )
   }
 
-  getOthers() {
+  function getOthers() {
     getOtherPeople(
-      this.props.conn,
-      this.props.chat.id,
-      (id, others) => this.setState({ others }),
+      props.conn,
+      props.chat.id,
+      (id, others) => setState({ ...state, others }),
       () => {},
     )
   }
 
-  renderOption(option) {
-    return <Option person={option} onClick={() => this.addPerson(option.username)} />
+  function renderOption(option) {
+    return <Option person={option} onClick={() => invitePerson(option.username)} />
   }
 
-  render() {
-    return (
-      <div style={{ marginBottom: '12px' }}>
-        <AutoCompleteInput 
-          style={{ width: '100%' }}
-          label='Type a username'
-          value={this.state.value}
-          options={this.state.others}
-          onFocus={() => this.getOthers()}
-          handleChange={(value) => this.handleChange(value)} 
-          renderOption={(option) => this.renderOption(option)}
-        />
-      </div>
-    );
-  }
+  return (
+    <div style={{ marginBottom: '12px' }}>
+      <AutoCompleteInput 
+        style={{ width: '100%' }}
+        label='Type a username'
+        value={state.value}
+        options={state.others}
+        onFocus={() => getOthers()}
+        handleChange={(value) => handleChange(value)} 
+        renderOption={(option) => renderOption(option)}
+      />
+    </div>
+  )
 }
+
+export default PersonForm

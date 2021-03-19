@@ -1,63 +1,64 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Thumbnail from './Thumbnail'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 
-export default class Photos extends React.Component {
-    state = {
+
+const PhotosSettings = props => {
+    const [state, setState] = useState({
         collapsed: true,
         hovered: false
-    }
+    })
 
-    renderPhotos(attachments) {
+    function renderPhotos(attachments) {
         return attachments.map((attachment, index) => {
             return <Thumbnail key={`person_${index}`} attachment={attachment} />
         })
     }
-  
-    render() {
-        const { chats, activeChat } = this.props
 
-        if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
+    const { chats, activeChat } = props
 
-        const chat = chats[activeChat]
+    if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
 
-        return (
-            <div style={{ borderTop: '1px solid #f0f0f0' }} className='ce-photo-section'>
+    const chat = chats[activeChat]
+
+    return (
+        <div style={{ borderTop: '1px solid #f0f0f0' }} className='ce-photo-section'>
+            <div 
+                onMouseEnter={() => setState({ ...state, hovered: true })}
+                onMouseLeave={() => setState({ ...state, hovered: false })}
+                onClick={() => setState({ ...state, collapsed: !state.collapsed })}
+                style={state.hovered ? { backgroundColor: '#f0f0f0', cursor: 'pointer' } : {}}
+                className='ce-section-title-container ce-photo-title-container'
+            >
                 <div 
-                    onMouseEnter={() => this.setState({ hovered: true })}
-                    onMouseLeave={() => this.setState({ hovered: false })}
-                    onClick={() => this.setState({ collapsed: !this.state.collapsed })}
-                    style={this.state.hovered ? { backgroundColor: '#f0f0f0', cursor: 'pointer' } : {}}
-                    className='ce-section-title-container ce-photo-title-container'
+                    className='ce-section-title ce-photo-title'
+                    style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}
                 >
-                    <div 
-                        className='ce-section-title ce-photo-title'
-                        style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}
-                    >
-                        Photos
-                    </div>
-
-                    {
-                        this.state.collapsed ?
-                        <LeftOutlined style={styles.collapseIcon} /> :
-                        <DownOutlined style={styles.collapseIcon} />
-                    }
+                    Photos
                 </div>
 
                 {
-                    !this.state.collapsed &&
-                    <div className='ce-photo-feed'>
-                        <div style={{ height: '12px' }} />
-
-                        { this.renderPhotos(chat.attachments) }
-                    </div>
+                    state.collapsed ?
+                    <LeftOutlined style={styles.collapseIcon} /> :
+                    <DownOutlined style={styles.collapseIcon} />
                 }
             </div>
-        )
-    }
+
+            {
+                !state.collapsed &&
+                <div className='ce-photo-feed'>
+                    <div style={{ height: '12px' }} />
+
+                    { renderPhotos(chat.attachments) }
+                </div>
+            }
+        </div>
+    )
 }
+
+export default PhotosSettings
 
 const styles = {
     collapseIcon: {
