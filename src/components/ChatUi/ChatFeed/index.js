@@ -134,7 +134,6 @@ const ChatFeed = props => {
                 <ChatHeader {...props} />
             }
 
-
             <div
                 id='ce-feed-container'
                 style={styles.feedContainer} 
