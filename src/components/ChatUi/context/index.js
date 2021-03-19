@@ -11,6 +11,5 @@ export const ChatEngineProvider = props => {
         <ChatEngineContext.Provider value={[state, setState]}>
             {props.children}
         </ChatEngineContext.Provider>
-
     )
 }
