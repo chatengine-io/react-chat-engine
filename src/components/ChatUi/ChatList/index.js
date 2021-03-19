@@ -1,63 +1,48 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import _ from 'lodash'
 
 import ChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
-class ChatList extends Component {
-    readLastMessage(chat) {
-        let readLastMessage = true
-        chat.people.map(chat_person => {
-            if(this.props.userName === chat_person.person.username) {
-                readLastMessage = chat.last_message.id === chat_person.last_read
-            }
-        })
-        return readLastMessage
-    }
-
-    renderChats(chats) {
+const ChatList = props => {
+    function renderChats(chats) {
         return chats.map((chat, index) => {
             if (!chat) return <div key={`chat_${index}`} />
 
-            if (this.props.renderChatCard) {
-                return <div key={`chat_${index}`}>{this.props.renderChatCard(chat, index)}</div>
+            if (props.renderChatCard) {
+                return <div key={`chat_${index}`}>{props.renderChatCard(chat, index)}</div>
             } else {
-                return <ChatCard key={`chat_${index}`} {...this.props} chat={chat} />
+                return <ChatCard key={`chat_${index}`} {...props} chat={chat} />
             }
         })
     }
 
-    render() {       
-        const chats = this.props.chats ? Object.values(this.props.chats) : []
-        chats.sort((a, b) => { 
-            const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
-            const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
-            return new Date(bDate) - new Date(aDate); 
-        })
+    const chats = props.chats ? Object.values(props.chats) : []
 
-        return (
-            <div style={styles.chatListContainer} className='ce-chat-list'>
+    chats.sort((a, b) => { 
+        const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
+        const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
+        return new Date(bDate) - new Date(aDate); 
+    })
 
-                <div style={styles.chatsContainer} className='ce-chats-container'>
+    return (
+        <div style={styles.chatListContainer} className='ce-chat-list'>
+            <div style={styles.chatsContainer} className='ce-chats-container'>
+                { renderChats(chats) } 
 
-                    { this.renderChats(chats) } 
+                <div style={{ height: '64px' }} />
 
-                    <div style={{ height: '64px' }} />
-
-                    {
-                        this.props.renderNewChatForm ?
-                        this.props.renderNewChatForm(this.props) :
-                        <div style={styles.newChatContainer} className='ce-chat-form-container'>
-                            <ChatForm {...this.props}  className='ce-chat-form' />
-                        </div>
-                    }
-                    
-                </div>
-
+                {
+                    props.renderNewChatForm ?
+                    props.renderNewChatForm(props) :
+                    <div style={styles.newChatContainer} className='ce-chat-form-container'>
+                        <ChatForm {...props}  className='ce-chat-form' />
+                    </div>
+                }
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 const styles={

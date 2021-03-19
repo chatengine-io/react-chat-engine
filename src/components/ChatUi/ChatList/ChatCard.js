@@ -4,74 +4,72 @@ import _ from 'lodash'
 
 import { daySinceSent } from '../Utilities/dateToString'
 
-class ChatCard extends Component {
-    readLastMessage(chat) {
+const ChatCard = props => {
+    function readLastMessage(chat) {
         let readLastMessage = true
         chat.people.map(chat_person => {
-            if(this.props.userName === chat_person.person.username) {
+            if(props.userName === chat_person.person.username) {
                 readLastMessage = chat.last_message.id === chat_person.last_read
             }
         })
         return readLastMessage
     }
 
-    render() {       
-        const { chat } = this.props
-        const extraStyle = this.props.activeChat === chat.id ? styles.activeChat : {}
-        const otherPerson = chat.people.find(person => person.person.username !== this.props.userName);
-        
-        if (this.props.renderChatCard) {
-            return <div key={`chat_${index}`}>{this.props.renderChatCard(chat, index)}</div>
-        }
+    const { chat } = props
+    const extraStyle = props.activeChat === chat.id ? styles.activeChat : {}
+    const otherPerson = chat.people.find(person => person.person.username !== props.userName);
+    
+    if (props.renderChatCard) {
+        return <div key={`chat_${index}`}>{props.renderChatCard(chat, index)}</div>
+    }
 
-        let lastMessage = chat.last_message.text
-        if (!lastMessage) {
-            lastMessage = chat.last_message.attachments.length > 0 ?
-            `${chat.last_message.attachments.length} image${chat.last_message.attachments.length > 1 ? 's' : ''}` :
-            'Say hello!'
-        }
+    let lastMessage = chat.last_message.text
+    if (!lastMessage) {
+        lastMessage = chat.last_message.attachments.length > 0 ?
+        `${chat.last_message.attachments.length} image${chat.last_message.attachments.length > 1 ? 's' : ''}` :
+        'Say hello!'
+    }
 
-        return (
-            <div 
-                onClick={() => this.props.onChatClick(chat.id)}
-                style={{ ...styles.chatContainer, ...extraStyle }}
-                className={`ce-chat-card ${this.props.activeChat === chat.id && 'ce-active-chat-card'}`}
-            >
-                <div style={ styles.titleText } className='ce-chat-title-text'>
-                    { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
-                    
-                    {
-                        !this.readLastMessage(chat) &&
-                        <div 
-                            className='ce-chat-unread-dot'
-                            style={{ 
-                                float: 'right',
-                                width: '12px',
-                                height: '12px',
-                                borderRadius: '6px',
-                                backgroundColor: '#1890ff',
-                                display: 'inline-block'
-                            }} 
-                        />
-                    }
-                    
+    return (
+        <div 
+            onClick={() => props.onChatClick(chat.id)}
+            style={{ ...styles.chatContainer, ...extraStyle }}
+            className={`ce-chat-card ${props.activeChat === chat.id && 'ce-active-chat-card'}`}
+        >
+            <div style={ styles.titleText } className='ce-chat-title-text'>
+                { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
+                
+                {
+                    !readLastMessage(chat) &&
+                    <div 
+                        className='ce-chat-unread-dot'
+                        style={{ 
+                            float: 'right',
+                            width: '12px',
+                            height: '12px',
+                            borderRadius: '6px',
+                            backgroundColor: '#1890ff',
+                            display: 'inline-block'
+                        }} 
+                    />
+                }
+                
+            </div>
+
+            <div style={{ width: '100%' }} className='ce-chat-subtitle'>
+                <div style={styles.messageText} className='ce-chat-subtitle-text ce-chat-subtitle-message'>
+                    { lastMessage }
                 </div>
 
-                <div style={{ width: '100%' }} className='ce-chat-subtitle'>
-                    <div style={styles.messageText} className='ce-chat-subtitle-text ce-chat-subtitle-message'>
-                        { lastMessage }
-                    </div>
-
-                    <div 
-                        className='ce-chat-subtitle-text ce-chat-subtitle-date'
-                        style={{ ...styles.messageText, ...{ textAlign: 'right', width: '25%' } }}
-                    >
-                        { daySinceSent(chat.last_message.created) }
-                    </div>
+                <div 
+                    className='ce-chat-subtitle-text ce-chat-subtitle-date'
+                    style={{ ...styles.messageText, ...{ textAlign: 'right', width: '25%' } }}
+                >
+                    { daySinceSent(chat.last_message.created) }
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 const styles={

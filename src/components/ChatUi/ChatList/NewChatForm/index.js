@@ -1,51 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react'
 
 import { newChat } from 'react-chat-engine'
 
 import { Button, TextInput } from 'react-chat-engine'
 
-export default class ChatForm extends React.Component {
-    state = {
-        value: ''
-    }
+const NewChatForm = props => {
+  const [value, setValue] = useState('')
   
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
-  
-    handleSubmit(event) {
-        event.preventDefault();
+  function handleChange(event) {
+    setValue(event.target.value)
+  }
 
-        if (this.state.value.trim().length > 0) {
-          newChat(
-            this.props, 
-            { title: this.state.value },
-            () => {}
-          )
-        }
+  function handleSubmit(event) {
+    event.preventDefault()
 
-        this.setState({ value: '' })
+    if (value.trim().length > 0) {
+      newChat(
+        props, 
+        { title: value },
+        () => {}
+      )
     }
-  
-    render() {
-      return (
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <div style={{ height: '1px' }}>
-            <TextInput 
-              label='New Chat'
-              value={this.state.value}
-              style={{ width: 'calc(100% - 48px)' }}
-              handleChange={(e) => this.handleChange(e)}
-            />
-          </div>
 
-          <div style={{ width: '100%', textAlign: 'right' }}>
-            <Button 
-              icon='plus'
-              type="submit" 
-            />
-          </div>
-        </form>
-      );
-    }
+    setValue('')
+  }
+
+  return (
+    <form onSubmit={handleSubmit.bind(this)}>
+      <div style={{ height: '1px' }}>
+        <TextInput 
+          label='New Chat'
+          value={value}
+          style={{ width: 'calc(100% - 48px)' }}
+          handleChange={(e) => handleChange(e)}
+        />
+      </div>
+
+      <div style={{ width: '100%', textAlign: 'right' }}>
+        <Button 
+          icon='plus'
+          type="submit" 
+        />
+      </div>
+    </form>
+  )
 }
+
+export default NewChatForm
