@@ -1,58 +1,53 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import PeopleSettings from './PeopleSettings'
 import PhotosSettings from './PhotosSettings'
 import OptionsSettings from './OptionsSettings'
 import ChatSettingsTop from './ChatSettingsTop'
 
-export default class ChatSettingsContainer extends Component {
+const ChatSettings = props => {
+    const { chats, activeChat } = props
+    const chat = chats && chats[activeChat] 
+    
+    if (!chat) return <div style={styles.filler} />
+    
+    return (
+        <div style={styles.settingsContainer} className='ce-settings'>
+            <div style={{ width: '90%', paddingLeft: '5%' }} className='ce-settings-container'>
+                {
+                    props.renderChatSettingsTop ?
+                    props.renderChatSettingsTop(props, chat) :
+                    <ChatSettingsTop {...props} />
+                }
 
-    render() {
-        const { chats, activeChat } = this.props
-        const chat = chats && chats[activeChat] 
-        
-        if (!chat) return <div style={styles.filler} />
-        
-        return (
-            <div style={styles.settingsContainer} className='ce-settings'>
+                {
+                    props.renderPeopleSettings ?
+                    props.renderPeopleSettings(props, chat) :
+                    <PeopleSettings {...props} />
+                }
 
-                <div style={{ width: '90%', paddingLeft: '5%' }} className='ce-settings-container'>
+                {
+                    props.renderPhotosSettings ?
+                    props.renderPhotosSettings(chat) :
+                    <PhotosSettings {...props} />
+                }
 
-                    {
-                        this.props.renderChatSettingsTop ?
-                        this.props.renderChatSettingsTop(this.props, chat) :
-                        <ChatSettingsTop {...this.props} />
-                    }
-
-                    {
-                        this.props.renderPeopleSettings ?
-                        this.props.renderPeopleSettings(this.props, chat) :
-                        <PeopleSettings {...this.props} />
-                    }
-
-                    {
-                        this.props.renderPhotosSettings ?
-                        this.props.renderPhotosSettings(chat) :
-                        <PhotosSettings {...this.props} />
-                    }
-
-                    {
-                        this.props && chat && this.props.userName === chat.admin.username  &&
-                        <div>
-                            {
-                                this.props.renderOptionsSettings ?
-                                this.props.renderOptionsSettings(this.props, chat) :
-                                <OptionsSettings {...this.props} />
-                            }
-                        </div>
-                    }
-
-                </div>
-
+                {
+                    props && chat && props.userName === chat.admin.username  &&
+                    <div>
+                        {
+                            props.renderOptionsSettings ?
+                            props.renderOptionsSettings(props, chat) :
+                            <OptionsSettings {...props} />
+                        }
+                    </div>
+                }
             </div>
-        )
-    }
+        </div>
+    )
 }
+
+export default ChatSettings
 
 const styles = {
     settingsContainer: { 

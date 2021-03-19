@@ -1,65 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Button, deleteChat } from 'react-chat-engine'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 
-export default class Options extends React.Component {
-    state = {
+const OptionsSettings = props => {
+    const [state, setState] = useState({
         collapsed: true,
         hovered: false
-    }
-  
-    render() {
-        const { chats, activeChat } = this.props
+    })
 
-        if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
+    const { chats, activeChat } = props
 
-        const chat = chats[activeChat]
+    if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
 
-        return (
-            <div style={{ borderTop: '1px solid #f0f0f0' }}>
+    const chat = chats[activeChat]
 
-                <div 
-                    onMouseEnter={() => this.setState({ hovered: true })}
-                    onMouseLeave={() => this.setState({ hovered: false })}
-                    onClick={() => this.setState({ collapsed: !this.state.collapsed })}
-                    style={this.state.hovered ? { backgroundColor: '#f0f0f0', cursor: 'pointer' } : {}}
-                >
-
-                    <div style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}>
-                        Options
-                    </div>
-
-                    {
-                        this.state.collapsed ?
-                        <LeftOutlined style={styles.collapseIcon} /> :
-                        <DownOutlined style={styles.collapseIcon} />
-                    }
-
+    return (
+        <div style={{ borderTop: '1px solid #f0f0f0' }}>
+            <div 
+                onMouseEnter={() => setState({ ...state, hovered: true })}
+                onMouseLeave={() => setState({ ...state, hovered: false })}
+                onClick={() => setState({ ...state, collapsed: !state.collapsed })}
+                style={state.hovered ? { backgroundColor: '#f0f0f0', cursor: 'pointer' } : {}}
+            >
+                <div style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}>
+                    Options
                 </div>
-                
+
                 {
-                    !this.state.collapsed &&
-                    <div>
-
-                        <div style={{ height: '12px' }} />
-
-                        <Button 
-                            value="Delete" 
-                            theme='danger'
-                            icon='delete'
-                            onClick={() => deleteChat(this.props, chat.id, (data) => {})}
-                            style={{ width: '100%', marginBottom: '12px' }}
-                        />
-
-                    </div>
+                    state.collapsed ?
+                    <LeftOutlined style={styles.collapseIcon} /> :
+                    <DownOutlined style={styles.collapseIcon} />
                 }
-            
             </div>
-        )
-    }
+            
+            {
+                !state.collapsed &&
+                <div>
+                    <div style={{ height: '12px' }} />
+
+                    <Button 
+                        value="Delete" 
+                        theme='danger'
+                        icon='delete'
+                        onClick={() => deleteChat(props, chat.id, (data) => {})}
+                        style={{ width: '100%', marginBottom: '12px' }}
+                    />
+                </div>
+            }
+        </div>
+    )
 }
+
+export default OptionsSettings
 
 const styles = {
     collapseIcon: {

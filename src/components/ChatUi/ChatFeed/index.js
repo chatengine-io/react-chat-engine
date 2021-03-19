@@ -17,11 +17,10 @@ const ChatFeed = props => {
 
     useEffect(() => {
         if (!didMountRef.current) {
+            didMountRef.current = true
             setTimeout(() => {
                 setDuration(100)
             }, 3000); // Once the chat loads, start animating
-            
-            didMountRef.current = true
 
         } else {
             // Only scroll if messages loaded
