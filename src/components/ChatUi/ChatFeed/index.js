@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import ChatHeader from './ChatHeader'
 import { AuthFail, Loading, Welcome } from './Steps'
@@ -11,30 +11,42 @@ import _ from 'lodash'
 
 import { animateScroll } from "react-scroll"
 
-export default class ChatFeed extends Component {
-    state = {
-        duration: 0
-    }
+const ChatFeed = props => {
+    const didMountRef = useRef(false)
+    const [duration, setDuration] = useState(0)
 
-    componentDidMount() {
-        setTimeout(() => {
-            this.setState({ duration: 100 })
-        }, 3000); // Once the chat loads, start animating
-    }
+    useEffect(() => {
+        if (!didMountRef.current) {
+            didMountRef.current = true
+            setTimeout(() => {
+                setDuration(100)
+            }, 3000); // Once the chat loads, start animating
 
-    renderTypers() {
-        const { typingData, activeChat } = this.props
+        } else {
+            // Only scroll if messages loaded
+            // TODO: Make more sophisticated
+            if(!_.isEmpty(props.messages)) {
+                animateScroll.scrollToBottom({
+                    duration,
+                    containerId: "ce-feed-container"
+                })
+            }
+        }
+    })
+
+    function renderTypers() {
+        const { typingData, activeChat } = props
         const typers = typingData && typingData[activeChat] ? typingData[activeChat] : []
 
-        if (this.props.renderIsTyping) {
-            return this.props.renderIsTyping(typers)
+        if (props.renderIsTyping) {
+            return props.renderIsTyping(typers)
         }
 
         return typers.map((username, index) => <IsTyping key={`typer_${index}`} username={username} />)
     }
 
-    renderMessages() {
-        const { messages, chats, activeChat } = this.props
+    function renderMessages() {
+        const { messages, chats, activeChat } = props
         const chat = chats && chats[activeChat]
         const keys = Object.keys(messages)
 
@@ -43,12 +55,12 @@ export default class ChatFeed extends Component {
             const lastMessageKey = index === 0 ? null : keys[index - 1]
             const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
 
-            if (this.props.renderMessageBubble) {
+            if (props.renderMessageBubble) {
                 return (
                     <div key={`message_${index}`}>
                         { 
-                            this.props.renderMessageBubble(
-                                this.props, 
+                            props.renderMessageBubble(
+                                props, 
                                 chat, 
                                 messages[lastMessageKey], 
                                 message, 
@@ -62,7 +74,7 @@ export default class ChatFeed extends Component {
             return (
                 <MessageBubble 
                     key={`message_${index}`}
-                    {...this.props}
+                    {...props}
                     chat={chat}
                     message={message}
                     lastMessage={messages[lastMessageKey]}
@@ -72,8 +84,8 @@ export default class ChatFeed extends Component {
         })
     }
 
-    renderSendingMessages() {
-        const { sendingMessages, chats, activeChat } = this.props
+    function renderSendingMessages() {
+        const { sendingMessages, chats, activeChat } = props
         const keys = Object.keys(sendingMessages)
         const chat = chats && chats[activeChat]
 
@@ -82,12 +94,12 @@ export default class ChatFeed extends Component {
             const lastMessageKey = index === 0 ? null : keys[index - 1]
             const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
 
-            if(message && message.chat === this.props.activeChat) {
+            if(message && message.chat === props.activeChat) {
                 return (
                     <MessageBubble 
                         sending
                         key={`sending-msg-${index}`}
-                        {...this.props}
+                        {...props}
                         chat={chat}
                         message={message}
                         lastMessage={sendingMessages[lastMessageKey]}
@@ -98,72 +110,57 @@ export default class ChatFeed extends Component {
         })
     }
 
-    scrollToBottom() {
-        animateScroll.scrollToBottom({
-            duration: this.state.duration,
-            containerId: "ce-feed-container"
-        })
+    const { chats, conn, activeChat } = props
+    const chat = chats && chats[activeChat] 
+
+    if(conn === undefined) {
+        return <AuthFail />
     }
 
-    componentDidUpdate() {
-        // Only scroll if messages loaded
-        // TODO: Make more sophisticated
-        if(!_.isEmpty(this.props.messages)) {
-            this.scrollToBottom()
-        }
+    if(conn && chats !== null && _.isEmpty(chats)) {
+        return <Welcome />
     }
 
-    render() {
-        const { chats, conn, activeChat } = this.props
-        const chat = chats && chats[activeChat] 
+    return (
+        <div 
+            className='ce-chat-feed'
+            style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
+        >
+            { props.connecting && <Loading /> }
 
-        if(conn === undefined) {
-            return <AuthFail />
-        }
+            {
+                props.renderChatHeader ? 
+                props.renderChatHeader(chat) :
+                <ChatHeader {...props} />
+            }
 
-        if(conn && chats !== null && _.isEmpty(chats)) {
-            return <Welcome />
-        }
-
-        return (
-            <div 
-                className='ce-chat-feed'
-                style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
+            <div
+                id='ce-feed-container'
+                style={styles.feedContainer} 
+                className='ce-chat-feed-container'
             >
-                { this.props.connecting && <Loading /> }
+                <div style={{ height: '88px' }} className='ce-feed-container-top' />
 
-                {
-                    this.props.renderChatHeader ? 
-                    this.props.renderChatHeader(chat) :
-                    <ChatHeader {...this.props} />
-                }
+                { renderMessages() }
 
+                { renderSendingMessages() }
 
-                <div
-                    id='ce-feed-container'
-                    style={styles.feedContainer} 
-                    className='ce-chat-feed-container'
-                >
-                    <div style={{ height: '88px' }} className='ce-feed-container-top' />
+                { renderTypers() }
 
-                    { this.renderMessages() }
-
-                    { this.renderSendingMessages() }
-
-                    { this.renderTypers() }
-
-                    <div style={{ height: '54px' }} className='ce-feed-container-bottom' />
-                </div>
-
-                {
-                    this.props.renderNewMessageForm ?
-                    this.props.renderNewMessageForm(this.props, activeChat) :
-                    <NewMessageForm {...this.props} />
-                }
+                <div style={{ height: '54px' }} className='ce-feed-container-bottom' />
             </div>
-        )
-    }
+
+            {
+                props.renderNewMessageForm ?
+                props.renderNewMessageForm(props, activeChat) :
+                <NewMessageForm {...props} />
+            }
+        </div>
+    )
 }
+
+export default ChatFeed
+
 const styles = {
     feedContainer: { 
         position: 'absolute', 

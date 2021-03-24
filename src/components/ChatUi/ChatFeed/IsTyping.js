@@ -1,13 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import { stringToColor } from '../Utilities/colorMapping'
 
-export default class ChatFeed extends Component {
-    render() {
-        return (
-            <div style={{ color: stringToColor(this.props.username), padding: '2px', paddingLeft: '12px' }}>
-                {`${this.props.username} is typing...`}
-            </div>
-        )
-    }
+const IsTyping = props => {
+    return (
+        <div style={{ color: stringToColor(props.username), padding: '2px', paddingLeft: '12px' }}>
+            {`${props.username} is typing...`}
+        </div>
+    )
 }
+export default IsTyping

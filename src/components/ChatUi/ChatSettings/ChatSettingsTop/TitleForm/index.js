@@ -1,55 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { editChat, TextInput } from 'react-chat-engine'
 
-export default class NewMessageForm extends React.Component {
-    state = {
+const NewMessageForm = props => {
+    const didMountRef = useRef(false)
+    const [state, setState] = useState({
         activeChat: null,
         value: ''
+    })
+  
+    function handleChange(event) {
+        setState({ ...state, value: event.target.value });
     }
   
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
-  
-    handleSubmit(event) {
+    function handleSubmit(event) {
         event.preventDefault();
 
         editChat(
-            this.props.conn, 
-            this.props.chat.id,
-            { title: this.state.value },
+            props.conn, 
+            props.chat.id,
+            {title: state.value},
             (data) => {}
         )
     }
 
-    // Update on new active chat. TODO: Find more eloquent way perhaps
-    componentDidUpdate() {
-        if(this.props.chat.title !== this.state.value && this.state.activeChat !== this.props.chat.id) {
-            this.setState({ 
-                value: this.props.chat.title,
-                activeChat: this.props.chat.id
-            })
+    useEffect(() => {
+        if (!didMountRef.current) {
+            didMountRef.current = true
+
+        } else {
+            if(state.activeChat !== props.chat.id) {
+                setState({ 
+                    ...state,
+                    value: props.chat.title,
+                    activeChat: props.chat.id
+                })
+            }
         }
-    }
-  
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit.bind(this)} className='ce-chat-title-form'>
-                <TextInput 
-                    label="Rename this Chat" 
-                    value={this.state.value} 
-                    default={this.props.chat.title}
-                    handleChange={this.handleChange.bind(this)} 
-                    style={{ 
-                        fontSize: '16px',
-                        fontWeight: '600',
-                        textAlign: 'center',
-                        border: '0px solid white',
-                        width: '100%',
-                    }}
-                />
-            </form>
-        );
-    }
+    })
+
+    return (
+        <form onSubmit={(e) => handleSubmit(e)} className='ce-chat-title-form'>
+            <TextInput 
+                label="Rename this Chat" 
+                value={state.value} 
+                default={props.chat.title}
+                handleChange={(e) => handleChange(e)} 
+                style={{ 
+                    fontSize: '16px',
+                    fontWeight: '600',
+                    textAlign: 'center',
+                    border: '0px solid white',
+                    width: '100%',
+                }}
+            />
+        </form>
+    );
 }
+
+export default NewMessageForm

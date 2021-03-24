@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const suffix = [
@@ -11,12 +11,12 @@ const suffix = [
   'st'
 ]
 
-export default class DatePartition extends Component {
-    getDate(date) {
+const DatePartition = props => {
+    function getDate(date) {
         return date ? date.substr(0, 10) : null
     }
 
-    formatDate(date_time) {
+    function formatDate(date_time) {
         if (!date_time) return ''
         
         const year = date_time.substr(0, 4)
@@ -40,23 +40,23 @@ export default class DatePartition extends Component {
         return time + timeSuffix + ', ' + month + ' ' + day + dayDuffix + ', ' + year
     }
 
-    render() {
-        const { lastCreated, created } = this.props
+    const { lastCreated, created } = props
 
-        const lastDate = this.getDate(lastCreated)
-        const thisDate = this.getDate(created)
+    const lastDate = getDate(lastCreated)
+    const thisDate = getDate(created)
 
-        if (lastCreated && lastDate === thisDate ) {
-            return <div />
-        }
-
-        return (
-            <div style={styles.dateText} className='ce-message-date-text'>
-                { this.formatDate(created) }
-            </div>
-        )
+    if (lastCreated && lastDate === thisDate ) {
+        return <div />
     }
+
+    return (
+        <div style={styles.dateText} className='ce-message-date-text'>
+            { formatDate(created) }
+        </div>
+    )
 }
+
+export default DatePartition
 
 const styles = {
     dateText: { 

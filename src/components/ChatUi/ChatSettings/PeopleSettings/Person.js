@@ -1,23 +1,21 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
 import { removePerson } from 'react-chat-engine'
 
 import { Avatar, Button } from 'react-chat-engine'
 
-export default class Person extends Component {
-    state = {
-        selected: false
-    }
+const Person = props => {
+    const [selected, setSelected] = useState(false)
 
-    onRemovePerson() {
+    function onRemovePerson() {
         removePerson(
-            this.props.conn,
-            this.props.chat.id,
-            this.props.person.username
+            props.conn,
+            props.chat.id,
+            props.person.username
         )
     }
 
-    renderPersonText(person) {
+    function renderPersonText(person) {
         if (person.first_name !== null) {
             return `${person.first_name}${person.last_name ? ` ${person.last_name}` : ''}`
         } else {
@@ -25,51 +23,51 @@ export default class Person extends Component {
         }
     }
 
-    render() {
-        const { person, chat, conn } = this.props
+    const { person, chat, conn } = props
 
-        if (!person || !chat) { return <div /> }
+    if (!person || !chat) { return <div /> }
 
-        const { admin } = chat
+    const { admin } = chat
 
-        return (
+    return (
+        <div 
+            className='ce-person-container'
+            onMouseEnter={() => setSelected(true)}
+            onMouseLeave={() => setSelected(false)}
+        >
             <div 
-                className='ce-person-container'
-                onMouseEnter={() => this.setState({ selected: true })}
-                onMouseLeave={() => this.setState({ selected: false })}
+                className='ce-person-avatar'
+                style={{ padding: '2px', height: '0px' }}
             >
-                <div 
-                    className='ce-person-avatar'
-                    style={{ padding: '2px', height: '0px' }}
+                <Avatar 
+                    avatar={person.avatar} 
+                    username={person.username} 
+                    is_online={person.is_online}
+                />
+            </div>
+
+            <div
+                className='ce-person-text'
+                style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px', fontSize: '15px' }}
+            >
+                { renderPersonText(person) }
+            </div>
+
+            {
+                selected && (conn.userName === admin.username) && (person.username !== admin.username) &&
+                <div
+                    className='ce-delete-chat' 
+                    style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}
                 >
-                    <Avatar 
-                        avatar={person.avatar} 
-                        username={person.username} 
-                        is_online={person.is_online}
+                    <Button 
+                        theme='danger'
+                        icon='delete'
+                        onClick={() => onRemovePerson()}
                     />
                 </div>
-
-                <div
-                    className='ce-person-text'
-                    style={{ paddingLeft: '52px', height: '44px', position: 'relative', top: '10px', fontSize: '15px' }}
-                >
-                    { this.renderPersonText(person) }
-                </div>
-
-                {
-                    this.state.selected && (conn.userName === admin.username) && (person.username !== admin.username) &&
-                    <div
-                        className='ce-delete-chat' 
-                        style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}
-                    >
-                        <Button 
-                            theme='danger'
-                            icon='delete'
-                            onClick={() => this.onRemovePerson()}
-                        />
-                    </div>
-                }
-            </div>
-        )
-    }
+            }
+        </div>
+    )
 }
+
+export default Person

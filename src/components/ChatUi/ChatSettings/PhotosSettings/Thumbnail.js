@@ -1,28 +1,28 @@
 import React from 'react'
 
-export default class Thumbnail extends React.Component {
-    render() {
-        const { attachment } = this.props 
+const Thumbnail = props => {
+    const { attachment } = props 
 
-        if (!attachment) { return <div /> }
+    if (!attachment) { return <div /> }
 
-        return (
-            <div style={styles.container} className='ce-photo-thumbnail'>
-                
-                <div style={{ paddingTop: '100%' }} />
-                
-                <img
-                    alt={attachment.id}
-                    style={styles.image}
-                    src={attachment.file}
-                    className='ce-photo-img'
-                    id={`image-${attachment.id}`}
-                />
-                
-            </div>
-        )
-    }
+    return (
+        <div style={styles.container} className='ce-photo-thumbnail'>
+            
+            <div style={{ paddingTop: '100%' }} />
+            
+            <img
+                alt={attachment.id}
+                style={styles.image}
+                src={attachment.file}
+                className='ce-photo-img'
+                id={`image-${attachment.id}`}
+            />
+            
+        </div>
+    )
 }
+
+export default Thumbnail
 
 const styles = {
     container: { 

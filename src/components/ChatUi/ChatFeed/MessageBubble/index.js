@@ -1,63 +1,58 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import DatePartition from './DatePartition'
 import MyMessage from './MyMessage'
 import TheirMessage from './TheirMessage'
 import SendingMessage from './SendingMessage'
 
-export default class Message extends Component {
-    state = {
-        selected: false
-    }
+const Message = props => {
+    const { lastMessage, message, sending, nextMessage, chats, activeChat } = props
+    
+    if (!message || !chats || !activeChat || !chats[activeChat]) { return <div /> }
 
-    render() {
-        const { lastMessage, message, sending, nextMessage } = this.props
-        const { chats, activeChat } = this.props
+    const chat = chats[activeChat]
 
-        if (!message || !chats || !activeChat || !chats[activeChat]) { return <div /> }
+    return (
+        <div className='ce-message-and-date'>
+            {
+                !sending &&
+                <DatePartition 
+                    lastCreated={lastMessage ? lastMessage.created : null} 
+                    created={message.created} 
+                />
+            }
 
-        const chat = chats[activeChat]
-
-        return (
-            <div className='ce-message-and-date'>
-                {
-                    !sending &&
-                    <DatePartition 
-                        lastCreated={lastMessage ? lastMessage.created : null} 
-                        created={message.created} 
-                    />
-                }
-
-                {
-                    sending ? 
-                    <SendingMessage 
-                        chat={chat} 
-                        conn={this.props} 
-                        lastMessage={lastMessage} 
-                        message={message} 
-                        nextMessage={nextMessage} 
-                    /> :
-                    <div>
-                        {
-                            !sending && message.sender_username === this.props.userName ?
-                            <MyMessage 
-                                chat={chat} 
-                                conn={this.props} 
-                                lastMessage={lastMessage} 
-                                message={message} 
-                                nextMessage={nextMessage} 
-                            /> :
-                            <TheirMessage 
-                                chat={chat} 
-                                conn={this.props} 
-                                lastMessage={lastMessage} 
-                                message={message} 
-                                nextMessage={nextMessage} 
-                            />
-                        }
-                    </div>
-                }
-            </div>
-        ) 
-    }
+            {
+                sending ? 
+                <SendingMessage 
+                    chat={chat} 
+                    conn={props} 
+                    lastMessage={lastMessage} 
+                    message={message} 
+                    nextMessage={nextMessage} 
+                /> :
+                <div>
+                    {
+                        !sending && message.sender_username === props.userName ?
+                        <MyMessage 
+                            chat={chat} 
+                            conn={props} 
+                            lastMessage={lastMessage} 
+                            message={message} 
+                            nextMessage={nextMessage} 
+                        /> :
+                        <TheirMessage 
+                            chat={chat} 
+                            conn={props} 
+                            lastMessage={lastMessage} 
+                            message={message} 
+                            nextMessage={nextMessage} 
+                        />
+                    }
+                </div>
+            }
+        </div>
+    ) 
 }
+
+export default Message

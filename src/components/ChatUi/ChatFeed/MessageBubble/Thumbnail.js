@@ -1,29 +1,28 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import { LoadingOutlined } from '@ant-design/icons'
 
-export default class Thumbnail extends Component {
+const Thumbnail = props => {
+    const { attachment } = props
 
-    render() {
-        const { attachment } = this.props
-
-        if (!attachment) {
-            return (
-                <div style={styles.loadingContainer}>
-                    <LoadingOutlined  style={{ color: 'white', padding: '4px', fontSize: '28px' }} />
-                </div>
-            )
-        }
-
+    if (!attachment) {
         return (
-            <img 
-                style={styles.thumbnail}
-                src={attachment.file}
-                alt={'thumb-nail'}
-            />
+            <div style={styles.loadingContainer}>
+                <LoadingOutlined  style={{ color: 'white', padding: '4px', fontSize: '28px' }} />
+            </div>
         )
     }
+
+    return (
+        <img 
+            style={styles.thumbnail}
+            src={attachment.file}
+            alt={'thumb-nail'}
+        />
+    )
 }
+
+export default Thumbnail
 
 const styles = {
     loadingContainer: {

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import _ from 'lodash'
 
+
 import { getChats } from '../../actions/chats'
 import { getMessages, readMessage } from '../../actions/messages'
 
@@ -26,7 +27,7 @@ export default class App extends Component {
     activeChat: null,
     typingCounter: {},
     typingData: {},
-    onChatClick: (chatId) => this.setActiveChat(chatId),
+    onChatClick: (chatId) => this.setActiveChat(chatId), // begging for correct context implementation
     sendingMessage: (chatId) => this.sendingMessage(chatId),
   }
 

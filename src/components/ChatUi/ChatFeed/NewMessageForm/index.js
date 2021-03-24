@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { sendMessage, isTyping } from 'react-chat-engine'
 
@@ -6,84 +6,87 @@ import FileRow from './FileRow'
 import ImagesInput from './ImagesInput'
 
 import { Button, TextAreaInput } from 'react-chat-engine'
-export default class NewMessageForm extends React.Component {
-    state = {
-      trigger: 0,
-      mod: 3,
-      value: '',
-      attachments: []
-    }
 
-    onRemove(index) {
-      let { attachments } = this.state 
-      attachments.splice(index, 1)
-      this.setState({ attachments })
-    }
+const NewMessageForm = props => {
+  const [state, setState] = useState({
+    trigger: 0,
+    mod: 3,
+    value: '',
+    attachments: []
+  })
+
+  function onRemove(index) {
+    let { attachments } = state 
+    attachments.splice(index, 1)
+    setState({ ...state, attachments })
+  }
   
-    handleChange(event) {
-      this.setState({
-        value: event.target.value,
-        trigger: (this.state.trigger + 1) % this.state.mod
-      });
-      
-      if (this.state.trigger === 1) {
-        isTyping(this.props, this.props.activeChat)
-      }
+  function handleChange(event) {
+    setState({
+      ...state,
+      value: event.target.value,
+      trigger: (state.trigger + 1) % state.mod
+    });
+    
+    if (state.trigger === 1) {
+      isTyping(props, props.activeChat)
     }
+  }
   
-    handleSubmit(event) {
-      event.preventDefault();
-      const { attachments } = this.state
-      const text = this.state.value.trim()
-      const custom_json = { sender_id: Date.now().toString() }
-      const sender_username = this.props.userName
-      const data = { text, attachments, custom_json, sender_username, chat: this.props.activeChat }
+  function handleSubmit(event) {
+    event.preventDefault();
 
-      if (text.length > 0 || attachments.length > 0) {
-        sendMessage(
-          this.props, 
-          this.props.activeChat, 
-          data,
-          (data) => {}
-        )
-      }
+    const { attachments } = state
+    const text = state.value.trim()
+    const sender_username = props.userName
+    const custom_json = { sender_id: Date.now().toString() }
+    const data = { text, attachments, custom_json, sender_username, chat: props.activeChat }
 
-      this.props.sendingMessage && this.props.sendingMessage(data)
-
-      this.setState({ value: '', attachments: [] })
+    if (text.length > 0 || attachments.length > 0) {
+      sendMessage(
+        props, 
+        props.activeChat, 
+        data,
+        (data) => {}
+      )
     }
-  
-    render() {
-      return (
-        <div 
-          id='msg-form-container'
-          style={styles.NewMessageFormContainer}
-          className='ce-message-form-container'
-        >
-          <FileRow files={this.state.attachments} onRemove={(i) => this.onRemove(i)} />
 
-          <ImagesInput onSelectFiles={(attachments) => this.setState({ attachments })} />
+    setState({ ...state, value: '', attachments: [] })
 
-          <form onSubmit={this.handleSubmit.bind(this)} className='ce-message-form'>
-            <div style={styles.inputContainer} className='ce-message-input-form'>
-              <TextAreaInput
-                value={this.state.value}
-                label='Send a message...'
-                handleChange={this.handleChange.bind(this)}
-                onSubmit={this.handleSubmit.bind(this)}
-              />
+    props.sendingMessage && props.sendingMessage(data)
+  }
 
-              <Button 
-                icon='send'
-                type="submit"
-                style={{ position: 'absolute', bottom: '10px', right: '6px' }}
-              />
-            </div>
-          </form>
+  return (
+    <div 
+      id='msg-form-container'
+      style={styles.NewMessageFormContainer}
+      className='ce-message-form-container'
+    >
+      <FileRow files={state.attachments} onRemove={(i) => onRemove(i)} />
+
+      <ImagesInput onSelectFiles={(attachments) => setState({ ...state, attachments })} />
+
+      <form onSubmit={handleSubmit.bind(this)} className='ce-message-form'>
+        <div style={styles.inputContainer} className='ce-message-input-form'>
+          <TextAreaInput
+            value={state.value}
+            label='Send a message...'
+            handleChange={handleChange.bind(this)}
+            onSubmit={handleSubmit.bind(this)}
+          />
+
+          <Button 
+            icon='send'
+            type="submit"
+            style={{ position: 'absolute', bottom: '10px', right: '6px' }}
+          />
         </div>
-      );
-    }
+      </form>
+    </div>
+  );
 }
+
+export default NewMessageForm
 
 const styles = {
   NewMessageFormContainer: { 

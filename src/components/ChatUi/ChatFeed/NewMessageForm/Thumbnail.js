@@ -1,38 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { CloseCircleTwoTone } from '@ant-design/icons'
 
-export default class FileRow extends React.Component {
-    state = {
-        hovered: false
-    }
-  
-    render() {
-        return (
-            <div 
-                style={{ padding: '12px 6px', display: 'inline' }}
-                onMouseEnter={() => this.setState({ hovered: true })}
-                onMouseLeave={() => this.setState({ hovered: false })}
-            >
-                
-                <img
-                    style={styles.imageSquare}
-                    alt={this.props.file ? this.props.file.name : ''}
-                    src={URL.createObjectURL(this.props.file)}
+const Thumbnail = props => {
+    const [hovered, setHovered] = useState(false)
+
+    return (
+        <div 
+            style={{ padding: '12px 6px', display: 'inline' }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+        >
+            
+            <img
+                style={styles.imageSquare}
+                alt={props.file ? props.file.name : ''}
+                src={URL.createObjectURL(props.file)}
+            />
+
+            {
+                hovered &&
+                <CloseCircleTwoTone 
+                    style={styles.closeIcon} 
+                    onClick={() => props.onRemove && props.onRemove()}
                 />
-
-                {
-                    this.state.hovered &&
-                    <CloseCircleTwoTone 
-                        style={styles.closeIcon} 
-                        onClick={() => this.props.onRemove && this.props.onRemove()}
-                    />
-                }
-
-            </div>
-      ) ;
-    }
+            }
+        </div>
+    )
 }
+
+export default Thumbnail
 
 const styles = {
     imageSquare: { 

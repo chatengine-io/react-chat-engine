@@ -1,44 +1,41 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
 import { SettingOutlined, CloseOutlined } from '@ant-design/icons'
 
 import ChatSettings from '../../ChatSettings'
 
-export default class ChatSettingsDrawer extends Component {
-    state = {
-        isOpen: false
-    }
+const ChatSettingsDrawer = props => {
+    const [isOpen, setIsOpen] = useState(false)
 
-    render() {
-        const chatLength = Object.keys(this.props.chats) && Object.keys(this.props.chats).length
-        return (
-            <div> 
-                <SettingOutlined
-                    onClick={() => this.setState({ isOpen: true })}
-                    style={{ color: 'rgb(24, 144, 255)', outline: 'none' }} 
-                />
+    return (
+        <div> 
+            <SettingOutlined
+                onClick={() => setIsOpen(true)}
+                style={{ color: 'rgb(24, 144, 255)', outline: 'none' }} 
+            />
 
-                { 
-                    this.state.isOpen &&
-                    <div style={styles.drawerContainer}>
-                        <CloseOutlined
-                            style={styles.closeIcon}
-                            onClick={() => this.setState({ isOpen: false })}
-                        />
+            { 
+                isOpen &&
+                <div style={styles.drawerContainer}>
+                    <CloseOutlined
+                        style={styles.closeIcon}
+                        onClick={() => setIsOpen(false)}
+                    />
 
-                        <div style={styles.titleContainer}>
-                            <div style={styles.titleText}>
-                                Chat Settings
-                            </div>
+                    <div style={styles.titleContainer}>
+                        <div style={styles.titleText}>
+                            Chat Settings
                         </div>
-
-                        <ChatSettings {...this.props} />
                     </div>
-                }
-            </div>
-        );
-    }
+
+                    <ChatSettings {...props} />
+                </div>
+            }
+        </div>
+    );
 }
+
+export default ChatSettingsDrawer
 
 const styles = {
     drawerContainer: { 
