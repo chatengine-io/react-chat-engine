@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import { ChatEngineContext } from '../../context'
 
 import { timeSinceDate } from '../../Utilities/dateToString'
 
@@ -12,12 +14,12 @@ import { setConfiguration } from 'react-grid-system';
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
 const ChatHeader = props => {
-    const { chats, activeChat } = props
+    const { conn, chats, activeChat } = useContext(ChatEngineContext)
 
     if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
 
     const chat = chats[activeChat]
-    const otherPerson = chat.people.find(person => person.person.username !== props.userName);
+    const otherPerson = chat.people.find(person => person.person.username !== conn.userName);
 
     return (
         <Row 
@@ -30,7 +32,7 @@ const ChatHeader = props => {
                 style={{ ...styles.mobileOptiom, ...{ left: '6px' } }}
                 className='ce-chat-list-mobile-option'
             >
-                <ChatListDrawer {...props} />
+                <ChatListDrawer />
             </Col>
 
             <Col 
@@ -58,7 +60,7 @@ const ChatHeader = props => {
                 style={{ ...styles.mobileOptiom, ...{ right: '6px' } }}
                 className='ce-chat-settings-mobile-option'
             >
-                <ChatSettingsDrawer {...props} />
+                <ChatSettingsDrawer />
             </Col>
         </Row>
     );

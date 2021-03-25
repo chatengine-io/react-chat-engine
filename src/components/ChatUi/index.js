@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 
 import _ from 'lodash'
 
+import { ChatEngineContext } from './context'
 
 import { getChats } from '../../actions/chats'
 import { getMessages, readMessage } from '../../actions/messages'
@@ -17,21 +18,22 @@ import { setConfiguration } from 'react-grid-system';
  
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
-export default class App extends Component {
-  state = {
-    connecting: true,
-    conn: null,
-    chats: null,
-    messages: {},
-    sendingMessages: {},
-    activeChat: null,
-    typingCounter: {},
-    typingData: {},
-    onChatClick: (chatId) => this.setActiveChat(chatId), // begging for correct context implementation
-    sendingMessage: (chatId) => this.sendingMessage(chatId),
-  }
+const App = props => {
+  const didMountRef = useRef(false)
+  const {
+    // The hooks needs ti be rendered up here
+    setConnecting,                        // Socket
+    conn, setConn,                        // Socket
+    chats, setChats,                      // Chat List
+    messages, setMessages,                // Chat Feed
+    sendingMessages, setSendingMessages,  // Chat Feed
+    activeChat, setActiveChat,            // Prop to Chat feed
+    typingCounter, setTypingCounter,      // Up here
+    typingData, setTypingData,            // Up here
+  } = useContext(ChatEngineContext)
+  const context = useContext(ChatEngineContext)
 
-  sortChats(chats) {
+  function sortChats(chats) {
     return Object.values(chats).sort((a, b) => { 
       const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
       const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
@@ -39,245 +41,230 @@ export default class App extends Component {
     })
   }
 
-  onConnect(conn) {
-    this.setState({ conn, connecting: false })
+  function onConnect(conn) {
+    setConnecting(false)
+    setConn(conn)
 
-    getChats(conn, (chats) => this.onGetChats(chats, conn))
+    getChats(conn, (chats) => onGetChats(chats, conn))
 
-    this.props.onConnect && this.props.onConnect(conn)
+    props.onConnect && props.onConnect(conn)
   }
 
-  onFailAuth(conn) {
-    this.setState({ conn: undefined })
+  function onFailAuth(conn) {
+    setConn(undefined)
 
-    this.props.onFailAuth && this.props.onFailAuth(conn)
+    props.onFailAuth && props.onFailAuth(conn)
   }
 
-  setActiveChat(chatId, connOptional) {
-    const conn = connOptional ? connOptional : this.props
+  function switchActiveChat(chatId, connOptional) {
+    const conn = connOptional ? connOptional : props
 
-    this.setState({ activeChat: chatId })
+    setActiveChat(chatId)
 
-    getMessages(conn, chatId, (chatId, messages) => this.onGetMessages(chatId, messages, conn))
+    getMessages(conn, chatId, (chatId, messages) => onGetMessages(chatId, messages, conn))
   }
 
-  onGetChats(chats, connOptional) {
-    const conn = connOptional ? connOptional : this.props
-    chats = this.sortChats(chats)
+  function onGetChats(chats, connOptional) {
+    const conn = connOptional ? connOptional : props
+    chats = sortChats(chats)
 
-    if (chats.length > 0 && this.state.activeChat === null) {
-      this.setActiveChat(chats[0].id, conn) 
+    if (chats.length > 0 && activeChat === null) {
+      switchActiveChat(chats[0].id, conn) 
     }
-    this.setState({ chats: _.mapKeys(chats, 'id') })
+    
+    setChats(_.mapKeys(chats, 'id'))
   }
 
-  onNewChat(chat) {
-    const { chats } = this.state
-
+  function onNewChat(chat) {
     if (chats) {
       chats[chat.id] = chat
-      this.setState({ chats })
-      this.setActiveChat(chat.id)
+      setChats(chats)
+      switchActiveChat(chat.id)
     }
 
-    this.props.onNewChat && this.props.onNewChat(chat)
+    props.onNewChat && props.onNewChat(chat)
   }
 
-  onEditChat(chat) {
-    const { chats } = this.state
-    
+  function onEditChat(chat) {    
     if (chats) {
       chats[chat.id] = chat
-      this.setState({ chats })
+      setChats(chats)
     }
 
-    this.props.onEditChat && this.props.onEditChat(chat)
+    props.onEditChat && props.onEditChat(chat)
   }
 
-  onDeleteChat(chat) {
-    const { chats } = this.state
-    
+  function onDeleteChat(chat) {    
     if (chats) {
       chats[chat.id] = undefined
-      this.setState({ chats })
+      
+      setChats(chats)
+
       if (!_.isEmpty(chats)) {
-        const sortedChats = this.sortChats(chats)
-        this.setActiveChat(sortedChats[0] ? parseInt(sortedChats[0].id) : 0)
+        const sortedChats = sortChats(chats)
+        switchActiveChat(sortedChats[0] ? parseInt(sortedChats[0].id) : 0)
       }
     }
 
-    this.props.onDeleteChat && this.props.onDeleteChat(chat)
+    props.onDeleteChat && props.onDeleteChat(chat)
   }
 
-  onGetMessages(chatId, messages, connOptional) {
-    const conn = connOptional ? connOptional : this.props
+  function onGetMessages(chatId, messages, connOptional) {
+    const conn = connOptional ? connOptional : props
 
-    this.setState({ messages: _.mapKeys(messages, 'id') })
+    setMessages(_.mapKeys(messages, 'id'))
 
     if (messages.length > 0) {
       const messageId = messages[messages.length - 1].id
-      readMessage(conn, this.state.activeChat, messageId, (chat) => this.onEditChat(chat))
+      readMessage(conn, chatId, messageId, (chat) => onEditChat(chat))
     }
     
-    this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
+    props.onGetMessages && props.onGetMessages(chatId, messages)
   }
 
-  sendingMessage(message) {
-    this.setState({
-      sendingMessages: {
-        ...this.state.sendingMessages,
-        [message.custom_json.sender_id]: message
-      }
+  function sendingMessage(message) {
+    setSendingMessages({
+      ...sendingMessages,
+      [message.custom_json.sender_id]: message
     })
   }
 
-  onNewMessage(chatId, message) {
-    const { sendingMessages, messages } = this.state
-
+  function onNewMessage(chatId, message) {
     if (typeof message.custom_json === "string" && message.custom_json.indexOf('sender_id') !== -1) {
       sendingMessages[JSON.parse(message.custom_json).sender_id] = undefined
-      this.setState({ sendingMessages })
+      setSendingMessages(sendingMessages)
     }
 
-    if (chatId === this.state.activeChat) {
+    if (chatId === activeChat) {
       messages[message.id] = message
-      this.setState({ messages })
+      setMessages(messages)
     }
 
-    readMessage(this.state.conn, this.state.activeChat, message.id, (chat) => this.onEditChat(chat))
+    readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
 
-    this.props.onNewMessage && this.props.onNewMessage(chatId, message)
+    props.onNewMessage && props.onNewMessage(chatId, message)
   }
 
-  onEditMessage(chatId, message) {
-    if (chatId === this.state.activeChat) {
-      const { messages } = this.state
+  function onEditMessage(chatId, message) {
+    if (chatId === activeChat) {
       messages[message.id] = message
-      this.setState({ messages })
+      setMessages(messages)
     }
 
-    this.props.onEditMessage && this.props.onEditMessage(chatId, message)
+    props.onEditMessage && props.onEditMessage(chatId, message)
   }
 
-  onDeleteMessage(chatId, message) {
-    if (chatId === this.state.activeChat) {
-      const { messages } = this.state
+  function onDeleteMessage(chatId, message) {
+    if (chatId === activeChat) {
       messages[message.id] = undefined
-      this.setState({ messages })
+      setMessages(messages)
     }
 
-    this.props.onDeleteMessage && this.props.onDeleteMessage(chatId, message)
+    props.onDeleteMessage && props.onDeleteMessage(chatId, message)
   }
 
-  onTyping(chatId, person) {
-    if (this.state.typingCounter[chatId] && this.state.typingCounter[chatId][person]) {
-      this.setState({
-        ...this.state,
-        typingCounter: {
-          ...this.state.typingCounter,
-          [chatId]: {
-            ...this.state.typingCounter[chatId],
-            [person]: this.state.typingCounter[chatId][person] + 1
-          }
+  function onTyping(chatId, person) {
+    if (typingCounter[chatId] && typingCounter[chatId][person]) {
+      setTypingCounter({
+        ...typingCounter,
+        [chatId]: {
+          ...typingCounter[chatId],
+          [person]: typingCounter[chatId][person] + 1
         }
       })
 
     } else {
-      this.setState({
-        ...this.state,
-        typingCounter: {
-          ...this.state.typingCounter,
-          [chatId]: {
-            ...this.state.typingCounter[chatId],
-            [person]: 1
-          }
+      setTypingCounter({
+        ...typingCounter,
+        [chatId]: {
+          ...typingCounter[chatId],
+          [person]: 1
         }
       })
     }
 
     setTimeout(() => {
-      this.setState({
-        ...this.state,
-        typingCounter: {
-          ...this.state.typingCounter,
-          [chatId]: {
-            ...this.state.typingCounter[chatId],
-            [person]: this.state.typingCounter[chatId][person] - 1
+      setTypingCounter({
+        ...typingCounter,
+        [chatId]: {
+          ...typingCounter[chatId],
+          [person]: typingCounter[chatId][person] - 1
+        }
+      })
+    }, 2500)
+
+    props.onTyping && props.onTyping(chatId, person)
+  }
+
+  useEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true
+      getChats(props, (chats) => onGetChats(chats))
+
+    } else {
+      Object.keys(typingCounter).map((chat) => {
+        let typers = []
+  
+        Object.keys(typingCounter[chat]).map((person) => {
+          if (typingCounter[chat][person] > 0) {
+            typers.push(person)
           }
+        })
+  
+        if (!typingData[chat] || typingData[chat].length !== typers.length) {
+          setTypingData({ ...typingData, [chat]: typers })
         }
       })
-    }, 2500);
+    }
+  })
 
-    this.props.onTyping && this.props.onTyping(chatId, person)
-  }
+  const { height } = props
 
-  componentDidUpdate() {
-    const { typingCounter, typingData } = this.state
+  return (
+    <div style={{ textAlign: 'left', backgroundColor: 'white' }}>
+      <Socket
+        {...props}
+        onConnect={(props) => onConnect(props)}
+        onDisconnect={() => setState({ connecting: true })}
+        onFailAuth={(props) => onFailAuth(props)}
+        onNewChat={(chat) => onNewChat(chat)}
+        onEditChat={(chat) => onEditChat(chat)}
+        onDeleteChat={(chat) => onDeleteChat(chat)}
+        onAddPerson={(chat) => onEditChat(chat)}
+        onRemovePerson={(chat) => onEditChat(chat)}
+        // onTyping={(chatId, person) => onTyping(chatId, person)}
+        onNewMessage={(chatId, message) => onNewMessage(chatId, message)}
+        onEditMessage={(chatId, message) => onEditMessage(chatId, message)}
+        onDeleteMessage={(chatId, message) => onDeleteMessage(chatId, message)}
+      />
 
-    Object.keys(typingCounter).map((chat) => {
-      let typers = []
+      <Row>
+        <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
+          {
+            props.renderChatList ?
+            props.renderChatList({...props, ...context}) :
+            <ChatList { ...props} />
+          }
+        </Col>
 
-      Object.keys(typingCounter[chat]).map((person) => {
-        if (typingCounter[chat][person] > 0) {
-          typers.push(person)
-        }
-      })
+        <Col xs={12} sm={6} style={{ height: height ? height : '' }}>
+          {
+            props.renderChatFeed ?
+            props.renderChatFeed({...props, ...context}) :
+            <ChatFeed { ...props} />
+          }
+        </Col>
 
-      if (!typingData[chat] || typingData[chat].length !== typers.length) {
-        this.setState({ ...this.state, typingData: { ...this.state.typingData, [chat]: typers } })
-      }
-    })
-  }
-
-  componentDidMount() { getChats(this.props, (chats) => this.onGetChats(chats)) }
-
-  render() {
-    const { height } = this.props
-
-    return (
-      <div style={{ textAlign: 'left', backgroundColor: 'white' }}>
-        <Socket
-          {...this.props}
-          onConnect={(props) => this.onConnect(props)}
-          onDisconnect={() => this.setState({ connecting: true })}
-          onFailAuth={(props) => this.onFailAuth(props)}
-          onNewChat={(chat) => this.onNewChat(chat)}
-          onEditChat={(chat) => this.onEditChat(chat)}
-          onDeleteChat={(chat) => this.onDeleteChat(chat)}
-          onAddPerson={(chat) => this.onEditChat(chat)}
-          onRemovePerson={(chat) => this.onEditChat(chat)}
-          onTyping={(chatId, person) => this.onTyping(chatId, person)}
-          onNewMessage={(chatId, message) => this.onNewMessage(chatId, message)}
-          onEditMessage={(chatId, message) => this.onEditMessage(chatId, message)}
-          onDeleteMessage={(chatId, message) => this.onDeleteMessage(chatId, message)}
-        />
-
-        <Row>
-          <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
-            {
-              this.props.renderChatList ?
-              this.props.renderChatList({...this.props, ...this.state}) :
-              <ChatList {...this.props} {...this.state} />
-            }
-          </Col>
-
-          <Col xs={12} sm={6} style={{ height: height ? height : '' }}>
-            {
-              this.props.renderChatFeed ?
-              this.props.renderChatFeed({...this.props, ...this.state}) :
-              <ChatFeed {...this.props} {...this.state} />
-            }
-          </Col>
-
-          <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
-            {
-              this.props.renderChatSettings ?
-              this.props.renderChatSettings({...this.props, ...this.state}) :
-              <ChatSettings {...this.props} {...this.state} />
-            }
-          </Col>
-        </Row>
-      </div>
-    )
-  }
+        <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
+          {
+            props.renderChatSettings ?
+            props.renderChatSettings({...props, ...context}) :
+            <ChatSettings { ...props} />
+          }
+        </Col>
+      </Row>
+    </div>
+  )
 }
+
+export default App

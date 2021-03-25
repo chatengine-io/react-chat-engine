@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react'
+
+import { ChatEngineContext } from '../../context'
 
 import { sendMessage, isTyping } from 'react-chat-engine'
 
@@ -7,7 +9,9 @@ import ImagesInput from './ImagesInput'
 
 import { Button, TextAreaInput } from 'react-chat-engine'
 
-const NewMessageForm = props => {
+const NewMessageForm = () => {
+  const { conn, activeChat } = useContext(ChatEngineContext)
+
   const [state, setState] = useState({
     trigger: 0,
     mod: 3,
@@ -29,7 +33,7 @@ const NewMessageForm = props => {
     });
     
     if (state.trigger === 1) {
-      isTyping(props, props.activeChat)
+      isTyping(conn, activeChat)
     }
   }
   
@@ -38,14 +42,14 @@ const NewMessageForm = props => {
 
     const { attachments } = state
     const text = state.value.trim()
-    const sender_username = props.userName
+    const sender_username = conn.userName
     const custom_json = { sender_id: Date.now().toString() }
-    const data = { text, attachments, custom_json, sender_username, chat: props.activeChat }
+    const data = { text, attachments, custom_json, sender_username, chat: activeChat }
 
     if (text.length > 0 || attachments.length > 0) {
       sendMessage(
-        props, 
-        props.activeChat, 
+        conn, 
+        activeChat, 
         data,
         (data) => {}
       )
@@ -53,7 +57,7 @@ const NewMessageForm = props => {
 
     setState({ ...state, value: '', attachments: [] })
 
-    props.sendingMessage && props.sendingMessage(data)
+    // props.sendingMessage && props.sendingMessage(data)
   }
 
   return (

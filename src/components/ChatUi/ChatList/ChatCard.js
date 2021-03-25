@@ -32,7 +32,7 @@ const ChatCard = props => {
 
     return (
         <div 
-            onClick={() => props.onChatClick(chat.id)}
+            // onClick={() => props.onChatClick(chat.id)}
             style={{ ...styles.chatContainer, ...extraStyle }}
             className={`ce-chat-card ${props.activeChat === chat.id && 'ce-active-chat-card'}`}
         >

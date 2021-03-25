@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
+
+import { ChatEngineContext } from '../context'
 
 import ChatHeader from './ChatHeader'
 import { AuthFail, Loading, Welcome } from './Steps'
@@ -14,6 +16,7 @@ import { animateScroll } from "react-scroll"
 const ChatFeed = props => {
     const didMountRef = useRef(false)
     const [duration, setDuration] = useState(0)
+    const { connecting, conn, chats, messages, typingData, activeChat, sendingMessages } = useContext(ChatEngineContext)
 
     useEffect(() => {
         if (!didMountRef.current) {
@@ -25,7 +28,7 @@ const ChatFeed = props => {
         } else {
             // Only scroll if messages loaded
             // TODO: Make more sophisticated
-            if(!_.isEmpty(props.messages)) {
+            if(!_.isEmpty(messages)) {
                 animateScroll.scrollToBottom({
                     duration,
                     containerId: "ce-feed-container"
@@ -35,7 +38,6 @@ const ChatFeed = props => {
     })
 
     function renderTypers() {
-        const { typingData, activeChat } = props
         const typers = typingData && typingData[activeChat] ? typingData[activeChat] : []
 
         if (props.renderIsTyping) {
@@ -46,10 +48,9 @@ const ChatFeed = props => {
     }
 
     function renderMessages() {
-        const { messages, chats, activeChat } = props
         const chat = chats && chats[activeChat]
         const keys = Object.keys(messages)
-
+        
         return keys.map((key, index) => {
             const message = messages[key]
             const lastMessageKey = index === 0 ? null : keys[index - 1]
@@ -60,7 +61,7 @@ const ChatFeed = props => {
                     <div key={`message_${index}`}>
                         { 
                             props.renderMessageBubble(
-                                props, 
+                                conn, 
                                 chat, 
                                 messages[lastMessageKey], 
                                 message, 
@@ -74,7 +75,6 @@ const ChatFeed = props => {
             return (
                 <MessageBubble 
                     key={`message_${index}`}
-                    {...props}
                     chat={chat}
                     message={message}
                     lastMessage={messages[lastMessageKey]}
@@ -85,7 +85,6 @@ const ChatFeed = props => {
     }
 
     function renderSendingMessages() {
-        const { sendingMessages, chats, activeChat } = props
         const keys = Object.keys(sendingMessages)
         const chat = chats && chats[activeChat]
 
@@ -94,12 +93,11 @@ const ChatFeed = props => {
             const lastMessageKey = index === 0 ? null : keys[index - 1]
             const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
 
-            if(message && message.chat === props.activeChat) {
+            if(message && message.chat === activeChat) {
                 return (
                     <MessageBubble 
                         sending
                         key={`sending-msg-${index}`}
-                        {...props}
                         chat={chat}
                         message={message}
                         lastMessage={sendingMessages[lastMessageKey]}
@@ -110,7 +108,6 @@ const ChatFeed = props => {
         })
     }
 
-    const { chats, conn, activeChat } = props
     const chat = chats && chats[activeChat] 
 
     if(conn === undefined) {
@@ -126,12 +123,12 @@ const ChatFeed = props => {
             className='ce-chat-feed'
             style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
         >
-            { props.connecting && <Loading /> }
+            { connecting && <Loading /> }
 
             {
                 props.renderChatHeader ? 
                 props.renderChatHeader(chat) :
-                <ChatHeader {...props} />
+                <ChatHeader />
             }
 
             <div
@@ -153,7 +150,7 @@ const ChatFeed = props => {
             {
                 props.renderNewMessageForm ?
                 props.renderNewMessageForm(props, activeChat) :
-                <NewMessageForm {...props} />
+                <NewMessageForm />
             }
         </div>
     )

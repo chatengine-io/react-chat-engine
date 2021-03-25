@@ -31,7 +31,7 @@ const ChatListDrawer = props => {
                     <ChatList 
                         {...props} 
                         onChatClick={(chatId) => {
-                            props.onChatClick && props.onChatClick(chatId)
+                            // props.onChatClick && props.onChatClick(chatId)
                             setIsOpen(false)
                         }}
                     />
