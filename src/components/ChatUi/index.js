@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef } from 'react'
 
-import _ from 'lodash'
-
 import { ChatEngineContext } from './context'
+
+import _ from 'lodash'
 
 import { getChats } from '../../actions/chats'
 import { getMessages, readMessage } from '../../actions/messages'

@@ -1,14 +1,18 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
+
+import { ChatEngineContext } from '../context'
 
 import _ from 'lodash'
 
 import { daySinceSent } from '../Utilities/dateToString'
 
 const ChatCard = props => {
+    const { conn, activeChat, setActiveChat } = useContext(ChatEngineContext)
+
     function readLastMessage(chat) {
         let readLastMessage = true
         chat.people.map(chat_person => {
-            if(props.userName === chat_person.person.username) {
+            if(conn.userName === chat_person.person.username) {
                 readLastMessage = chat.last_message.id === chat_person.last_read
             }
         })
@@ -16,8 +20,8 @@ const ChatCard = props => {
     }
 
     const { chat } = props
-    const extraStyle = props.activeChat === chat.id ? styles.activeChat : {}
-    const otherPerson = chat.people.find(person => person.person.username !== props.userName);
+    const extraStyle = activeChat === chat.id ? styles.activeChat : {}
+    const otherPerson = chat.people.find(person => person.person.username !== conn.userName);
     
     if (props.renderChatCard) {
         return <div key={`chat_${index}`}>{props.renderChatCard(chat, index)}</div>
@@ -32,9 +36,9 @@ const ChatCard = props => {
 
     return (
         <div 
-            // onClick={() => props.onChatClick(chat.id)}
+            onClick={() => setActiveChat(chat.id)}
             style={{ ...styles.chatContainer, ...extraStyle }}
-            className={`ce-chat-card ${props.activeChat === chat.id && 'ce-active-chat-card'}`}
+            className={`ce-chat-card ${activeChat === chat.id && 'ce-active-chat-card'}`}
         >
             <div style={ styles.titleText } className='ce-chat-title-text'>
                 { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }

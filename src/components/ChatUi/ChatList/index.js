@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import { ChatEngineContext } from '../context'
 
 import _ from 'lodash'
 
@@ -6,6 +8,8 @@ import ChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
 const ChatList = props => {
+    const { chats } = useContext(ChatEngineContext)
+
     function renderChats(chats) {
         return chats.map((chat, index) => {
             if (!chat) return <div key={`chat_${index}`} />
@@ -13,14 +17,14 @@ const ChatList = props => {
             if (props.renderChatCard) {
                 return <div key={`chat_${index}`}>{props.renderChatCard(chat, index)}</div>
             } else {
-                return <ChatCard key={`chat_${index}`} {...props} chat={chat} />
+                return <ChatCard key={`chat_${index}`} chat={chat} />
             }
         })
     }
 
-    const chats = props.chats ? Object.values(props.chats) : []
+    const chatList = chats ? Object.values(chats) : []
 
-    chats.sort((a, b) => { 
+    chatList.sort((a, b) => { 
         const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
         const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
         return new Date(bDate) - new Date(aDate); 
@@ -29,7 +33,7 @@ const ChatList = props => {
     return (
         <div style={styles.chatListContainer} className='ce-chat-list'>
             <div style={styles.chatsContainer} className='ce-chats-container'>
-                { renderChats(chats) } 
+                { renderChats(chatList) } 
 
                 <div style={{ height: '64px' }} />
 
