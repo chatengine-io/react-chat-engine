@@ -41,7 +41,8 @@ export default class App extends Component {
 
   onConnect(conn) {
     this.setState({ conn, connecting: false })
-    getChats(conn, (chats) => this.onGetChats(chats))
+
+    getChats(conn, (chats) => this.onGetChats(chats, conn))
 
     this.props.onConnect && this.props.onConnect(conn)
   }
@@ -52,16 +53,20 @@ export default class App extends Component {
     this.props.onFailAuth && this.props.onFailAuth(conn)
   }
 
-  setActiveChat(chatId) {
+  setActiveChat(chatId, connOptional) {
+    const conn = connOptional ? connOptional : this.props
+
     this.setState({ activeChat: chatId })
-    getMessages(this.state.conn, chatId, (chatId, messages) => this.onGetMessages(chatId, messages))
+
+    getMessages(conn, chatId, (chatId, messages) => this.onGetMessages(chatId, messages, conn))
   }
 
-  onGetChats(chats) {
+  onGetChats(chats, connOptional) {
+    const conn = connOptional ? connOptional : this.props
     chats = this.sortChats(chats)
 
     if (chats.length > 0 && this.state.activeChat === null) {
-      this.setActiveChat(chats[0].id) 
+      this.setActiveChat(chats[0].id, conn) 
     }
     this.setState({ chats: _.mapKeys(chats, 'id') })
   }
@@ -104,12 +109,14 @@ export default class App extends Component {
     this.props.onDeleteChat && this.props.onDeleteChat(chat)
   }
 
-  onGetMessages(chatId, messages) {
+  onGetMessages(chatId, messages, connOptional) {
+    const conn = connOptional ? connOptional : this.props
+
     this.setState({ messages: _.mapKeys(messages, 'id') })
 
     if (messages.length > 0) {
       const messageId = messages[messages.length - 1].id
-      readMessage(this.state.conn, this.state.activeChat, messageId, (chat) => this.onEditChat(chat))
+      readMessage(conn, this.state.activeChat, messageId, (chat) => this.onEditChat(chat))
     }
     
     this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
@@ -188,8 +195,6 @@ export default class App extends Component {
       })
     }
 
-    this.props.onTyping && this.props.onTyping(chatId, person)
-
     setTimeout(() => {
       this.setState({
         ...this.state,
@@ -202,6 +207,8 @@ export default class App extends Component {
         }
       })
     }, 2500);
+
+    this.props.onTyping && this.props.onTyping(chatId, person)
   }
 
   componentDidUpdate() {
