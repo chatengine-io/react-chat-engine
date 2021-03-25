@@ -15,7 +15,7 @@ export function getMessages(props, chatId, callback) {
         // Run hook in Axios on GET requests
         props.onGetMessages && props.onGetMessages(chatId, response.data)
 
-        callback && callback(response.data)
+        callback && callback(chatId, response.data)
     })
     
     .catch((error) => {

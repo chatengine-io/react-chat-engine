@@ -41,7 +41,7 @@ export default class App extends Component {
 
   onConnect(conn) {
     this.setState({ conn, connecting: false })
-    getChats(conn, () => {})
+    getChats(conn, (chats) => this.onGetChats(chats))
 
     this.props.onConnect && this.props.onConnect(conn)
   }
@@ -54,7 +54,7 @@ export default class App extends Component {
 
   setActiveChat(chatId) {
     this.setState({ activeChat: chatId })
-    getMessages(this.state.conn, chatId, () => {})
+    getMessages(this.state.conn, chatId, (chatId, messages) => this.onGetMessages(chatId, messages))
   }
 
   onGetChats(chats) {
@@ -64,8 +64,6 @@ export default class App extends Component {
       this.setActiveChat(chats[0].id) 
     }
     this.setState({ chats: _.mapKeys(chats, 'id') })
-
-    this.props.onGetChats && this.props.onGetChats(chats)
   }
 
   onNewChat(chat) {
@@ -94,7 +92,6 @@ export default class App extends Component {
   onDeleteChat(chat) {
     const { chats } = this.state
     
-
     if (chats) {
       chats[chat.id] = undefined
       this.setState({ chats })
@@ -112,7 +109,7 @@ export default class App extends Component {
 
     if (messages.length > 0) {
       const messageId = messages[messages.length - 1].id
-      readMessage(this.state.conn, this.state.activeChat, messageId, () => {})
+      readMessage(this.state.conn, this.state.activeChat, messageId, (chat) => this.onEditChat(chat))
     }
     
     this.props.onGetMessages && this.props.onGetMessages(chatId, messages)
@@ -140,7 +137,7 @@ export default class App extends Component {
       this.setState({ messages })
     }
 
-    readMessage(this.state.conn, this.state.activeChat, message.id)
+    readMessage(this.state.conn, this.state.activeChat, message.id, (chat) => this.onEditChat(chat))
 
     this.props.onNewMessage && this.props.onNewMessage(chatId, message)
   }
@@ -207,8 +204,6 @@ export default class App extends Component {
     }, 2500);
   }
 
-  componentDidMount() { getChats(this.props) }
-
   componentDidUpdate() {
     const { typingCounter, typingData } = this.state
 
@@ -239,14 +234,12 @@ export default class App extends Component {
           onConnect={(props) => this.onConnect(props)}
           onDisconnect={() => this.setState({ connecting: true })}
           onFailAuth={(props) => this.onFailAuth(props)}
-          onGetChats={(chats) => this.onGetChats(chats)}
           onNewChat={(chat) => this.onNewChat(chat)}
           onEditChat={(chat) => this.onEditChat(chat)}
           onDeleteChat={(chat) => this.onDeleteChat(chat)}
           onAddPerson={(chat) => this.onEditChat(chat)}
           onRemovePerson={(chat) => this.onEditChat(chat)}
           onTyping={(chatId, person) => this.onTyping(chatId, person)}
-          onGetMessages={(chatId, messages) => this.onGetMessages(chatId, messages)}
           onNewMessage={(chatId, message) => this.onNewMessage(chatId, message)}
           onEditMessage={(chatId, message) => this.onEditMessage(chatId, message)}
           onDeleteMessage={(chatId, message) => this.onDeleteMessage(chatId, message)}
