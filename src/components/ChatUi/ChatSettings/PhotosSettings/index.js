@@ -10,18 +10,13 @@ const PhotosSettings = props => {
         collapsed: true,
         hovered: false
     })
+    const { chat } = props
 
     function renderPhotos(attachments) {
         return attachments.map((attachment, index) => {
             return <Thumbnail key={`person_${index}`} attachment={attachment} />
         })
     }
-
-    const { chats, activeChat } = props
-
-    if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
-
-    const chat = chats[activeChat]
 
     return (
         <div style={{ borderTop: '1px solid #f0f0f0' }} className='ce-photo-section'>

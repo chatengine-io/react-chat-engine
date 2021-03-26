@@ -9,12 +9,7 @@ const OptionsSettings = props => {
         collapsed: true,
         hovered: false
     })
-
-    const { chats, activeChat } = props
-
-    if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
-
-    const chat = chats[activeChat]
+    const { chat } = props
 
     return (
         <div style={{ borderTop: '1px solid #f0f0f0' }}>

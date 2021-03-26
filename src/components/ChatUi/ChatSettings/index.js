@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import { ChatEngineContext } from '../context'
 
 import PeopleSettings from './PeopleSettings'
 import PhotosSettings from './PhotosSettings'
@@ -6,7 +8,7 @@ import OptionsSettings from './OptionsSettings'
 import ChatSettingsTop from './ChatSettingsTop'
 
 const ChatSettings = props => {
-    const { chats, activeChat } = props
+    const { chats, activeChat } = useContext(ChatEngineContext)  
     const chat = chats && chats[activeChat] 
     
     if (!chat) return <div style={styles.filler} />
@@ -17,19 +19,19 @@ const ChatSettings = props => {
                 {
                     props.renderChatSettingsTop ?
                     props.renderChatSettingsTop(props, chat) :
-                    <ChatSettingsTop {...props} />
+                    <ChatSettingsTop {...props} chat={chat} />
                 }
 
                 {
                     props.renderPeopleSettings ?
                     props.renderPeopleSettings(props, chat) :
-                    <PeopleSettings {...props} />
+                    <PeopleSettings {...props} chat={chat} />
                 }
 
                 {
                     props.renderPhotosSettings ?
                     props.renderPhotosSettings(chat) :
-                    <PhotosSettings {...props} />
+                    <PhotosSettings {...props} chat={chat} />
                 }
 
                 {
@@ -38,7 +40,7 @@ const ChatSettings = props => {
                         {
                             props.renderOptionsSettings ?
                             props.renderOptionsSettings(props, chat) :
-                            <OptionsSettings {...props} />
+                            <OptionsSettings {...props} chat={chat} />
                         }
                     </div>
                 }
