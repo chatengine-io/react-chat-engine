@@ -61,7 +61,9 @@ const App = props => {
 
     setActiveChat(chatId)
 
-    getMessages(conn, chatId, (chatId, messages) => onGetMessages(chatId, messages, conn))
+    if (chatId) {
+      getMessages(conn, chatId, (chatId, messages) => onGetMessages(chatId, messages, conn))
+    }
   }
 
   function onGetChats(chats, connOptional) {
@@ -85,7 +87,7 @@ const App = props => {
     props.onNewChat && props.onNewChat(chat)
   }
 
-  function onEditChat(chat) {    
+  function onEditChat(chat) {
     if (chats) {
       chats[chat.id] = chat
       setChats(chats)
@@ -218,6 +220,13 @@ const App = props => {
     }
   })
 
+  useEffect(() => {
+    if (activeChat) {
+      getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages, conn))
+    }
+  }, [activeChat])
+  useEffect(() => console.log('chats!!!!', chats), [chats])
+
   const { height } = props
 
   return (
@@ -225,7 +234,7 @@ const App = props => {
       <Socket
         {...props}
         onConnect={(props) => onConnect(props)}
-        onDisconnect={() => setState({ connecting: true })}
+        onDisconnect={() => setConnecting(true)}
         onFailAuth={(props) => onFailAuth(props)}
         onNewChat={(chat) => onNewChat(chat)}
         onEditChat={(chat) => onEditChat(chat)}
