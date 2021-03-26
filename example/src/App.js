@@ -21,7 +21,7 @@ export const store = createStoreWithMiddleware(persistedReducer);
 const persistor = persistStore(
   store,
   {},
-  () => { console.log('Getting persisted state from store') }
+  () => {}
 );
 
 function App() {

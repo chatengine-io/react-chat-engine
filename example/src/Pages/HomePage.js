@@ -21,7 +21,7 @@ class HomePage extends Component {
         this.setState({ loading: true })
         this.props.login(
             this.state, 
-            () => console.log('Logged in'),
+            () => {},
             (error) => console.log(error)
         )
     }
