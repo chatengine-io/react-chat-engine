@@ -12,6 +12,8 @@ const PeopleSettings = props => {
     })
     const { chat } = props
 
+    if (chat.is_direct_chat) { return <div /> }
+
     function renderChatPeople(people, chat) {
         return people.map((chatPerson, index) => {
             return (
@@ -23,9 +25,7 @@ const PeopleSettings = props => {
                 />
             )
         })
-    }
-
-    if (chat.is_direct_chat) { return <div /> }
+    }    
 
     return (
         <div style={{ borderTop: '1px solid #f0f0f0' }}>
