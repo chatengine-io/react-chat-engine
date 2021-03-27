@@ -117,8 +117,6 @@ const Socket = props => {
         } else if (eventJSON.action === 'edit_chat') {
             onEditChat(eventJSON.data)
             
-            props.onEditChat && props.onEditChat(eventJSON.data)
-
         } else if (eventJSON.action === 'delete_chat') {
             const chat = eventJSON.data 
 
