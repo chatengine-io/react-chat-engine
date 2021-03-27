@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { ChatEngineContext } from '../../context'
+import { ChatEngineContext } from '../../../Context'
 
 import { timeSinceDate } from '../../Utilities/dateToString'
 

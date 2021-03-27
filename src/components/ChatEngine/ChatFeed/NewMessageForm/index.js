@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 
-import { ChatEngineContext } from '../../context'
+import { ChatEngineContext } from '../../../Context'
 
 import { sendMessage, isTyping } from 'react-chat-engine'
 

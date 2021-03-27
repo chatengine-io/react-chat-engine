@@ -3,7 +3,7 @@ import React from 'react'
 import Socket from './Socket'
 import ChatEngine from './ChatEngine'
 
-import { ChatEngineProvider } from './ChatEngine/context'
+import { ChatEngineProvider } from './Context'
 
 const ChatEngineApp = (props) => {
     if (props.hideUI) {

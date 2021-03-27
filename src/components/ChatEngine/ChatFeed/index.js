@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 
-import { ChatEngineContext } from '../context'
+import { ChatEngineContext } from '../../Context'
 
 import ChatHeader from './ChatHeader'
 import { AuthFail, Loading, Welcome } from './Steps'
