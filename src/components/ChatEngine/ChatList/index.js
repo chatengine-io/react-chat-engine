@@ -16,6 +16,7 @@ const ChatList = props => {
 
             if (props.renderChatCard) {
                 return <div key={`chat_${index}`}>{props.renderChatCard(chat, index)}</div>
+                
             } else {
                 return (
                     <div 
