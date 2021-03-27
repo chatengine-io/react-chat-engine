@@ -49,13 +49,13 @@ const ChatFeed = props => {
     }
 
     useEffect(() => {
-        if (conn && !props.chatId && activeChat !== null && activeChat !== currentChat) {
+        if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
             setCurrentChat(activeChat)
             getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages))
 
-        } else if (conn && props.chatId && props.chatId !== activeChat) {
-            setActiveChat(props.chatId)
-            getMessages(conn, props.chatId, (chatId, messages) => onGetMessages(chatId, messages))
+        } else if (conn && props.activeChat && props.activeChat !== activeChat) {
+            setActiveChat(props.activeChat)
+            getMessages(conn, props.activeChat, (chatId, messages) => onGetMessages(chatId, messages))
         }
     }, [activeChat])
 
