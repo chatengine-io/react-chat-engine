@@ -18,7 +18,7 @@ import { setConfiguration } from 'react-grid-system';
  
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
-const App = props => {
+const ChatEngine = props => {
   const didMountRef = useRef(false)
   const {
     // The hooks needs ti be rendered up here
@@ -42,8 +42,8 @@ const App = props => {
   }
 
   function onConnect(conn) {
-    setConnecting(false)
     setConn(conn)
+    setConnecting(false)
 
     getChats(conn, (chats) => onGetChats(chats, conn))
 
@@ -216,8 +216,7 @@ const App = props => {
     }
   }, [activeChat])
 
-  // TODO: Is typing is super shitty
-  useEffect(() => {
+  useEffect(() => { // TODO: Is typing is super shitty
     if (typingCounter) {
       const newTypingCounter = {...typingCounter}
       Object.keys(newTypingCounter).map(chatId => {
@@ -287,4 +286,4 @@ const App = props => {
   )
 }
 
-export default App
+export default ChatEngine
