@@ -79,18 +79,31 @@ const ChatFeed = props => {
     useEffect(() => {
         if (!didMountRef.current) {
             didMountRef.current = true
-            setTimeout(() => {
+            setTimeout(() => { // Once chat loads, animate scroll
                 setDuration(100)
-            }, 3000); // Once the chat loads, start animating
+            }, 3000);
 
         } else {
-            // TODO: Make more sophisticated
-            if(!_.isEmpty(messages)) {
+            if(!_.isEmpty(messages)) { // Scroll (TODO: Make more sophisticated)
                 animateScroll.scrollToBottom({
                     duration,
                     containerId: "ce-feed-container"
                 })
             }
+
+            Object.keys(typingCounter).map((chat) => { // Render Typing Data
+                let typers = []
+        
+                Object.keys(typingCounter[chat]).map((person) => {
+                    if (typingCounter[chat][person] > 0) {
+                        typers.push(person)
+                    }
+                })
+        
+                if (!typingData[chat] || typingData[chat].length !== typers.length) {
+                    setTypingData({ ...typingData, [chat]: typers })
+                }
+            })
         }
     })
 

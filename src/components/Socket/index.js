@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import { ChatEngineContext } from '../Context'
 
@@ -8,7 +8,6 @@ import { readMessage } from '../../actions/messages'
 import { WebSocket } from 'nextjs-websocket'
 
 const Socket = props => {
-    const didMountRef = useRef(false)
     const {
       setConnecting,
       conn, setConn,
@@ -40,18 +39,11 @@ const Socket = props => {
         props.onEditChat && props.onEditChat(chat)
     }
 
-    function switchActiveChat(chatId, connOptional) {
-        const conn = connOptional ? connOptional : props
-
-        setActiveChat(chatId)
-    }
-
-    function onGetChats(chats, connOptional) {
-        const conn = connOptional ? connOptional : props
+    function onGetChats(chats) {
         chats = sortChats(chats)
     
         if (chats.length > 0 && activeChat === null) {
-            switchActiveChat(chats[0].id, conn) 
+            setActiveChat(chats[0].id)
         }
         
         setChats(_.mapKeys(chats, 'id'))
@@ -61,7 +53,7 @@ const Socket = props => {
         setConn(conn)
         setConnecting(false)
     
-        getChats(conn, (chats) => onGetChats(chats, conn))
+        getChats(conn, (chats) => onGetChats(chats))
     
         props.onConnect && props.onConnect(conn)
     }
@@ -92,7 +84,7 @@ const Socket = props => {
                 const newChats = {...chats}
                 newChats[chat.id] = chat
                 setChats(newChats)
-                switchActiveChat(chat.id)
+                setActiveChat(chat.id)
             }
 
             props.onNewChat && props.onNewChat(eventJSON.data)
@@ -110,7 +102,7 @@ const Socket = props => {
           
                 if (!_.isEmpty(chats)) {
                     const sortedChats = sortChats(chats)
-                    switchActiveChat(sortedChats[0] ? parseInt(sortedChats[0].id) : 0)
+                    setActiveChat(sortedChats[0] ? parseInt(sortedChats[0].id) : 0)
                 }
             }
 
@@ -196,29 +188,6 @@ const Socket = props => {
     }
 
     function onClose() { setConnecting(true) }
-
-    // Component Lifecycle
-
-    useEffect(() => {
-        if (!didMountRef.current) {
-          didMountRef.current = true
-    
-        } else {
-            Object.keys(typingCounter).map((chat) => {
-                let typers = []
-        
-                Object.keys(typingCounter[chat]).map((person) => {
-                    if (typingCounter[chat][person] > 0) {
-                        typers.push(person)
-                    }
-                })
-        
-                if (!typingData[chat] || typingData[chat].length !== typers.length) {
-                    setTypingData({ ...typingData, [chat]: typers })
-                }
-            })
-        }
-    })
 
     // Render
     
