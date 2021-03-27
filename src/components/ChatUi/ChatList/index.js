@@ -41,7 +41,7 @@ const ChatList = props => {
                     props.renderNewChatForm ?
                     props.renderNewChatForm(props) :
                     <div style={styles.newChatContainer} className='ce-chat-form-container'>
-                        <ChatForm {...props}  className='ce-chat-form' />
+                        <ChatForm className='ce-chat-form' />
                     </div>
                 }
             </div>

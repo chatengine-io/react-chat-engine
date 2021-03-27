@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+
+import { ChatEngineContext } from '../../context'
 
 import { newChat } from 'react-chat-engine'
 
 import { Button, TextInput } from 'react-chat-engine'
 
-const NewChatForm = props => {
+const NewChatForm = () => {
+  const { conn } = useContext(ChatEngineContext)
   const [value, setValue] = useState('')
   
   function handleChange(event) {
@@ -16,7 +19,7 @@ const NewChatForm = props => {
 
     if (value.trim().length > 0) {
       newChat(
-        props, 
+        conn, 
         { title: value },
         () => {}
       )
