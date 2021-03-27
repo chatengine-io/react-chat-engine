@@ -126,13 +126,6 @@ const App = props => {
     props.onGetMessages && props.onGetMessages(chatId, messages)
   }
 
-  function sendingMessage(message) {
-    setSendingMessages({
-      ...sendingMessages,
-      [message.custom_json.sender_id]: message
-    })
-  }
-
   function onNewMessage(chatId, message) {
     if (typeof message.custom_json === "string" && message.custom_json.indexOf('sender_id') !== -1) {
       sendingMessages[JSON.parse(message.custom_json).sender_id] = undefined

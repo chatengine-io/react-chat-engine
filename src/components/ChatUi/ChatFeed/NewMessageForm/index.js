@@ -10,7 +10,7 @@ import ImagesInput from './ImagesInput'
 import { Button, TextAreaInput } from 'react-chat-engine'
 
 const NewMessageForm = () => {
-  const { conn, activeChat } = useContext(ChatEngineContext)
+  const { conn, activeChat, sendingMessages, setSendingMessages } = useContext(ChatEngineContext)
 
   const [state, setState] = useState({
     trigger: 0,
@@ -57,7 +57,9 @@ const NewMessageForm = () => {
 
     setState({ ...state, value: '', attachments: [] })
 
-    // props.sendingMessage && props.sendingMessage(data)
+    let newSendingMessages = {...sendingMessages}
+    newSendingMessages[data.custom_json.sender_id] = data
+    setSendingMessages(newSendingMessages)
   }
 
   return (
