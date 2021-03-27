@@ -1,15 +1,13 @@
 import axios from 'axios'
+
 import * as str from '..'
+import { getHeaders } from '../auth'
 
 export function editMyData(props, data, callback) {
     axios.patch(
         `${str.getApiUrl(props)}/chats/me/`,
         data,
-        { headers: { 
-            "Public-Key": props.publicKey ? props.publicKey : props.projectID,
-            "User-Name": props.userName,
-            "User-Secret": props.userPassword ? props.userPassword : props.userSecret,
-        }}
+        { headers: getHeaders(props) }
     )
 
     .then((response) => {

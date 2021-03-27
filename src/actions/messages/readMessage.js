@@ -1,15 +1,12 @@
 import axios from 'axios'
 import * as str from '../../actions'
+import { getHeaders } from '../auth'
 
 export function readMessage(props, chatId, messageId, callback) {
     axios.patch(
         `${str.getApiUrl(props)}/chats/${chatId}/people/`,
         { last_read: messageId },
-        { headers: { 
-            "Public-Key": props.publicKey ? props.publicKey : props.projectID,
-            "User-Name": props.userName,
-            "User-Secret": props.userPassword ? props.userPassword : props.userSecret,
-        }}
+        { headers: getHeaders(props) }
     )
 
     .then((response) => {

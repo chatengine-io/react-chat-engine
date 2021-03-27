@@ -1,14 +1,11 @@
 import axios from 'axios'
 import * as str from '../../actions'
+import { getHeaders } from '../auth'
 
 export function getChats(props, callback) {
     axios.get(
         `${str.getApiUrl(props)}/chats/`,
-        { headers: { 
-            "Public-Key": props.publicKey ? props.publicKey : props.projectID,
-            "User-Name": props.userName,
-            "User-Secret": props.userPassword ? props.userPassword : props.userSecret,
-        }}
+        { headers: getHeaders(props) }
     )
 
     .then((response) => {
