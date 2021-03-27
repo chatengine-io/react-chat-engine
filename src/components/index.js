@@ -1,17 +1,17 @@
 import React from 'react'
 
 import Socket from './Socket'
-import ChatUi from './ChatUi'
+import ChatEngine from './ChatEngine'
 
-import { ChatEngineProvider } from './ChatUi/context'
+import { ChatEngineProvider } from './ChatEngine/context'
 
-const ChatEngine = (props) => {
+const ChatEngineApp = (props) => {
     if (props.hideUI) {
         return <Socket {...props} />
     } else {
-        return <ChatEngineProvider><ChatUi {...props} /></ChatEngineProvider>
+        return <ChatEngineProvider><ChatEngine {...props} /></ChatEngineProvider>
     }
     
 }
 
-export default ChatEngine
+export default ChatEngineApp

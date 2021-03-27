@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Socket, ChatFeed } from 'react-chat-engine'
+// import { Socket, ChatFeed } from 'react-chat-engine'
 
 // const prod = window.location.host.indexOf('chatengine.io') !== -1
 

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react'
 
-import { ChatEngineContext } from '../ChatUi/context'
+import { ChatEngineContext } from '../ChatEngine/context'
 
 import { getChats } from '../../actions/chats'
 import { getMessages, readMessage } from '../../actions/messages'
