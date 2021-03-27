@@ -26,7 +26,6 @@ const ChatFeed = props => {
             }, 3000); // Once the chat loads, start animating
 
         } else {
-            // Only scroll if messages loaded
             // TODO: Make more sophisticated
             if(!_.isEmpty(messages)) {
                 animateScroll.scrollToBottom({

@@ -238,7 +238,6 @@ const App = props => {
     }
   }, [typingCounter])
   
-  
   const { height } = props
 
   return (
