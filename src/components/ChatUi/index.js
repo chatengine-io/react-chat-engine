@@ -79,8 +79,9 @@ const App = props => {
 
   function onNewChat(chat) {
     if (chats) {
-      chats[chat.id] = chat
-      setChats(chats)
+      const newChats = {...chats}
+      newChats[chat.id] = chat
+      setChats(newChats)
       switchActiveChat(chat.id)
     }
 
@@ -89,8 +90,9 @@ const App = props => {
 
   function onEditChat(chat) {
     if (chats) {
-      chats[chat.id] = chat
-      setChats(chats)
+      const newChats = {...chats}
+      newChats[chat.id] = chat
+      setChats(newChats)
     }
 
     props.onEditChat && props.onEditChat(chat)
@@ -138,8 +140,9 @@ const App = props => {
     }
 
     if (chatId === activeChat) {
-      messages[message.id] = message
-      setMessages(messages)
+      const newMessages = {...messages}
+      newMessages[message.id] = message
+      setMessages(newMessages)
     }
 
     readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
@@ -166,34 +169,28 @@ const App = props => {
   }
 
   function onTyping(chatId, person) {
-    if (typingCounter[chatId] && typingCounter[chatId][person]) {
-      setTypingCounter({
-        ...typingCounter,
+    let newTypingCounter = {...typingCounter}
+
+    if (newTypingCounter[chatId] && newTypingCounter[chatId][person]) {
+      newTypingCounter = {
+        ...newTypingCounter,
         [chatId]: {
-          ...typingCounter[chatId],
-          [person]: typingCounter[chatId][person] + 1
+          ...newTypingCounter[chatId],
+          [person]: newTypingCounter[chatId][person] + 1
         }
-      })
+      }
 
     } else {
-      setTypingCounter({
-        ...typingCounter,
+      newTypingCounter = {
+        ...newTypingCounter,
         [chatId]: {
-          ...typingCounter[chatId],
+          ...newTypingCounter[chatId],
           [person]: 1
         }
-      })
+      }
     }
-
-    setTimeout(() => {
-      setTypingCounter({
-        ...typingCounter,
-        [chatId]: {
-          ...typingCounter[chatId],
-          [person]: typingCounter[chatId][person] - 1
-        }
-      })
-    }, 2500)
+    
+    setTypingCounter(newTypingCounter)
 
     props.onTyping && props.onTyping(chatId, person)
   }
@@ -225,8 +222,30 @@ const App = props => {
       getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages, conn))
     }
   }, [activeChat])
-  useEffect(() => console.log('chats!!!!', chats), [chats])
 
+  // TODO: Is typing is super shitty
+  useEffect(() => {
+    if (typingCounter) {
+      const newTypingCounter = {...typingCounter}
+      Object.keys(newTypingCounter).map(chatId => {
+        Object.keys(newTypingCounter[chatId]).map(person => {
+          if (newTypingCounter[chatId][person] > 0) {
+            setTimeout(() => {
+              setTypingCounter({
+                ...newTypingCounter,
+                [chatId]: {
+                  ...newTypingCounter[chatId],
+                  [person]: newTypingCounter[chatId][person] - 1
+                }
+              })
+            }, 2500)
+          }
+        })
+      })
+    }
+  }, [typingCounter])
+  
+  
   const { height } = props
 
   return (
@@ -241,7 +260,7 @@ const App = props => {
         onDeleteChat={(chat) => onDeleteChat(chat)}
         onAddPerson={(chat) => onEditChat(chat)}
         onRemovePerson={(chat) => onEditChat(chat)}
-        // onTyping={(chatId, person) => onTyping(chatId, person)}
+        onTyping={(chatId, person) => onTyping(chatId, person)}
         onNewMessage={(chatId, message) => onNewMessage(chatId, message)}
         onEditMessage={(chatId, message) => onEditMessage(chatId, message)}
         onDeleteMessage={(chatId, message) => onDeleteMessage(chatId, message)}

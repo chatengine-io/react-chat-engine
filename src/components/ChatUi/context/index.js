@@ -3,11 +3,6 @@ import React, { useState, createContext } from 'react'
 export const ChatEngineContext = createContext()
 
 export const ChatEngineProvider = props => {
-    // const [context, setContext] = useState({
-        // onChatClick: (chatId) => this.setActiveChat(chatId), // begging for correct context implementation
-        // sendingMessage: (chatId) => this.sendingMessage(chatId),
-    // })
-
     const [connecting, setConnecting] = useState(true)
     const [conn, setConn] = useState(null)
     const [chats, setChats] = useState(null)
