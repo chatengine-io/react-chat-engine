@@ -16,7 +16,6 @@ const Socket = props => {
       sendingMessages, setSendingMessages,
       activeChat, setActiveChat,
       typingCounter, setTypingCounter,
-      typingData, setTypingData,
     } = useContext(ChatEngineContext)
 
     function sortChats(chats) {
@@ -53,7 +52,7 @@ const Socket = props => {
         setConn(conn)
         setConnecting(false)
     
-        getChats(conn, (chats) => onGetChats(chats))
+        getChats(conn, (chats) => onGetChats(chats)) // Semi-redundant request
     
         props.onConnect && props.onConnect(conn)
     }
