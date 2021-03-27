@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext } from '../../Context'
 
+import { getMessages, readMessage } from '../../../actions/messages'
+
 import ChatHeader from './ChatHeader'
 import { AuthFail, Loading, Welcome } from './Steps'
 
@@ -16,7 +18,63 @@ import { animateScroll } from "react-scroll"
 const ChatFeed = props => {
     const didMountRef = useRef(false)
     const [duration, setDuration] = useState(0)
-    const { connecting, conn, chats, messages, typingData, activeChat, sendingMessages } = useContext(ChatEngineContext)
+    const [currentChat, setCurrentChat] = useState(null)
+    const { 
+        connecting, conn,
+        chats, setChats,
+        messages, setMessages,
+        typingCounter, setTypingCounter,
+        typingData, activeChat, sendingMessages
+    } = useContext(ChatEngineContext)
+
+    function onReadMessage(chat) {
+        if (chats) {
+            const newChats = {...chats}
+            newChats[chat.id] = chat
+            setChats(newChats)
+        }
+    }
+
+    function onGetMessages(chatId, messages, connOptional) {
+        const conn = connOptional ? connOptional : props
+
+        setMessages(_.mapKeys(messages, 'id'))
+
+        if (messages.length > 0) {
+            const messageId = messages[messages.length - 1].id
+            readMessage(conn, chatId, messageId, (chat) => onReadMessage(chat))
+        }
+        
+        props.onGetMessages && props.onGetMessages(chatId, messages)
+    }
+
+    useEffect(() => {
+        if (activeChat !== currentChat && activeChat !== null) {
+            setCurrentChat(activeChat)
+            getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages, conn))
+        }
+    }, [activeChat])
+
+    useEffect(() => { // TODO: Is typing is super shitty
+        if (typingCounter) {
+            const newTypingCounter = {...typingCounter}
+            Object.keys(newTypingCounter).map(chatId => {
+                Object.keys(newTypingCounter[chatId]).map(person => {
+                    if (newTypingCounter[chatId][person] > 0) {
+                        setTimeout(() => {
+                            setTypingCounter({
+                                ...newTypingCounter,
+                                [chatId]: {
+                                ...newTypingCounter[chatId],
+                                [person]: newTypingCounter[chatId][person] - 1
+                                }
+                            })
+                        }, 2500)
+                    }
+                })
+            })
+        }
+    }, [typingCounter])
 
     useEffect(() => {
         if (!didMountRef.current) {

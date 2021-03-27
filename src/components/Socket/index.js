@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { ChatEngineContext } from '../Context'
 
 import { getChats } from '../../actions/chats'
-import { getMessages, readMessage } from '../../actions/messages'
+import { readMessage } from '../../actions/messages'
 
 import { WebSocket } from 'nextjs-websocket'
 
@@ -40,27 +40,10 @@ const Socket = props => {
         props.onEditChat && props.onEditChat(chat)
     }
 
-    function onGetMessages(chatId, messages, connOptional) {
-        const conn = connOptional ? connOptional : props
-
-        setMessages(_.mapKeys(messages, 'id'))
-
-        if (messages.length > 0) {
-            const messageId = messages[messages.length - 1].id
-            readMessage(conn, chatId, messageId, (chat) => onEditChat(chat))
-        }
-        
-        props.onGetMessages && props.onGetMessages(chatId, messages)
-    }
-
     function switchActiveChat(chatId, connOptional) {
         const conn = connOptional ? connOptional : props
 
         setActiveChat(chatId)
-
-        if (chatId) {
-            getMessages(conn, chatId, (chatId, messages) => onGetMessages(chatId, messages, conn))
-        }
     }
 
     function onGetChats(chats, connOptional) {
@@ -157,7 +140,9 @@ const Socket = props => {
                 setMessages(newMessages)
             }
           
-            readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
+            if (message.sender.username !== props.userName) {
+                readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
+            }
 
             props.onNewMessage && props.onNewMessage(id, message)
 
@@ -234,33 +219,6 @@ const Socket = props => {
             })
         }
     })
-
-    useEffect(() => {
-        if (activeChat) {
-            getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages, conn))
-        }
-    }, [activeChat])
-
-    useEffect(() => { // TODO: Is typing is super shitty
-      if (typingCounter) {
-        const newTypingCounter = {...typingCounter}
-        Object.keys(newTypingCounter).map(chatId => {
-          Object.keys(newTypingCounter[chatId]).map(person => {
-            if (newTypingCounter[chatId][person] > 0) {
-              setTimeout(() => {
-                setTypingCounter({
-                  ...newTypingCounter,
-                  [chatId]: {
-                    ...newTypingCounter[chatId],
-                    [person]: newTypingCounter[chatId][person] - 1
-                  }
-                })
-              }, 2500)
-            }
-          })
-        })
-      }
-    }, [typingCounter])
 
     // Render
     
