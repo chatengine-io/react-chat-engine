@@ -22,9 +22,11 @@ const ChatFeed = props => {
     const { 
         connecting, conn,
         chats, setChats,
+        sendingMessages,
         messages, setMessages,
+        activeChat, setActiveChat,
+        typingData, setTypingData, 
         typingCounter, setTypingCounter,
-        typingData, activeChat, sendingMessages
     } = useContext(ChatEngineContext)
 
     function onReadMessage(chat) {
@@ -35,9 +37,7 @@ const ChatFeed = props => {
         }
     }
 
-    function onGetMessages(chatId, messages, connOptional) {
-        const conn = connOptional ? connOptional : props
-
+    function onGetMessages(chatId, messages) {
         setMessages(_.mapKeys(messages, 'id'))
 
         if (messages.length > 0) {
@@ -49,9 +49,13 @@ const ChatFeed = props => {
     }
 
     useEffect(() => {
-        if (activeChat !== currentChat && activeChat !== null) {
+        if (conn && !props.chatId && activeChat !== null && activeChat !== currentChat) {
             setCurrentChat(activeChat)
-            getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages, conn))
+            getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages))
+
+        } else if (conn && props.chatId && props.chatId !== activeChat) {
+            setActiveChat(props.chatId)
+            getMessages(conn, props.chatId, (chatId, messages) => onGetMessages(chatId, messages))
         }
     }, [activeChat])
 
@@ -178,15 +182,11 @@ const ChatFeed = props => {
         })
     }
 
-    const chat = chats && chats[activeChat] 
+    const chat = chats && chats[currentChat] 
 
-    if(conn === undefined) {
-        return <AuthFail />
-    }
+    if(conn === undefined) { return <AuthFail /> }
 
-    if(conn && chats !== null && _.isEmpty(chats)) {
-        return <Welcome />
-    }
+    if(conn && chats !== null && _.isEmpty(chats)) { return <Welcome /> }
 
     return (
         <div 
@@ -219,7 +219,7 @@ const ChatFeed = props => {
 
             {
                 props.renderNewMessageForm ?
-                props.renderNewMessageForm(props, activeChat) :
+                props.renderNewMessageForm(props, currentChat) :
                 <NewMessageForm />
             }
         </div>
