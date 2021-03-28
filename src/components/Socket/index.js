@@ -178,15 +178,14 @@ const Socket = props => {
     // Render
     
     const { 
+        development,
         publicKey, projectID, 
         userName, 
         userPassword, userSecret, 
-        development 
     } = props 
     
     const wsStart = development ? 'ws://' : 'wss://'
     const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
-    
     const project = publicKey ? publicKey : projectID
     const secret = userPassword ? userPassword : userSecret
 
