@@ -2,7 +2,7 @@ import React, { useState, createContext } from 'react'
 
 export const ChatEngineContext = createContext()
 
-export const ChatEngineProvider = props => {
+export const ChatEngineWrapper = props => {
     const [connecting, setConnecting] = useState(true)
     const [conn, setConn] = useState(null)
     const [chats, setChats] = useState(null)

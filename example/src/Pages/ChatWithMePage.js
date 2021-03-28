@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { ChatEngineProvider, ChatSocket, ChatFeed } from 'react-chat-engine'
+import { ChatEngineWrapper, ChatSocket, ChatFeed } from 'react-chat-engine'
 
 const prod = false // window.location.host.indexOf('chatengine.io') !== -1
 
@@ -18,7 +18,7 @@ export default class HomePage extends Component {
     render() { 
         return (
             <div>
-                <ChatEngineProvider>
+                <ChatEngineWrapper>
                     <ChatSocket 
                         development={!prod}
                         projectID={projectID}
@@ -37,7 +37,7 @@ export default class HomePage extends Component {
                             senderUsername={senderUsername}
                         />
                     </div>
-                </ChatEngineProvider>
+                </ChatEngineWrapper>
             </div>
         )
     }
