@@ -53,8 +53,9 @@ const ChatFeed = props => {
             setCurrentChat(activeChat)
             getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages))
 
-        } else if (conn && props.activeChat && props.activeChat !== activeChat) {
+        } else if (conn && props.activeChat && props.activeChat !== currentChat) {
             setActiveChat(props.activeChat)
+            setCurrentChat(props.activeChat)
             getMessages(conn, props.activeChat, (chatId, messages) => onGetMessages(chatId, messages))
         }
     }, [activeChat])
@@ -69,8 +70,8 @@ const ChatFeed = props => {
                             setTypingCounter({
                                 ...newTypingCounter,
                                 [chatId]: {
-                                ...newTypingCounter[chatId],
-                                [person]: newTypingCounter[chatId][person] - 1
+                                    ...newTypingCounter[chatId],
+                                    [person]: newTypingCounter[chatId][person] - 1
                                 }
                             })
                         }, 2500)

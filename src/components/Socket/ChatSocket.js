@@ -3,7 +3,6 @@ import React, { useContext } from 'react'
 import { ChatEngineContext } from '../Context'
 
 import { getChat } from '../../actions/chats'
-import { readMessage } from '../../actions/messages'
 
 import { WebSocket } from 'nextjs-websocket'
 
@@ -31,7 +30,7 @@ const ChatSocket = props => {
     }
 
     function onGetChat(chat) {
-        setActiveChat(chats.id)
+        setActiveChat(chat.id)
 
         setChats(_.mapKeys([chat], 'id'))
     }
@@ -40,7 +39,7 @@ const ChatSocket = props => {
         setConn(conn)
         setConnecting(false)
     
-        getChat(conn, (chat) => onGetChat(chat)) // TODO: Semi-redundant request
+        getChat(conn, props.chatID, (chat) => onGetChat(chat)) // TODO: Semi-redundant request
     
         props.onConnect && props.onConnect(conn)
     }
@@ -101,10 +100,6 @@ const ChatSocket = props => {
                 newMessages[message.id] = message
                 setMessages(newMessages)
             }
-          
-            if (message.sender.username !== props.userName) {
-                readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
-            }
 
             props.onNewMessage && props.onNewMessage(id, message)
 
@@ -136,8 +131,8 @@ const ChatSocket = props => {
                 newTypingCounter = {
                     ...newTypingCounter,
                     [id]: {
-                    ...newTypingCounter[id],
-                    [person]: newTypingCounter[id][person] + 1
+                        ...newTypingCounter[id],
+                        [person]: newTypingCounter[id][person] + 1
                     }
                 }
 
@@ -145,8 +140,8 @@ const ChatSocket = props => {
                 newTypingCounter = {
                     ...newTypingCounter,
                     [id]: {
-                    ...newTypingCounter[id],
-                    [person]: 1
+                        ...newTypingCounter[id],
+                        [person]: 1
                     }
                 }
             }
