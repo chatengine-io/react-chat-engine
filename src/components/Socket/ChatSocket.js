@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 
 import { ChatEngineContext } from '../Context'
 
-import { getChats } from '../../actions/chats'
+import { getChat } from '../../actions/chats'
 import { readMessage } from '../../actions/messages'
 
 import { WebSocket } from 'nextjs-websocket'
 
-const Socket = props => {
+const ChatSocket = props => {
     const {
       setConnecting,
       conn, setConn,
@@ -17,14 +17,6 @@ const Socket = props => {
       activeChat, setActiveChat,
       typingCounter, setTypingCounter,
     } = useContext(ChatEngineContext)
-
-    function sortChats(chats) {
-        return Object.values(chats).sort((a, b) => { 
-            const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
-            const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
-            return new Date(bDate) - new Date(aDate); 
-        })
-    }
 
     // Common Context Handlers
 
@@ -38,21 +30,17 @@ const Socket = props => {
         props.onEditChat && props.onEditChat(chat)
     }
 
-    function onGetChats(chats) {
-        chats = sortChats(chats)
-    
-        if (chats.length > 0 && activeChat === null) {
-            setActiveChat(chats[0].id)
-        }
-        
-        setChats(_.mapKeys(chats, 'id'))
+    function onGetChat(chat) {
+        setActiveChat(chats.id)
+
+        setChats(_.mapKeys([chat], 'id'))
     }
 
     function onConnect(conn) {
         setConn(conn)
         setConnecting(false)
     
-        getChats(conn, (chats) => onGetChats(chats)) // TODO: Semi-redundant request
+        getChat(conn, (chat) => onGetChat(chat)) // TODO: Semi-redundant request
     
         props.onConnect && props.onConnect(conn)
     }
@@ -64,10 +52,10 @@ const Socket = props => {
 
         if (eventJSON.action === 'login_error') {
             console.log(
-                `Your login credentials were not correct: \n
+                `Your chat auth credentials were not correct: \n
                 Project ID: ${props.projectID} \n
-                Username: ${props.userName} \n
-                User Secret: ${props.userSecret}\n
+                Chat ID: ${props.chatID} \n
+                Access Key: ${props.accessKey}\n
                 Double check these credentials to make sure they're correct.\n
                 If all three are correct, try resetting the username and secret in the Online Dashboard or Private API.`
             )
@@ -75,18 +63,6 @@ const Socket = props => {
             setConn(undefined)
 
             props.onFailAuth && props.onFailAuth(conn)
-
-        } else if (eventJSON.action === 'new_chat') {
-            const chat = eventJSON.data
-            
-            if (chats) {
-                const newChats = {...chats}
-                newChats[chat.id] = chat
-                setChats(newChats)
-                setActiveChat(chat.id)
-            }
-
-            props.onNewChat && props.onNewChat(eventJSON.data)
 
         } else if (eventJSON.action === 'edit_chat') {
             onEditChat(eventJSON.data)
@@ -98,11 +74,6 @@ const Socket = props => {
                 chats[chat.id] = undefined
                 
                 setChats(chats)
-          
-                if (!_.isEmpty(chats)) {
-                    const sortedChats = sortChats(chats)
-                    setActiveChat(sortedChats[0] ? parseInt(sortedChats[0].id) : 0)
-                }
             }
 
             props.onDeleteChat && props.onDeleteChat(chat)
@@ -192,8 +163,7 @@ const Socket = props => {
     
     const { 
         publicKey, projectID, 
-        userName, 
-        userPassword, userSecret, 
+        chatID, accessKey, 
         development 
     } = props 
     
@@ -201,10 +171,9 @@ const Socket = props => {
     const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
     
     const project = publicKey ? publicKey : projectID
-    const secret = userPassword ? userPassword : userSecret
 
     return <WebSocket 
-        url={`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`}
+        url={`${wsStart}${rootHost}/chat/?projectID=${project}&chatID=${chatID}&accessKey=${accessKey}`}
         onOpen={() => onConnect(props)}
         onClose={onClose.bind(this)}
         onMessage={handleEvent.bind(this)}
@@ -212,4 +181,4 @@ const Socket = props => {
     />
 }
 
-export default Socket
+export default ChatSocket

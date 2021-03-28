@@ -1,6 +1,7 @@
 import ChatEngine from './components'
 
 import Socket from './components/Socket'
+import ChatSocket from './components/Socket/ChatSocket'
 
 import { isTyping } from './actions/typing'
 import { getChats, newChat, editChat, deleteChat } from './actions/chats'
@@ -32,7 +33,9 @@ import OptionsSettings from './components/ChatEngine/ChatSettings/OptionsSetting
 export {
   ChatEngineProvider,
 
-  ChatEngine, Socket,
+  ChatEngine, 
+  
+  Socket, ChatSocket,
 
   Avatar, Dot,
   Button,

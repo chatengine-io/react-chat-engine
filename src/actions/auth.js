@@ -1,8 +1,8 @@
 export function getHeaders(props) { 
-    if (props.chatId) {
+    if (props.chatID) {
         return { 
             "public-key": props.publicKey ? props.publicKey : props.projectID,
-            "chat-id": props.chatId,
+            "chat-id": props.chatID,
             "access-key": props.accessKey,
         }
     }
