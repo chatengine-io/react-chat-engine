@@ -41,8 +41,11 @@ const ChatFeed = props => {
         setMessages(_.mapKeys(messages, 'id'))
 
         if (messages.length > 0) {
-            const messageId = messages[messages.length - 1].id
-            readMessage(conn, chatId, messageId, (chat) => onReadMessage(chat))
+            const message = messages[messages.length - 1]
+
+            if (props.userName && props.userName !== message.sender_username) {
+                readMessage(conn, chatId, message.id, (chat) => onReadMessage(chat))
+            }
         }
         
         props.onGetMessages && props.onGetMessages(chatId, messages)
@@ -58,7 +61,7 @@ const ChatFeed = props => {
             setCurrentChat(props.activeChat)
             getMessages(conn, props.activeChat, (chatId, messages) => onGetMessages(chatId, messages))
         }
-    }, [activeChat])
+    }, [conn, activeChat])
 
     useEffect(() => { // TODO: Is typing is super shitty
         if (typingCounter) {

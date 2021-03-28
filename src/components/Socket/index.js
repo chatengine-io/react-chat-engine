@@ -118,7 +118,7 @@ const Socket = props => {
                 setMessages(newMessages)
             }
           
-            if (message.sender.username !== props.userName) {
+            if (message.sender_username !== props.userName) {
                 readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
             }
 

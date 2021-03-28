@@ -12,7 +12,7 @@ import { Avatar, Dot } from './components/ChatEngine/components/Avatar'
 import { Button } from './components/ChatEngine/components/Button'
 import { TextInput, TextAreaInput, AutoCompleteInput } from './components/ChatEngine/components/Input'
 
-import { ChatEngineWrapper } from './components/Context'
+import { ChatEngineWrapper, ChatEngineContext } from './components/Context'
 
 import ChatList from './components/ChatEngine/ChatList'
 import ChatCard from './components/ChatEngine/ChatList/ChatCard'
@@ -31,7 +31,7 @@ import PhotosSettings from './components/ChatEngine/ChatSettings/PhotosSettings'
 import OptionsSettings from './components/ChatEngine/ChatSettings/OptionsSettings'
 
 export {
-  ChatEngineWrapper,
+  ChatEngineWrapper, ChatEngineContext,
 
   ChatEngine, 
   

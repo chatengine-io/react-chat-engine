@@ -14,6 +14,6 @@ export function readMessage(props, chatId, messageId, callback) {
     })
     
     .catch((error) => {
-        console.log('Send Messages Error', error)
+        console.log('Read Message Error', error)
     });
 }
