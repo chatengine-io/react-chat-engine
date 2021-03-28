@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 
 import { ChatEngineContext } from '../Context'
 
-import { getChats } from '../../actions/chats'
 import { readMessage } from '../../actions/messages'
 
 import { WebSocket } from 'nextjs-websocket'
@@ -38,22 +37,10 @@ const Socket = props => {
         props.onEditChat && props.onEditChat(chat)
     }
 
-    function onGetChats(chats) {
-        chats = sortChats(chats)
-    
-        if (chats.length > 0 && activeChat === null) {
-            setActiveChat(chats[0].id)
-        }
-        
-        setChats(_.mapKeys(chats, 'id'))
-    }
-
     function onConnect(conn) {
         setConn(conn)
         setConnecting(false)
-    
-        getChats(conn, (chats) => onGetChats(chats)) // TODO: Semi-redundant request
-    
+        
         props.onConnect && props.onConnect(conn)
     }
     
