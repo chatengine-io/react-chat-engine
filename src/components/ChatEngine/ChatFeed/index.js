@@ -192,7 +192,7 @@ const ChatFeed = props => {
     return (
         <div 
             className='ce-chat-feed'
-            style={{ maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
+            style={{ height: '100%', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
         >
             { connecting && <Loading /> }
 
@@ -231,11 +231,11 @@ export default ChatFeed
 
 const styles = {
     feedContainer: { 
-        width: '100%', 
+        width: '100%',
+        height: '100%',
         maxHeight: '100vh',
         overflowX: 'hidden',
         overflowY: 'scroll',
         backgroundColor: 'white',
-        borderRight: '1px solid rgb(175, 175, 175)'
     }
 }

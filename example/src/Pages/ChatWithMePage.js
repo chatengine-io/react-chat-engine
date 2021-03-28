@@ -23,7 +23,7 @@ export default class HomePage extends Component {
     render() { 
         return (
             <Row>
-                <Col xs={12} sm={6} md={4}>
+                <Col xs={12} sm={6} md={4} style={{ height: '600px' }}>
                     <ChatEngineWrapper>
                         <ChatSocket 
                             development={!prod}

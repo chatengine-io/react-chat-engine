@@ -65,7 +65,7 @@ class HomePage extends Component {
                     onClick={() => this.props.logout()}
                     style={{ position: 'absolute', bottom: '24px', right: '24px' }}
                 >
-                    Logout
+                    Logout!
                 </button>
             </div>
         )
