@@ -35,20 +35,20 @@ const Message = props => {
                 /> :
                 <div>
                     {
-                        !sending && message.sender_username === conn.userName ?
+                        message.sender_username === conn.userName || message.sender_username === conn.senderUsername ?
                         <MyMessage 
-                            chat={chat} 
-                            conn={conn} 
-                            lastMessage={lastMessage} 
-                            message={message} 
-                            nextMessage={nextMessage} 
+                            chat={chat}
+                            conn={conn}
+                            lastMessage={lastMessage}
+                            message={message}
+                            nextMessage={nextMessage}
                         /> :
                         <TheirMessage 
-                            chat={chat} 
-                            conn={conn} 
-                            lastMessage={lastMessage} 
-                            message={message} 
-                            nextMessage={nextMessage} 
+                            chat={chat}
+                            conn={conn}
+                            lastMessage={lastMessage}
+                            message={message}
+                            nextMessage={nextMessage}
                         />
                     }
                 </div>

@@ -3,7 +3,7 @@ export function getHeaders(props) {
         return { 
             "public-key": props.publicKey ? props.publicKey : props.projectID,
             "chat-id": props.chatID,
-            "access-key": props.accessKey,
+            "access-key": props.chatAccessKey,
         }
     }
 

@@ -6,7 +6,8 @@ const prod = false // window.location.host.indexOf('chatengine.io') !== -1
 
 const projectID = prod ? '...' : '1ed59673-1fd6-46ed-9eb9-56239a6a4f82'
 const chatID = prod ? 0 : 251
-const accessKey = prod ? '123' : 'ca-0d21f8cb-b884-4a8b-9e2e-a2acbdbc3792'
+const chatAccessKey = prod ? '123' : 'ca-0d21f8cb-b884-4a8b-9e2e-a2acbdbc3792'
+const senderUsername = 'Adam La Morre'
 
 export default class HomePage extends Component {
     state = {
@@ -16,22 +17,24 @@ export default class HomePage extends Component {
     
     render() { 
         return (
-            <div style={{ position: 'absolute', top: '0px', width: '100%' }}>
+            <div>
                 <ChatEngineProvider>
                     <ChatSocket 
                         development={!prod}
                         projectID={projectID}
                         chatID={chatID}
-                        accessKey={accessKey}
+                        chatAccessKey={chatAccessKey}
+                        senderUsername={senderUsername}
                     />
 
-                    <div style={{ width: '33vw', height: '550px' }}>
+                    <div style={{ width: '33%', height: '550px' }}>
                         <ChatFeed 
                             development={!prod}
                             projectID={projectID}
                             chatID={chatID}
-                            accessKey={accessKey}
+                            chatAccessKey={chatAccessKey}
                             activeChat={chatID}
+                            senderUsername={senderUsername}
                         />
                     </div>
                 </ChatEngineProvider>

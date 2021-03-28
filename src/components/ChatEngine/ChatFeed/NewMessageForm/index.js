@@ -42,8 +42,8 @@ const NewMessageForm = () => {
 
     const { attachments } = state
     const text = state.value.trim()
-    const sender_username = conn.userName
     const custom_json = { sender_id: Date.now().toString() }
+    const sender_username = conn.userName ? conn.userName : conn.senderUsername
     const data = { text, attachments, custom_json, sender_username, chat: activeChat }
 
     if (text.length > 0 || attachments.length > 0) {

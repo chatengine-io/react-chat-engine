@@ -54,7 +54,7 @@ const ChatSocket = props => {
                 `Your chat auth credentials were not correct: \n
                 Project ID: ${props.projectID} \n
                 Chat ID: ${props.chatID} \n
-                Access Key: ${props.accessKey}\n
+                Access Key: ${props.chatAccessKey}\n
                 Double check these credentials to make sure they're correct.\n
                 If all three are correct, try resetting the username and secret in the Online Dashboard or Private API.`
             )
@@ -158,7 +158,7 @@ const ChatSocket = props => {
     
     const { 
         publicKey, projectID, 
-        chatID, accessKey, 
+        chatID, chatAccessKey, 
         development 
     } = props 
     
@@ -168,7 +168,7 @@ const ChatSocket = props => {
     const project = publicKey ? publicKey : projectID
 
     return <WebSocket 
-        url={`${wsStart}${rootHost}/chat/?projectID=${project}&chatID=${chatID}&accessKey=${accessKey}`}
+        url={`${wsStart}${rootHost}/chat/?projectID=${project}&chatID=${chatID}&accessKey=${chatAccessKey}`}
         onOpen={() => onConnect(props)}
         onClose={onClose.bind(this)}
         onMessage={handleEvent.bind(this)}
