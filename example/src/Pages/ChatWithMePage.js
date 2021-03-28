@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 
 import { ChatEngineWrapper, ChatSocket, ChatFeed } from 'react-chat-engine'
 
+import { Row, Col } from 'react-grid-system'
+import { setConfiguration } from 'react-grid-system';
+ 
+setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
+
 const prod = false // window.location.host.indexOf('chatengine.io') !== -1
 
 const projectID = prod ? '...' : '1ed59673-1fd6-46ed-9eb9-56239a6a4f82'
@@ -17,17 +22,17 @@ export default class HomePage extends Component {
     
     render() { 
         return (
-            <div>
-                <ChatEngineWrapper>
-                    <ChatSocket 
-                        development={!prod}
-                        projectID={projectID}
-                        chatID={chatID}
-                        chatAccessKey={chatAccessKey}
-                        senderUsername={senderUsername}
-                    />
+            <Row>
+                <Col xs={12} sm={6} md={4}>
+                    <ChatEngineWrapper>
+                        <ChatSocket 
+                            development={!prod}
+                            projectID={projectID}
+                            chatID={chatID}
+                            chatAccessKey={chatAccessKey}
+                            senderUsername={senderUsername}
+                        />
 
-                    <div style={{ width: '33%', height: '550px' }}>
                         <ChatFeed 
                             development={!prod}
                             projectID={projectID}
@@ -35,10 +40,10 @@ export default class HomePage extends Component {
                             chatAccessKey={chatAccessKey}
                             activeChat={chatID}
                             senderUsername={senderUsername}
-                        />
-                    </div>
-                </ChatEngineWrapper>
-            </div>
+                        />                        
+                    </ChatEngineWrapper>
+                </Col>
+            </Row>
         )
     }
 }
