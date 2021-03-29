@@ -1,14 +1,11 @@
 import axios from 'axios'
 import * as str from '../../actions'
+import { getHeaders } from '../auth'
 
 export function deleteMessage(props, chatId, messageId, callback) {
     axios.delete(
         `${str.getApiUrl(props)}/chats/${chatId}/messages/${messageId}/`,
-        { headers: { 
-            "Public-Key": props.publicKey ? props.publicKey : props.projectID,
-            "User-Name": props.userName,
-            "User-Secret": props.userPassword ? props.userPassword : props.userSecret,
-        }}
+        { headers: getHeaders(props) }
     )
 
     .then((response) => {

@@ -2,10 +2,9 @@ import axios from 'axios'
 import * as str from '../../actions'
 import { getHeaders } from '../auth'
 
-export function editChat(props, chatId, data, callback) {
-    axios.patch(
+export function getChat(props, chatId, callback) {
+    axios.get(
         `${str.getApiUrl(props)}/chats/${chatId}/`,
-        data, 
         { headers: getHeaders(props) }
     )
 
@@ -14,6 +13,6 @@ export function editChat(props, chatId, data, callback) {
     })
     
     .catch((error) => {
-        console.log('Edit Chat Error', error)
+        console.log('Get Chat Error', error)
     });
 }

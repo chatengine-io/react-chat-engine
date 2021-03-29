@@ -2,11 +2,11 @@ import React, { useContext } from 'react'
 
 import { ChatEngineContext } from '../Context'
 
-import { readMessage } from '../../actions/messages'
+import { getChat } from '../../actions/chats'
 
 import { WebSocket } from 'nextjs-websocket'
 
-const Socket = props => {
+const ChatSocket = props => {
     const {
       setConnecting,
       conn, setConn,
@@ -16,14 +16,6 @@ const Socket = props => {
       activeChat, setActiveChat,
       typingCounter, setTypingCounter,
     } = useContext(ChatEngineContext)
-
-    function sortChats(chats) {
-        return Object.values(chats).sort((a, b) => { 
-            const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
-            const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
-            return new Date(bDate) - new Date(aDate); 
-        })
-    }
 
     // Common Context Handlers
 
@@ -37,10 +29,20 @@ const Socket = props => {
         props.onEditChat && props.onEditChat(chat)
     }
 
+    function onGetChat(chat) {
+        if (activeChat === null) {
+            setActiveChat(chat.id)
+        }
+
+        setChats(_.mapKeys([chat], 'id'))
+    }
+
     function onConnect(conn) {
         setConn(conn)
         setConnecting(false)
-        
+    
+        getChat(conn, props.chatID, (chat) => onGetChat(chat)) // Not redundant
+    
         props.onConnect && props.onConnect(conn)
     }
     
@@ -51,10 +53,10 @@ const Socket = props => {
 
         if (eventJSON.action === 'login_error') {
             console.log(
-                `Your login credentials were not correct: \n
+                `Your chat auth credentials were not correct: \n
                 Project ID: ${props.projectID} \n
-                Username: ${props.userName} \n
-                User Secret: ${props.userSecret}\n
+                Chat ID: ${props.chatID} \n
+                Access Key: ${props.chatAccessKey}\n
                 Double check these credentials to make sure they're correct.\n
                 If all three are correct, try resetting the username and secret in the Online Dashboard or Private API.`
             )
@@ -62,18 +64,6 @@ const Socket = props => {
             setConn(undefined)
 
             props.onFailAuth && props.onFailAuth(conn)
-
-        } else if (eventJSON.action === 'new_chat') {
-            const chat = eventJSON.data
-            
-            if (chats) {
-                const newChats = {...chats}
-                newChats[chat.id] = chat
-                setChats(newChats)
-                setActiveChat(chat.id)
-            }
-
-            props.onNewChat && props.onNewChat(eventJSON.data)
 
         } else if (eventJSON.action === 'edit_chat') {
             onEditChat(eventJSON.data)
@@ -85,11 +75,6 @@ const Socket = props => {
                 chats[chat.id] = undefined
                 
                 setChats(chats)
-          
-                if (!_.isEmpty(chats)) {
-                    const sortedChats = sortChats(chats)
-                    setActiveChat(sortedChats[0] ? parseInt(sortedChats[0].id) : 0)
-                }
             }
 
             props.onDeleteChat && props.onDeleteChat(chat)
@@ -116,10 +101,6 @@ const Socket = props => {
                 const newMessages = {...messages}
                 newMessages[message.id] = message
                 setMessages(newMessages)
-            }
-          
-            if (message.sender_username !== props.userName) {
-                readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
             }
 
             props.onNewMessage && props.onNewMessage(id, message)
@@ -152,8 +133,8 @@ const Socket = props => {
                 newTypingCounter = {
                     ...newTypingCounter,
                     [id]: {
-                    ...newTypingCounter[id],
-                    [person]: newTypingCounter[id][person] + 1
+                        ...newTypingCounter[id],
+                        [person]: newTypingCounter[id][person] + 1
                     }
                 }
 
@@ -161,8 +142,8 @@ const Socket = props => {
                 newTypingCounter = {
                     ...newTypingCounter,
                     [id]: {
-                    ...newTypingCounter[id],
-                    [person]: 1
+                        ...newTypingCounter[id],
+                        [person]: 1
                     }
                 }
             }
@@ -177,20 +158,18 @@ const Socket = props => {
 
     // Render
     
-    const { 
+    const {
         development,
         publicKey, projectID, 
-        userName, 
-        userPassword, userSecret, 
+        chatID, chatAccessKey, 
     } = props 
     
     const wsStart = development ? 'ws://' : 'wss://'
     const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
     const project = publicKey ? publicKey : projectID
-    const secret = userPassword ? userPassword : userSecret
 
     return <WebSocket 
-        url={`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`}
+        url={`${wsStart}${rootHost}/chat/?projectID=${project}&chatID=${chatID}&accessKey=${chatAccessKey}`}
         onOpen={() => onConnect(props)}
         onClose={onClose.bind(this)}
         onMessage={handleEvent.bind(this)}
@@ -198,4 +177,4 @@ const Socket = props => {
     />
 }
 
-export default Socket
+export default ChatSocket

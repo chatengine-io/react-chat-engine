@@ -1,8 +1,18 @@
 import React, { Component } from 'react'
 
-import { Socket, ChatFeed } from 'react-chat-engine'
+import { ChatEngineWrapper, ChatSocket, ChatFeed } from 'react-chat-engine'
 
-// const prod = window.location.host.indexOf('chatengine.io') !== -1
+import { Row, Col } from 'react-grid-system'
+import { setConfiguration } from 'react-grid-system';
+ 
+setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
+
+const prod = false // window.location.host.indexOf('chatengine.io') !== -1
+
+const projectID = prod ? '...' : '1ed59673-1fd6-46ed-9eb9-56239a6a4f82'
+const chatID = prod ? 0 : 251
+const chatAccessKey = prod ? '123' : 'ca-0d21f8cb-b884-4a8b-9e2e-a2acbdbc3792'
+const senderUsername = 'Adam La Morre'
 
 export default class HomePage extends Component {
     state = {
@@ -12,24 +22,28 @@ export default class HomePage extends Component {
     
     render() { 
         return (
-            <div style={{ position: 'absolute', top: '0px', width: '100%' }}>
-                <Socket 
-                    development
-                    projectID='1ed59673-1fd6-46ed-9eb9-56239a6a4f82'
-                    userName='Jane_Smith'
-                    userSecret='pass1234'
-                    onConnect={(c) => this.setState({ c, loading: false })}
-                />
+            <Row>
+                <Col xs={12} sm={6} md={4} style={{ height: '600px' }}>
+                    <ChatEngineWrapper>
+                        <ChatSocket 
+                            development={!prod}
+                            projectID={projectID}
+                            chatID={chatID}
+                            chatAccessKey={chatAccessKey}
+                            senderUsername={senderUsername}
+                        />
 
-                {
-                    this.state.c !== null &&
-                    <ChatFeed 
-                        conn={this.state.c}    // Should it be c
-                        activeChat={296}                // These two should be grouped into Chats
-                        // chats={[{id: 296}]}
-                    />
-                }
-            </div>
+                        <ChatFeed 
+                            development={!prod}
+                            projectID={projectID}
+                            chatID={chatID}
+                            chatAccessKey={chatAccessKey}
+                            activeChat={chatID}
+                            senderUsername={senderUsername}
+                        />                        
+                    </ChatEngineWrapper>
+                </Col>
+            </Row>
         )
     }
 }

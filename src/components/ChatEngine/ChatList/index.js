@@ -1,4 +1,8 @@
-import React from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
+
+import { ChatEngineContext } from '../../Context'
+
+import { getChats } from '../../../actions/chats'
 
 import _ from 'lodash'
 
@@ -6,30 +10,61 @@ import ChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
 const ChatList = props => {
+    const didMountRef = useRef(false)
+
+    const { chats, setChats, activeChat, setActiveChat } = useContext(ChatEngineContext)
+
     function renderChats(chats) {
         return chats.map((chat, index) => {
             if (!chat) return <div key={`chat_${index}`} />
 
             if (props.renderChatCard) {
                 return <div key={`chat_${index}`}>{props.renderChatCard(chat, index)}</div>
+                
             } else {
-                return <ChatCard key={`chat_${index}`} {...props} chat={chat} />
+                return (
+                    <div 
+                        key={`chat_${index}`}
+                        onClick={() => props.onChatClick && props.onChatClick()}
+                    >
+                        <ChatCard chat={chat} />
+                    </div>
+                )
             }
         })
     }
 
-    const chats = props.chats ? Object.values(props.chats) : []
+    function sortChats(chats) {
+        return chats.sort((a, b) => { 
+            const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
+            const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
+            return new Date(bDate) - new Date(aDate); 
+        })
+    }
 
-    chats.sort((a, b) => { 
-        const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
-        const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
-        return new Date(bDate) - new Date(aDate); 
+    function onGetChats(chats) {
+        const chatList = sortChats(chats)
+    
+        if (chatList.length > 0 && activeChat === null) {
+            setActiveChat(chatList[0].id)
+        }
+        
+        setChats(_.mapKeys(chats, 'id'))
+    }
+
+    useEffect(() => {
+        if (!didMountRef.current) {
+            didMountRef.current = true
+            getChats(props, (chats) => onGetChats(chats))
+        }
     })
+
+    const chatList = sortChats(chats ? Object.values(chats) : [])
 
     return (
         <div style={styles.chatListContainer} className='ce-chat-list'>
             <div style={styles.chatsContainer} className='ce-chats-container'>
-                { renderChats(chats) } 
+                { renderChats(chatList) } 
 
                 <div style={{ height: '64px' }} />
 
@@ -37,7 +72,7 @@ const ChatList = props => {
                     props.renderNewChatForm ?
                     props.renderNewChatForm(props) :
                     <div style={styles.newChatContainer} className='ce-chat-form-container'>
-                        <ChatForm {...props}  className='ce-chat-form' />
+                        <ChatForm className='ce-chat-form' />
                     </div>
                 }
             </div>

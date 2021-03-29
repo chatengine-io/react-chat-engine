@@ -1,31 +1,37 @@
 import React, { useState } from 'react'
 
-import { Button, deleteChat } from 'react-chat-engine'
+import Thumbnail from './Thumbnail'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 
-const OptionsSettings = props => {
+
+const PhotosSettings = props => {
     const [state, setState] = useState({
         collapsed: true,
         hovered: false
     })
+    const { chat } = props
 
-    const { chats, activeChat } = props
-
-    if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
-
-    const chat = chats[activeChat]
+    function renderPhotos(attachments) {
+        return attachments.map((attachment, index) => {
+            return <Thumbnail key={`person_${index}`} attachment={attachment} />
+        })
+    }
 
     return (
-        <div style={{ borderTop: '1px solid #f0f0f0' }}>
+        <div style={{ borderTop: '1px solid #f0f0f0' }} className='ce-photo-section'>
             <div 
                 onMouseEnter={() => setState({ ...state, hovered: true })}
                 onMouseLeave={() => setState({ ...state, hovered: false })}
                 onClick={() => setState({ ...state, collapsed: !state.collapsed })}
                 style={state.hovered ? { backgroundColor: '#f0f0f0', cursor: 'pointer' } : {}}
+                className='ce-section-title-container ce-photo-title-container'
             >
-                <div style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}>
-                    Options
+                <div 
+                    className='ce-section-title ce-photo-title'
+                    style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}
+                >
+                    Photos
                 </div>
 
                 {
@@ -34,26 +40,20 @@ const OptionsSettings = props => {
                     <DownOutlined style={styles.collapseIcon} />
                 }
             </div>
-            
+
             {
                 !state.collapsed &&
-                <div>
+                <div className='ce-photo-feed'>
                     <div style={{ height: '12px' }} />
 
-                    <Button 
-                        value="Delete" 
-                        theme='danger'
-                        icon='delete'
-                        onClick={() => deleteChat(props, chat.id, (data) => {})}
-                        style={{ width: '100%', marginBottom: '12px' }}
-                    />
+                    { renderPhotos(chat.attachments) }
                 </div>
             }
         </div>
     )
 }
 
-export default OptionsSettings
+export default PhotosSettings
 
 const styles = {
     collapseIcon: {

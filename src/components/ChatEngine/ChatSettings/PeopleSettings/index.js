@@ -10,6 +10,9 @@ const PeopleSettings = props => {
         collapsed: false,
         hovered: false
     })
+    const { chat } = props
+
+    if (chat.is_direct_chat) { return <div /> }
 
     function renderChatPeople(people, chat) {
         return people.map((chatPerson, index) => {
@@ -22,13 +25,7 @@ const PeopleSettings = props => {
                 />
             )
         })
-    }
-
-    const { chats, activeChat } = props
-
-    if (!chats || !activeChat || !chats[activeChat] || chats[activeChat].is_direct_chat) { return <div /> }
-
-    const chat = chats[activeChat]
+    }    
 
     return (
         <div style={{ borderTop: '1px solid #f0f0f0' }}>

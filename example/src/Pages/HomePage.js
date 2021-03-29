@@ -21,7 +21,7 @@ class HomePage extends Component {
         this.setState({ loading: true })
         this.props.login(
             this.state, 
-            () => console.log('Logged in'),
+            () => {},
             (error) => console.log(error)
         )
     }
@@ -65,7 +65,7 @@ class HomePage extends Component {
                     onClick={() => this.props.logout()}
                     style={{ position: 'absolute', bottom: '24px', right: '24px' }}
                 >
-                    Logout
+                    Logout!
                 </button>
             </div>
         )

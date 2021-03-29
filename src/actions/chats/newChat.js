@@ -1,15 +1,12 @@
 import axios from 'axios'
 import * as str from '../../actions'
+import { getHeaders } from '../auth'
 
 export function newChat(props, data, callback) {
     axios.post(
         `${str.getApiUrl(props)}/chats/`,
         data, 
-        { headers: { 
-            "Public-Key": props.publicKey ? props.publicKey : props.projectID,
-            "User-Name": props.userName,
-            "User-Secret": props.userPassword ? props.userPassword : props.userSecret,
-        }}
+        { headers: getHeaders(props) }
     )
 
     .then((response) => {

@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import { ChatEngineContext } from '../../../Context'
 
 import { Avatar } from 'react-chat-engine'
 
 import TitleForm from './TitleForm'
 
 const ChatSettingsTop = props => {
+    const { conn } = useContext(ChatEngineContext)
+    const { chat } = props
+    const topPeople = chat.people.slice(0, 3)
+    const otherPerson = getOtherPerson(chat.people)
 
     function renderOnePerson(people) {
         return (
@@ -73,16 +79,8 @@ const ChatSettingsTop = props => {
     }
 
     function getOtherPerson(people) {
-        return people.find(person => person.person.username !== props.userName);
+        return people.find(person => person.person.username !== conn.userName);
     }
-
-    const { chats, activeChat } = props
-
-    if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
-
-    const chat = chats[activeChat]
-    const topPeople = chat.people.slice(0, 3)
-    const otherPerson = getOtherPerson(chat.people)
     
     return (
         <div className='ce-chat-settings-container'>
@@ -109,7 +107,7 @@ const ChatSettingsTop = props => {
                 }}>
                     { otherPerson.person.username }
                 </div> :
-                <TitleForm chat={chat} conn={props} />
+                <TitleForm chat={chat} conn={conn} />
             }
         </div>
     )

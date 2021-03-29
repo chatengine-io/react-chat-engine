@@ -16,7 +16,7 @@ const Person = props => {
     }
 
     function renderPersonText(person) {
-        if (person.first_name !== null) {
+        if (person.first_name && person.first_name !== null) {
             return `${person.first_name}${person.last_name ? ` ${person.last_name}` : ''}`
         } else {
             return person.username

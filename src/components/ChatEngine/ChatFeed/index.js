@@ -1,4 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
+
+import { ChatEngineContext } from '../../Context'
+
+import { getMessages, readMessage } from '../../../actions/messages'
 
 import ChatHeader from './ChatHeader'
 import { AuthFail, Loading, Welcome } from './Steps'
@@ -14,28 +18,104 @@ import { animateScroll } from "react-scroll"
 const ChatFeed = props => {
     const didMountRef = useRef(false)
     const [duration, setDuration] = useState(0)
+    const [currentChat, setCurrentChat] = useState(null)
+    const { 
+        connecting, conn,
+        chats, setChats,
+        sendingMessages,
+        messages, setMessages,
+        activeChat, setActiveChat,
+        typingData, setTypingData, 
+        typingCounter, setTypingCounter,
+    } = useContext(ChatEngineContext)
+
+    function onReadMessage(chat) {
+        if (chats) {
+            const newChats = {...chats}
+            newChats[chat.id] = chat
+            setChats(newChats)
+        }
+    }
+
+    function onGetMessages(chatId, messages) {
+        setMessages(_.mapKeys(messages, 'id'))
+
+        if (messages.length > 0) {
+            const message = messages[messages.length - 1]
+
+            if (props.userName && props.userName !== message.sender_username) {
+                readMessage(conn, chatId, message.id, (chat) => onReadMessage(chat))
+            }
+        }
+        
+        props.onGetMessages && props.onGetMessages(chatId, messages)
+    }
+
+    useEffect(() => {
+        if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
+            setCurrentChat(activeChat)
+            getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages))
+
+        } else if (conn && props.activeChat && props.activeChat !== currentChat) {
+            setActiveChat(props.activeChat)
+            setCurrentChat(props.activeChat)
+            getMessages(conn, props.activeChat, (chatId, messages) => onGetMessages(chatId, messages))
+        }
+    }, [conn, activeChat])
+
+    useEffect(() => { // TODO: Is typing is super shitty
+        if (typingCounter) {
+            const newTypingCounter = {...typingCounter}
+            Object.keys(newTypingCounter).map(chatId => {
+                Object.keys(newTypingCounter[chatId]).map(person => {
+                    if (newTypingCounter[chatId][person] > 0) {
+                        setTimeout(() => {
+                            setTypingCounter({
+                                ...newTypingCounter,
+                                [chatId]: {
+                                    ...newTypingCounter[chatId],
+                                    [person]: newTypingCounter[chatId][person] - 1
+                                }
+                            })
+                        }, 2500)
+                    }
+                })
+            })
+        }
+    }, [typingCounter])
 
     useEffect(() => {
         if (!didMountRef.current) {
             didMountRef.current = true
-            setTimeout(() => {
+            setTimeout(() => { // Once chat loads, animate scroll
                 setDuration(100)
-            }, 3000); // Once the chat loads, start animating
+            }, 3000);
 
         } else {
-            // Only scroll if messages loaded
-            // TODO: Make more sophisticated
-            if(!_.isEmpty(props.messages)) {
+            if(!_.isEmpty(messages)) { // Scroll (TODO: Make more sophisticated)
                 animateScroll.scrollToBottom({
                     duration,
                     containerId: "ce-feed-container"
                 })
             }
+
+            Object.keys(typingCounter).map((chat) => { // Render Typing Data
+                let typers = []
+        
+                Object.keys(typingCounter[chat]).map((person) => {
+                    if (typingCounter[chat][person] > 0) {
+                        typers.push(person)
+                    }
+                })
+        
+                if (!typingData[chat] || typingData[chat].length !== typers.length) {
+                    setTypingData({ ...typingData, [chat]: typers })
+                }
+            })
         }
     })
 
     function renderTypers() {
-        const { typingData, activeChat } = props
         const typers = typingData && typingData[activeChat] ? typingData[activeChat] : []
 
         if (props.renderIsTyping) {
@@ -46,10 +126,9 @@ const ChatFeed = props => {
     }
 
     function renderMessages() {
-        const { messages, chats, activeChat } = props
         const chat = chats && chats[activeChat]
         const keys = Object.keys(messages)
-
+        
         return keys.map((key, index) => {
             const message = messages[key]
             const lastMessageKey = index === 0 ? null : keys[index - 1]
@@ -60,7 +139,7 @@ const ChatFeed = props => {
                     <div key={`message_${index}`}>
                         { 
                             props.renderMessageBubble(
-                                props, 
+                                conn, 
                                 chat, 
                                 messages[lastMessageKey], 
                                 message, 
@@ -74,7 +153,6 @@ const ChatFeed = props => {
             return (
                 <MessageBubble 
                     key={`message_${index}`}
-                    {...props}
                     chat={chat}
                     message={message}
                     lastMessage={messages[lastMessageKey]}
@@ -85,7 +163,6 @@ const ChatFeed = props => {
     }
 
     function renderSendingMessages() {
-        const { sendingMessages, chats, activeChat } = props
         const keys = Object.keys(sendingMessages)
         const chat = chats && chats[activeChat]
 
@@ -94,12 +171,11 @@ const ChatFeed = props => {
             const lastMessageKey = index === 0 ? null : keys[index - 1]
             const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
 
-            if(message && message.chat === props.activeChat) {
+            if(message && message.chat === activeChat) {
                 return (
                     <MessageBubble 
                         sending
                         key={`sending-msg-${index}`}
-                        {...props}
                         chat={chat}
                         message={message}
                         lastMessage={sendingMessages[lastMessageKey]}
@@ -110,28 +186,23 @@ const ChatFeed = props => {
         })
     }
 
-    const { chats, conn, activeChat } = props
-    const chat = chats && chats[activeChat] 
+    const chat = chats && chats[currentChat] 
 
-    if(conn === undefined) {
-        return <AuthFail />
-    }
+    if(conn === undefined) { return <AuthFail /> }
 
-    if(conn && chats !== null && _.isEmpty(chats)) {
-        return <Welcome />
-    }
+    if(conn && chats !== null && _.isEmpty(chats)) { return <Welcome /> }
 
     return (
         <div 
             className='ce-chat-feed'
-            style={{ display: 'flex', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
+            style={{ height: '100%', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
         >
-            { props.connecting && <Loading /> }
+            { connecting && <Loading /> }
 
             {
                 props.renderChatHeader ? 
                 props.renderChatHeader(chat) :
-                <ChatHeader {...props} />
+                <ChatHeader />
             }
 
             <div
@@ -152,8 +223,8 @@ const ChatFeed = props => {
 
             {
                 props.renderNewMessageForm ?
-                props.renderNewMessageForm(props, activeChat) :
-                <NewMessageForm {...props} />
+                props.renderNewMessageForm(props, currentChat) :
+                <NewMessageForm />
             }
         </div>
     )
@@ -163,13 +234,11 @@ export default ChatFeed
 
 const styles = {
     feedContainer: { 
-        position: 'absolute', 
-        top: '0px', 
-        height: '100%', 
-        width: '100%', 
-        overflow: 'scroll',
+        width: '100%',
+        height: '100%',
+        maxHeight: '100vh',
         overflowX: 'hidden',
+        overflowY: 'scroll',
         backgroundColor: 'white',
-        borderRight: '1px solid rgb(175, 175, 175)'
     }
 }
