@@ -27,6 +27,8 @@ class HomePage extends Component {
     }
     
     render() {  
+        const { id } = this.props.match.params
+        
         if (!this.props.accounts.userName) {
             return (
                 <div>
