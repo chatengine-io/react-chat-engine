@@ -4,7 +4,7 @@ import Socket from './components/Socket'
 import ChatSocket from './components/Socket/ChatSocket'
 
 import { isTyping } from './actions/typing'
-import { getChats, newChat, editChat, deleteChat } from './actions/chats'
+import { getChats, newChat, getLatestChats, getChat, editChat, deleteChat } from './actions/chats'
 import { addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat } from './actions/people'
 import { getMessages, sendMessage, editMessage, deleteMessage } from './actions/messages'
 
@@ -45,7 +45,7 @@ export {
   ChatFeed, ChatHeader, MessageBubble, IsTyping, NewMessageForm,
   ChatSettings, ChatSettingsTop, PeopleSettings, PhotosSettings, OptionsSettings,
   
-  getChats, newChat, editChat, deleteChat,
+  getChats, newChat, getLatestChats, getChat, editChat, deleteChat,
   addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat,
   getMessages, sendMessage, editMessage, deleteMessage,
   isTyping,
