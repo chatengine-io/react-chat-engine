@@ -1,17 +1,22 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { ChatEngineContext } from '../../Context'
 
-import { getChats } from '../../../actions/chats'
+import { getLatestChats } from '../../../actions/chats'
 
 import _ from 'lodash'
+
+import ChatLoader from './ChatLoader'
 
 import ChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
+let count = 13
+const interval = 13
+
 const ChatList = props => {
     const didMountRef = useRef(false)
-
+    const [hasMoreChats, setHasMoreChats] = useState(true)
     const { chats, setChats, activeChat, setActiveChat } = useContext(ChatEngineContext)
 
     function renderChats(chats) {
@@ -42,22 +47,32 @@ const ChatList = props => {
         })
     }
 
-    function onGetChats(chats) {
+    function onGetChats(chats, count) {
         const chatList = sortChats(chats)
     
         if (chatList.length > 0 && activeChat === null) {
             setActiveChat(chatList[0].id)
         }
+
+        if(count && count > chatList.length) {
+            setHasMoreChats(false)
+        }
         
-        setChats(_.mapKeys(chats, 'id'))
+        const newChats = {...chats}
+        setChats(_.mapKeys(newChats, 'id'))
     }
 
     useEffect(() => {
         if (!didMountRef.current) {
             didMountRef.current = true
-            getChats(props, (chats) => onGetChats(chats))
+            getLatestChats(props, interval, (chats) => onGetChats(chats))
         }
     })
+
+    function loadChats() {
+        count = count + interval
+        getLatestChats(props, count, (chats) => onGetChats(chats, count))
+    }
 
     const chatList = sortChats(chats ? Object.values(chats) : [])
 
@@ -65,6 +80,8 @@ const ChatList = props => {
         <div style={styles.chatListContainer} className='ce-chat-list'>
             <div style={styles.chatsContainer} className='ce-chats-container'>
                 { renderChats(chatList) } 
+
+                { hasMoreChats && chatList.length > 0 && <ChatLoader onVisible={() => loadChats()} /> }
 
                 <div style={{ height: '64px' }} />
 

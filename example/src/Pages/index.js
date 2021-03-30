@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import history from '../Utilities/history'
 
 import ChatWithMePage from './ChatWithMePage'
+import DirectChatsPage from './DirectChatsPage'
 import HomePage from './HomePage'
 
 class RootPage extends Component {
@@ -14,6 +15,7 @@ class RootPage extends Component {
       <Router history={history}>
         <Switch>
           <Route path='/with_me' component={ChatWithMePage} />
+          <Route path='/direct' component={DirectChatsPage} />
           <Route path='/' component={HomePage} />
         </Switch>
       </Router>
