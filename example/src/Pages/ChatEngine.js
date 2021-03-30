@@ -1,18 +1,20 @@
 import React, { useContext, useState, useEffect } from 'react'
 
+import _ from 'lodash'
+
 import { ChatEngine, ChatEngineContext } from 'react-chat-engine'
 
 const ChatEngineApp = props => {
-    const { chats, setActiveChat } = useContext(ChatEngineContext)
+    const { chats, messages, setActiveChat } = useContext(ChatEngineContext)
     const [hasSetLink, setLink] = useState(false)
 
     useEffect(() => {
         const { id } = props
-        if (id && chats && chats[id] && !hasSetLink) {
+        if (id && chats && chats[id] && !_.isEmpty(messages) && !hasSetLink) {
             setActiveChat(id)
             setLink(true)
         }
-    }, [chats])
+    }, [chats, messages, props, setActiveChat, hasSetLink, setLink])
 
     return (
         <ChatEngine 
