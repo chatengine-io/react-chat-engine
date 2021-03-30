@@ -16,6 +16,7 @@ class RootPage extends Component {
         <Switch>
           <Route path='/with_me' component={ChatWithMePage} />
           <Route path='/direct' component={DirectChatsPage} />
+          <Route path='/:id' component={HomePage} />
           <Route path='/' component={HomePage} />
         </Switch>
       </Router>
