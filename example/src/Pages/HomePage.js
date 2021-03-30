@@ -4,7 +4,9 @@ import { bindActionCreators } from 'redux'
 
 import { login, logout } from '../Actions/Accounts'
 
-import { ChatEngine } from 'react-chat-engine'
+import { ChatEngineWrapper } from 'react-chat-engine'
+
+import ChatEngine from './ChatEngine'
 
 const prod = window.location.host.indexOf('chatengine.io') !== -1
 
@@ -16,6 +18,7 @@ const HomePage = props => {
         userName: '',
         userSecret: '',
     })
+    const { id } = props.match.params
 
     function submit(){
         setState({ ...state, loading: true })
@@ -52,13 +55,9 @@ const HomePage = props => {
 
     return (
         <div style={{ position: 'absolute', top: '0px', width: '100%' }}>
-            <ChatEngine 
-                height='100vh'
-                development={!prod}
-                userName={props.accounts.userName}
-                userSecret={props.accounts.userSecret}
-                projectID={props.accounts.projectID}
-            />
+            <ChatEngineWrapper>
+                <ChatEngine {...props.accounts} {...prod} id={parseInt(id)} />
+            </ChatEngineWrapper>
 
             <button 
                 onClick={() => props.logout()}
