@@ -9,7 +9,7 @@ import { daySinceSent } from '../Utilities/dateToString'
 const ChatCard = props => {
     const { conn, activeChat, setActiveChat } = useContext(ChatEngineContext)
 
-    if (!conn) return <div/>
+    if (!conn || conn === null) return <div/>
 
     function readLastMessage(chat) {
         let readLastMessage = true
