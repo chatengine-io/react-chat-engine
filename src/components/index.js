@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
-import Socket from './Socket'
 import ChatEngine from './ChatEngine'
 
-import { ChatEngineWrapper } from './Context'
+import { ChatEngineWrapper, ChatEngineContext } from './Context'
 
 const ChatEngineApp = (props) => {
-    if (props.hideUI) {
-        return <Socket {...props} />
+    if (useContext(ChatEngineContext)) {
+        return <ChatEngine {...props} />
     } else {
         return <ChatEngineWrapper><ChatEngine {...props} /></ChatEngineWrapper>
     }
