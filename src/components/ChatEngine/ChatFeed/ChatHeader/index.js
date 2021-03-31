@@ -13,10 +13,12 @@ import { setConfiguration } from 'react-grid-system';
  
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
-const ChatHeader = props => {
+const ChatHeader = () => {
     const { conn, chats, activeChat } = useContext(ChatEngineContext)
 
     if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
+
+    if (!conn || conn === null) { return <div /> }
 
     const chat = chats[activeChat]
     const otherPerson = chat.people.find(person => person.person.username !== conn.userName);

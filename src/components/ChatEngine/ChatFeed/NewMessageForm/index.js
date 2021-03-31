@@ -12,6 +12,8 @@ import { Button, TextAreaInput } from 'react-chat-engine'
 const NewMessageForm = () => {
   const { conn, activeChat, sendingMessages, setSendingMessages } = useContext(ChatEngineContext)
 
+  if (!conn || conn === null) return <div />
+
   const [state, setState] = useState({
     trigger: 0,
     mod: 3,

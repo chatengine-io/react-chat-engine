@@ -25,7 +25,7 @@ const MessageLoader = props => {
     const ref = useRef()
     const isVisible = useOnScreen(ref)
     
-    return <div ref={ref}>{isVisible && `Loading...`}</div>
+    return <div ref={ref} />
 }
 
 export default MessageLoader

@@ -7,6 +7,12 @@ import { Avatar, Button } from 'react-chat-engine'
 const Person = props => {
     const [selected, setSelected] = useState(false)
 
+    const { person, chat, conn } = props
+
+    if (!person || !chat) { return <div /> }
+
+    if (!conn || conn === null) return <div />
+
     function onRemovePerson() {
         removePerson(
             props.conn,
@@ -22,12 +28,6 @@ const Person = props => {
             return person.username
         }
     }
-
-    const { person, chat, conn } = props
-
-    if (!person || !chat) { return <div /> }
-
-    const { admin } = chat
 
     return (
         <div 
@@ -54,7 +54,7 @@ const Person = props => {
             </div>
 
             {
-                selected && (conn.userName === admin.username) && (person.username !== admin.username) &&
+                selected && (conn.userName === chat.admin.username) && (person.username !== chat.admin.username) &&
                 <div
                     className='ce-delete-chat' 
                     style={{ float: 'right', height: '0px', position: 'relative', bottom: '44px'}}

@@ -14,6 +14,8 @@ const Message = props => {
 
     if (!message || !chat) { return <div /> }
 
+    if (!conn || conn === null) { return <div /> }
+
     return (
         <div className='ce-message-and-date'>
             {

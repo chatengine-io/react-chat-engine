@@ -9,6 +9,9 @@ import TitleForm from './TitleForm'
 const ChatSettingsTop = props => {
     const { conn } = useContext(ChatEngineContext)
     const { chat } = props
+    
+    if (!conn || conn === null) return <div />
+
     const topPeople = chat.people.slice(0, 3)
     const otherPerson = getOtherPerson(chat.people)
 
