@@ -2,11 +2,12 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext } from '../../Context'
 
-import { getMessages, readMessage } from '../../../actions/messages'
+import { getLatestMessages, readMessage } from '../../../actions/messages'
 
 import ChatHeader from './ChatHeader'
 import { AuthFail, Loading, Welcome } from './Steps'
 
+import MessageLoader from './MessageLoader'
 import MessageBubble from './MessageBubble'
 import NewMessageForm from './NewMessageForm'
 import IsTyping from './IsTyping'
@@ -14,6 +15,10 @@ import IsTyping from './IsTyping'
 import _ from 'lodash'
 
 import { animateScroll } from "react-scroll"
+
+const initial = 66
+let count = initial
+const interval = 33
 
 const ChatFeed = props => {
     const didMountRef = useRef(false)
@@ -51,16 +56,26 @@ const ChatFeed = props => {
         props.onGetMessages && props.onGetMessages(chatId, messages)
     }
 
-    useEffect(() => {
+    function loadMoreMessages(loadMore) {
         if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
+            count = initial
             setCurrentChat(activeChat)
-            getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages))
+            getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
 
         } else if (conn && props.activeChat && props.activeChat !== currentChat) {
+            count = initial
             setActiveChat(props.activeChat)
             setCurrentChat(props.activeChat)
-            getMessages(conn, props.activeChat, (chatId, messages) => onGetMessages(chatId, messages))
+            getLatestMessages(conn, props.activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
+
+        } else if (loadMore) {
+            count = count + interval
+            getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
         }
+    }
+
+    useEffect(() => {
+        loadMoreMessages()
     }, [conn, activeChat])
 
     useEffect(() => { // TODO: Is typing is super shitty
@@ -211,6 +226,11 @@ const ChatFeed = props => {
                 className='ce-chat-feed-container'
             >
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
+
+                { 
+                    Object.keys(messages).length > 0 && 
+                    <MessageLoader onVisible={() => loadMoreMessages(true)} /> 
+                }
 
                 { renderMessages() }
 

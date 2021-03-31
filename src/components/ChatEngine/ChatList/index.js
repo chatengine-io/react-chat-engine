@@ -54,9 +54,7 @@ const ChatList = props => {
             setActiveChat(chatList[0].id)
         }
 
-        if(count && count > chatList.length) {
-            setHasMoreChats(false)
-        }
+        if(count && count > chatList.length) { setHasMoreChats(false) }
         
         const newChats = {...chats}
         setChats(_.mapKeys(newChats, 'id'))

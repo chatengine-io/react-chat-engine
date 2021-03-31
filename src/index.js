@@ -6,7 +6,7 @@ import ChatSocket from './components/Socket/ChatSocket'
 import { isTyping } from './actions/typing'
 import { getChats, newChat, getLatestChats, getChat, editChat, deleteChat } from './actions/chats'
 import { addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat } from './actions/people'
-import { getMessages, sendMessage, editMessage, deleteMessage } from './actions/messages'
+import { getMessages, sendMessage, editMessage, deleteMessage, getLatestMessages } from './actions/messages'
 
 import { Avatar, Dot } from './components/ChatEngine/components/Avatar'
 import { Button } from './components/ChatEngine/components/Button'
@@ -47,6 +47,6 @@ export {
   
   getChats, newChat, getLatestChats, getChat, editChat, deleteChat,
   addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat,
-  getMessages, sendMessage, editMessage, deleteMessage,
+  getMessages, sendMessage, editMessage, deleteMessage, getLatestMessages,
   isTyping,
 }
