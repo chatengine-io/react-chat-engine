@@ -9,7 +9,7 @@ import { WebSocket } from 'nextjs-websocket'
 const ChatSocket = props => {
     const {
       setConnecting,
-      conn, setConn,
+      conn, setConn, setCreds,
       chats, setChats,
       messages, setMessages,
       sendingMessages, setSendingMessages,
@@ -38,7 +38,7 @@ const ChatSocket = props => {
     }
 
     function onConnect(conn) {
-        setConn(conn)
+        setConn(conn); setCreds(conn);
         setConnecting(false)
     
         getChat(conn, props.chatID, (chat) => onGetChat(chat)) // Not redundant
@@ -61,7 +61,7 @@ const ChatSocket = props => {
                 If all three are correct, try resetting the username and secret in the Online Dashboard or Private API.`
             )
 
-            setConn(undefined)
+            setConn(undefined); setCreds(undefined);
 
             props.onFailAuth && props.onFailAuth(conn)
 

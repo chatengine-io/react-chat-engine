@@ -56,7 +56,7 @@ const HomePage = props => {
     return (
         <div style={{ position: 'absolute', top: '0px', width: '100%' }}>
             <ChatEngineWrapper>
-                <ChatEngine {...props.accounts} {...prod} id={parseInt(id)} />
+                <ChatEngine {...props.accounts} prod={prod} id={parseInt(id)} />
             </ChatEngineWrapper>
 
             <button 
