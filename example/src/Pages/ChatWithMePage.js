@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { ChatEngineWrapper, ChatSocket, ChatFeed } from 'react-chat-engine'
+import { ChatEngineWrapper, ChatSocket, ChatFeed, ChatList } from 'react-chat-engine'
 
 import { Row, Col } from 'react-grid-system'
 import { setConfiguration } from 'react-grid-system';
@@ -40,7 +40,9 @@ export default class HomePage extends Component {
                             chatAccessKey={chatAccessKey}
                             activeChat={chatID}
                             senderUsername={senderUsername}
-                        />                        
+                        /> 
+
+                        <ChatList development={!prod}/>                        
                     </ChatEngineWrapper>
                 </Col>
             </Row>
