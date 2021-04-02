@@ -18,6 +18,7 @@ setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 const ChatEngine = props => {
   const context = useContext(ChatEngineContext)
   const { height } = props
+  const propsAndContext = {...props, ...context}
 
   return (
     <div style={{ textAlign: 'left', backgroundColor: 'white' }}>
@@ -25,27 +26,15 @@ const ChatEngine = props => {
 
       <Row>
         <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
-          {
-            props.renderChatList ?
-            props.renderChatList({...props, ...context}) :
-            <ChatList { ...props} />
-          }
+          <ChatList {...propsAndContext} />
         </Col>
 
         <Col xs={12} sm={6} style={{ height: height ? height : '' }}>
-          {
-            props.renderChatFeed ?
-            props.renderChatFeed({...props, ...context}) :
-            <ChatFeed { ...props} />
-          }
+          <ChatFeed {...propsAndContext} />
         </Col>
 
         <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
-          {
-            props.renderChatSettings ?
-            props.renderChatSettings({...props, ...context}) :
-            <ChatSettings { ...props} />
-          }
+          <ChatSettings { ...propsAndContext} />
         </Col>
       </Row>
     </div>
