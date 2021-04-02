@@ -2,12 +2,11 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext } from '../../Context'
 
-import { getLatestMessages, readMessage } from '../../../actions/messages'
+import { getMessages, readMessage } from '../../../actions/messages'
 
-import ChatHeader from './ChatHeader'
 import { AuthFail, Loading, Welcome } from './Steps'
 
-import MessageLoader from './MessageLoader'
+import ChatHeader from './ChatHeader'
 import MessageBubble from './MessageBubble'
 import NewMessageForm from './NewMessageForm'
 import IsTyping from './IsTyping'
@@ -56,21 +55,18 @@ const ChatFeed = props => {
         props.onGetMessages && props.onGetMessages(chatId, messages)
     }
 
-    function loadMoreMessages(loadMore) {
+    function loadMoreMessages() {
         if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
             count = initial
             setCurrentChat(activeChat)
-            getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
+            getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages))
 
         } else if (conn && props.activeChat && props.activeChat !== currentChat) {
             count = initial
             setActiveChat(props.activeChat)
             setCurrentChat(props.activeChat)
-            getLatestMessages(conn, props.activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
+            getMessages(conn, props.activeChat, (chatId, messages) => onGetMessages(chatId, messages))
 
-        } else if (loadMore) {
-            count = count + interval
-            getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
         }
     }
 
@@ -224,11 +220,6 @@ const ChatFeed = props => {
                 className='ce-chat-feed-container'
             >
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
-
-                { 
-                    Object.keys(messages).length > 0 && 
-                    <MessageLoader onVisible={() => loadMoreMessages(true)} /> 
-                }
 
                 { renderMessages() }
 
