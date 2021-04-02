@@ -75,8 +75,8 @@ const ChatFeed = props => {
     }
 
     useEffect(() => {
-        loadMoreMessages()
-    }, [conn, activeChat])
+        loadMoreMessages(false)
+    }, [conn, activeChat, currentChat])
 
     useEffect(() => { // TODO: Is typing is super shitty
         if (typingCounter) {
@@ -216,11 +216,7 @@ const ChatFeed = props => {
         >
             { connecting && <Loading /> }
 
-            {
-                props.renderChatHeader ? 
-                props.renderChatHeader(chat) :
-                <ChatHeader />
-            }
+            { props.renderChatHeader ?  props.renderChatHeader(chat) : <ChatHeader /> }
 
             <div
                 id='ce-feed-container'
@@ -243,11 +239,7 @@ const ChatFeed = props => {
                 <div style={{ height: '54px' }} className='ce-feed-container-bottom' />
             </div>
 
-            {
-                props.renderNewMessageForm ?
-                props.renderNewMessageForm(props, currentChat) :
-                <NewMessageForm />
-            }
+            { props.renderNewMessageForm ? props.renderNewMessageForm(props, currentChat) : <NewMessageForm /> }
         </div>
     )
 }

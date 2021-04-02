@@ -4,7 +4,7 @@ import { ChatEngine } from 'react-chat-engine'
 
 import ChatFeed from './ChatFeed'
 
-import './App.css'
+// import './App.css'
 
 const userNames = ['Alice', 'Bob', 'Wendy', 'Zack']
 const userName = userNames[Math.floor(Math.random() * userNames.length)]
