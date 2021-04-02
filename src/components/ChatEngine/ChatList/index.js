@@ -74,6 +74,8 @@ const ChatList = props => {
 
     const chatList = sortChats(chats ? Object.values(chats) : [])
 
+    if (props.renderChatList) return props.renderChatList(props)
+
     return (
         <div style={styles.chatListContainer} className='ce-chat-list'>
             <div style={styles.chatsContainer} className='ce-chats-container'>

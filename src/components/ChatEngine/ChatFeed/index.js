@@ -203,9 +203,11 @@ const ChatFeed = props => {
 
     const chat = chats && chats[currentChat] 
 
-    if(conn === undefined) { return <AuthFail /> }
+    if(props.renderChatFeed) return props.renderChatFeed(props)
 
-    if(conn && chats !== null && _.isEmpty(chats)) { return <Welcome /> }
+    if(conn === undefined) return <AuthFail />
+
+    if(conn && chats !== null && _.isEmpty(chats)) return <Welcome />
 
     return (
         <div 

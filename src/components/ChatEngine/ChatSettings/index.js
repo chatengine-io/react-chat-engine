@@ -10,6 +10,8 @@ import ChatSettingsTop from './ChatSettingsTop'
 const ChatSettings = props => {
     const { chats, activeChat } = useContext(ChatEngineContext)  
     const chat = chats && chats[activeChat] 
+
+    if (props.renderChatSettings) return props.renderChatSettings(props)
     
     if (!chat) return <div style={styles.filler} />
     
