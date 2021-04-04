@@ -152,8 +152,8 @@ const Socket = props => {
                 newTypingCounter = {
                     ...newTypingCounter,
                     [id]: {
-                    ...newTypingCounter[id],
-                    [person]: newTypingCounter[id][person] + 1
+                        ...newTypingCounter[id],
+                        [person]: newTypingCounter[id][person] + 1
                     }
                 }
 
@@ -161,8 +161,8 @@ const Socket = props => {
                 newTypingCounter = {
                     ...newTypingCounter,
                     [id]: {
-                    ...newTypingCounter[id],
-                    [person]: 1
+                        ...newTypingCounter[id],
+                        [person]: 1
                     }
                 }
             }
