@@ -9,7 +9,7 @@ import { AuthFail, Loading, Welcome } from './Steps'
 import ChatHeader from './ChatHeader'
 import MessageBubble from './MessageBubble'
 import NewMessageForm from './NewMessageForm'
-import IsTyping from './IsTyping'
+import Typers from './Typers'
 
 import _ from 'lodash'
 
@@ -92,22 +92,6 @@ const ChatFeed = props => {
             }
         }
     })
-
-    function renderTypers() {
-        const typers = typingCounter && typingCounter[activeChat] ? typingCounter[activeChat] : []
-
-        if (props.renderIsTyping) {
-            return props.renderIsTyping(typers)
-        }
-
-        return Object.keys(typers).map((username, index) => {
-            if (username !== props.userName && currentTime < typers[username]) {
-                return <IsTyping key={`typer_${index}`} username={username} />
-            } else {
-                return <div key={`typer_${index}`} />
-            }
-        })
-    }
 
     function renderMessages() {
         const chat = chats && chats[activeChat]
@@ -198,7 +182,7 @@ const ChatFeed = props => {
 
                 { renderSendingMessages() }
 
-                { renderTypers() }
+                <Typers currentTime={currentTime} />
 
                 <div style={{ height: '54px' }} className='ce-feed-container-bottom' />
             </div>
