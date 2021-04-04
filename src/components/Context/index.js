@@ -11,7 +11,6 @@ export const ChatEngineWrapper = props => {
     const [sendingMessages, setSendingMessages] = useState({})
     const [activeChat, setActiveChat] = useState(null)
     const [typingCounter, setTypingCounter] = useState({})
-    const [typingData, setTypingData] = useState({})
 
     const value = {
         connecting, setConnecting,
@@ -22,7 +21,6 @@ export const ChatEngineWrapper = props => {
         sendingMessages, setSendingMessages,
         activeChat, setActiveChat,
         typingCounter, setTypingCounter,
-        typingData, setTypingData,
     }
 
     return (
