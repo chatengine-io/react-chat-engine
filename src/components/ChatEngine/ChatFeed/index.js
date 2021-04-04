@@ -101,7 +101,7 @@ const ChatFeed = props => {
         }
 
         return Object.keys(typers).map((username, index) => {
-            if (currentTime < typers[username]) {
+            if (username !== props.userName && currentTime < typers[username]) {
                 return <IsTyping key={`typer_${index}`} username={username} />
             } else {
                 return <div key={`typer_${index}`} />
