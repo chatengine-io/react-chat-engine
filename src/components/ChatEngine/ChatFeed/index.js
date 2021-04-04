@@ -23,13 +23,13 @@ const ChatFeed = props => {
     const didMountRef = useRef(false)
     const [duration, setDuration] = useState(0)
     const [currentChat, setCurrentChat] = useState(null)
+    const [currentTime, setCurrentTime] = useState(Date.now())
     const { 
         connecting, conn,
         chats, setChats,
         sendingMessages,
         messages, setMessages,
         activeChat, setActiveChat,
-        typingData, setTypingData, 
         typingCounter, setTypingCounter,
     } = useContext(ChatEngineContext)
 
@@ -73,66 +73,40 @@ const ChatFeed = props => {
         loadMoreMessages()
     }, [conn, activeChat, currentChat])
 
-    useEffect(() => { // TODO: Is typing is super shitty
-        if (typingCounter) {
-            const newTypingCounter = {...typingCounter}
-            Object.keys(newTypingCounter).map(chatId => {
-                Object.keys(newTypingCounter[chatId]).map(person => {
-                    if (newTypingCounter[chatId][person] > 0) {
-                        setTimeout(() => {
-                            setTypingCounter({
-                                ...newTypingCounter,
-                                [chatId]: {
-                                    ...newTypingCounter[chatId],
-                                    [person]: newTypingCounter[chatId][person] - 1
-                                }
-                            })
-                        }, 2500)
-                    }
-                })
-            })
-        }
-    }, [typingCounter])
-
     useEffect(() => {
         if (!didMountRef.current) {
             didMountRef.current = true
-            setTimeout(() => { // Once chat loads, animate scroll
+            setTimeout(() => {
                 setDuration(100)
-            }, 3000);
+            }, 3000)
+            setInterval(() => {
+                setCurrentTime(Date.now())
+            }, 1000)
 
         } else {
-            if(!_.isEmpty(messages)) { // Scroll (TODO: Make more sophisticated)
+            if(!_.isEmpty(messages)) { // TODO: Make more sophisticated
                 animateScroll.scrollToBottom({
                     duration,
                     containerId: "ce-feed-container"
                 })
             }
-
-            Object.keys(typingCounter).map((chat) => { // Render Typing Data
-                let typers = []
-        
-                Object.keys(typingCounter[chat]).map((person) => {
-                    if (typingCounter[chat][person] > 0) {
-                        typers.push(person)
-                    }
-                })
-        
-                if (!typingData[chat] || typingData[chat].length !== typers.length) {
-                    setTypingData({ ...typingData, [chat]: typers })
-                }
-            })
         }
     })
 
     function renderTypers() {
-        const typers = typingData && typingData[activeChat] ? typingData[activeChat] : []
+        const typers = typingCounter && typingCounter[activeChat] ? typingCounter[activeChat] : []
 
         if (props.renderIsTyping) {
             return props.renderIsTyping(typers)
         }
 
-        return typers.map((username, index) => <IsTyping key={`typer_${index}`} username={username} />)
+        return Object.keys(typers).map((username, index) => {
+            if (currentTime < typers[username]) {
+                return <IsTyping key={`typer_${index}`} username={username} />
+            } else {
+                return <div key={`typer_${index}`} />
+            }
+        })
     }
 
     function renderMessages() {
