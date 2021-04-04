@@ -30,7 +30,6 @@ const ChatFeed = props => {
         sendingMessages,
         messages, setMessages,
         activeChat, setActiveChat,
-        typingCounter, setTypingCounter,
     } = useContext(ChatEngineContext)
 
     function onReadMessage(chat) {
