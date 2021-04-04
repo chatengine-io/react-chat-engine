@@ -111,30 +111,6 @@ const styles={
         backgroundColor: 'white', 
         borderRadius: '0px 0px 24px 24px'
     },
-    chatContainer: { 
-        padding: '16px', 
-        paddingBottom: '12px',
-        cursor: 'pointer'
-    },
-    titleText: { 
-        fontWeight: '500',
-         paddingBottom: '4px', 
-         whiteSpace: 'nowrap', 
-         overflow: 'hidden' 
-    },
-    messageText: {
-        width: '75%',
-        color: 'rgba(153, 153, 153, 1)', 
-        fontSize: '14px', 
-        whiteSpace: 'nowrap', 
-        overflow: 'hidden',
-        display: 'inline-block'
-    },
-    activeChat: {
-        backgroundColor: '#d9d9d9',
-        border: '4px solid white',
-        borderRadius: '12px'
-    },
     newChatContainer: { 
         position: 'absolute', 
         bottom: '0px', 

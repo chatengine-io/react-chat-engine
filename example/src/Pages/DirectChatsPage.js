@@ -29,6 +29,7 @@ export default class DirectChatPage extends Component {
             <div style={{ position: 'absolute', top: '0px', width: '100%' }}>
                 <ChatEngine 
                     height='100vh'
+                    development
                     userName={'Adam_La_Morre'}
                     userSecret={'pass1234'}
                     projectID={'1ed59673-1fd6-46ed-9eb9-56239a6a4f82'}
