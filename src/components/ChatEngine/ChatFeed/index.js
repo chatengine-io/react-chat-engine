@@ -2,12 +2,13 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext } from '../../Context'
 
-import { getMessages, readMessage } from '../../../actions/messages'
+import { getLatestMessages, readMessage } from '../../../actions/messages'
 
 import { AuthFail, Loading, Welcome } from './Steps'
 
 import ChatHeader from './ChatHeader'
 import MessageBubble from './MessageBubble'
+import MessageLoader from './MessageLoader'
 import NewMessageForm from './NewMessageForm'
 import Typers from './Typers'
 
@@ -30,6 +31,7 @@ const ChatFeed = props => {
         sendingMessages,
         messages, setMessages,
         activeChat, setActiveChat,
+        loadMoreMessages, setLoadMoreMessages,
     } = useContext(ChatEngineContext)
 
     function onReadMessage(chat) {
@@ -54,23 +56,38 @@ const ChatFeed = props => {
         props.onGetMessages && props.onGetMessages(chatId, messages)
     }
 
-    function loadMoreMessages() {
-        if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
+    function loadMessages(loadMoreMessages) {
+        // Message Loader triggers
+        if (loadMoreMessages) { 
+            setLoadMoreMessages(false)
+            count = count + interval
+            getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
+            console.log('1', count)
+
+        // Active Chat switched in context
+        } else if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
             count = initial
             setCurrentChat(activeChat)
-            getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages))
+            getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
+            console.log('2', count)
 
+        // Active Chat passed into props
         } else if (conn && props.activeChat && props.activeChat !== currentChat) {
             count = initial
             setActiveChat(props.activeChat)
             setCurrentChat(props.activeChat)
-            getMessages(conn, props.activeChat, (chatId, messages) => onGetMessages(chatId, messages))
+            getLatestMessages(conn, props.activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
+            console.log('3', count)
         }
     }
 
     useEffect(() => {
-        loadMoreMessages()
+        loadMessages(false)
     }, [conn, activeChat, currentChat])
+
+    useEffect(() => {
+        loadMessages(loadMoreMessages)
+    }, [loadMoreMessages])
 
     useEffect(() => {
         if (!didMountRef.current) {
@@ -83,7 +100,7 @@ const ChatFeed = props => {
             }, 1000)
 
         } else {
-            if(!_.isEmpty(messages)) { // TODO: Make more sophisticated
+            if(!_.isEmpty(messages) && !loadMoreMessages) { // TODO: Make more sophisticated
                 animateScroll.scrollToBottom({
                     duration,
                     containerId: "ce-feed-container"
@@ -176,6 +193,8 @@ const ChatFeed = props => {
                 className='ce-chat-feed-container'
             >
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
+
+                { Object.keys(messages).length > 0 && <MessageLoader /> }
 
                 { renderMessages() }
 
