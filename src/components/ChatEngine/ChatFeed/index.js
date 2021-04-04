@@ -66,12 +66,11 @@ const ChatFeed = props => {
             setActiveChat(props.activeChat)
             setCurrentChat(props.activeChat)
             getMessages(conn, props.activeChat, (chatId, messages) => onGetMessages(chatId, messages))
-
         }
     }
 
     useEffect(() => {
-        loadMoreMessages(false)
+        loadMoreMessages()
     }, [conn, activeChat, currentChat])
 
     useEffect(() => { // TODO: Is typing is super shitty
