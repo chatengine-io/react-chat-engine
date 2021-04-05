@@ -17,7 +17,7 @@ import _ from 'lodash'
 
 import { animateScroll } from "react-scroll"
 
-const initial = 15
+const initial = 45
 let count = initial
 const interval = 33
 
@@ -63,14 +63,12 @@ const ChatFeed = props => {
             setLoadMoreMessages(false)
             count = count + interval
             getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
-            console.log('1', count)
 
         // Active Chat switched in context
         } else if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
             count = initial
             setCurrentChat(activeChat)
             getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
-            console.log('2', count)
 
         // Active Chat passed into props
         } else if (conn && props.activeChat && props.activeChat !== currentChat) {
@@ -78,7 +76,6 @@ const ChatFeed = props => {
             setActiveChat(props.activeChat)
             setCurrentChat(props.activeChat)
             getLatestMessages(conn, props.activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
-            console.log('3', count)
         }
     }
 
