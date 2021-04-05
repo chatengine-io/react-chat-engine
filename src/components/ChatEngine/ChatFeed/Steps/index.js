@@ -1,9 +1,9 @@
 import AuthFail from './AuthFail'
-import Loading from './Loading'
 import Welcome from './Welcome'
+import ConnectionBar from './ConnectionBar'
 
 export {
     AuthFail,
-    Loading,
     Welcome,
+    ConnectionBar,
 }

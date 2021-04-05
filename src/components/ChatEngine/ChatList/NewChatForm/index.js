@@ -29,24 +29,33 @@ const NewChatForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit.bind(this)}>
-      <div style={{ height: '1px' }}>
-        <TextInput 
-          label='New Chat'
-          value={value}
-          style={{ width: 'calc(100% - 48px)' }}
-          handleChange={(e) => handleChange(e)}
-        />
-      </div>
+    <div style={styles.newChatContainer} className='ce-chat-form-container'>
+      <form onSubmit={handleSubmit.bind(this)} className='ce-chat-form'>
+        <div style={{ height: '1px' }}>
+          <TextInput 
+            label='New Chat'
+            value={value}
+            style={{ width: 'calc(100% - 48px)' }}
+            handleChange={(e) => handleChange(e)}
+          />
+        </div>
 
-      <div style={{ width: '100%', textAlign: 'right' }}>
-        <Button 
-          icon='plus'
-          type="submit" 
-        />
-      </div>
-    </form>
+        <div style={{ width: '100%', textAlign: 'right' }}>
+          <Button 
+            icon='plus'
+            type="submit" 
+          />
+        </div>
+      </form>
+    </div>
   )
 }
 
 export default NewChatForm
+
+const styles = {
+  newChatContainer: { 
+    padding: '18px 2px',
+    backgroundColor: 'white'
+  }
+}

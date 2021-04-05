@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import { ChatEngineContext } from '../../../Context'
 
 import { SyncOutlined } from '@ant-design/icons'
 
-const Loading  = () => {
+const ConnectionBar  = () => {
+    const { connecting } = useContext(ChatEngineContext)
+
+    if (!connecting) return <div />
+
     return (
         <div 
             style={{ 
@@ -25,4 +31,4 @@ const Loading  = () => {
     )
 }
 
-export default Loading
+export default ConnectionBar

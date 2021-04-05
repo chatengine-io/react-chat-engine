@@ -4,14 +4,14 @@ import { ChatEngineContext } from '../../Context'
 
 import { getLatestMessages, readMessage } from '../../../actions/messages'
 
-import { AuthFail, Loading, Welcome } from './Steps'
+import { AuthFail, ConnectionBar, Welcome } from './Steps'
 
 import ChatHeader from './ChatHeader'
 import MessageLoader from './MessageLoader'
 import Messages from './Messages'
 import SendingMessages from './Messages/SendingMessages'
-import NewMessageForm from './NewMessageForm'
 import Typers from './Typers'
+import NewMessageForm from './NewMessageForm'
 
 import _ from 'lodash'
 
@@ -27,7 +27,7 @@ const ChatFeed = props => {
     const [currentChat, setCurrentChat] = useState(null)
     const [currentTime, setCurrentTime] = useState(Date.now())
     const { 
-        connecting, conn,
+        conn,
         chats, setChats,
         sendingMessages,
         messages, setMessages,
@@ -64,13 +64,13 @@ const ChatFeed = props => {
             count = count + interval
             getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
 
-        // Active Chat switched in context
+        // Active Chat passed by context
         } else if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
             count = initial
             setCurrentChat(activeChat)
             getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
 
-        // Active Chat passed into props
+        // Active Chat passed by props
         } else if (conn && props.activeChat && props.activeChat !== currentChat) {
             count = initial
             setActiveChat(props.activeChat)
@@ -87,13 +87,14 @@ const ChatFeed = props => {
             didMountRef.current = true
             setTimeout(() => {
                 setDuration(100)
-            }, 3000)
+            }, 3000) // Start animating scroll post-load
             setInterval(() => {
                 setCurrentTime(Date.now())
-            }, 1000)
+            }, 1000) // Check time every second
 
         } else {
-            if(!_.isEmpty(messages) && !loadMoreMessages) { // TODO: Make more sophisticated
+            // Scroll on new incoming messages
+            if(!_.isEmpty(messages) && !loadMoreMessages) {
                 animateScroll.scrollToBottom({
                     duration,
                     containerId: "ce-feed-container"
@@ -105,17 +106,21 @@ const ChatFeed = props => {
 
     const chat = chats && chats[currentChat] 
 
-    if(props.renderChatFeed) return props.renderChatFeed(props)
-    if(conn === undefined) return <AuthFail />
-    if(conn && chats !== null && _.isEmpty(chats)) return <Welcome />
+    if(props.renderChatFeed) {
+        return props.renderChatFeed(props)
+    
+    } else if (conn === undefined) {
+        return <AuthFail />
+    
+    } else if (conn && chats !== null && _.isEmpty(chats)) {
+        return <Welcome />
+    }
 
     return (
         <div 
             className='ce-chat-feed'
             style={{ height: '100%', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
         >
-            { connecting && <Loading /> }
-
             { props.renderChatHeader ?  props.renderChatHeader(chat) : <ChatHeader /> }
 
             <div
@@ -132,6 +137,8 @@ const ChatFeed = props => {
                 <SendingMessages {...props} />
 
                 <Typers currentTime={currentTime} />
+
+                <ConnectionBar />
 
                 <div style={{ height: '54px' }} className='ce-feed-container-bottom' />
             </div>
