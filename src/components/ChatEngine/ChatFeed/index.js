@@ -81,13 +81,8 @@ const ChatFeed = props => {
         }
     }
 
-    useEffect(() => {
-        loadMessages(false)
-    }, [conn, activeChat, currentChat])
-
-    useEffect(() => {
-        loadMessages(loadMoreMessages)
-    }, [loadMoreMessages])
+    useEffect(() => { loadMessages(false) }, [conn, activeChat, currentChat])
+    useEffect(() => { loadMessages(loadMoreMessages) }, [loadMoreMessages])
 
     useEffect(() => {
         if (!didMountRef.current) {
@@ -107,7 +102,7 @@ const ChatFeed = props => {
                 })
             }
         }
-    })
+    }, [messages])
 
     function renderMessages() {
         const chat = chats && chats[activeChat]
@@ -173,9 +168,7 @@ const ChatFeed = props => {
     const chat = chats && chats[currentChat] 
 
     if(props.renderChatFeed) return props.renderChatFeed(props)
-
     if(conn === undefined) return <AuthFail />
-
     if(conn && chats !== null && _.isEmpty(chats)) return <Welcome />
 
     return (
