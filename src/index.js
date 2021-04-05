@@ -1,18 +1,19 @@
+import { ChatEngineWrapper, ChatEngineContext } from './components/Context'
+
 import ChatEngine from './components'
 
 import Socket from './components/Socket'
 import ChatSocket from './components/Socket/ChatSocket'
 
-import { isTyping } from './actions/typing'
-import { getChats, newChat, getLatestChats, getChat, editChat, deleteChat } from './actions/chats'
-import { addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat } from './actions/people'
-import { getMessages, sendMessage, editMessage, deleteMessage, getLatestMessages } from './actions/messages'
-
 import { Avatar, Dot } from './components/ChatEngine/components/Avatar'
 import { Button } from './components/ChatEngine/components/Button'
 import { TextInput, TextAreaInput, AutoCompleteInput } from './components/ChatEngine/components/Input'
 
-import { ChatEngineWrapper, ChatEngineContext } from './components/Context'
+
+import { getChats, newChat, getLatestChats, getChat, editChat, deleteChat } from './actions/chats'
+import { addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat } from './actions/people'
+import { getMessages, sendMessage, editMessage, deleteMessage, getLatestMessages } from './actions/messages'
+import { isTyping } from './actions/typing'
 
 import ChatList from './components/ChatEngine/ChatList'
 import ChatCard from './components/ChatEngine/ChatList/ChatCard'
@@ -41,12 +42,12 @@ export {
   Button,
   TextInput, TextAreaInput, AutoCompleteInput,
   
-  ChatList, ChatCard, NewChatForm,
-  ChatFeed, ChatHeader, MessageBubble, Typers, NewMessageForm,
-  ChatSettings, ChatSettingsTop, PeopleSettings, PhotosSettings, OptionsSettings,
-  
   getChats, newChat, getLatestChats, getChat, editChat, deleteChat,
   addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat,
   getMessages, sendMessage, editMessage, deleteMessage, getLatestMessages,
   isTyping,
+
+  ChatList, ChatCard, NewChatForm,
+  ChatFeed, ChatHeader, MessageBubble, Typers, NewMessageForm,
+  ChatSettings, ChatSettingsTop, PeopleSettings, PhotosSettings, OptionsSettings,
 }
