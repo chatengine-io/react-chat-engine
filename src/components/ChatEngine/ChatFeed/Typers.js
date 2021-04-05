@@ -14,7 +14,10 @@ const Typers = props => {
     return Object.keys(typers).map((username, index) => {
         if (props.currentTime < typers[username]) {
             return (
-                <div style={{ color: stringToColor(username), padding: '2px', paddingLeft: '12px' }}>
+                <div 
+                    key={`typer_${index}`} 
+                    style={{ color: stringToColor(username), padding: '2px', paddingLeft: '12px' }}
+                >
                     {`${username} is typing...`}
                 </div>
             )

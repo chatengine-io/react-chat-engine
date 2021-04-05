@@ -7,8 +7,9 @@ import { getLatestMessages, readMessage } from '../../../actions/messages'
 import { AuthFail, Loading, Welcome } from './Steps'
 
 import ChatHeader from './ChatHeader'
-import MessageBubble from './MessageBubble'
 import MessageLoader from './MessageLoader'
+import Messages from './Messages'
+import SendingMessages from './Messages/SendingMessages'
 import NewMessageForm from './NewMessageForm'
 import Typers from './Typers'
 
@@ -16,7 +17,7 @@ import _ from 'lodash'
 
 import { animateScroll } from "react-scroll"
 
-const initial = 66
+const initial = 15
 let count = initial
 const interval = 33
 
@@ -102,68 +103,8 @@ const ChatFeed = props => {
                 })
             }
         }
-    }, [messages])
+    }, [sendingMessages, messages])
 
-    function renderMessages() {
-        const chat = chats && chats[activeChat]
-        const keys = Object.keys(messages)
-        
-        return keys.map((key, index) => {
-            const message = messages[key]
-            const lastMessageKey = index === 0 ? null : keys[index - 1]
-            const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
-
-            if (props.renderMessageBubble) {
-                return (
-                    <div key={`message_${index}`}>
-                        { 
-                            props.renderMessageBubble(
-                                conn, 
-                                chat, 
-                                messages[lastMessageKey], 
-                                message, 
-                                messages[nextMessageKey]
-                            ) 
-                        }
-                    </div>
-                )
-            }
-            
-            return (
-                <MessageBubble 
-                    key={`message_${index}`}
-                    chat={chat}
-                    message={message}
-                    lastMessage={messages[lastMessageKey]}
-                    nextMessage={messages[nextMessageKey]}
-                />
-            )
-        })
-    }
-
-    function renderSendingMessages() {
-        const keys = Object.keys(sendingMessages)
-        const chat = chats && chats[activeChat]
-
-        return keys.map((key, index) => {
-            const message = sendingMessages[key]
-            const lastMessageKey = index === 0 ? null : keys[index - 1]
-            const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
-
-            if(message && message.chat === activeChat) {
-                return (
-                    <MessageBubble 
-                        sending
-                        key={`sending-msg-${index}`}
-                        chat={chat}
-                        message={message}
-                        lastMessage={sendingMessages[lastMessageKey]}
-                        nextMessage={sendingMessages[nextMessageKey]}
-                    />
-                )
-            }
-        })
-    }
 
     const chat = chats && chats[currentChat] 
 
@@ -189,9 +130,9 @@ const ChatFeed = props => {
 
                 { Object.keys(messages).length > 0 && <MessageLoader /> }
 
-                { renderMessages() }
+                <Messages {...props} />
 
-                { renderSendingMessages() }
+                <SendingMessages {...props} />
 
                 <Typers currentTime={currentTime} />
 
