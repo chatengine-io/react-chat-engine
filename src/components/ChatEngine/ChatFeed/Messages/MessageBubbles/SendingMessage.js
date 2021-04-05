@@ -2,7 +2,7 @@ import React from 'react'
 
 import Thumbnail from './Thumbnail'
 
-import Dot from '../../components/Avatar/Dot'
+import Dot from '../../../components/Avatar/Dot'
 
 import { Row, Col, setConfiguration } from 'react-grid-system'
 

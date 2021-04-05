@@ -25,10 +25,6 @@ const ChatCard = props => {
     const extraStyle = activeChat === chat.id ? styles.activeChat : {}
     const otherPerson = chat.people.find(person => person.person.username !== conn.userName);
     
-    if (props.renderChatCard) {
-        return <div key={`chat_${index}`}>{props.renderChatCard(chat, index)}</div>
-    }
-
     let lastMessage = chat.last_message.text
     if (!lastMessage) {
         lastMessage = chat.last_message.attachments.length > 0 ?

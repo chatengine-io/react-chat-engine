@@ -2,20 +2,22 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext } from '../../Context'
 
-import { getMessages, readMessage } from '../../../actions/messages'
+import { getLatestMessages, readMessage } from '../../../actions/messages'
 
 import { AuthFail, Loading, Welcome } from './Steps'
 
 import ChatHeader from './ChatHeader'
-import MessageBubble from './MessageBubble'
+import MessageLoader from './MessageLoader'
+import Messages from './Messages'
+import SendingMessages from './Messages/SendingMessages'
 import NewMessageForm from './NewMessageForm'
-import IsTyping from './IsTyping'
+import Typers from './Typers'
 
 import _ from 'lodash'
 
 import { animateScroll } from "react-scroll"
 
-const initial = 66
+const initial = 45
 let count = initial
 const interval = 33
 
@@ -30,7 +32,7 @@ const ChatFeed = props => {
         sendingMessages,
         messages, setMessages,
         activeChat, setActiveChat,
-        typingCounter, setTypingCounter,
+        loadMoreMessages, setLoadMoreMessages,
     } = useContext(ChatEngineContext)
 
     function onReadMessage(chat) {
@@ -55,23 +57,30 @@ const ChatFeed = props => {
         props.onGetMessages && props.onGetMessages(chatId, messages)
     }
 
-    function loadMoreMessages() {
-        if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
+    function loadMessages(loadMoreMessages) {
+        // Message Loader triggers
+        if (loadMoreMessages) { 
+            setLoadMoreMessages(false)
+            count = count + interval
+            getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
+
+        // Active Chat switched in context
+        } else if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
             count = initial
             setCurrentChat(activeChat)
-            getMessages(conn, activeChat, (chatId, messages) => onGetMessages(chatId, messages))
+            getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
 
+        // Active Chat passed into props
         } else if (conn && props.activeChat && props.activeChat !== currentChat) {
             count = initial
             setActiveChat(props.activeChat)
             setCurrentChat(props.activeChat)
-            getMessages(conn, props.activeChat, (chatId, messages) => onGetMessages(chatId, messages))
+            getLatestMessages(conn, props.activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
         }
     }
 
-    useEffect(() => {
-        loadMoreMessages()
-    }, [conn, activeChat, currentChat])
+    useEffect(() => { loadMessages(false) }, [conn, activeChat, currentChat])
+    useEffect(() => { loadMessages(loadMoreMessages) }, [loadMoreMessages])
 
     useEffect(() => {
         if (!didMountRef.current) {
@@ -84,98 +93,20 @@ const ChatFeed = props => {
             }, 1000)
 
         } else {
-            if(!_.isEmpty(messages)) { // TODO: Make more sophisticated
+            if(!_.isEmpty(messages) && !loadMoreMessages) { // TODO: Make more sophisticated
                 animateScroll.scrollToBottom({
                     duration,
                     containerId: "ce-feed-container"
                 })
             }
         }
-    })
+    }, [sendingMessages, messages])
 
-    function renderTypers() {
-        const typers = typingCounter && typingCounter[activeChat] ? typingCounter[activeChat] : []
-
-        if (props.renderIsTyping) {
-            return props.renderIsTyping(typers)
-        }
-
-        return Object.keys(typers).map((username, index) => {
-            if (username !== props.userName && currentTime < typers[username]) {
-                return <IsTyping key={`typer_${index}`} username={username} />
-            } else {
-                return <div key={`typer_${index}`} />
-            }
-        })
-    }
-
-    function renderMessages() {
-        const chat = chats && chats[activeChat]
-        const keys = Object.keys(messages)
-        
-        return keys.map((key, index) => {
-            const message = messages[key]
-            const lastMessageKey = index === 0 ? null : keys[index - 1]
-            const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
-
-            if (props.renderMessageBubble) {
-                return (
-                    <div key={`message_${index}`}>
-                        { 
-                            props.renderMessageBubble(
-                                conn, 
-                                chat, 
-                                messages[lastMessageKey], 
-                                message, 
-                                messages[nextMessageKey]
-                            ) 
-                        }
-                    </div>
-                )
-            }
-            
-            return (
-                <MessageBubble 
-                    key={`message_${index}`}
-                    chat={chat}
-                    message={message}
-                    lastMessage={messages[lastMessageKey]}
-                    nextMessage={messages[nextMessageKey]}
-                />
-            )
-        })
-    }
-
-    function renderSendingMessages() {
-        const keys = Object.keys(sendingMessages)
-        const chat = chats && chats[activeChat]
-
-        return keys.map((key, index) => {
-            const message = sendingMessages[key]
-            const lastMessageKey = index === 0 ? null : keys[index - 1]
-            const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
-
-            if(message && message.chat === activeChat) {
-                return (
-                    <MessageBubble 
-                        sending
-                        key={`sending-msg-${index}`}
-                        chat={chat}
-                        message={message}
-                        lastMessage={sendingMessages[lastMessageKey]}
-                        nextMessage={sendingMessages[nextMessageKey]}
-                    />
-                )
-            }
-        })
-    }
 
     const chat = chats && chats[currentChat] 
 
     if(props.renderChatFeed) return props.renderChatFeed(props)
-
     if(conn === undefined) return <AuthFail />
-
     if(conn && chats !== null && _.isEmpty(chats)) return <Welcome />
 
     return (
@@ -194,11 +125,13 @@ const ChatFeed = props => {
             >
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
 
-                { renderMessages() }
+                { Object.keys(messages).length > 0 && <MessageLoader /> }
 
-                { renderSendingMessages() }
+                <Messages {...props} />
 
-                { renderTypers() }
+                <SendingMessages {...props} />
+
+                <Typers currentTime={currentTime} />
 
                 <div style={{ height: '54px' }} className='ce-feed-container-bottom' />
             </div>

@@ -1,15 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
+
+import { ChatEngineContext } from '../../Context'
 
 const MessageLoader = props => {
+    const { setLoadMoreMessages } = useContext(ChatEngineContext)
+
     function useOnScreen(ref) {
         const [isIntersecting, setIntersecting] = useState(false)
       
         const observer = new IntersectionObserver(
             ([entry]) => {
                 setIntersecting(entry.isIntersecting)
-                if (entry.isIntersecting) {
-                    props.onVisible()
-                }
+                
+                if (entry.isIntersecting) setLoadMoreMessages(true)
             }
         )
       

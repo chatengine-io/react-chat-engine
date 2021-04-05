@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { ChatEngineContext } from '../../../Context'
+import { ChatEngineContext } from '../../../../Context'
 
 import DatePartition from './DatePartition'
 import MyMessage from './MyMessage'
