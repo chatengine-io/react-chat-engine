@@ -50,7 +50,11 @@ const Messages = props => {
                     nextMessage={messages[nextMessageKey]}
                 />
 
-                { index === 0 && <RenderTrigger onEnter={() => setLoadMoreMessages(true)} /> }
+                { 
+                    index === 0 && 
+                    <RenderTrigger onEnter={() => setLoadMoreMessages(true)} /> 
+                }
+                
                 { 
                     index === keys.length - 1 && 
                     <RenderTrigger 
