@@ -22,12 +22,19 @@ export default class TextInput extends Component {
         return (
             // NOTE: You may need to make a div the searchContainer to put icons in...
             <input 
+                autoFocus={this.props.autoFocus}
                 className='ce-input ce-text-input'
                 value={this.props.value} 
                 placeholder={this.props.label}
                 style={{ ...defaultStyle, ...customStyle }}
-                onBlur={() => this.setState({ focused: false })}
-                onFocus={() => this.setState({ focused: true })}
+                onBlur={() => {
+                    this.setState({ focused: false });
+                    this.props.onBlur && this.props.onBlur();
+                }}
+                onFocus={() => {
+                    this.setState({ focused: true });
+                    this.props.onFocus && this.props.onFocus();
+                }}
                 type={this.props.type ? this.props.type : "text" }
                 onChange={(e) => this.props.handleChange && this.props.handleChange(e)} 
             />
