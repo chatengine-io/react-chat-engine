@@ -7,7 +7,6 @@ import { getLatestMessages, readMessage } from '../../../actions/messages'
 import { AuthFail, ConnectionBar, Welcome } from './Steps'
 
 import ChatHeader from './ChatHeader'
-import MessageLoader from './MessageLoader'
 import Messages from './Messages'
 import SendingMessages from './Messages/SendingMessages'
 import Typers from './Typers'
@@ -129,8 +128,6 @@ const ChatFeed = props => {
                 className='ce-chat-feed-container'
             >
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
-
-                { Object.keys(messages).length > 0 && <MessageLoader /> }
 
                 <Messages {...props} />
 

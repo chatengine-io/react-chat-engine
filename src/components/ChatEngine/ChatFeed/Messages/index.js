@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 
 import { ChatEngineContext } from '../../../Context'
 
+import { RenderTrigger } from '../Triggers'
+
 import MessageBubble from './MessageBubbles/index'
 
 const Messages = props => {
@@ -10,6 +12,7 @@ const Messages = props => {
         chats,
         messages,
         activeChat,
+        setLoadMoreMessages,
     } = useContext(ChatEngineContext)
 
     const chat = chats && chats[activeChat]
@@ -39,13 +42,23 @@ const Messages = props => {
         }
         
         return (
-            <MessageBubble 
-                key={`message_${index}`}
-                chat={chat}
-                message={message}
-                lastMessage={messages[lastMessageKey]}
-                nextMessage={messages[nextMessageKey]}
-            />
+            <div key={`message_${index}`}>
+                <MessageBubble 
+                    chat={chat}
+                    message={message}
+                    lastMessage={messages[lastMessageKey]}
+                    nextMessage={messages[nextMessageKey]}
+                />
+
+                { index === 0 && <RenderTrigger onEnter={() => setLoadMoreMessages(true)} /> }
+                { 
+                    index === keys.length - 1 && 
+                    <RenderTrigger 
+                        onEnter={() => console.log('last msg in')} 
+                        onLeave={() => console.log('last msg left')}
+                    />
+                }
+            </div>
         )
     })
 }
