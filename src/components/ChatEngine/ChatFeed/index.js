@@ -7,7 +7,6 @@ import { getLatestMessages, readMessage } from '../../../actions/messages'
 import { AuthFail, ConnectionBar, Welcome } from './Steps'
 
 import ChatHeader from './ChatHeader'
-import MessageLoader from './MessageLoader'
 import Messages from './Messages'
 import SendingMessages from './Messages/SendingMessages'
 import Typers from './Typers'
@@ -33,6 +32,7 @@ const ChatFeed = props => {
         messages, setMessages,
         activeChat, setActiveChat,
         loadMoreMessages, setLoadMoreMessages,
+        isBottomVisible,
     } = useContext(ChatEngineContext)
 
     function onReadMessage(chat) {
@@ -43,7 +43,7 @@ const ChatFeed = props => {
         }
     }
 
-    function onGetMessages(chatId, messages) {
+    function onGetMessages(chatId, messages, scrollDownTo) {
         setMessages(_.mapKeys(messages, 'id'))
 
         if (messages.length > 0) {
@@ -52,6 +52,10 @@ const ChatFeed = props => {
             if (props.userName && props.userName !== message.sender_username) {
                 readMessage(conn, chatId, message.id, (chat) => onReadMessage(chat))
             }
+        }
+
+        if (scrollDownTo) {
+            animateScroll.scrollToBottom({ duration: 0, containerId: scrollDownTo })
         }
         
         props.onGetMessages && props.onGetMessages(chatId, messages)
@@ -62,20 +66,29 @@ const ChatFeed = props => {
         if (loadMoreMessages) { 
             setLoadMoreMessages(false)
             count = count + interval
-            getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
+            getLatestMessages(
+                conn, activeChat, count, 
+                (chatId, messages) => onGetMessages(chatId, messages, false)
+            )
 
         // Active Chat passed by context
         } else if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
             count = initial
             setCurrentChat(activeChat)
-            getLatestMessages(conn, activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
+            getLatestMessages(
+                conn, activeChat, count, 
+                (chatId, messages) => onGetMessages(chatId, messages, "ce-feed-container")
+            )
 
         // Active Chat passed by props
         } else if (conn && props.activeChat && props.activeChat !== currentChat) {
             count = initial
             setActiveChat(props.activeChat)
             setCurrentChat(props.activeChat)
-            getLatestMessages(conn, props.activeChat, count, (chatId, messages) => onGetMessages(chatId, messages))
+            getLatestMessages(
+                conn, props.activeChat, count, 
+                (chatId, messages) => onGetMessages(chatId, messages, "ce-feed-container")
+            )
         }
     }
 
@@ -85,23 +98,25 @@ const ChatFeed = props => {
     useEffect(() => {
         if (!didMountRef.current) {
             didMountRef.current = true
+            
             setTimeout(() => {
                 setDuration(100)
             }, 3000) // Start animating scroll post-load
+
             setInterval(() => {
                 setCurrentTime(Date.now())
             }, 1000) // Check time every second
 
         } else {
             // Scroll on new incoming messages
-            if(!_.isEmpty(messages) && !loadMoreMessages) {
+            if(isBottomVisible && !_.isEmpty(messages)) {
                 animateScroll.scrollToBottom({
                     duration,
                     containerId: "ce-feed-container"
                 })
             }
         }
-    }, [sendingMessages, messages])
+    }, [sendingMessages, messages, isBottomVisible])
 
 
     const chat = chats && chats[currentChat] 
@@ -129,8 +144,6 @@ const ChatFeed = props => {
                 className='ce-chat-feed-container'
             >
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
-
-                { Object.keys(messages).length > 0 && <MessageLoader /> }
 
                 <Messages {...props} />
 

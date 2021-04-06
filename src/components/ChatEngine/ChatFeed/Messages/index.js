@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 
 import { ChatEngineContext } from '../../../Context'
 
+import { RenderTrigger } from '../Triggers'
+
 import MessageBubble from './MessageBubbles/index'
 
 const Messages = props => {
@@ -10,6 +12,8 @@ const Messages = props => {
         chats,
         messages,
         activeChat,
+        setLoadMoreMessages,
+        setIsBottomVisible,
     } = useContext(ChatEngineContext)
 
     const chat = chats && chats[activeChat]
@@ -39,13 +43,29 @@ const Messages = props => {
         }
         
         return (
-            <MessageBubble 
-                key={`message_${index}`}
-                chat={chat}
-                message={message}
-                lastMessage={messages[lastMessageKey]}
-                nextMessage={messages[nextMessageKey]}
-            />
+            <div key={`message_${index}`} id={`ce-message-${message.id}`}>
+                {/* Scroll down if the top of last msg is visible */}
+                { 
+                    index === keys.length - 1 && 
+                    <RenderTrigger 
+                        onEnter={() => setIsBottomVisible(true)}
+                        onLeave={() => setIsBottomVisible(false)}
+                    />
+                }
+
+                <MessageBubble 
+                    chat={chat}
+                    message={message}
+                    lastMessage={messages[lastMessageKey]}
+                    nextMessage={messages[nextMessageKey]}
+                />
+
+                {/* Load more if the bottom of top msg is visible */}
+                { 
+                    index === 0 && 
+                    <RenderTrigger onEnter={() => setLoadMoreMessages(true)} /> 
+                }
+            </div>
         )
     })
 }
