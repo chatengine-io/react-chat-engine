@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { LoadingOutlined } from '@ant-design/icons'
 
 const Thumbnail = props => {
+    const [hovered, setHovered] = useState(false)
     const { attachment } = props
+    const style={ 
+        ...styles.thumbnail, 
+        ...{ border: hovered ? '1px solid #1890ff' : '0px' } 
+    }
 
     if (!attachment) {
         return (
@@ -15,9 +20,12 @@ const Thumbnail = props => {
 
     return (
         <img 
-            style={styles.thumbnail}
+            onClick={() => window.open(attachment.file)}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
             src={attachment.file}
             alt={'thumb-nail'}
+            style={style}
         />
     )
 }
