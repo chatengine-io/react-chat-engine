@@ -48,12 +48,7 @@ const NewMessageForm = () => {
     const data = { text, attachments, custom_json, sender_username, chat: activeChat }
 
     if (text.length > 0 || attachments.length > 0) {
-      sendMessage(
-        conn, 
-        activeChat, 
-        data,
-        (data) => {}
-      )
+      sendMessage(conn, activeChat, data, (data) => {})
     }
 
     setState({ ...state, value: '', attachments: [] })
