@@ -58,7 +58,7 @@ const NewMessageForm = () => {
 
     setState({ ...state, value: '', attachments: [] })
     
-    // Hack - should be in Text Area Input
+    // TODO: Should be in Text Area Input
     var textarea = document.getElementById("msg-textarea")
     textarea.style.height = "24px"
 
