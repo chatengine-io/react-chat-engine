@@ -151,7 +151,7 @@ const Socket = props => {
                 ...newTypingCounter,
                 [id]: {
                     ...newTypingCounter[id],
-                    [person]: Date.now() + 2000
+                    [person]: Date.now()
                 }
             }
                 

@@ -128,23 +128,11 @@ const ChatSocket = props => {
         } else if (eventJSON.action === 'is_typing') {
             const { id, person } = eventJSON.data
             let newTypingCounter = {...typingCounter}
-
-            if (newTypingCounter[id] && newTypingCounter[id][person]) {
-                newTypingCounter = {
-                    ...newTypingCounter,
-                    [id]: {
-                        ...newTypingCounter[id],
-                        [person]: newTypingCounter[id][person] + 1
-                    }
-                }
-
-            } else {
-                newTypingCounter = {
-                    ...newTypingCounter,
-                    [id]: {
-                        ...newTypingCounter[id],
-                        [person]: 1
-                    }
+            newTypingCounter = {
+                ...newTypingCounter,
+                [id]: {
+                    ...newTypingCounter[id],
+                    [person]: Date.now()
                 }
             }
                 
