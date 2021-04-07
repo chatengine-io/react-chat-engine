@@ -18,7 +18,6 @@ export default class App extends Component {
         userName={userName}
         userSecret='pass1234'
         renderChatFeed={(chatAppProps) => <ChatFeed {...chatAppProps} /> }
-        // renderChatSettings={(props) => {console.log(props); return <div />}}
         onNewMessage={() => new Audio('https://chat-engine-assets.s3.amazonaws.com/click.mp3').play()}
       />
     );

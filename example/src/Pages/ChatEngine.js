@@ -18,11 +18,9 @@ const ChatEngineApp = props => {
 
     return (
         <ChatEngine 
+            {...props}
             height='100vh'
             development={!props.prod}
-            userName={props.userName}
-            userSecret={props.userSecret}
-            projectID={props.projectID}
         />
     )
 }

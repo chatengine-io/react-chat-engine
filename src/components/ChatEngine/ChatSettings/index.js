@@ -8,7 +8,7 @@ import OptionsSettings from './OptionsSettings'
 import ChatSettingsTop from './ChatSettingsTop'
 
 const ChatSettings = props => {
-    const { chats, activeChat } = useContext(ChatEngineContext)  
+    const { conn, chats, activeChat } = useContext(ChatEngineContext)  
     const chat = chats && chats[activeChat] 
 
     if (props.renderChatSettings) return props.renderChatSettings(props)
@@ -20,13 +20,13 @@ const ChatSettings = props => {
             <div style={{ width: '90%', paddingLeft: '5%' }} className='ce-settings-container'>
                 {
                     props.renderChatSettingsTop ?
-                    props.renderChatSettingsTop(props, chat) :
+                    props.renderChatSettingsTop(conn, chat) :
                     <ChatSettingsTop {...props} chat={chat} />
                 }
 
                 {
                     props.renderPeopleSettings ?
-                    props.renderPeopleSettings(props, chat) :
+                    props.renderPeopleSettings(conn, chat) :
                     <PeopleSettings {...props} chat={chat} />
                 }
 
@@ -41,7 +41,7 @@ const ChatSettings = props => {
                     <div>
                         {
                             props.renderOptionsSettings ?
-                            props.renderOptionsSettings(props, chat) :
+                            props.renderOptionsSettings(conn, chat) :
                             <OptionsSettings {...props} chat={chat} />
                         }
                     </div>

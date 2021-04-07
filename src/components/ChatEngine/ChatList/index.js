@@ -17,7 +17,7 @@ const interval = 25
 const ChatList = props => {
     const didMountRef = useRef(false)
     const [hasMoreChats, setHasMoreChats] = useState(true)
-    const { chats, setChats, activeChat, setActiveChat } = useContext(ChatEngineContext)
+    const { conn, chats, setChats, activeChat, setActiveChat } = useContext(ChatEngineContext)
 
     function renderChats(chats) {
         return chats.map((chat, index) => {
@@ -80,7 +80,7 @@ const ChatList = props => {
     return (
         <div style={styles.chatListContainer} className='ce-chat-list'>
             <div style={styles.chatsContainer} className='ce-chats-container'>
-                { props.renderNewChatForm ? props.renderNewChatForm(props) : <ChatForm  /> }
+                { props.renderNewChatForm ? props.renderNewChatForm(conn) : <ChatForm  /> }
 
                 { renderChats(chatList) } 
 
