@@ -11,8 +11,8 @@ import ChatLoader from './ChatLoader'
 import ChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
-let count = 13
-const interval = 13
+let count = 25
+const interval = 25
 
 const ChatList = props => {
     const didMountRef = useRef(false)
