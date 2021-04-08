@@ -21,7 +21,7 @@ Try our free plan at [chatengine.io](https://chatengine.io)
 - Using [npm](https://www.npmjs.com/#getting-started): `npm install react-chat-engine --save`
 - Using [Yarn](https://yarnpkg.com/): `yarn add react-chat-engine`
 
-## Getting Started
+## Quick Start
 
 Add serverless chat to your React app in 3 minutes.
 
