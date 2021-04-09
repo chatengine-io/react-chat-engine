@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 
 import { ChatEngineContext } from '../Context'
 
+import { getLatestChats } from '../../actions/chats'
 import { readMessage } from '../../actions/messages'
 
 import { WebSocket } from 'nextjs-websocket'
@@ -40,6 +41,8 @@ const Socket = props => {
     function onConnect(conn) {
         setConn(conn); setCreds(conn);
         setConnecting(false)
+
+        getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
         
         props.onConnect && props.onConnect(conn)
     }

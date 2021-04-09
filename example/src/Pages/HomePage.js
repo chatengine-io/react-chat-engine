@@ -60,6 +60,7 @@ const HomePage = props => {
                     {...props.accounts} 
                     prod={prod} 
                     id={parseInt(id)} 
+                    onGetChats={(chats) => console.log(chats)}
                 />
             </ChatEngineWrapper>
 

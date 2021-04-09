@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext } from '../../Context'
 
-import { getChat } from '../../../actions/chats'
 import { getLatestMessages, readMessage } from '../../../actions/messages'
 
 import { AuthFail, ConnectionBar, Welcome } from './Steps'
@@ -93,10 +92,6 @@ const ChatFeed = props => {
                 conn, props.activeChat, count, 
                 (chatId, messages) => onGetMessages(chatId, messages, "ce-feed-container")
             )
-
-            if (!chats || chats === null) { // Get the chat if not loaded
-                getChat(conn, props.activeChat, (chat) => setChats(_.mapKeys([chat], 'id')))
-            }
         }
     }
 

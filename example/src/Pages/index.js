@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux'
 
 import history from '../Utilities/history'
 
-import ChatWithMePage from './ChatWithMePage'
+import UserSocketFeedPage from './UserSocketFeedPage'
+import ChatSocketPage from './ChatSocketPage'
 import DirectChatsPage from './DirectChatsPage'
 import ChatTutorial from './ChatTutorial'
 import HomePage from './HomePage'
@@ -15,7 +16,8 @@ class RootPage extends Component {
     return (
       <Router history={history}>
         <Switch>
-          <Route path='/with_me' component={ChatWithMePage} />
+          <Route path='/user_socket_feed' component={UserSocketFeedPage} />
+          <Route path='/chat_socket' component={ChatSocketPage} />
           <Route path='/direct' component={DirectChatsPage} />
           <Route path='/tutorial' component={ChatTutorial} />
           <Route path='/:id' component={HomePage} />
