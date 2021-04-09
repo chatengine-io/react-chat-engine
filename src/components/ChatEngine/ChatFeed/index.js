@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext } from '../../Context'
 
+import { getChat } from '../../../actions/chats'
 import { getLatestMessages, readMessage } from '../../../actions/messages'
 
 import { AuthFail, ConnectionBar, Welcome } from './Steps'
@@ -64,8 +65,9 @@ const ChatFeed = props => {
     function loadMessages(loadMoreMessages) {
         // Message Loader triggers
         if (loadMoreMessages) { 
-            setLoadMoreMessages(false)
             count = count + interval
+            setLoadMoreMessages(false)
+
             getLatestMessages(
                 conn, activeChat, count, 
                 (chatId, messages) => onGetMessages(chatId, messages, false)
@@ -75,6 +77,7 @@ const ChatFeed = props => {
         } else if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
             count = initial
             setCurrentChat(activeChat)
+
             getLatestMessages(
                 conn, activeChat, count, 
                 (chatId, messages) => onGetMessages(chatId, messages, "ce-feed-container")
@@ -85,10 +88,15 @@ const ChatFeed = props => {
             count = initial
             setActiveChat(props.activeChat)
             setCurrentChat(props.activeChat)
+
             getLatestMessages(
                 conn, props.activeChat, count, 
                 (chatId, messages) => onGetMessages(chatId, messages, "ce-feed-container")
             )
+
+            if (!chats || chats === null) { // Get the chat if not loaded
+                getChat(conn, props.activeChat, (chat) => setChats(_.mapKeys([chat], 'id')))
+            }
         }
     }
 
