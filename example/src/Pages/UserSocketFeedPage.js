@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { ChatEngineWrapper, Socket, ChatFeed, ChatList } from 'react-chat-engine'
+import { ChatEngineWrapper, Socket, ChatFeed } from 'react-chat-engine'
 
 import { Row, Col } from 'react-grid-system'
 import { setConfiguration } from 'react-grid-system';
