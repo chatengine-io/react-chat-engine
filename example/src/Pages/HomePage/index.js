@@ -4,27 +4,25 @@ import { bindActionCreators } from 'redux'
 
 import { login, logout } from '../../Actions/Accounts'
 
+import { DEVELOPMENT, PROJECT_ID } from '../../consts'
+
 import { ChatEngineWrapper } from 'react-chat-engine'
 
 import ChatEngine from './ChatEngine'
 
-const prod = window.location.host.indexOf('chatengine.io') !== -1
 
 const HomePage = props => {
-    const [state, setState] = useState({
-        loading: false,
-        rootUrl: prod ? 'https://api.chatengine.io/' : 'http://127.0.0.1:8000/',
-        projectID: prod ? '8a1f9edb-a05a-4b55-9d6e-ec399a38f5a9' : '1ed59673-1fd6-46ed-9eb9-56239a6a4f82',
-        userName: '',
-        userSecret: '',
-    })
+    const [loading, setLoading] = useState(false)
+    const [userName, setUserName] = useState('')
+    const [userSecret, setUserSecret] = useState('')
     const { id } = props.match.params
 
     function submit(){
-        setState({ ...state, loading: true })
+        setLoading(true)
+
         props.login(
-            state, 
-            () => {},
+            {userName, userSecret}, 
+            () => setLoading(false),
             (error) => console.log(error)
         )
     }
@@ -35,17 +33,21 @@ const HomePage = props => {
                 <input 
                     type='text'
                     placeholder='User Name'
-                    onChange={(e) => setState({ ...state, userName: e.target.value })}
+                    id='home-page-username-input'
+                    onChange={(e) => setUserName(e.target.value)}
                 />
+
                 <input 
                     type='password'
                     placeholder='Password'
-                    onChange={(e) => setState({ ...state, userSecret: e.target.value })}
+                    id='home-page-password-input'
+                    onChange={(e) => setUserSecret(e.target.value)}
                 />
 
                 <button 
                     onClick={() => submit()}
-                    style={{ backgroundColor: state.loading ? '#f0f0f0' : '#91d5ff' }}
+                    id='home-page-login-button'
+                    style={{ backgroundColor: loading ? '#f0f0f0' : '#91d5ff' }}
                 >
                     Submit
                 </button>
@@ -58,14 +60,15 @@ const HomePage = props => {
             <ChatEngineWrapper>
                 <ChatEngine 
                     {...props.accounts} 
-                    prod={prod} 
+                    prod={!DEVELOPMENT} 
                     id={parseInt(id)} 
-                    onGetChats={(chats) => console.log(chats)}
+                    projectID={PROJECT_ID}
                 />
             </ChatEngineWrapper>
 
             <button 
                 onClick={() => props.logout()}
+                id='home-page-logout-button'
                 style={{ position: 'absolute', bottom: '24px', right: '24px' }}
             >
                 Logout!
