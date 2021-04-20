@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import { login, logout } from '../../Actions/Accounts'
 
-import { DEVELOPMENT, PROJECT_ID } from '../../consts'
+import { ROOT_URL, DEVELOPMENT, PROJECT_ID } from '../../consts'
 
 import { ChatEngineWrapper } from 'react-chat-engine'
 
@@ -21,7 +21,7 @@ const HomePage = props => {
         setLoading(true)
 
         props.login(
-            {userName, userSecret}, 
+            { rootUrl: ROOT_URL, projectID: PROJECT_ID, userName, userSecret },
             () => setLoading(false),
             (error) => console.log(error)
         )
@@ -59,9 +59,9 @@ const HomePage = props => {
         <div style={{ position: 'absolute', top: '0px', width: '100%' }}>
             <ChatEngineWrapper>
                 <ChatEngine 
-                    {...props.accounts} 
-                    development={DEVELOPMENT} 
-                    id={parseInt(id)} 
+                    {...props.accounts}
+                    development={DEVELOPMENT}
+                    id={parseInt(id)}
                     projectID={PROJECT_ID}
                 />
             </ChatEngineWrapper>
