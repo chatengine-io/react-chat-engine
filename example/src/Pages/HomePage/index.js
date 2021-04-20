@@ -60,7 +60,7 @@ const HomePage = props => {
             <ChatEngineWrapper>
                 <ChatEngine 
                     {...props.accounts} 
-                    prod={!DEVELOPMENT} 
+                    development={DEVELOPMENT} 
                     id={parseInt(id)} 
                     projectID={PROJECT_ID}
                 />

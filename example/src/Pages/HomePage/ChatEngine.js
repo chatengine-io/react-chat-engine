@@ -20,7 +20,6 @@ const ChatEngineApp = props => {
         <ChatEngine 
             {...props}
             height='100vh'
-            development={!props.prod}
         />
     )
 }
