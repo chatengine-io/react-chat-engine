@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { login, logout } from '../Actions/Accounts'
+import { login, logout } from '../../Actions/Accounts'
 
 import { ChatEngineWrapper } from 'react-chat-engine'
 
