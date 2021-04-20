@@ -12,40 +12,32 @@ const prod = window.location.host.indexOf('chatengine.io') !== -1
 const projectID = prod ? '...' : '1ed59673-1fd6-46ed-9eb9-56239a6a4f82'
 const chatID = prod ? 0 : 251
 const chatAccessKey = prod ? '123' : 'ca-0d21f8cb-b884-4a8b-9e2e-a2acbdbc3792'
-const senderUsername = 'Adam La Morre'
+const senderUsername = 'Abel Smith'
 
 export default class HomePage extends Component {
-    state = {
-        loading: false,
-        c: null,
-    }
-    
     render() { 
         return (
-            <Row>
-                <Col xs={12} sm={6} md={4} style={{ height: '600px' }}>
-                    <ChatEngineWrapper>
-                        <ChatSocket 
-                            development={!prod}
-                            projectID={projectID}
-                            chatID={chatID}
-                            chatAccessKey={chatAccessKey}
-                            senderUsername={senderUsername}
-                        />
+            <ChatEngineWrapper>
+                <Row style={{ height: '100vh', backgroundColor: '#bae7ff' }}>
+                    <Col xs={0} sm={0} md={4}  />
 
-                        <ChatFeed 
-                            development={!prod}
-                            projectID={projectID}
-                            chatID={chatID}
-                            chatAccessKey={chatAccessKey}
-                            activeChat={chatID}
-                            senderUsername={senderUsername}
-                        /> 
+                    <Col xs={12} sm={6} md={4} style={{ height: '95vh', marginTop: '2.5vh' }}>
+                            <ChatSocket 
+                                development={!prod}
+                                projectID={projectID}
+                                chatID={chatID}
+                                chatAccessKey={chatAccessKey}
+                                senderUsername={senderUsername}
+                            />
 
-                        <ChatList development={!prod}/>                        
-                    </ChatEngineWrapper>
-                </Col>
-            </Row>
+                            <ChatFeed development={!prod} activeChat={chatID} /> 
+                    </Col>
+
+                    <Col xs={12} sm={6} md={4} style={{ height: '95vh', marginTop: '2.5vh' }}>
+                        <ChatList development={!prod}/>
+                    </Col>
+                </Row>
+            </ChatEngineWrapper>
         )
     }
 }
