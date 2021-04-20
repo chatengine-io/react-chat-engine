@@ -38,7 +38,11 @@ const ChatCard = props => {
             style={{ ...styles.chatContainer, ...extraStyle }}
             className={`ce-chat-card ${activeChat === chat.id && 'ce-active-chat-card'}`}
         >
-            <div style={ styles.titleText } className='ce-chat-title-text'>
+            <div 
+                style={ styles.titleText } 
+                className='ce-chat-title-text'
+                id={`ce-chat-card-title-${chat.title}`}
+            >
                 { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
                 
                 {
@@ -55,7 +59,6 @@ const ChatCard = props => {
                         }} 
                     />
                 }
-                
             </div>
 
             <div style={{ width: '100%' }} className='ce-chat-subtitle'>

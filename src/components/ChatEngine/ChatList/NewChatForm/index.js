@@ -31,7 +31,6 @@ const NewChatForm = () => {
 
   return (
     <div style={styles.newChatContainer} className='ce-chat-form-container'>
-      
         {
           selected ?
           <form onSubmit={handleSubmit.bind(this)}> 
@@ -55,11 +54,11 @@ const NewChatForm = () => {
             <div style={{ width: '100%', textAlign: 'right' }}>
               <Button 
                 icon='plus'
+                id='new-chat-plus-button'
                 onClick={() => setSelected(true)}
               />
             </div>
           </div>
-
         }
     </div>
   )

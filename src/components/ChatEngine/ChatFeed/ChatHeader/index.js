@@ -43,7 +43,11 @@ const ChatHeader = () => {
                 style={styles.titleContainer} 
                 className='ce-chat-title-container'
             >
-                <div style={styles.titleText} className='ce-chat-title-text'>
+                <div 
+                    style={styles.titleText} 
+                    className='ce-chat-title-text' 
+                    id={`ce-chat-feed-title-${chat.title}`}
+                >
                     { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
                 </div>
                 

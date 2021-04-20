@@ -22,6 +22,7 @@ export default class TextInput extends Component {
         return (
             // NOTE: You may need to make a div the searchContainer to put icons in...
             <input 
+                id={this.props.id}
                 autoFocus={this.props.autoFocus}
                 className='ce-input ce-text-input'
                 value={this.props.value} 
