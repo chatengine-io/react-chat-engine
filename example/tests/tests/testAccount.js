@@ -18,7 +18,6 @@ module.exports = {
         // New Chat
         .waitForElementVisible('#new-chat-plus-button', 1000, 'Find new chat button')
         .click('#new-chat-plus-button')
-        .pause(10000)
         .waitForElementVisible('#ce-new-chat-title-field', 1000, 'Find new chat input');
         
         browser.setValue('#ce-new-chat-title-field', ['Test-Chat', browser.Keys.ENTER]);
@@ -36,6 +35,12 @@ module.exports = {
         // Send Message
         
         // Delete Chat
+        .waitForElementVisible('#ce-options-drop-down', 1000, 'Wait for options dorp down')
+        .click('#ce-options-drop-down')
+        .waitForElementVisible('#ce-delete-chat-button', 1000, 'Wait for options drop down')
+        .click('#ce-delete-chat-button')
+        .waitForElementNotPresent('#ce-chat-card-title-Test-Chat', 1000, 'Find no more Chat Card')
+        .waitForElementNotPresent('#ce-chat-feed-title-Test-Chat', 1000, 'Find no more Chat Feed')
 
         // Logout
         .click('@logoutButton')
