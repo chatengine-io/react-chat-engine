@@ -74,6 +74,7 @@ export default class AutoComplete extends Component {
         return (
             <div>
                 <input 
+                    id='ce-add-username-input'
                     className='ce-input ce-autocomplete-input'
                     value={this.props.value} 
                     placeholder={this.props.label}

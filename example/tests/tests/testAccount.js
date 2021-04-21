@@ -18,29 +18,32 @@ module.exports = {
         // New Chat
         .waitForElementVisible('#new-chat-plus-button', 1000, 'Find new chat button')
         .click('#new-chat-plus-button')
-        .waitForElementVisible('#ce-new-chat-title-field', 1000, 'Find new chat input');
-        
-        browser.setValue('#ce-new-chat-title-field', ['Test-Chat', browser.Keys.ENTER]);
+        .waitForElementVisible('#ce-new-chat-title-field', 1000, 'Find new chat input')
+        .pause(1000).setValue('#ce-new-chat-title-field', ['Test-Chat', browser.Keys.ENTER]).pause(1000)
 
         // Edit Chat
-        page
-        .navigate()
-        .waitForElementVisible('#ce-chat-card-title-Test-Chat', 1000, 'Find new Chat Card')
+        .waitForElementVisible('#ce-chat-card-title-Test-Chat', 5000, 'Find new Chat Card')
         .waitForElementVisible('#ce-chat-feed-title-Test-Chat', 1000, 'Find new Chat Feed')
 
         // Add Person
+        .waitForElementVisible('#ce-add-username-input', 1000, 'Find add user input')
+        .set('#ce-add-username-input', '.')
+        .waitForElementVisible('#ce-username-option-Alex_Johns', 5000, 'Find Jane Smith')
+        .click('#ce-username-option-Alex_Johns')
         
         // Delete Person
 
         // Send Message
         
         // Delete Chat
-        .waitForElementVisible('#ce-options-drop-down', 1000, 'Wait for options dorp down')
+        .getLocationInView('#ce-options-drop-down')
+        .waitForElementVisible('#ce-options-drop-down', 1000, 'Wait for options drop down')
         .click('#ce-options-drop-down')
-        .waitForElementVisible('#ce-delete-chat-button', 1000, 'Wait for options drop down')
+        .getLocationInView('#ce-delete-chat-button')
+        .waitForElementVisible('#ce-delete-chat-button', 1000, 'Wait for delete chat button')
         .click('#ce-delete-chat-button')
-        .waitForElementNotPresent('#ce-chat-card-title-Test-Chat', 1000, 'Find no more Chat Card')
-        .waitForElementNotPresent('#ce-chat-feed-title-Test-Chat', 1000, 'Find no more Chat Feed')
+        .waitForElementNotPresent('#ce-chat-card-title-Test-Chat', 5000, 'Find no more Chat Card')
+        .waitForElementNotPresent('#ce-chat-feed-title-Test-Chat', 5000, 'Find no more Chat Feed')
 
         // Logout
         .click('@logoutButton')
