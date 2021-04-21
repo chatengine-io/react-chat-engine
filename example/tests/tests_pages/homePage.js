@@ -5,6 +5,13 @@ module.exports = {
     userSecretInput: '#home-page-password-input',
     loginButton: '#home-page-login-button',
     logoutButton: '#home-page-logout-button',
+    newChatButton: '#new-chat-plus-button',
+    newChatInput: '#ce-new-chat-title-field',
+    addUserInput: '#ce-add-username-input',
+    newMessageInput: '#msg-textarea',
+    newMessageButton: '#ce-send-message-button',
+    optionsSettings: '#ce-options-drop-down',
+    deleteChatButton: '#ce-delete-chat-button',
   },
   commands: [{
     assertText(element, expectedText, assertText){
