@@ -32,8 +32,14 @@ module.exports = {
         .click('#ce-username-option-Alex_Johns')
         
         // Delete Person
+        // TODO: We cannot do this at the moment (need hover)
 
         // Send Message
+        .waitForElementVisible('#msg-textarea', 1000, 'Find message form')
+        .waitForElementVisible('#ce-send-message-button', 1000, 'Find send message button')
+        .set('#msg-textarea', 'Test-message')
+        .click('#ce-send-message-button')
+        .waitForElementVisible('.ce-message-bubble', 1000, 'Find message bubble')
         
         // Delete Chat
         .getLocationInView('#ce-options-drop-down')

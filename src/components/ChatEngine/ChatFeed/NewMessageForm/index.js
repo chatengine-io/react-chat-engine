@@ -84,6 +84,7 @@ const NewMessageForm = () => {
           <Button 
             icon='send'
             type="submit"
+            id='ce-send-message-button'
             style={{ position: 'absolute', bottom: '10px', right: '6px' }}
           />
         </div>
