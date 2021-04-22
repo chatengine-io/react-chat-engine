@@ -24,6 +24,7 @@ const ChatCard = props => {
     const { chat } = props
     const extraStyle = activeChat === chat.id ? styles.activeChat : {}
     const otherPerson = chat.people.find(person => person.person.username !== conn.userName);
+    const title = chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title
     
     let lastMessage = chat.last_message.text
     if (!lastMessage) {
@@ -38,8 +39,12 @@ const ChatCard = props => {
             style={{ ...styles.chatContainer, ...extraStyle }}
             className={`ce-chat-card ${activeChat === chat.id && 'ce-active-chat-card'}`}
         >
-            <div style={ styles.titleText } className='ce-chat-title-text'>
-                { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
+            <div 
+                style={ styles.titleText } 
+                className='ce-chat-title-text'
+                id={`ce-chat-card-title-${title}`}
+            >
+                { title }
                 
                 {
                     !readLastMessage(chat) &&
@@ -55,7 +60,6 @@ const ChatCard = props => {
                         }} 
                     />
                 }
-                
             </div>
 
             <div style={{ width: '100%' }} className='ce-chat-subtitle'>

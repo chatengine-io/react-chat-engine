@@ -16,6 +16,7 @@ export default class Button extends Component {
 
         return (
             <button 
+                id={this.props.id}
                 type={this.props.type}
                 onClick={() => this.props.onClick && this.props.onClick()}
                 onMouseEnter={() => this.setState({ hovered: true })}

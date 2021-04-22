@@ -10,6 +10,7 @@ const Option = props => {
 
     return (
         <div 
+            id={`ce-username-option-${username}`}
             onMouseEnter={() => setFocused(true)}
             onMouseLeave={() => setFocused(false)}
             onClick={() => props.onClick && props.onClick()}

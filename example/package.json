@@ -6,7 +6,7 @@
   "scripts": {
     "start": "PORT=3009 node ../node_modules/react-scripts/bin/react-scripts.js start",
     "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
-    "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
+    "test": "nightwatch -c tests/tests_conf/nightwatch.conf.js",
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject",
     "deploy": "node ../node_modules/react-scripts/bin/react-scripts.js build && aws s3 cp --recursive ./build s3://support.chatengine.io"
   },
@@ -26,7 +26,9 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
+    "chromedriver": "^90.0.0",
+    "nightwatch": "^1.6.3"
   },
   "eslintConfig": {
     "extends": "react-app"

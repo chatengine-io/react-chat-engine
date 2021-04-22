@@ -14,6 +14,7 @@ const OptionsSettings = props => {
     return (
         <div style={{ borderTop: '1px solid #f0f0f0' }}>
             <div 
+                id='ce-options-drop-down'
                 onMouseEnter={() => setState({ ...state, hovered: true })}
                 onMouseLeave={() => setState({ ...state, hovered: false })}
                 onClick={() => setState({ ...state, collapsed: !state.collapsed })}
@@ -39,6 +40,7 @@ const OptionsSettings = props => {
                         value="Delete" 
                         theme='danger'
                         icon='delete'
+                        id='ce-delete-chat-button'
                         onClick={() => deleteChat(props, chat.id, (data) => {})}
                         style={{ width: '100%', marginBottom: '12px' }}
                     />
