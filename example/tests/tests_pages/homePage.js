@@ -12,6 +12,9 @@ module.exports = {
     newMessageButton: '#ce-send-message-button',
     optionsSettings: '#ce-options-drop-down',
     deleteChatButton: '#ce-delete-chat-button',
+    // Direct Chats
+    newDirectChatInput: '#new-dc-user',
+    newDirectChatButton: '#new-dc-user-btn',
   },
   commands: [{
     assertText(element, expectedText, assertText){

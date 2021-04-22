@@ -18,8 +18,8 @@ const DirectChatPage = () => {
     function renderChatForm(creds) {
         return (
             <div>
-                <input placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
-                <button onClick={() => createDirectChat(creds)}>Create</button>
+                <input placeholder='Username' id='new-dc-user' value={username} onChange={(e) => setUsername(e.target.value)} />
+                <button id='new-dc-user-btn' onClick={() => createDirectChat(creds)}>Create</button>
             </div>
         )
     }

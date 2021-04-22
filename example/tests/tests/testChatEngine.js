@@ -1,7 +1,7 @@
 module.exports = {
     "tags": ["home", "ChatEngine"],
 
-    'Login to chat engine': function(browser) {
+    'Test ChatEngine component': function(browser) {
         const page = browser.page.homePage();
         
         page

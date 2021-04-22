@@ -24,6 +24,7 @@ const ChatCard = props => {
     const { chat } = props
     const extraStyle = activeChat === chat.id ? styles.activeChat : {}
     const otherPerson = chat.people.find(person => person.person.username !== conn.userName);
+    const title = chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title
     
     let lastMessage = chat.last_message.text
     if (!lastMessage) {
@@ -41,9 +42,9 @@ const ChatCard = props => {
             <div 
                 style={ styles.titleText } 
                 className='ce-chat-title-text'
-                id={`ce-chat-card-title-${chat.title}`}
+                id={`ce-chat-card-title-${title}`}
             >
-                { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
+                { title }
                 
                 {
                     !readLastMessage(chat) &&

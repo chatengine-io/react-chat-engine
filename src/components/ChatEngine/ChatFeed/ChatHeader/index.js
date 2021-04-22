@@ -22,6 +22,7 @@ const ChatHeader = () => {
 
     const chat = chats[activeChat]
     const otherPerson = chat.people.find(person => person.person.username !== conn.userName);
+    const title = chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title
 
     return (
         <Row 
@@ -46,9 +47,9 @@ const ChatHeader = () => {
                 <div 
                     style={styles.titleText} 
                     className='ce-chat-title-text' 
-                    id={`ce-chat-feed-title-${chat.title}`}
+                    id={`ce-chat-feed-title-${title}`}
                 >
-                    { chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title }
+                    { title }
                 </div>
                 
                 <div style={styles.subtitleText} className='ce-chat-subtitle-text'>
