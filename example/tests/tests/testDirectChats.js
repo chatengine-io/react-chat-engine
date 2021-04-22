@@ -26,6 +26,9 @@ module.exports = {
         .waitForElementVisible('#ce-chat-card-title-Matthew_Orr', 1000, 'Find new DM chat card')
         .waitForElementVisible('#ce-chat-feed-title-Matthew_Orr', 1000, 'Find new DM title')
 
+        // Assert no add person
+        .waitForElementNotPresent('@addUserInput', 1000, 'Find no add user input')
+
         // Send a DM
         .waitForElementVisible('@newMessageInput', 1000, 'Find message form')
         .waitForElementVisible('@newMessageButton', 1000, 'Find send message button')
