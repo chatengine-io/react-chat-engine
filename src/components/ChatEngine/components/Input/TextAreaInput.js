@@ -68,6 +68,7 @@ const styles = {
         // Fonts
         fontFamily: 'inherit',
         fontSize: '15px',
+        fontFamily: 'Avenir',
         // Padding
         paddingLeft: '12px',
         paddingRight: '12px',

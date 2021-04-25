@@ -48,6 +48,7 @@ const styles = {
         // Sizes
         height: '36px',
         fontSize: '15px',
+        fontFamily: 'Avenir',
         // Border
         outline: 'none',
         borderRadius: '24px',
@@ -60,6 +61,7 @@ const styles = {
         // Sizes
         height: '36px',
         fontSize: '15px',
+        fontFamily: 'Avenir',
         // Border
         outline: 'none',
         borderRadius: '24px',
