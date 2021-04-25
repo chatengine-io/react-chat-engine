@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './App.css';
 import RootPage from './Pages';
 
 import thunk from "redux-thunk";

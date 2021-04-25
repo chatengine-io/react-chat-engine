@@ -97,7 +97,8 @@ const styles={
         overflow: 'scroll', 
         overflowX: 'hidden',
         borderRight: '1px solid #afafaf', 
-        backgroundColor: 'white' 
+        backgroundColor: 'white',
+        fontFamily: 'Avenir'
     },
     chatsContainer: { 
         width: '100%', 
