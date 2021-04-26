@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { CloseCircleTwoTone } from '@ant-design/icons'
 
 const Thumbnail = props => {
     const [hovered, setHovered] = useState(false)
-
+    const [blob, setBlob] = useState('')
+    useEffect(() => {
+      setBlob(URL.createObjectURL(props.file))
+    }, [props.file])
     return (
         <div 
-            style={{ padding: '12px 6px', display: 'inline' }}
+            style={{ padding: '12px 6px', display: 'inline-block', position: "relative" }}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
@@ -15,7 +18,7 @@ const Thumbnail = props => {
             <img
                 style={styles.imageSquare}
                 alt={props.file ? props.file.name : ''}
-                src={URL.createObjectURL(props.file)}
+                src={blob}
             />
 
             {
@@ -41,9 +44,9 @@ const styles = {
         display: 'inline',
     },
     closeIcon: {
-        position: 'relative', 
-        bottom: '91px', 
-        right: '20px', 
+        position: 'absolute', 
+        bottom: 'calc(100% - 32px)', 
+        left: '96px', 
         width: '0px', 
         cursor: 'pointer'
     }
