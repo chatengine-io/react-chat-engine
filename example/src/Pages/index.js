@@ -10,7 +10,7 @@ import ChatSocketPage from './ChatSocketPage'
 import DirectChatsPage from './DirectChatsPage'
 import ChatTutorial from './ChatTutorial'
 import HomePage from './HomePage'
-import GifPage from './GifPage'
+// import GifPage from './GifPage'
 
 class RootPage extends Component {
   render() {    
