@@ -48,8 +48,7 @@ const ChatSocket = props => {
             getLatestMessages(
                 conn, props.chatID, 45,
                 (id, list) => {
-                    const newMessages = {...messages, ..._.mapKeys(list, 'id')}
-                    setMessages(newMessages)
+                    setMessages({...messages, ..._.mapKeys(list, 'id')})
                 }
             )
         }

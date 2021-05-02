@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { ChatEngineContext } from '../Context'
 
-import { getLatestChats } from '../../actions/chats'
-import { readMessage } from '../../actions/messages'
+import { getLatestChats, getLatestMessages, readMessage } from 'react-chat-engine'
 
 import { WebSocket } from 'nextjs-websocket'
 
 const Socket = props => {
+    const [reconnect, reset] = useState(Date.now() + 10000)
     const {
       setConnecting,
       conn, setConn, setCreds,
@@ -43,6 +43,15 @@ const Socket = props => {
         setConnecting(false)
 
         getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
+
+        if (Date.now() > reconnect) {
+            getLatestMessages(
+                conn, activeChat, 45,
+                (id, list) => {
+                    setMessages({...messages, ..._.mapKeys(list, 'id')})
+                }
+            )
+        }
         
         props.onConnect && props.onConnect(conn)
     }

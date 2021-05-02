@@ -12,7 +12,7 @@ import { TextInput, TextAreaInput, AutoCompleteInput } from './components/ChatEn
 
 import { getChats, newChat, getLatestChats, getOrCreateChat, getChat, editChat, deleteChat } from './actions/chats'
 import { addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat } from './actions/people'
-import { getMessages, getLatestMessages, sendMessage, getMessage, editMessage, deleteMessage } from './actions/messages'
+import { getMessages, getLatestMessages, sendMessage, getMessage, editMessage, readMessage, deleteMessage } from './actions/messages'
 import { isTyping } from './actions/typing'
 
 import ChatList from './components/ChatEngine/ChatList'
@@ -44,7 +44,7 @@ export {
   
   getChats, newChat, getLatestChats, getOrCreateChat, getChat, editChat, deleteChat,
   addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat,
-  getMessages, getLatestMessages, sendMessage, getMessage, editMessage, deleteMessage,
+  getMessages, getLatestMessages, sendMessage, getMessage, editMessage, readMessage, deleteMessage,
   isTyping,
 
   ChatList, ChatCard, NewChatForm,
