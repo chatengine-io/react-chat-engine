@@ -10,7 +10,7 @@ import ChatSocketPage from './ChatSocketPage'
 import DirectChatsPage from './DirectChatsPage'
 import ChatTutorial from './ChatTutorial'
 import HomePage from './HomePage'
-// import GifPage from './GifPage'
+import GifPage from './GifPage'
 
 class RootPage extends Component {
   render() {    
@@ -21,7 +21,7 @@ class RootPage extends Component {
           <Route path='/chat_socket' component={ChatSocketPage} />
           <Route path='/direct' component={DirectChatsPage} />
           <Route path='/tutorial' component={ChatTutorial} />
-          {/* <Route path='/gif' component={GifPage} /> */}
+          <Route path='/gif' component={GifPage} />
           <Route path='/:id' component={HomePage} />
           <Route path='/' component={HomePage} />
         </Switch>
