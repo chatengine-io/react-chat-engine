@@ -6,8 +6,9 @@ import { sendMessage, isTyping } from 'react-chat-engine'
 
 import FileRow from './FileRow'
 import ImagesInput from './ImagesInput'
+import MessageInput from './MessageInput'
 
-import { Button, TextAreaInput } from 'react-chat-engine'
+import { Button } from 'react-chat-engine'
 
 const NewMessageForm = () => {
   const { conn, activeChat, sendingMessages, setSendingMessages } = useContext(ChatEngineContext)
@@ -74,7 +75,7 @@ const NewMessageForm = () => {
 
       <form onSubmit={handleSubmit.bind(this)} className='ce-message-form'>
         <div style={styles.inputContainer} className='ce-message-input-form'>
-          <TextAreaInput
+          <MessageInput
             value={state.value}
             label='Send a message...'
             handleChange={handleChange.bind(this)}

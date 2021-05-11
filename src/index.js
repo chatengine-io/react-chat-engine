@@ -7,7 +7,7 @@ import ChatSocket from './components/Socket/ChatSocket'
 
 import { Avatar, Dot } from './components/ChatEngine/components/Avatar'
 import { Button } from './components/ChatEngine/components/Button'
-import { TextInput, TextAreaInput, AutoCompleteInput } from './components/ChatEngine/components/Input'
+import { TextInput, AutoCompleteInput } from './components/ChatEngine/components/Input'
 
 
 import { getChats, newChat, getLatestChats, getOrCreateChat, getChat, editChat, deleteChat } from './actions/chats'
@@ -40,7 +40,7 @@ export {
 
   Avatar, Dot,
   Button,
-  TextInput, TextAreaInput, AutoCompleteInput,
+  TextInput, AutoCompleteInput,
   
   getChats, newChat, getLatestChats, getOrCreateChat, getChat, editChat, deleteChat,
   addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat,

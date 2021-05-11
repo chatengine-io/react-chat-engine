@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class TextAreaInput extends Component {
+export default class MessageInput extends Component {
     state = {
         focused: false,
         value: null
@@ -61,21 +61,17 @@ export default class TextAreaInput extends Component {
 // This is another thing we need to chat about which regards the competence of one more
 const styles = {
     input: { 
-        // Border
-        border: '1px solid white',
-        width: 'calc(100% - 64px - 24px - 44px)',
-        outline: 'none', 
-        // Fonts
-        fontFamily: 'inherit',
-        fontSize: '15px',
-        fontFamily: 'Avenir',
-        // Padding
-        paddingLeft: '12px',
-        paddingRight: '12px',
+        // border: '1px solid white',
+        // width: 'calc(100% - 64px - 24px - 44px)',
+        // outline: 'none', 
+        // fontFamily: 'inherit',
+        // fontSize: '15px',
+        // fontFamily: 'Avenir',
+        // paddingLeft: '12px',
+        // paddingRight: '12px',
         // Position
-        position: 'relative', 
-        left: '12px',
-        // Dynamic Sizing
-        resize: 'none', 
+        // position: 'relative', 
+        // left: '12px',
+        // resize: 'none', 
     }
 }
