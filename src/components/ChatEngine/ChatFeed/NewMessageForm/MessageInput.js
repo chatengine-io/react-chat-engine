@@ -61,7 +61,6 @@ const styles = {
         width: 'calc(100% - 64px - 24px - 44px)',
         outline: 'none', 
         fontSize: '15px',
-        fontFamily: 'Avenir',
         paddingLeft: '12px',
         paddingRight: '12px',
         position: 'relative', 

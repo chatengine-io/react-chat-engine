@@ -82,7 +82,6 @@ const styles = {
         width: '100%',
         zIndex: '1',
         backgroundColor: 'rgb(256, 256, 256, 0.92)',
-        fontFamily: 'Avenir',
     },
     mobileOptiom: {
         width: '100%',
