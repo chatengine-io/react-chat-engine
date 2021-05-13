@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PORT=3009 node ../node_modules/react-scripts/bin/react-scripts.js start",
+    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
     "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
     "test": "nightwatch -c tests/tests_conf/nightwatch.conf.js",
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject",

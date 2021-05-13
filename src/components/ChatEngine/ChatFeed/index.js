@@ -174,6 +174,5 @@ const styles = {
         overflowX: 'hidden',
         overflowY: 'scroll',
         backgroundColor: 'white',
-        fontFamily: 'Avenir',
     }
 }
