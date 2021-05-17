@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 
-import { ChatEngineContext } from '../../Context'
+import { ChatEngineContext } from '../../../Context'
 
-import { stringToColor } from '../Utilities/colorMapping'
+import { stringToColor } from '../../Utilities/colorMapping'
 
 const Typers = props => {
     const { conn, activeChat, typingCounter } = useContext(ChatEngineContext)
@@ -34,4 +34,5 @@ const Typers = props => {
         </div>
     )
 }
+
 export default Typers
