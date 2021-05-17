@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 
-import { ChatEngineContext } from '../../../../Context'
+import { ChatEngineContext } from '../../../Context'
 
-import MessageBubble from '../MessageBubbles/index'
+import MessageBubble from '../Messages/Bubble/index'
 
 const SendingMessages = props => {
     const { 

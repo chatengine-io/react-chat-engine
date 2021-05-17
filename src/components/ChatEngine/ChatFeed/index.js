@@ -8,7 +8,7 @@ import { AuthFail, ConnectionBar, Welcome } from './Steps'
 
 import ChatHeader from './ChatHeader'
 import Messages from './Messages'
-import SendingMessages from './Messages/SendingMessages'
+import SendingMessages from './SendingMessages'
 import Typers from './Typers'
 import NewMessageForm from './NewMessageForm'
 
