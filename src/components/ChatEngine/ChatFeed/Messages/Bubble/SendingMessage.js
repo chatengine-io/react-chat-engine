@@ -2,7 +2,7 @@ import React from 'react'
 
 import Thumbnail from './Thumbnail'
 
-import { parseMessage } from '../parser'
+import Body from './Body'
 
 import { Row, Col, setConfiguration } from 'react-grid-system'
 
@@ -52,7 +52,7 @@ const SendingMessage = props => {
                             className='ce-message-bubble ce-my-message-bubble'
                             style={{ ...styles.myMessage, ...{ borderRadius } }}
                         >
-                            { parseMessage(message.text) }
+                            <Body text={message.text} />
                         </div>
                     }
                 </Col>
