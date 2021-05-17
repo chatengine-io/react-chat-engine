@@ -2,6 +2,8 @@ import React from 'react'
 
 import Thumbnail from './Thumbnail'
 
+import { parseMessage } from '../parser'
+
 import { Row, Col, setConfiguration } from 'react-grid-system'
 
 setConfiguration({ maxScreenClass: 'xl' })
@@ -50,7 +52,7 @@ const SendingMessage = props => {
                             className='ce-message-bubble ce-my-message-bubble'
                             style={{ ...styles.myMessage, ...{ borderRadius } }}
                         >
-                            { message.text }
+                            { parseMessage(message.text) }
                         </div>
                     }
                 </Col>

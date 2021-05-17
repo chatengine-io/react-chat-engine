@@ -6,6 +6,8 @@ import { Avatar, Dot } from 'react-chat-engine'
 
 import { Row, Col, setConfiguration } from 'react-grid-system'
 
+import { parseMessage } from '../parser'
+
 setConfiguration({ maxScreenClass: 'xl' })
 
 
@@ -90,7 +92,7 @@ const TheirMessage = props => {
                                 className='ce-message-bubble ce-their-message-bubble'
                                 style={{ ...styles.theirMessage, ...{ borderRadius } }}
                             >
-                                { message.text }
+                                { parseMessage(message.text) }
                             </div>
                         </div>  
                     }
