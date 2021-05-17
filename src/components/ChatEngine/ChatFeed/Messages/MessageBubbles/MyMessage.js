@@ -37,7 +37,6 @@ const Message = props => {
         })
     }
 
-    
     const { lastMessage, message, nextMessage } = props
 
     if (!message) { return <div /> }
