@@ -10,9 +10,8 @@ const Body = props => {
                 sections.map((section, index) => {
                     if (section.type === 'code') {
                         return (
-                            <span>
+                            <span key={`ce_code_${index}`}>
                                 <span 
-                                    key={`index_${index}`}
                                     style={{ 
                                         color: '#545454', 
                                         fontFamily: 'Monaco',
@@ -31,8 +30,8 @@ const Body = props => {
 
                     if (section.type === 'link') {
                         return (
-                            <span>
-                                <a href={section.text} style={{ color: 'inherit' }} key={`index_${index}`}>{section.text}</a>
+                            <span key={`ce_link_${index}`}>
+                                <a href={section.text} style={{ color: 'inherit' }}>{section.text}</a>
                                 {' '}
                             </span>
                         )
@@ -40,7 +39,7 @@ const Body = props => {
 
                     return (
                         <span 
-                            key={`section_${index}`}
+                            key={`ce_text_${index}`}
                             style={{
                                 fontWeight: section.type.indexOf('bold') !== -1 ? '600' : 'inherit',
                                 fontStyle: section.type.indexOf('italic') !== -1 ? 'italic' : 'normal',
