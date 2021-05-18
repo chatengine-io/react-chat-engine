@@ -13,7 +13,7 @@ const Body = props => {
                             <span key={`ce_code_${index}`}>
                                 <span 
                                     style={{ 
-                                        color: '#545454', 
+                                        color: '#e01e5a', 
                                         fontFamily: 'Monaco',
                                         fontSize: '13px',
                                         padding: '2px',
