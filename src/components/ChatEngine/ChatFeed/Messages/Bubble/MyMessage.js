@@ -4,6 +4,8 @@ import Thumbnail from './Thumbnail'
 
 import Dot from '../../../components/Avatar/Dot'
 
+import Body from './Body'
+
 import { Row, Col, setConfiguration } from 'react-grid-system'
 
 setConfiguration({ maxScreenClass: 'xl' })
@@ -37,7 +39,6 @@ const Message = props => {
         })
     }
 
-    
     const { lastMessage, message, nextMessage } = props
 
     if (!message) { return <div /> }
@@ -75,7 +76,7 @@ const Message = props => {
                             className='ce-message-bubble ce-my-message-bubble'
                             style={{ ...styles.myMessage, ...{ borderRadius } }}
                         >
-                            { message.text }
+                            <Body text={message.text} />
                         </div>
                     }
                 </Col>
@@ -101,5 +102,6 @@ const styles = {
         fontSize: '15px',
         whiteSpace: 'pre-line',
         backgroundColor: 'rgb(24, 144, 255)', 
+        overflowWrap: 'anywhere'
     }
 }

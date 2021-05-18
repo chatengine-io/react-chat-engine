@@ -4,7 +4,7 @@ import { ChatEngineContext } from '../../../Context'
 
 import { RenderTrigger } from '../Triggers'
 
-import MessageBubble from './MessageBubbles/index'
+import MessageBubble from './Bubble/index'
 
 const Messages = props => {
     const { 

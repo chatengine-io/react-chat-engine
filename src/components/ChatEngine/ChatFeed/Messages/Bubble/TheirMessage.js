@@ -4,6 +4,8 @@ import Thumbnail from './Thumbnail'
 
 import { Avatar, Dot } from 'react-chat-engine'
 
+import Body from './Body'
+
 import { Row, Col, setConfiguration } from 'react-grid-system'
 
 setConfiguration({ maxScreenClass: 'xl' })
@@ -90,7 +92,7 @@ const TheirMessage = props => {
                                 className='ce-message-bubble ce-their-message-bubble'
                                 style={{ ...styles.theirMessage, ...{ borderRadius } }}
                             >
-                                { message.text }
+                                <Body text={message.text} />
                             </div>
                         </div>  
                     }
@@ -120,6 +122,7 @@ const styles = {
         fontSize: '15px',
         whiteSpace: 'pre-line',
         backgroundColor: '#f1f0f0', 
+        overflowWrap: 'anywhere'
     },
     nameText: { 
         paddingLeft: '62px', 

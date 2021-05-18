@@ -21,7 +21,7 @@ import NewChatForm from './components/ChatEngine/ChatList/NewChatForm'
 
 import ChatFeed from './components/ChatEngine/ChatFeed'
 import ChatHeader from './components/ChatEngine/ChatFeed/ChatHeader'
-import MessageBubble from './components/ChatEngine/ChatFeed/Messages/MessageBubbles'
+import MessageBubble from './components/ChatEngine/ChatFeed/Messages/Bubble'
 import Typers from './components/ChatEngine/ChatFeed/Typers'
 import NewMessageForm from './components/ChatEngine/ChatFeed/NewMessageForm'
 

@@ -2,33 +2,13 @@ import React from 'react'
 
 import Thumbnail from './Thumbnail'
 
-import Dot from '../../../components/Avatar/Dot'
+import Body from './Body'
 
 import { Row, Col, setConfiguration } from 'react-grid-system'
 
 setConfiguration({ maxScreenClass: 'xl' })
 
 const SendingMessage = props => {
-    function renderReads() {
-        const { chat, message } = props
-
-        if(!chat) { return <div /> }
-
-        return chat.people.map((chatPerson, index) => {
-            if (message.id === chatPerson.last_read) {
-                return (
-                    <Dot 
-                        key={`read_${index}`}
-                        avatar={chatPerson.person.avatar}
-                        username={chatPerson.person.username}
-                        style={{ float: 'right', marginLeft: '4px' }} 
-                    />
-                )
-            }
-            return <div key={`read_${index}`} />
-        })
-    }
-
     function renderAttachments(attachments) {
         return attachments.map((a, index) => {
             return <Thumbnail key={`sending-file-${index}`} />
@@ -72,7 +52,7 @@ const SendingMessage = props => {
                             className='ce-message-bubble ce-my-message-bubble'
                             style={{ ...styles.myMessage, ...{ borderRadius } }}
                         >
-                            { message.text }
+                            <Body text={message.text} />
                         </div>
                     }
                 </Col>
@@ -94,5 +74,6 @@ const styles = {
         fontSize: '15px',
         whiteSpace: 'pre-line',
         backgroundColor: '#40a9ff', 
+        overflowWrap: 'anywhere'
     }
 }
