@@ -122,6 +122,7 @@ const styles = {
         fontSize: '15px',
         whiteSpace: 'pre-line',
         backgroundColor: '#f1f0f0', 
+        overflowWrap: 'anywhere'
     },
     nameText: { 
         paddingLeft: '62px', 

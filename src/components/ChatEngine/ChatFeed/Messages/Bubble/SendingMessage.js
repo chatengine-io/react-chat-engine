@@ -74,5 +74,6 @@ const styles = {
         fontSize: '15px',
         whiteSpace: 'pre-line',
         backgroundColor: '#40a9ff', 
+        overflowWrap: 'anywhere'
     }
 }

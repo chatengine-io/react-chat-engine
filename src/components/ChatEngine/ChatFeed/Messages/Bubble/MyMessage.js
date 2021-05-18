@@ -102,5 +102,6 @@ const styles = {
         fontSize: '15px',
         whiteSpace: 'pre-line',
         backgroundColor: 'rgb(24, 144, 255)', 
+        overflowWrap: 'anywhere'
     }
 }
