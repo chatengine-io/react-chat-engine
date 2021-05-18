@@ -8,7 +8,7 @@ const Body = props => {
         <div className='ce-message-body'>
             { 
                 sections.map((section, index) => {
-                    if (section.type === 'code') {
+                    if (section.type['code']) {
                         return (
                             <span key={`ce_code_${index}`}>
                                 <span 
@@ -28,7 +28,7 @@ const Body = props => {
                         )
                     }
 
-                    if (section.type === 'link') {
+                    if (section.type['link']) {
                         return (
                             <span key={`ce_link_${index}`}>
                                 <a href={section.text} style={{ color: 'inherit' }}>{section.text}</a>
@@ -41,9 +41,9 @@ const Body = props => {
                         <span 
                             key={`ce_text_${index}`}
                             style={{
-                                fontWeight: section.type.indexOf('bold') !== -1 ? '600' : 'inherit',
-                                fontStyle: section.type.indexOf('italic') !== -1 ? 'italic' : 'normal',
-                                textDecoration: section.type.indexOf('strikethrough') !== -1 ? 'line-through' : 'none',
+                                fontWeight: section.type['bold'] ? '600' : 'inherit',
+                                fontStyle: section.type['italic'] ? 'italic' : 'normal',
+                                textDecoration: section.type['strikethrough'] ? 'line-through' : 'none',
                             }}
                         >
                             {section.text}{' '}
