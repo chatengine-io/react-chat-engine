@@ -6,8 +6,7 @@ import { sendMessage, isTyping } from 'react-chat-engine'
 
 import FileRow from './FileRow'
 import ImagesInput from './ImagesInput'
-
-import { Button } from 'react-chat-engine'
+import SendButton from './SendButton'
 
 const ReactQuill = require('react-quill');
 require('react-quill/dist/quill.snow.css');
@@ -83,6 +82,13 @@ const NewMessageForm = () => {
     >
       <FileRow files={state.attachments} onRemove={(i) => onRemove(i)} />
 
+      <ReactQuill
+        theme='snow'
+        modules={modules}
+        formats={formats}
+        onChange={handleChange.bind(this)}
+      />
+
       <div id="toolbar">
         <button className="ql-bold"></button>
         <button className="ql-italic"></button>
@@ -91,15 +97,8 @@ const NewMessageForm = () => {
           
           onSelectFiles={(attachments) => setState({ ...state, attachments })} 
         />
-        <Button onClick={handleSubmit.bind(this)} style={{ position: 'relative', left: '55px' }} />
+        <SendButton onClick={handleSubmit.bind(this)} style={{ position: 'relative', left: '55px' }} />
       </div>
-
-      <ReactQuill
-        theme='snow'
-        modules={modules}
-        formats={formats}
-        onChange={handleChange.bind(this)}
-      />
     </div>
   );
 }

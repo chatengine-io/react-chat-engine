@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { PlusOutlined, ArrowUpOutlined, DeleteOutlined, UserAddOutlined } from '@ant-design/icons'
+import { PlusOutlined, DeleteOutlined, UserAddOutlined } from '@ant-design/icons'
 
 export default class Button extends Component {
     state = {
@@ -26,7 +26,6 @@ export default class Button extends Component {
             >
 
                 { icon === 'plus' && <PlusOutlined /> }
-                { icon === 'send'  && <ArrowUpOutlined /> }
                 { icon === 'delete'  && <DeleteOutlined /> }
                 { icon === 'user-add'  && <UserAddOutlined /> }
 
