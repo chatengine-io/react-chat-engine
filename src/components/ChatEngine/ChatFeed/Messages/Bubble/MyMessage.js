@@ -76,7 +76,7 @@ const Message = props => {
                             className='ce-message-bubble ce-my-message-bubble'
                             style={{ ...styles.myMessage, ...{ borderRadius } }}
                         >
-                            <Body text={message.text} />
+                            <Body myMessage={true} text={message.text} />
                         </div>
                     }
                 </Col>
