@@ -6,9 +6,11 @@ import { sendMessage, isTyping } from 'react-chat-engine'
 
 import FileRow from './FileRow'
 import ImagesInput from './ImagesInput'
-import MessageInput from './MessageInput'
 
 import { Button } from 'react-chat-engine'
+
+const ReactQuill = require('react-quill');
+require('react-quill/dist/quill.snow.css');
 
 const NewMessageForm = () => {
   const { conn, activeChat, sendingMessages, setSendingMessages } = useContext(ChatEngineContext)
@@ -19,6 +21,21 @@ const NewMessageForm = () => {
     attachments: []
   })
 
+  const modules = {
+    toolbar: {
+      container: "#toolbar",
+      // handlers: {
+      //   "insertStar": insertStar,
+      // }
+    }
+  }
+  const formats = [
+    'header',
+    'bold', 'italic', 'underline', 'strike', 'code',
+    'list', 'bullet', 'indent',
+    'link',
+  ]
+
   if (!conn || conn === null) return <div />
 
   function onRemove(index) {
@@ -27,10 +44,11 @@ const NewMessageForm = () => {
     setState({ ...state, attachments })
   }
   
-  function handleChange(event) {
+  function handleChange(value) {
+    console.log('value', value)
     setState({
       ...state,
-      value: event.target.value,
+      value,
       trigger: (state.trigger + 1) % state.mod
     });
     
@@ -39,9 +57,7 @@ const NewMessageForm = () => {
     }
   }
   
-  function handleSubmit(event) {
-    event.preventDefault();
-
+  function handleSubmit() {
     const { attachments } = state
     const text = state.value.trim()
     const custom_json = { sender_id: Date.now().toString() }
@@ -53,10 +69,6 @@ const NewMessageForm = () => {
     }
 
     setState({ ...state, value: '', attachments: [] })
-    
-    // TODO: Should be in Text Area Input
-    var textarea = document.getElementById("msg-textarea")
-    textarea.style.height = "24px"
 
     let newSendingMessages = {...sendingMessages}
     newSendingMessages[data.custom_json.sender_id] = data
@@ -71,25 +83,23 @@ const NewMessageForm = () => {
     >
       <FileRow files={state.attachments} onRemove={(i) => onRemove(i)} />
 
-      <ImagesInput onSelectFiles={(attachments) => setState({ ...state, attachments })} />
+      <div id="toolbar">
+        <button className="ql-bold"></button>
+        <button className="ql-italic"></button>
+        <button className="ql-underline"></button>
+        <ImagesInput 
+          
+          onSelectFiles={(attachments) => setState({ ...state, attachments })} 
+        />
+        <Button onClick={handleSubmit.bind(this)} style={{ position: 'relative', left: '55px' }} />
+      </div>
 
-      <form onSubmit={handleSubmit.bind(this)} className='ce-message-form'>
-        <div style={styles.inputContainer} className='ce-message-input-form'>
-          <MessageInput
-            value={state.value}
-            label='Send a message...'
-            handleChange={handleChange.bind(this)}
-            onSubmit={handleSubmit.bind(this)}
-          />
-
-          <Button 
-            icon='send'
-            type="submit"
-            id='ce-send-message-button'
-            style={{ position: 'absolute', bottom: '10px', right: '6px' }}
-          />
-        </div>
-      </form>
+      <ReactQuill
+        theme='snow'
+        modules={modules}
+        formats={formats}
+        onChange={handleChange.bind(this)}
+      />
     </div>
   );
 }

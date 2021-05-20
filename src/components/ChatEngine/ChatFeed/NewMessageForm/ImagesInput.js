@@ -26,7 +26,7 @@ const ImagesInput = props => {
                     onMouseEnter={() => setState({ ...state, hovered: true })}
                     onMouseLeave={() => setState({ ...state, hovered: false })}
                     style={{
-                        ...{ cursor: 'pointer', position: 'absolute', bottom: '20px', right: '63px', fontSize: '18px' },
+                        ...{ cursor: 'pointer', fontSize: '16px', position: 'relative', top: '1px', left: '3px' },
                         ...{ color: state.hovered ? '#69c0ff' : '#1890ff' }
                     }}
                 />
