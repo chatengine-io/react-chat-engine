@@ -20,7 +20,6 @@ const SendButton = () => {
                     display: 'inline-block',
                     padding: '5px 9px',
                     borderRadius: '8px',
-
                 }}
             >
                 <ArrowUpOutlined style={{ color: 'white' }} />

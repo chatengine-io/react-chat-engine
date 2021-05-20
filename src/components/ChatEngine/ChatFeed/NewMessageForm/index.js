@@ -13,12 +13,9 @@ require('react-quill/dist/quill.snow.css');
 
 const NewMessageForm = () => {
   const { conn, activeChat, sendingMessages, setSendingMessages } = useContext(ChatEngineContext)
-  const [state, setState] = useState({
-    trigger: 0,
-    mod: 3,
-    value: '',
-    attachments: []
-  })
+  const [trigger, setTrigger] = useState(0)
+  const [value, setValue] = useState(0)
+  const [attachments, setAttachments] = useState([])
 
   const modules = {
     toolbar: {
@@ -38,27 +35,18 @@ const NewMessageForm = () => {
   if (!conn || conn === null) return <div />
 
   function onRemove(index) {
-    let { attachments } = state 
-    attachments.splice(index, 1)
-    setState({ ...state, attachments })
+    const list = attachments.splice(index, 1)
+    setAttachments(list)
   }
   
   function handleChange(value) {
-    console.log('value', value)
-    setState({
-      ...state,
-      value,
-      trigger: (state.trigger + 1) % state.mod
-    });
-    
-    if (state.trigger === 1) {
-      isTyping(conn, activeChat)
-    }
+    setValue(value)
+    setTrigger((trigger + 1) % 4)
+    if (trigger === 1) { isTyping(conn, activeChat) }
   }
   
   function handleSubmit() {
-    const { attachments } = state
-    const text = state.value.trim()
+    const text = value.trim()
     const custom_json = { sender_id: Date.now().toString() }
     const sender_username = conn.userName ? conn.userName : conn.senderUsername
     const data = { text, attachments, custom_json, sender_username, chat: activeChat }
@@ -67,7 +55,8 @@ const NewMessageForm = () => {
       sendMessage(conn, activeChat, data, (data) => {})
     }
 
-    setState({ ...state, value: '', attachments: [] })
+    setValue('')
+    setAttachments([])
 
     let newSendingMessages = {...sendingMessages}
     newSendingMessages[data.custom_json.sender_id] = data
@@ -80,7 +69,7 @@ const NewMessageForm = () => {
       style={styles.NewMessageFormContainer}
       className='ce-message-form-container'
     >
-      <FileRow files={state.attachments} onRemove={(i) => onRemove(i)} />
+      <FileRow files={attachments} onRemove={(i) => onRemove(i)} />
 
       <ReactQuill
         theme='snow'
@@ -93,11 +82,11 @@ const NewMessageForm = () => {
         <button className="ql-bold"></button>
         <button className="ql-italic"></button>
         <button className="ql-underline"></button>
-        <ImagesInput 
-          
-          onSelectFiles={(attachments) => setState({ ...state, attachments })} 
-        />
-        <SendButton onClick={handleSubmit.bind(this)} style={{ position: 'relative', left: '55px' }} />
+        <ImagesInput onSelectFiles={(attachments) => setAttachments(attachments)} />
+        
+        <div onClick={handleSubmit.bind(this)} style={{ position:'absolute', right: '48px' }}>
+          <SendButton />
+        </div>
       </div>
     </div>
   );
