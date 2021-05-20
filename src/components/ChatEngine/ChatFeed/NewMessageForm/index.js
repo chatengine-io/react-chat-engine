@@ -20,16 +20,12 @@ const NewMessageForm = () => {
   const modules = {
     toolbar: {
       container: "#toolbar",
-      // handlers: {
-      //   "insertStar": insertStar,
-      // }
     }
   }
   const formats = [
-    'header',
     'bold', 'italic', 'underline', 'strike', 'code',
     'list', 'bullet', 'indent',
-    'link',
+    'link', 'code',
   ]
 
   if (!conn || conn === null) return <div />
@@ -73,18 +69,24 @@ const NewMessageForm = () => {
 
       <ReactQuill
         theme='snow'
+        value={value}
         modules={modules}
         formats={formats}
         onChange={handleChange.bind(this)}
+        onKeyDown={(e) => { if (e.keyCode === 13) { handleSubmit() } }}
       />
 
       <div id="toolbar">
         <button className="ql-bold"></button>
         <button className="ql-italic"></button>
         <button className="ql-underline"></button>
+        <button className="ql-strike"></button>
+
+        <button className="ql-code"></button>
+        <button className="ql-link"></button>
         <ImagesInput onSelectFiles={(attachments) => setAttachments(attachments)} />
-        
-        <div onClick={handleSubmit.bind(this)} style={{ position:'absolute', right: '48px' }}>
+
+        <div style={{ position: 'absolute', right: '5px', bottom: '36px' }} onClick={handleSubmit.bind(this)}>
           <SendButton />
         </div>
       </div>

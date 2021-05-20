@@ -11,11 +11,7 @@ const SendButton = () => {
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
                 style={{ 
-                    left: '40px',
-                    bottom: '4px',
-                    cursor: 'hover',
                     cursor: 'pointer',
-                    position: 'relative', 
                     backgroundColor: hover ? '#40a9ff' : '#1890ff',
                     display: 'inline-block',
                     padding: '5px 9px',
