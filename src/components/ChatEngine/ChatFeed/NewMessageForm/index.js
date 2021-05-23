@@ -43,7 +43,6 @@ const NewMessageForm = () => {
   
   function handleSubmit() {
     let text = value.trim()
-    text = text.replace("<p>", "<div>").replace("</p>", "</div>")
     if (text.slice(-11) === '<p><br></p>') { text = text.substr(0, text.length - 11) }
 
     const custom_json = { sender_id: Date.now().toString() }
