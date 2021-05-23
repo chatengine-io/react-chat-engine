@@ -4,59 +4,65 @@ import { ChatEngineContext } from '../../../Context'
 
 import { sendMessage, isTyping } from 'react-chat-engine'
 
-import FileRow from './FileRow'
+import FilesRow from './FilesRow'
 import ImagesInput from './ImagesInput'
-import MessageInput from './MessageInput'
+import SendButton from './SendButton'
 
-import { Button } from 'react-chat-engine'
+const ReactQuill = require('react-quill');
+require('react-quill/dist/quill.snow.css');
 
 const NewMessageForm = () => {
-  const { conn, activeChat, sendingMessages, setSendingMessages } = useContext(ChatEngineContext)
-  const [state, setState] = useState({
-    trigger: 0,
-    mod: 3,
-    value: '',
-    attachments: []
-  })
+  const { 
+    conn, 
+    activeChat, 
+    sendingMessages, 
+    setSendingMessages 
+  } = useContext(ChatEngineContext)
+  
+  const [trigger, setTrigger] = useState(0)
+  const [value, setValue] = useState(0)
+  const [attachments, setAttachments] = useState([])
+
+  const modules = {
+    toolbar: {
+      container: "#toolbar",
+    }
+  }
+  
+  const formats = [
+    'bold', 'italic', 'underline', 'strike', 'code',
+    'list', 'bullet', 'indent',
+    'link', 'code',
+  ]
 
   if (!conn || conn === null) return <div />
 
   function onRemove(index) {
-    let { attachments } = state 
-    attachments.splice(index, 1)
-    setState({ ...state, attachments })
+    const newAttachments = attachments
+    newAttachments.splice(index, 1)
+    setAttachments(newAttachments)
   }
   
-  function handleChange(event) {
-    setState({
-      ...state,
-      value: event.target.value,
-      trigger: (state.trigger + 1) % state.mod
-    });
-    
-    if (state.trigger === 1) {
-      isTyping(conn, activeChat)
-    }
+  function handleChange(value) {
+    setValue(value)
+    setTrigger((trigger + 1) % 4)
+    if (trigger === 1) { isTyping(conn, activeChat) }
   }
   
-  function handleSubmit(event) {
-    event.preventDefault();
+  function handleSubmit() {
+    let text = value.trim()
+    if (text.slice(-11) === '<p><br></p>') { text = text.substr(0, text.length - 11) }
 
-    const { attachments } = state
-    const text = state.value.trim()
     const custom_json = { sender_id: Date.now().toString() }
     const sender_username = conn.userName ? conn.userName : conn.senderUsername
     const data = { text, attachments, custom_json, sender_username, chat: activeChat }
 
     if (text.length > 0 || attachments.length > 0) {
-      sendMessage(conn, activeChat, data, (data) => {})
+      sendMessage(conn, activeChat, data, () => {})
     }
 
-    setState({ ...state, value: '', attachments: [] })
-    
-    // TODO: Should be in Text Area Input
-    var textarea = document.getElementById("msg-textarea")
-    textarea.style.height = "24px"
+    setValue('')
+    setAttachments([])
 
     let newSendingMessages = {...sendingMessages}
     newSendingMessages[data.custom_json.sender_id] = data
@@ -69,27 +75,31 @@ const NewMessageForm = () => {
       style={styles.NewMessageFormContainer}
       className='ce-message-form-container'
     >
-      <FileRow files={state.attachments} onRemove={(i) => onRemove(i)} />
+      <FilesRow files={attachments} onRemove={(i) => onRemove(i)} />
 
-      <ImagesInput onSelectFiles={(attachments) => setState({ ...state, attachments })} />
+      <ReactQuill
+        theme='snow'
+        value={value}
+        modules={modules}
+        formats={formats}
+        onChange={handleChange.bind(this)}
+        onKeyDown={(e) => { if (e.keyCode === 13) { handleSubmit() } }}
+      />
 
-      <form onSubmit={handleSubmit.bind(this)} className='ce-message-form'>
-        <div style={styles.inputContainer} className='ce-message-input-form'>
-          <MessageInput
-            value={state.value}
-            label='Send a message...'
-            handleChange={handleChange.bind(this)}
-            onSubmit={handleSubmit.bind(this)}
-          />
+      <div id="toolbar">
+        <button className="ql-bold"></button>
+        <button className="ql-italic"></button>
+        <button className="ql-underline"></button>
+        <button className="ql-strike"></button>
 
-          <Button 
-            icon='send'
-            type="submit"
-            id='ce-send-message-button'
-            style={{ position: 'absolute', bottom: '10px', right: '6px' }}
-          />
+        <button className="ql-code"></button>
+        <button className="ql-link"></button>
+        <ImagesInput onSelectFiles={(attachments) => setAttachments(attachments)} />
+
+        <div style={{ position: 'absolute', right: '5px', bottom: '36px' }} onClick={handleSubmit.bind(this)}>
+          <SendButton />
         </div>
-      </form>
+      </div>
     </div>
   );
 }

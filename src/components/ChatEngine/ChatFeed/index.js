@@ -156,7 +156,7 @@ const ChatFeed = props => {
 
                 <ConnectionBar />
 
-                <div style={{ height: '54px' }} className='ce-feed-container-bottom' />
+                <div style={{ height: '86px' }} className='ce-feed-container-bottom' />
             </div>
 
             { props.renderNewMessageForm ? props.renderNewMessageForm(props, currentChat) : <NewMessageForm /> }
