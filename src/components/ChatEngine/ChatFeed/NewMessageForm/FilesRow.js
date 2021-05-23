@@ -2,7 +2,7 @@ import React from 'react'
 
 import Thumbnail from './Thumbnail'
 
-const FileRow = props => {
+const FilesRow = props => {
     function renderFiles() {
         return props.files.map((file, index) => {
             return (
@@ -22,4 +22,4 @@ const FileRow = props => {
     )
 }
 
-export default FileRow
+export default FilesRow

@@ -4,7 +4,7 @@ import { ChatEngineContext } from '../../../Context'
 
 import { sendMessage, isTyping } from 'react-chat-engine'
 
-import FileRow from './FileRow'
+import FilesRow from './FilesRow'
 import ImagesInput from './ImagesInput'
 import SendButton from './SendButton'
 
@@ -12,7 +12,13 @@ const ReactQuill = require('react-quill');
 require('react-quill/dist/quill.snow.css');
 
 const NewMessageForm = () => {
-  const { conn, activeChat, sendingMessages, setSendingMessages } = useContext(ChatEngineContext)
+  const { 
+    conn, 
+    activeChat, 
+    sendingMessages, 
+    setSendingMessages 
+  } = useContext(ChatEngineContext)
+  
   const [trigger, setTrigger] = useState(0)
   const [value, setValue] = useState(0)
   const [attachments, setAttachments] = useState([])
@@ -22,6 +28,7 @@ const NewMessageForm = () => {
       container: "#toolbar",
     }
   }
+  
   const formats = [
     'bold', 'italic', 'underline', 'strike', 'code',
     'list', 'bullet', 'indent',
@@ -31,8 +38,9 @@ const NewMessageForm = () => {
   if (!conn || conn === null) return <div />
 
   function onRemove(index) {
-    const list = attachments.splice(index, 1)
-    setAttachments(list)
+    const newAttachments = attachments
+    newAttachments.splice(index, 1)
+    setAttachments(newAttachments)
   }
   
   function handleChange(value) {
@@ -50,7 +58,7 @@ const NewMessageForm = () => {
     const data = { text, attachments, custom_json, sender_username, chat: activeChat }
 
     if (text.length > 0 || attachments.length > 0) {
-      sendMessage(conn, activeChat, data, (data) => {})
+      sendMessage(conn, activeChat, data, () => {})
     }
 
     setValue('')
@@ -67,7 +75,7 @@ const NewMessageForm = () => {
       style={styles.NewMessageFormContainer}
       className='ce-message-form-container'
     >
-      <FileRow files={attachments} onRemove={(i) => onRemove(i)} />
+      <FilesRow files={attachments} onRemove={(i) => onRemove(i)} />
 
       <ReactQuill
         theme='snow'
