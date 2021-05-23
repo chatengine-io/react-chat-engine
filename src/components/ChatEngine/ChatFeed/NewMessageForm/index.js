@@ -19,8 +19,8 @@ const NewMessageForm = () => {
     setSendingMessages 
   } = useContext(ChatEngineContext)
   
-  const [trigger, setTrigger] = useState(0)
   const [value, setValue] = useState(0)
+  const [trigger, setTrigger] = useState(0)
   const [attachments, setAttachments] = useState([])
 
   const modules = {
