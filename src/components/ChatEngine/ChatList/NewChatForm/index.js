@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react'
 
+import { CloseOutlined } from '@ant-design/icons'
+
 import { ChatEngineContext } from '../../../Context'
 
-import { newChat } from 'react-chat-engine'
+import { newChat, Button, TextInput } from 'react-chat-engine'
 
-import { Button, TextInput } from 'react-chat-engine'
-
-const NewChatForm = () => {
+const NewChatForm = (props) => {
   const { conn } = useContext(ChatEngineContext)
   const [value, setValue] = useState('')
   const [selected, setSelected] = useState(false)
@@ -30,7 +30,24 @@ const NewChatForm = () => {
   }
 
   return (
-    <div style={styles.newChatContainer} className='ce-chat-form-container'>
+    <div>
+      {
+        props.onClose && 
+        <div style={{ height: '0px' }}>
+          <CloseOutlined
+            style={styles.closeIcon}
+            onClick={() => props.onClose()}
+          />
+        </div>
+      }
+
+      <div
+        className='ce-chat-form-container' 
+        style={{
+          ...styles.newChatContainer,
+          ...{ marginLeft: props.onClose ? '40px' : '0px' }
+        }}
+      >
         {
           selected ?
           <form onSubmit={handleSubmit.bind(this)}> 
@@ -46,7 +63,7 @@ const NewChatForm = () => {
           </form>:
           <div>
             <div style={{ height: '0px' }}>
-              <div style={{ fontWeight: '600', fontSize: '24px', position: 'relative', top: '4px', width:' calc(100% - 48px)' }}>
+              <div style={{ fontWeight: '600', fontSize: '24px', position: 'relative', top: '4px', width: 'calc(100% - 48px)' }}>
                 My Chats
               </div>
             </div>
@@ -60,6 +77,7 @@ const NewChatForm = () => {
             </div>
           </div>
         }
+      </div>
     </div>
   )
 }
@@ -67,6 +85,12 @@ const NewChatForm = () => {
 export default NewChatForm
 
 const styles = {
+  closeIcon: {
+    position: 'relative',
+    top: '26px',
+    left: '18px',
+    fontSize: '16px',
+  },
   newChatContainer: { 
     padding: '16px 14px',
     backgroundColor: 'white'

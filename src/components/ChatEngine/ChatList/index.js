@@ -8,7 +8,7 @@ import _ from 'lodash'
 
 import ChatLoader from './ChatLoader'
 
-import ChatForm from './NewChatForm'
+import NewChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
 let count = 25
@@ -80,7 +80,11 @@ const ChatList = props => {
     return (
         <div style={styles.chatListContainer} className='ce-chat-list'>
             <div style={styles.chatsContainer} className='ce-chats-container'>
-                { props.renderNewChatForm ? props.renderNewChatForm(conn) : <ChatForm  /> }
+                { 
+                    props.renderNewChatForm ? 
+                    props.renderNewChatForm(conn) : 
+                    <NewChatForm onClose={props.onClose ? () => props.onClose() : undefined} /> 
+                }
 
                 { renderChats(chatList) } 
 

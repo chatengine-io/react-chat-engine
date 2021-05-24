@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
-import { MenuOutlined, CloseOutlined } from '@ant-design/icons'
+import { MenuOutlined } from '@ant-design/icons'
+
+import { ChatEngineContext } from '../../../Context'
 
 import ChatList from '../../ChatList'
 
 const ChatListDrawer = props => {
     const [isOpen, setIsOpen] = useState(false)
+    const context = useContext(ChatEngineContext)
+    const propsAndContext = {...props, ...context}
 
     return (
         <div> 
@@ -17,20 +21,10 @@ const ChatListDrawer = props => {
             { 
                 isOpen &&
                 <div style={styles.drawerContainer}>
-                    <CloseOutlined
-                        style={styles.closeIcon}
-                        onClick={() => setIsOpen(false)}
-                    />
-
-                    <div style={styles.titleContainer}>
-                        <div style={styles.titleText}>
-                            My Chats
-                        </div>
-                    </div>
-
                     <ChatList 
-                        {...props} 
-                        onChatClick={() => setIsOpen(false)}
+                        {...propsAndContext} 
+                        onClose={() => setIsOpen(false)} 
+                        onChatClick={() => setIsOpen(false)} 
                     />
                 </div>
             }
@@ -50,11 +44,6 @@ const styles = {
         height: '100%',
         backgroundColor: 'white',
         textAlign: 'left'
-    },
-    closeIcon: {
-        position: 'absolute',
-        left: '28px',
-        top: '32px'
     },
     titleContainer: {
         width: '100%',
