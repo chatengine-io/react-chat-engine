@@ -46,15 +46,22 @@ const ChatCard = props => {
                 className='ce-chat-title-text'
                 id={`ce-chat-card-title-${title}`}
             >
-                <span style={{ width: readLastMessage(chat) ? '100%' : 'calc(100% - 52px)', overflowX: 'hidden' }}>
+                <div 
+                    style={{ 
+                        width: !readLastMessage(chat) && 'calc(100% - 18px)', 
+                        overflowX: 'hidden', 
+                        display: 'inline-block' 
+                    }}
+                >
                     { title }
-                </span>
+                </div>
                 
                 {
                     !readLastMessage(chat) &&
-                    <span 
+                    <div 
                         className='ce-chat-unread-dot'
                         style={{ 
+                            marginTop: '5px',
                             width: '12px',
                             height: '12px',
                             borderRadius: '6px',

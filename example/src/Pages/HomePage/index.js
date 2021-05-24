@@ -67,9 +67,8 @@ const HomePage = props => {
             </ChatEngineWrapper>
 
             <button 
-                onClick={() => props.logout()}
                 id='home-page-logout-button'
-                style={{ position: 'absolute', bottom: '24px', right: '24px' }}
+                onClick={() => props.logout()}
             >
                 Logout!
             </button>
