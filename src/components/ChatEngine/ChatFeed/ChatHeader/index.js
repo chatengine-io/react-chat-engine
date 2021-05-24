@@ -99,6 +99,7 @@ const styles = {
     titleText: {
         fontSize: '24px',
         fontWeight: '600',
+        overflowWrap: 'anywhere'
     },
     subtitleText: {
         fontSize: '12px',
