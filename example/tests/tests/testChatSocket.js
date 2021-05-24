@@ -5,7 +5,7 @@ module.exports = {
         const page = browser.page.homePage();
         
         page
-        .navigate('http://localhost:3009/chat_socket')
+        .navigate('http://localhost:3001/chat_socket')
         .pause(1500)
 
         // Send a DM
@@ -21,7 +21,7 @@ module.exports = {
         const page = browser.page.homePage();
         
         page
-        .navigate('http://localhost:3009/user_socket_feed')
+        .navigate('http://localhost:3001/user_socket_feed')
         .pause(1500)
 
         // Send a DM

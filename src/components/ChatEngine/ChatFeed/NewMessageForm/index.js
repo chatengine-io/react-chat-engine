@@ -96,7 +96,10 @@ const NewMessageForm = () => {
         <button className="ql-link"></button>
         <ImagesInput onSelectFiles={(attachments) => setAttachments(attachments)} />
 
-        <div style={{ position: 'absolute', right: '5px', bottom: '36px' }} onClick={handleSubmit.bind(this)}>
+        <div 
+          onClick={handleSubmit.bind(this)}
+          style={{ position: 'absolute', right: '5px', bottom: '37px' }} 
+        >
           <SendButton />
         </div>
       </div>

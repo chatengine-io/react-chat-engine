@@ -8,6 +8,7 @@ const SendButton = () => {
     return (
         <div style={{ height: "0px" }}>
             <div 
+                id="ce-send-message-button"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
                 style={{ 

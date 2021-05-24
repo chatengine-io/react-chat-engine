@@ -16,7 +16,7 @@ const ImagesInput = props => {
         <form
             className="uploader"
             encType="multipart/form-data"
-            style={{ height: '0px', position: 'relative', top: '2px', left: '4px' }}
+            style={{ height: '0px' }}
         >
             <label
                 htmlFor="files"
@@ -26,7 +26,7 @@ const ImagesInput = props => {
                     onMouseEnter={() => setState({ ...state, hovered: true })}
                     onMouseLeave={() => setState({ ...state, hovered: false })}
                     style={{
-                        ...{ cursor: 'pointer', fontSize: '16px' },
+                        ...styles.icon,
                         ...{ color: state.hovered ? '#06c' : '#444' }
                     }}
                 />
@@ -43,6 +43,19 @@ const ImagesInput = props => {
             />
         </form>
     );
+}
+
+const styles = {
+    icon: {
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        display: 'inline-block',
+        float: 'left',
+        height: '24px',
+        padding: '4px 5px',
+        width: '28px',
+    }
 }
 
 export default ImagesInput

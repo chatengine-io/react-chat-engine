@@ -5,7 +5,7 @@ module.exports = {
         const page = browser.page.homePage();
         
         page
-        .navigate('http://localhost:3009/tutorial')
+        .navigate('http://localhost:3001/tutorial')
         .pause(1500)
 
         // Send a DM
