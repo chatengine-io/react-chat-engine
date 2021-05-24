@@ -1,5 +1,5 @@
 module.exports = {
-  url: 'http://localhost:3009',
+  url: 'http://localhost:3001',
   elements: {
     userNameInput: '#home-page-username-input',
     userSecretInput: '#home-page-password-input',
@@ -8,7 +8,7 @@ module.exports = {
     newChatButton: '#new-chat-plus-button',
     newChatInput: '#ce-new-chat-title-field',
     addUserInput: '#ce-add-username-input',
-    newMessageInput: '#msg-textarea',
+    newMessageInput: '.ql-editor',
     newMessageButton: '#ce-send-message-button',
     optionsSettings: '#ce-options-drop-down',
     deleteChatButton: '#ce-delete-chat-button',

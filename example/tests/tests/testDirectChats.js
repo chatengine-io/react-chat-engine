@@ -5,7 +5,7 @@ module.exports = {
         const page = browser.page.homePage();
         
         page
-        .navigate('http://localhost:3009/direct')
+        .navigate('http://localhost:3001/direct')
         .pause(1500)
 
         // New DM
