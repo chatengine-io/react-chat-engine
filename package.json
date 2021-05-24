@@ -52,6 +52,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "axios": "^0.21.1",
+    "html-to-text": "^7.1.1",
     "lodash": "4.17.21",
     "nextjs-websocket": "^1.0.0",
     "react-grid-system": "^7.1.1",

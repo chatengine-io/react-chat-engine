@@ -6,6 +6,8 @@ import _ from 'lodash'
 
 import { daySinceSent } from '../Utilities/dateToString'
 
+const { htmlToText } = require('html-to-text')
+
 const ChatCard = props => {
     const { conn, activeChat, setActiveChat } = useContext(ChatEngineContext)
 
@@ -26,7 +28,7 @@ const ChatCard = props => {
     const otherPerson = chat.people.find(person => person.person.username !== conn.userName);
     const title = chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title
     
-    let lastMessage = chat.last_message.text
+    let lastMessage = htmlToText(chat.last_message.text, {})
     if (!lastMessage) {
         lastMessage = chat.last_message.attachments.length > 0 ?
         `${chat.last_message.attachments.length} image${chat.last_message.attachments.length > 1 ? 's' : ''}` :
