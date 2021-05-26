@@ -5,12 +5,14 @@ import { CloseCircleTwoTone } from '@ant-design/icons'
 const Thumbnail = props => {
     const [hovered, setHovered] = useState(false)
     const [blob, setBlob] = useState('')
+
     useEffect(() => {
       setBlob(URL.createObjectURL(props.file))
     }, [props.file])
+    
     return (
         <div 
-            style={{ padding: '12px 6px', display: 'inline-block', position: "relative" }}
+            style={{ padding: '6px', display: 'inline-block', position: "relative" }}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
