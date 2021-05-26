@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import { CloseCircleTwoTone } from '@ant-design/icons'
 
-const Thumbnail = props => {
+const FilePreview = props => {
     const [hovered, setHovered] = useState(false)
-    
 
     return (
         <div 
@@ -28,7 +27,7 @@ const Thumbnail = props => {
     )
 }
 
-export default Thumbnail
+export default FilePreview
 
 const styles = {
     filePreview: { 

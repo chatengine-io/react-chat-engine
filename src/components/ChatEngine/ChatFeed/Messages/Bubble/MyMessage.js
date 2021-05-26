@@ -42,7 +42,9 @@ const Message = props => {
             const fileName = getFileName(attachment.file)
             if(isImage(fileName)) {
                 return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
-            } else { return <div key={`attachment${index}`} /> }
+            } else { 
+                return <div key={`attachment${index}`} /> 
+            }
         })
     }
 
@@ -54,7 +56,9 @@ const Message = props => {
             const fileName = getFileName(attachment.file)
             if(!isImage(fileName)) {
                 return <FileView attachment={attachment} key={`attachment_${index}`} />
-            } else { return <div key={`attachment${index}`} />}
+            } else { 
+                return <div key={`attachment${index}`} />
+            }
         })
     }
 
@@ -81,7 +85,7 @@ const Message = props => {
             >
                 { renderImages() }
             </div>
-            
+
             <div 
                 style={{ display: 'auto' }} 
                 className='ce-my-message-attachments-container ce-my-message-files-container'

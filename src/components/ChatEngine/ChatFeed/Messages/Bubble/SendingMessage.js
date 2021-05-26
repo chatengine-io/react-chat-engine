@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { getFileName, isImage } from './file'
+import { isImage } from './file'
 
 import FileView from './FileView'
 import Thumbnail from './Thumbnail'
@@ -16,7 +16,9 @@ const SendingMessage = props => {
         return attachments.map((attachment, index) => {
             if(isImage(attachment.name)) {
                 return <Thumbnail key={`attachment_${index}`} />
-            } else { return <div key={`attachment${index}`} /> }
+            } else { 
+                return <div key={`attachment${index}`} /> 
+            }
         })
     }
 
@@ -24,7 +26,9 @@ const SendingMessage = props => {
         return attachments.map((attachment, index) => {
             if(!isImage(attachment.name)) {
                 return <FileView key={`attachment_${index}`} />
-            } else { return <div key={`attachment${index}`} />}
+            } else { 
+                return <div key={`attachment${index}`} />
+            }
         })
     }
 

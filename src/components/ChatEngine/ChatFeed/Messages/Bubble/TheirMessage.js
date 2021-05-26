@@ -43,7 +43,9 @@ const TheirMessage = props => {
             const fileName = getFileName(attachment.file)
             if(isImage(fileName)) {
                 return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
-            } else { return <div key={`attachment${index}`} /> }
+            } else { 
+                return <div key={`attachment${index}`} /> 
+            }
         })
     }
 
@@ -55,7 +57,9 @@ const TheirMessage = props => {
             const fileName = getFileName(attachment.file)
             if(!isImage(fileName)) {
                 return <FileView attachment={attachment} key={`attachment_${index}`} />
-            } else { return <div key={`attachment${index}`} />}
+            } else { 
+                return <div key={`attachment${index}`} />
+            }
         })
     }
 

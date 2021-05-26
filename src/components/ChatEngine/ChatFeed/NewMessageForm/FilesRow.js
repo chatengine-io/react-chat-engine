@@ -15,7 +15,9 @@ const FilesRow = props => {
                         onRemove={() => props.onRemove && props.onRemove(index)}
                     />
                 )
-            } else { return <div key={`no_file_${index}`} /> }
+            } else { 
+                return <div key={`no_file_${index}`} /> 
+            }
         })
     }
   

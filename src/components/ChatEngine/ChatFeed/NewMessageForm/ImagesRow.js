@@ -15,7 +15,9 @@ const ImagesRow = props => {
                         onRemove={() => props.onRemove && props.onRemove(index)}
                     />
                 )
-            } else { return <div key={`no_thumb_${index}`} /> }
+            } else { 
+                return <div key={`no_thumb_${index}`} /> 
+            }
         })
     }
   
