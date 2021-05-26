@@ -1,6 +1,9 @@
 import React from 'react'
 
+import { getFileName, isImage } from './file'
+
 import Thumbnail from './Thumbnail'
+import FileView from './FileView'
 
 import Dot from '../../../components/Avatar/Dot'
 
@@ -31,11 +34,31 @@ const Message = props => {
         })
     }
 
-    function renderAttachments() {
+    function renderImages() {
         const { message } = props
         const attachments = message && message.attachments ? message.attachments : []
+        
         return attachments.map((attachment, index) => {
-            return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
+            const fileName = getFileName(attachment.file)
+            if(isImage(fileName)) {
+                return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
+            } else { 
+                return <div key={`attachment${index}`} /> 
+            }
+        })
+    }
+
+    function renderFiles() {
+        const { message } = props
+        const attachments = message && message.attachments ? message.attachments : []
+        
+        return attachments.map((attachment, index) => {
+            const fileName = getFileName(attachment.file)
+            if(!isImage(fileName)) {
+                return <FileView attachment={attachment} key={`attachment_${index}`} />
+            } else { 
+                return <div key={`attachment${index}`} />
+            }
         })
     }
 
@@ -58,9 +81,16 @@ const Message = props => {
         >
             <div 
                 style={{ display: 'auto' }} 
-                className='ce-my-message-attachments-container'
+                className='ce-my-message-attachments-container ce-my-message-images-container'
             >
-                { renderAttachments() }
+                { renderImages() }
+            </div>
+
+            <div 
+                style={{ display: 'auto' }} 
+                className='ce-my-message-attachments-container ce-my-message-files-container'
+            >
+                { renderFiles() }
             </div>
 
             <Row

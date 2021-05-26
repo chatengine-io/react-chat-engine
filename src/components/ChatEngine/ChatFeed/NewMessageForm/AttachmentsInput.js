@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { PaperClipOutlined } from '@ant-design/icons'
 
-const ImagesInput = props => {
+const AttachmentsInput = props => {
     const [state, setState] = useState({
         hovered: false,
     })
@@ -35,7 +35,6 @@ const ImagesInput = props => {
             <input
                 multiple
                 id="files"
-                accept="image/x-png,image/gif,image/jpeg"
                 style={{ visibility: "hidden" }}
                 type="file"
                 onChange={(e) => onSelect(e)}
@@ -58,4 +57,4 @@ const styles = {
     }
 }
 
-export default ImagesInput
+export default AttachmentsInput

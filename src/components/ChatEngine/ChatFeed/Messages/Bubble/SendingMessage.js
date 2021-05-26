@@ -1,5 +1,8 @@
 import React from 'react'
 
+import { isImage } from './file'
+
+import FileView from './FileView'
 import Thumbnail from './Thumbnail'
 
 import Body from './Body'
@@ -9,9 +12,23 @@ import { Row, Col, setConfiguration } from 'react-grid-system'
 setConfiguration({ maxScreenClass: 'xl' })
 
 const SendingMessage = props => {
-    function renderAttachments(attachments) {
-        return attachments.map((a, index) => {
-            return <Thumbnail key={`sending-file-${index}`} />
+    function renderImages(attachments) {
+        return attachments.map((attachment, index) => {
+            if(isImage(attachment.name)) {
+                return <Thumbnail key={`attachment_${index}`} />
+            } else { 
+                return <div key={`attachment${index}`} /> 
+            }
+        })
+    }
+
+    function renderFiles(attachments) {
+        return attachments.map((attachment, index) => {
+            if(!isImage(attachment.name)) {
+                return <FileView key={`attachment_${index}`} />
+            } else { 
+                return <div key={`attachment${index}`} />
+            }
         })
     }
 
@@ -34,9 +51,16 @@ const SendingMessage = props => {
         >
             <div 
                 style={{ display: 'auto' }} 
-                className='ce-my-message-attachments-container'
+                className='ce-my-message-attachments-container ce-my-message-images-container'
             >
-                { renderAttachments(attachments) }
+                { renderImages(attachments) }
+            </div>
+            
+            <div 
+                style={{ display: 'auto' }} 
+                className='ce-my-message-attachments-container ce-my-message-files-container'
+            >
+                { renderFiles(attachments) }
             </div>
 
             <Row

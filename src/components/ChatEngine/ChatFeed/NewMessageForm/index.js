@@ -5,7 +5,9 @@ import { ChatEngineContext } from '../../../Context'
 import { sendMessage, isTyping } from 'react-chat-engine'
 
 import FilesRow from './FilesRow'
-import ImagesInput from './ImagesInput'
+import ImagesRow from './ImagesRow'
+
+import AttachmentsInput from './AttachmentsInput'
 import SendButton from './SendButton'
 
 const ReactQuill = require('react-quill');
@@ -75,6 +77,8 @@ const NewMessageForm = () => {
       style={styles.NewMessageFormContainer}
       className='ce-message-form-container'
     >
+      <ImagesRow files={attachments} onRemove={(i) => onRemove(i)} />
+
       <FilesRow files={attachments} onRemove={(i) => onRemove(i)} />
 
       <ReactQuill
@@ -94,7 +98,7 @@ const NewMessageForm = () => {
 
         <button className="ql-code"></button>
         <button className="ql-link"></button>
-        <ImagesInput onSelectFiles={(attachments) => setAttachments(attachments)} />
+        <AttachmentsInput onSelectFiles={(attachments) => setAttachments(attachments)} />
 
         <div 
           onClick={handleSubmit.bind(this)}
