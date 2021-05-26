@@ -1,5 +1,8 @@
 import React from 'react'
 
+import { getFileName, isImage } from './file'
+
+import FileView from './FileView'
 import Thumbnail from './Thumbnail'
 
 import { Avatar, Dot } from 'react-chat-engine'
@@ -32,11 +35,27 @@ const TheirMessage = props => {
         })
     }
 
-    function renderAttachments() {
+    function renderImages() {
         const { message } = props
-        const attachments = message && message.attachments ? props.message.attachments : []
+        const attachments = message && message.attachments ? message.attachments : []
+        
         return attachments.map((attachment, index) => {
-            return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
+            const fileName = getFileName(attachment.file)
+            if(isImage(fileName)) {
+                return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
+            } else { return <div key={`attachment${index}`} /> }
+        })
+    }
+
+    function renderFiles() {
+        const { message } = props
+        const attachments = message && message.attachments ? message.attachments : []
+        
+        return attachments.map((attachment, index) => {
+            const fileName = getFileName(attachment.file)
+            if(!isImage(fileName)) {
+                return <FileView attachment={attachment} key={`attachment_${index}`} />
+            } else { return <div key={`attachment${index}`} />}
         })
     }
 
@@ -75,14 +94,20 @@ const TheirMessage = props => {
                                 avatar={message.sender && message.sender.avatar}
                             />
                         }
-
                     </div>
 
                     <div 
                         style={{ display: 'auto', paddingLeft: '50px' }}
-                        className='ce-their-message-attachments-container'
+                        className='ce-their-message-attachments-container ce-their-message-images-container'
                     >
-                        { renderAttachments() }
+                        { renderImages() }
+                    </div>
+
+                    <div 
+                        style={{ display: 'auto', paddingLeft: '50px' }}
+                        className='ce-their-message-attachments-container ce-their-message-files-container'
+                    >
+                        { renderFiles() }
                     </div>
 
                     {

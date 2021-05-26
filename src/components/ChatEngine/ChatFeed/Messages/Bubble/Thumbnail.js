@@ -7,13 +7,13 @@ const Thumbnail = props => {
     const { attachment } = props
     const style={ 
         ...styles.thumbnail, 
-        ...{ border: hovered ? '1px solid #1890ff' : '0px' } 
+        ...{ border: hovered ? '1px solid #1890ff' : '1px solid #fff' } 
     }
 
     if (!attachment) {
         return (
             <div style={styles.loadingContainer}>
-                <LoadingOutlined  style={{ color: 'white', padding: '4px', fontSize: '28px' }} />
+                <LoadingOutlined  style={{ color: 'white', padding: '4px', fontSize: '24px' }} />
             </div>
         )
     }
@@ -41,7 +41,7 @@ const styles = {
         objectFit: 'cover',
         borderRadius: '0.3em',
         marginRight: '2px',
-
+        marginBottom: '4px',
         height: '30vw', 
         width: '30vw', 
         maxHeight: '200px',
