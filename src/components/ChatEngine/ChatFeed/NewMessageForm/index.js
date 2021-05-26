@@ -4,7 +4,7 @@ import { ChatEngineContext } from '../../../Context'
 
 import { sendMessage, isTyping } from 'react-chat-engine'
 
-import FilesRow from './FilesRow'
+import ImagesRow from './ImagesRow'
 import AttachmentsInput from './AttachmentsInput'
 import SendButton from './SendButton'
 
@@ -75,7 +75,7 @@ const NewMessageForm = () => {
       style={styles.NewMessageFormContainer}
       className='ce-message-form-container'
     >
-      <FilesRow files={attachments} onRemove={(i) => onRemove(i)} />
+      <ImagesRow files={attachments} onRemove={(i) => onRemove(i)} />
 
       <ReactQuill
         theme='snow'
