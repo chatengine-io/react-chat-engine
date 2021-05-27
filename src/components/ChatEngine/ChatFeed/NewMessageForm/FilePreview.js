@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import { FileOutlined } from '@ant-design/icons'
+
 import { CloseCircleTwoTone } from '@ant-design/icons'
 
 const FilePreview = props => {
@@ -14,7 +16,7 @@ const FilePreview = props => {
                 ...{ paddingRight: hovered ? '6px' : '26px' }
             }}
         >
-            { props.file && props.file.name } {' '}
+            <FileOutlined />{' '}{ props.file && props.file.name } {' '}
             
             {
                 hovered &&

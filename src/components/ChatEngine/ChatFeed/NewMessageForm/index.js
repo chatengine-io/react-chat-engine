@@ -21,7 +21,7 @@ const NewMessageForm = () => {
     setSendingMessages 
   } = useContext(ChatEngineContext)
   
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState('')
   const [trigger, setTrigger] = useState(0)
   const [attachments, setAttachments] = useState([])
 
@@ -53,7 +53,7 @@ const NewMessageForm = () => {
   
   function handleSubmit() {
     let text = value.trim()
-    if (text.slice(-11) === '<p><br></p>') { text = text.substr(0, text.length - 11) }
+    if (text.length > 11 && text.slice(-11) === '<p><br></p>') { text = text.substr(0, text.length - 11) }
 
     const custom_json = { sender_id: Date.now().toString() }
     const sender_username = conn.userName ? conn.userName : conn.senderUsername
