@@ -8204,10 +8204,10 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-nextjs-websocket@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/nextjs-websocket/-/nextjs-websocket-1.0.0.tgz#5b92d4effc3bec2b01cb633b95ff7ebbadbdb043"
-  integrity sha512-RUZX4vDLTAOHB2BVZrShKZPqSXDnwrQq7+Gkwz3jcNlOX0Qpccekr0ZKfNW4aWgD4nJ7IfUZfKlmPU9GnEtrTA==
+nextjs-websocket@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/nextjs-websocket/-/nextjs-websocket-1.0.5.tgz#cd508a26125b763d60e8a1cd37b5753ebd265811"
+  integrity sha512-U697NGVVvJD6km4d+NOnheQzqQOu9V07mU+lw76sU5FV4smpBJlCkCqeXjPjGOTm0jJ5RLyub1n0FoyM9llSVg==
   dependencies:
     websocket "^1.0.33"
 

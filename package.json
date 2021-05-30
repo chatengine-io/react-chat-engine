@@ -54,7 +54,7 @@
     "axios": "^0.21.1",
     "html-to-text": "^7.1.1",
     "lodash": "4.17.21",
-    "nextjs-websocket": "^1.0.0",
+    "nextjs-websocket": "^1.0.5",
     "react-grid-system": "^7.1.1",
     "react-quill": "^1.3.5",
     "react-scroll": "^1.8.1",
