@@ -6,7 +6,15 @@ import { getChat, getLatestMessages } from 'react-chat-engine'
 
 import { WebSocket } from 'nextjs-websocket'
 
+let socketRef = undefined;
+let dt = new Date().getTime();
+
 const ChatSocket = props => {
+    const [uuid, setUuid] = useState('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (dt + Math.random()*16)%16 | 0;
+        dt = Math.floor(dt/16);
+        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    }))
     const [reconnect, reset] = useState(Date.now() + 10000)
     const {
       setConnecting,
@@ -38,7 +46,17 @@ const ChatSocket = props => {
         setChats(_.mapKeys([chat], 'id'))
     }
 
-    function onConnect(conn) {
+    function onConnect() {
+        const { publicKey, projectID, chatID, chatAccessKey } = props 
+        const project = publicKey ? publicKey : projectID
+        socketRef.sendMessage(JSON.stringify({
+            "project-id": project,
+            "chat-id": chatID,
+            "access-key": chatAccessKey,
+        }))
+    }
+
+    function onAuthenticate(conn) {
         setConn(conn); setCreds(conn);
         setConnecting(false)
     
@@ -61,7 +79,10 @@ const ChatSocket = props => {
     function handleEvent(event) {
         const eventJSON = JSON.parse(event)
 
-        if (eventJSON.action === 'login_error') {
+        if (eventJSON.action === 'login_success') {
+            onAuthenticate(props)
+
+        } else if (eventJSON.action === 'login_error') {
             console.log(
                 `Your chat auth credentials were not correct: \n
                 Project ID: ${props.projectID} \n
@@ -154,21 +175,14 @@ const ChatSocket = props => {
 
     function onClose() { setConnecting(true) }
 
-    // Render
-    
-    const {
-        development,
-        publicKey, projectID, 
-        chatID, chatAccessKey, 
-    } = props 
-    
+    const { development } = props 
     const wsStart = development ? 'ws://' : 'wss://'
     const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
-    const project = publicKey ? publicKey : projectID
-
     return <WebSocket 
-        url={`${wsStart}${rootHost}/chat/?projectID=${project}&chatID=${chatID}&accessKey=${chatAccessKey}`}
-        onOpen={() => onConnect(props)}
+        reconnect={true}
+        childRef={ref => socketRef = ref}
+        url={`${wsStart}${rootHost}/chat_v2/?connection_id=${uuid}`}
+        onOpen={onConnect.bind(this)}
         onClose={onClose.bind(this)}
         onMessage={handleEvent.bind(this)}
         reconnectIntervalInMilliSeconds={3000}

@@ -6,7 +6,15 @@ import { getLatestChats, getLatestMessages, readMessage } from 'react-chat-engin
 
 import { WebSocket } from 'nextjs-websocket'
 
+let socketRef = undefined;
+let dt = new Date().getTime();
+
 const Socket = props => {
+    const [uuid, setUuid] = useState('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (dt + Math.random()*16)%16 | 0;
+        dt = Math.floor(dt/16);
+        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    }))
     const [reconnect, reset] = useState(Date.now() + 10000)
     const {
       setConnecting,
@@ -38,7 +46,18 @@ const Socket = props => {
         props.onEditChat && props.onEditChat(chat)
     }
 
-    function onConnect(conn) {
+    function onConnect() {
+        const { publicKey, projectID, userName, userPassword, userSecret } = props 
+        const project = publicKey ? publicKey : projectID
+        const secret = userPassword ? userPassword : userSecret
+        socketRef.sendMessage(JSON.stringify({
+            "project-id": project,
+            "user-name": userName,
+            "user-secret": secret,
+        }))
+    }
+
+    function onAuthenticate(conn) {
         setConn(conn); setCreds(conn);
         setConnecting(false)
 
@@ -61,7 +80,10 @@ const Socket = props => {
     function handleEvent(event) {
         const eventJSON = JSON.parse(event)
 
-        if (eventJSON.action === 'login_error') {
+        if (eventJSON.action === 'login_success') {
+            onAuthenticate(props)
+
+        } else if (eventJSON.action === 'login_error') {
             console.log(
                 `Your login credentials were not correct: \n
                 Project ID: ${props.projectID} \n
@@ -175,23 +197,15 @@ const Socket = props => {
 
     function onClose() { setConnecting(true) }
 
-    // Render
-    
-    const { 
-        development,
-        publicKey, projectID, 
-        userName, 
-        userPassword, userSecret, 
-    } = props 
-    
+    const { development } = props 
     const wsStart = development ? 'ws://' : 'wss://'
     const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
-    const project = publicKey ? publicKey : projectID
-    const secret = userPassword ? userPassword : userSecret
 
     return <WebSocket 
-        url={`${wsStart}${rootHost}/person/?publicKey=${project}&username=${userName}&secret=${secret}`}
-        onOpen={() => onConnect(props)}
+        reconnect={true}
+        childRef={ref => socketRef = ref}
+        url={`${wsStart}${rootHost}/person_v2/?connection_id=${uuid}`}
+        onOpen={onConnect.bind(this)}
         onClose={onClose.bind(this)}
         onMessage={handleEvent.bind(this)}
         reconnectIntervalInMilliSeconds={3000}
