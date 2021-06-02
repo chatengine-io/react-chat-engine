@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import { CloseOutlined } from '@ant-design/icons'
 
-export default class AutoComplete extends Component {
+export default class AutoCompleteInput extends Component {
     state = {
         focused: false,
         showAll: false,
@@ -116,4 +117,17 @@ const styles = {
         fontSize: '15px',
         borderRadius: '24px',
     }
+}
+
+AutoCompleteInput.propTypes = {
+    default: PropTypes.string,
+    value: PropTypes.string,
+    options: PropTypes.arrayOf([PropTypes.object, PropTypes.string]),
+    max: PropTypes.number,
+    label: PropTypes.string,
+    type: PropTypes.oneOf(['text', 'number']),
+    style: PropTypes.object,
+    handleChange: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
 }
