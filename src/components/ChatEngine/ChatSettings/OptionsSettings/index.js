@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
-import { Button, deleteChat } from 'react-chat-engine'
+import { Button, deleteChat, ChatEngineContext } from 'react-chat-engine'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 
-const OptionsSettings = props => {
+const OptionsSettings = () => {
+    const { conn, chats, activeChat } = useContext(ChatEngineContext)  
+    const chat = chats && chats[activeChat] 
     const [state, setState] = useState({
         collapsed: true,
         hovered: false
     })
-    const { chat } = props
+
+    if (!chat) return <div />
 
     return (
         <div style={{ borderTop: '1px solid #f0f0f0' }}>
@@ -41,7 +44,7 @@ const OptionsSettings = props => {
                         theme='danger'
                         icon='delete'
                         id='ce-delete-chat-button'
-                        onClick={() => deleteChat(props, chat.id, (data) => {})}
+                        onClick={() => deleteChat(conn, chat.id, (data) => {})}
                         style={{ width: '100%', marginBottom: '12px' }}
                     />
                 </div>

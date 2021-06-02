@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types'
+import React, { useState, useContext } from 'react'
+
+import { ChatEngineContext } from 'react-chat-engine'
 
 import PersonRow from './PersonRow'
 import PersonForm from './PersonForm'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 
-const PeopleSettings = props => {
+const PeopleSettings = () => {
+    const { conn, chats, activeChat } = useContext(ChatEngineContext)  
+    const chat = chats && chats[activeChat] 
     const [state, setState] = useState({
         collapsed: false,
         hovered: false
     })
-    const { chat } = props
 
-    if (chat.is_direct_chat) { return <div /> }
+    if (!chat || chat.is_direct_chat) { return <div /> }
 
     function renderChatPeople(people, chat) {
         return people.map((chatPerson, index) => {
@@ -21,7 +23,7 @@ const PeopleSettings = props => {
                 <PersonRow 
                     key={`person_${index}`} 
                     person={chatPerson.person}
-                    conn={props} 
+                    conn={conn} 
                     chat={chat} 
                 />
             )
@@ -60,8 +62,8 @@ const PeopleSettings = props => {
                     <div style={{ height: '12px' }} />
 
                     {
-                        props && chat && props.userName === chat.admin.username &&
-                        <PersonForm conn={props} chat={chat} />
+                        conn && chat && conn.userName === chat.admin.username &&
+                        <PersonForm conn={conn} chat={chat} />
                     }
                 </div>
             }
@@ -78,9 +80,4 @@ const styles = {
         bottom: '30px',
         right: '12px'
     }
-}
-
-PeopleSettings.propTypes = {
-    chat: PropTypes.object,
-    userName: PropTypes.string,
 }

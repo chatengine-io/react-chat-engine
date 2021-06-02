@@ -1,16 +1,14 @@
 import React, { useContext } from 'react'
 
-import { ChatEngineContext } from '../../../Context'
-
-import { Avatar } from 'react-chat-engine'
+import { Avatar, ChatEngineContext } from 'react-chat-engine'
 
 import TitleForm from './TitleForm'
 
-const ChatSettingsTop = props => {
-    const { conn } = useContext(ChatEngineContext)
-    const { chat } = props
+const ChatSettingsTop = () => {
+    const { conn, chats, activeChat } = useContext(ChatEngineContext)  
+    const chat = chats && chats[activeChat] 
     
-    if (!conn || conn === null) return <div />
+    if (!chat || !conn || conn === null) return <div />
 
     const topPeople = chat.people.slice(0, 3)
     const otherPerson = getOtherPerson(chat.people)

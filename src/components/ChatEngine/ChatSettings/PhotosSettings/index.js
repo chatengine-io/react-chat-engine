@@ -1,17 +1,21 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useContext } from 'react'
+
+import { ChatEngineContext } from 'react-chat-engine'
 
 import Thumbnail from './Thumbnail'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 
 
-const PhotosSettings = props => {
+const PhotosSettings = () => {
+    const { chats, activeChat } = useContext(ChatEngineContext)  
+    const chat = chats && chats[activeChat] 
     const [state, setState] = useState({
         collapsed: true,
         hovered: false
     })
-    const { chat } = props
+
+    if (!chat) return <div />
 
     function renderPhotos(attachments) {
         return attachments.map((attachment, index) => {
@@ -63,8 +67,4 @@ const styles = {
         bottom: '30px',
         right: '12px'
     }
-}
-
-PhotosSettings.propTypes = {
-    chat: PropTypes.object,
 }

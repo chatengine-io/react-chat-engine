@@ -122,7 +122,7 @@ const styles = {
 AutoCompleteInput.propTypes = {
     default: PropTypes.string,
     value: PropTypes.string,
-    options: PropTypes.arrayOf([PropTypes.object, PropTypes.string]),
+    options: PropTypes.arrayOf(PropTypes.object),
     max: PropTypes.number,
     label: PropTypes.string,
     type: PropTypes.oneOf(['text', 'number']),
