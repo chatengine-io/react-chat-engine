@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 import Thumbnail from './Thumbnail'
 
@@ -62,4 +63,8 @@ const styles = {
         bottom: '30px',
         right: '12px'
     }
+}
+
+PhotosSettings.propTypes = {
+    chat: PropTypes.object,
 }

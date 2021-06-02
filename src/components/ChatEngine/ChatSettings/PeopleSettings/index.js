@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'
 
-import Person from './Person'
+import PersonRow from './PersonRow'
 import PersonForm from './PersonForm'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
@@ -17,7 +18,7 @@ const PeopleSettings = props => {
     function renderChatPeople(people, chat) {
         return people.map((chatPerson, index) => {
             return (
-                <Person 
+                <PersonRow 
                     key={`person_${index}`} 
                     person={chatPerson.person}
                     conn={props} 
@@ -77,4 +78,9 @@ const styles = {
         bottom: '30px',
         right: '12px'
     }
+}
+
+PeopleSettings.propTypes = {
+    chat: PropTypes.object,
+    userName: PropTypes.string,
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Thumbnail = props => {
     const { attachment } = props 
@@ -7,7 +8,6 @@ const Thumbnail = props => {
 
     return (
         <div style={styles.container} className='ce-photo-thumbnail'>
-            
             <div style={{ paddingTop: '100%' }} />
             
             <img
@@ -17,7 +17,6 @@ const Thumbnail = props => {
                 className='ce-photo-img'
                 id={`image-${attachment.id}`}
             />
-            
         </div>
     )
 }
@@ -39,4 +38,8 @@ const styles = {
         position: 'absolute',
         objectFit: 'cover'
     }
+}
+
+Thumbnail.propTypes = {
+    attachment: PropTypes.object,
 }

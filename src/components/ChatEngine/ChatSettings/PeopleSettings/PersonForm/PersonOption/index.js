@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 import { Avatar } from 'react-chat-engine'
 
 
-const Option = props => {
+const PersonOption = props => {
     const [focused, setFocused] = useState(false)
 
     const { avatar, username } = props.person 
@@ -27,7 +28,7 @@ const Option = props => {
     );
 }
 
-export default Option
+export default PersonOption
 
 const styles = {
   option: {
@@ -36,4 +37,8 @@ const styles = {
     fontSize: '15px',
     display: 'flex'
   },
+}
+
+PersonOption.propTypes = {
+    person: PropTypes.object,
 }
