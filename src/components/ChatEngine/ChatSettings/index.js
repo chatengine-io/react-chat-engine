@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { ChatEngineContext } from '../../Context'
+import { ChatEngineContext } from 'react-chat-engine'
 
 import PeopleSettings from './PeopleSettings'
 import PhotosSettings from './PhotosSettings'
@@ -14,26 +14,26 @@ const ChatSettings = props => {
     if (props.renderChatSettings) return props.renderChatSettings(props)
     
     if (!chat) return <div style={styles.filler} />
-    
+
     return (
         <div style={styles.settingsContainer} className='ce-settings'>
             <div style={{ width: '90%', paddingLeft: '5%' }} className='ce-settings-container'>
                 {
                     props.renderChatSettingsTop ?
                     props.renderChatSettingsTop(conn, chat) :
-                    <ChatSettingsTop {...props} chat={chat} />
+                    <ChatSettingsTop />
                 }
 
                 {
                     props.renderPeopleSettings ?
                     props.renderPeopleSettings(conn, chat) :
-                    <PeopleSettings {...props} chat={chat} />
+                    <PeopleSettings />
                 }
 
                 {
                     props.renderPhotosSettings ?
                     props.renderPhotosSettings(chat) :
-                    <PhotosSettings {...props} chat={chat} />
+                    <PhotosSettings />
                 }
 
                 {
@@ -42,7 +42,7 @@ const ChatSettings = props => {
                         {
                             props.renderOptionsSettings ?
                             props.renderOptionsSettings(conn, chat) :
-                            <OptionsSettings {...props} chat={chat} />
+                            <OptionsSettings />
                         }
                     </div>
                 }

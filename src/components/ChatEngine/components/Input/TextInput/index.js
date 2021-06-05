@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 
 export default class TextInput extends Component {
     state = {
@@ -68,4 +70,17 @@ const styles = {
         padding: '0px 12px',
         boxSizing: 'border-box',
     }
+}
+
+TextInput.propTypes = {
+    default: PropTypes.string,
+    value: PropTypes.string,
+    label: PropTypes.string,
+    type: PropTypes.oneOf(['text', 'password', 'number']),
+    autoFocus: PropTypes.bool,
+    id: PropTypes.string,
+    style: PropTypes.object,
+    handleChange: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
 }

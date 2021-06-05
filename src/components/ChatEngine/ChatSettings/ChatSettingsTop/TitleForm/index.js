@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types'
 
 import { editChat, TextInput } from 'react-chat-engine'
 
@@ -59,3 +60,7 @@ const NewMessageForm = props => {
 }
 
 export default NewMessageForm
+
+NewMessageForm.propTypes = {
+    chat: PropTypes.object.isRequired,
+}

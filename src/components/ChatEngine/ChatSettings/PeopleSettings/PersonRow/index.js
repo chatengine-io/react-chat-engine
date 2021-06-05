@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 import { removePerson } from 'react-chat-engine'
 
@@ -71,3 +72,9 @@ const Person = props => {
 }
 
 export default Person
+
+Person.propTypes = {
+    person: PropTypes.object.isRequired,
+    chat: PropTypes.object.isRequired,
+    conn: PropTypes.object.isRequired,
+}

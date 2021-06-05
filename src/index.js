@@ -5,8 +5,8 @@ import ChatEngine from './components'
 import Socket from './components/Socket'
 import ChatSocket from './components/Socket/ChatSocket'
 
+import Button from './components/ChatEngine/components/Button'
 import { Avatar, Dot } from './components/ChatEngine/components/Avatar'
-import { Button } from './components/ChatEngine/components/Button'
 import { TextInput, AutoCompleteInput } from './components/ChatEngine/components/Input'
 
 

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 import { addPerson, getOtherPeople } from 'react-chat-engine'
 
 import { AutoCompleteInput } from 'react-chat-engine'
 
-import Option from './Option'
+import PersonOption from './PersonOption'
 
 const PersonForm = props => {
   const [state, setState] = useState({
@@ -38,7 +39,7 @@ const PersonForm = props => {
   }
 
   function renderOption(option) {
-    return <Option person={option} onClick={() => invitePerson(option.username)} />
+    return <PersonOption person={option} onClick={() => invitePerson(option.username)} />
   }
 
   return (
@@ -57,3 +58,8 @@ const PersonForm = props => {
 }
 
 export default PersonForm
+
+PersonForm.propTypes = {
+  chat: PropTypes.object.isRequired,
+  conn: PropTypes.object.isRequired,
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import { stringToColor } from '../../Utilities/colorMapping' 
+import { stringToColor } from '../../../Utilities/colorMapping' 
 
 
 export default class Avatar extends Component {
@@ -86,4 +87,12 @@ const styles = {
         borderRadius: '100%', 
         border: '2px solid white',   
     }
+}
+
+Avatar.propTypes = {
+    avatar: PropTypes.string,
+    username: PropTypes.string,
+    style: PropTypes.object,
+    is_online: PropTypes.bool,
+    show_online: PropTypes.bool,
 }

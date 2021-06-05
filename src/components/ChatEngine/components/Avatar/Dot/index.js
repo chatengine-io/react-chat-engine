@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import { stringToColor } from '../../Utilities/colorMapping' 
+import { stringToColor } from '../../../Utilities/colorMapping' 
 
 
 export default class Dot extends Component {
@@ -50,4 +51,10 @@ const styles = {
         borderRadius: '13px',
         textAlign: 'center',
     }
+}
+
+Dot.propTypes = {
+    avatar: PropTypes.string,
+    username: PropTypes.string,
+    style: PropTypes.object,
 }
