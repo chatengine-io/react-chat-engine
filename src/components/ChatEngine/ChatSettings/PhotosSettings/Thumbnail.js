@@ -41,5 +41,5 @@ const styles = {
 }
 
 Thumbnail.propTypes = {
-    attachment: PropTypes.object,
+    attachment: PropTypes.object.isRequired,
 }

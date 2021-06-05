@@ -40,5 +40,5 @@ const styles = {
 }
 
 PersonOption.propTypes = {
-    person: PropTypes.object,
+    person: PropTypes.object.isRequired,
 }

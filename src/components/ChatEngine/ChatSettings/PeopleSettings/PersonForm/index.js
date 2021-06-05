@@ -60,6 +60,6 @@ const PersonForm = props => {
 export default PersonForm
 
 PersonForm.propTypes = {
-  chat: PropTypes.object, 
-  conn: PropTypes.object,
+  chat: PropTypes.object.isRequired,
+  conn: PropTypes.object.isRequired,
 }

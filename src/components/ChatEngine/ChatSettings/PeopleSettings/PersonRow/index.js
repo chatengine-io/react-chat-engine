@@ -74,7 +74,7 @@ const Person = props => {
 export default Person
 
 Person.propTypes = {
-    person: PropTypes.object,
-    chat: PropTypes.object,
-    conn: PropTypes.object,
+    person: PropTypes.object.isRequired,
+    chat: PropTypes.object.isRequired,
+    conn: PropTypes.object.isRequired,
 }
