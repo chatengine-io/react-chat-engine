@@ -13,7 +13,7 @@ const Welcome = () => {
             </div>
 
             <div style={{ fontSize: '18px', paddingTop: '24px', width: '75%', paddingLeft: '12.5%' }}>
-                Fill out the "New Chat" form to get started.
+                Create a new Chat form to get started.
             </div>
 
         </div>
