@@ -19,7 +19,7 @@ const ChatHeader = () => {
     const { conn, chats, activeChat } = useContext(ChatEngineContext)
 
     const chat = chats ? chats[activeChat] : undefined
-    const otherPerson = chat && chat.people.find(person => person.person.username !== conn.userName)
+    const otherPerson = chat && conn && chat.people.find(person => person.person.username !== conn.userName)
     const title = chat ? (chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title) : undefined
 
     return (
