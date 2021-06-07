@@ -18,9 +18,9 @@ const NewChatForm = (props) => {
   function handleSubmit(event) {
     event.preventDefault()
 
-    if (value.trim().length > 0) {
+    if (conn && value.trim().length > 0) {
       newChat(
-        conn, 
+        conn,
         { title: value },
         () => setSelected(false)
       )

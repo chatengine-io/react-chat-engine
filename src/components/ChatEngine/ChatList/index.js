@@ -7,7 +7,6 @@ import { getLatestChats } from '../../../actions/chats'
 import _ from 'lodash'
 
 import ChatLoader from './ChatLoader'
-
 import NewChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
@@ -42,8 +41,8 @@ const ChatList = props => {
 
     function sortChats(chats) {
         return chats.sort((a, b) => { 
-            const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
-            const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
+            const aDate = a.last_message && a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
+            const bDate = b.last_message && b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
             return new Date(bDate) - new Date(aDate); 
         })
     }
@@ -73,7 +72,7 @@ const ChatList = props => {
         getLatestChats(props, count, (chats) => onGetChats(chats, count))
     }
 
-    const chatList = sortChats(chats ? Object.values(chats) : [])
+    const chatList = sortChats(chats ? Object.values(chats) : [{}, {}, {}, {}, {}, {}, {}, {}, {}])
 
     if (props.renderChatList) return props.renderChatList(props)
 

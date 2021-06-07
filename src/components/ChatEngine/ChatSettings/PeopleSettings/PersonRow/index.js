@@ -5,7 +5,7 @@ import { removePerson } from 'react-chat-engine'
 
 import { Avatar, Button } from 'react-chat-engine'
 
-const Person = props => {
+const PersonRow = props => {
     const [selected, setSelected] = useState(false)
 
     const { person, chat, conn } = props
@@ -71,10 +71,10 @@ const Person = props => {
     )
 }
 
-export default Person
+export default PersonRow
 
-Person.propTypes = {
+PersonRow.propTypes = {
     person: PropTypes.object.isRequired,
     chat: PropTypes.object.isRequired,
-    conn: PropTypes.object.isRequired,
+    conn: PropTypes.object,
 }

@@ -13,8 +13,6 @@ const ChatSettings = props => {
 
     if (props.renderChatSettings) return props.renderChatSettings(props)
     
-    if (!chat) return <div style={styles.filler} />
-
     return (
         <div style={styles.settingsContainer} className='ce-settings'>
             <div style={{ width: '90%', paddingLeft: '5%' }} className='ce-settings-container'>
@@ -61,11 +59,5 @@ const styles = {
         borderLeft: '1px solid #afafaf',
         backgroundColor: 'white',
         fontFamily: 'Avenir'
-    },
-    filler: { 
-        display: 'flex',
-        width: '90%',
-        paddingLeft: '5%',
-        borderLeft: '1px solid #afafaf'
     }
 }

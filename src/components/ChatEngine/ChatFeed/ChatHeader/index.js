@@ -1,11 +1,13 @@
 import React, { useContext } from 'react'
 
-import { ChatEngineContext } from '../../../Context'
+import { ChatEngineContext } from 'react-chat-engine'
 
 import { timeSinceDate } from '../../Utilities/dateToString'
 
 import ChatListDrawer from './ChatListDrawer'
 import ChatSettingsDrawer from './ChatSettingsDrawer'
+
+import { LoadingOutlined } from '@ant-design/icons'
 
 import { Row, Col } from 'react-grid-system'
 
@@ -16,13 +18,9 @@ setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 const ChatHeader = () => {
     const { conn, chats, activeChat } = useContext(ChatEngineContext)
 
-    if (!chats || !activeChat || !chats[activeChat]) { return <div /> }
-
-    if (!conn || conn === null) { return <div /> }
-
-    const chat = chats[activeChat]
-    const otherPerson = chat.people.find(person => person.person.username !== conn.userName);
-    const title = chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title
+    const chat = chats ? chats[activeChat] : undefined
+    const otherPerson = chat && conn && chat.people.find(person => person.person.username !== conn.userName)
+    const title = chat ? (chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title) : undefined
 
     return (
         <Row 
@@ -49,14 +47,14 @@ const ChatHeader = () => {
                     className='ce-chat-title-text' 
                     id={`ce-chat-feed-title-${title}`}
                 >
-                    { title }
+                    { title ? title : <LoadingOutlined /> }
                 </div>
                 
                 <div style={styles.subtitleText} className='ce-chat-subtitle-text'>
                     {
-                        chat.last_message.created && chat.last_message.created.length > 0 ?
+                        chat ? chat.last_message.created && chat.last_message.created.length > 0 ?
                         `Active ${timeSinceDate(chat.last_message.created)}` :
-                        'Say hello!'
+                        'Say hello!' : 'Loading'
                     }
                 </div>
             </Col>

@@ -37,8 +37,6 @@ const NewMessageForm = () => {
     'link', 'code',
   ]
 
-  if (!conn || conn === null) return <div />
-
   function onRemove(index) {
     const newAttachments = attachments
     newAttachments.splice(index, 1)
@@ -48,10 +46,12 @@ const NewMessageForm = () => {
   function handleChange(value) {
     setValue(value)
     setTrigger((trigger + 1) % 4)
-    if (trigger === 1) { isTyping(conn, activeChat) }
+    if (trigger === 1) { conn && isTyping(conn, activeChat) }
   }
   
   function handleSubmit() {
+    if (!conn) return 
+
     let text = value.trim()
     if (text.length > 11 && text.slice(-11) === '<p><br></p>') { text = text.substr(0, text.length - 11) }
 

@@ -1,15 +1,20 @@
 import React, { useContext } from 'react'
 
-import { ChatEngineContext } from '../../Context'
+import { ChatEngineContext } from 'react-chat-engine'
 
 import _ from 'lodash'
 
-import { daySinceSent } from '../Utilities/dateToString'
+import Loading from './Loading'
+
+import { daySinceSent } from '../../Utilities/dateToString'
 
 const { htmlToText } = require('html-to-text')
 
 const ChatCard = props => {
+    const { chat } = props
     const { conn, activeChat, setActiveChat } = useContext(ChatEngineContext)
+    
+    if (_.isEmpty(chat) || props.loading) return <Loading />
 
     if (!conn || conn === null) return <div/>
 
@@ -23,7 +28,6 @@ const ChatCard = props => {
         return readLastMessage
     }
 
-    const { chat } = props
     const extraStyle = activeChat === chat.id ? styles.activeChat : {}
     const otherPerson = chat.people.find(person => person.person.username !== conn.userName);
     const title = chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title
