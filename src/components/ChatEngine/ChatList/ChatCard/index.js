@@ -6,8 +6,7 @@ import _ from 'lodash'
 
 import Loading from './Loading'
 
-// import { Float } from '../../components/Effects'
-import { daySinceSent } from '../../Utilities/dateToString'
+import { Boop } from '../../components/Effects'
 
 const { htmlToText } = require('html-to-text')
 
@@ -39,8 +38,17 @@ const ChatCard = props => {
         return didReadLastMessage
     }
 
+    function daySinceSent(date) {
+        if (!date) return ''
+        const day = date.substr(8,2)
+        const month = date.substr(5,2)
+        const year = date.substr(0,4)
+        const sent = new Date(`${month} ${day} ${year}`).toString()
+        return sent.substr(4, 6)
+    }
+
     return (
-        // <Float shadowX={3} shadowY={100} width={'-webkit-fill-available'}>
+        <Boop triggers={['onClick', 'onMouseEnter']} x={3} timing={60} width={'-webkit-fill-available'}>
             <div 
                 onClick={() => setActiveChat(chat.id)}
                 style={{ ...styles.chatContainer, ...extraStyle }}
@@ -91,7 +99,7 @@ const ChatCard = props => {
                     </div>
                 </div>
             </div>
-        // </Float>
+        </Boop>
     )
 }
 
