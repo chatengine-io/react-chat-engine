@@ -17,17 +17,23 @@ const SettingsBlock = (props) => {
                 style={{
                     cursor: 'pointer',
                     backgroundColor: hovered ? '#f0f0f0' : '#fff',
+                    transition: `background-color 100ms`,
                 }}
             >
                 <div style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}>
                     { props.label }
                 </div>
 
-                {
-                    collapsed ?
-                    <LeftOutlined style={styles.collapseIcon} /> :
-                    <DownOutlined style={styles.collapseIcon} />
-                }
+                <LeftOutlined 
+                    style={{
+                        float: 'right',
+                        position: 'relative',
+                        bottom: '30px',
+                        right: '12px',
+                        transform: collapsed ? `rotate(0deg)` : `rotate(-90deg)`,
+                        transition: `transform 100ms`,
+                    }} 
+                /> 
             </div>
 
             <div>
