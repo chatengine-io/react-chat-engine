@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 
 import { ChatEngineContext } from 'react-chat-engine'
 
@@ -6,14 +6,12 @@ import Thumbnail from './Thumbnail'
 
 import { LeftOutlined, DownOutlined } from '@ant-design/icons'
 
+import SettingsBlock from '../SettingsBlock'
+
 
 const PhotosSettings = () => {
     const { chats, activeChat } = useContext(ChatEngineContext)  
     const chat = chats && chats[activeChat] 
-    const [state, setState] = useState({
-        collapsed: true,
-        hovered: false
-    })
 
     if (!chat) return <div />
 
@@ -25,35 +23,16 @@ const PhotosSettings = () => {
 
     return (
         <div style={{ borderTop: '1px solid #f0f0f0' }} className='ce-photo-section'>
-            <div 
-                onMouseEnter={() => setState({ ...state, hovered: true })}
-                onMouseLeave={() => setState({ ...state, hovered: false })}
-                onClick={() => setState({ ...state, collapsed: !state.collapsed })}
-                style={state.hovered ? { backgroundColor: '#f0f0f0', cursor: 'pointer' } : {}}
+            <SettingsBlock
+                label='Photos'
                 className='ce-section-title-container ce-photo-title-container'
             >
-                <div 
-                    className='ce-section-title ce-photo-title'
-                    style={{ fontSize: '17px', padding: '12px', fontWeight: '600' }}
-                >
-                    Photos
-                </div>
-
-                {
-                    state.collapsed ?
-                    <LeftOutlined style={styles.collapseIcon} /> :
-                    <DownOutlined style={styles.collapseIcon} />
-                }
-            </div>
-
-            {
-                !state.collapsed &&
                 <div className='ce-photo-feed'>
                     <div style={{ height: '12px' }} />
 
                     { renderPhotos(chat.attachments) }
                 </div>
-            }
+            </SettingsBlock>
         </div>
     )
 }
