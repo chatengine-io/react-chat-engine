@@ -26,6 +26,8 @@ module.exports = {
         .waitForElementVisible('#ce-chat-feed-title-Test-Chat', 1000, 'Find new Chat Feed')
 
         // Add Person
+        .click('.ce-person-title-container')
+        .pause(1000)
         .waitForElementVisible('@addUserInput', 1000, 'Find add user input')
         .set('@addUserInput', '.')
         .waitForElementVisible('#ce-username-option-Alex_Johns', 5000, 'Find Jane Smith')

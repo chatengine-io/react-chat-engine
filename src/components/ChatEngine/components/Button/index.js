@@ -60,7 +60,7 @@ const styles = {
         border: '1px solid red',
     },
     hoverButton: {
-        opacity: '0.66'
+        opacity: '0.66',
     }
 }
 
