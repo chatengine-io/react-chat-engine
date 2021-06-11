@@ -64,6 +64,7 @@ const Socket = props => {
         getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
 
         if (Date.now() > reconnect) {
+            setSendingMessages({})
             getLatestMessages(
                 conn, activeChat, 45,
                 (id, list) => {
