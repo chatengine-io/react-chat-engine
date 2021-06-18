@@ -10,12 +10,11 @@ import ChatLoader from './ChatLoader'
 import NewChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
-let count = 25
+let count = 100
 const interval = 25
 
 const ChatList = props => {
     const didMountRef = useRef(false)
-    const [hasMoreChats, setHasMoreChats] = useState(true)
     const { conn, chats, setChats, activeChat, setActiveChat } = useContext(ChatEngineContext)
 
     function renderChats(chats) {
@@ -53,9 +52,6 @@ const ChatList = props => {
         if (chatList.length > 0 && activeChat === null) {
             setActiveChat(chatList[0].id)
         }
-
-        if(count && count > chatList.length) { setHasMoreChats(false) }
-        
         const newChats = {...chats}
         setChats(_.mapKeys(newChats, 'id'))
     }
@@ -69,10 +65,15 @@ const ChatList = props => {
 
     function loadChats() {
         count = count + interval
+        console.log('loading', count)
         getLatestChats(props, count, (chats) => onGetChats(chats, count))
     }
 
-    const chatList = sortChats(chats ? Object.values(chats) : [{}, {}, {}, {}, {}, {}, {}, {}, {}])
+    const chatList = sortChats(
+        chats ? 
+        Object.values(chats) : 
+        [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+    )
 
     if (props.renderChatList) return props.renderChatList(props)
 
@@ -87,7 +88,7 @@ const ChatList = props => {
 
                 { renderChats(chatList) } 
 
-                { hasMoreChats && chatList.length > 0 && <ChatLoader onVisible={() => loadChats()} /> }
+                { chatList.length > 0 && <ChatLoader onVisible={() => {}} /> }
             </div>
         </div>
     )
