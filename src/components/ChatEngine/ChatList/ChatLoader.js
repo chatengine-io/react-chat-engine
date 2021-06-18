@@ -32,8 +32,6 @@ const ChatLoader = props => {
             <div style={{ textAlign: 'center', backgroundColor: '#e2e2e2', margin: '4px', borderRadius: '4px' }}>
                 <LoadingOutlined style={{ fontSize: '21px', padding: '24px' }} />
             </div>
-
-            <div style={{  height: '12px' }} />
         </div>
     )
 }

@@ -11,7 +11,7 @@ import NewChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
 let count = 100
-const interval = 25
+const interval = 50
 
 const ChatList = props => {
     const didMountRef = useRef(false)
@@ -88,7 +88,13 @@ const ChatList = props => {
 
                 { renderChats(chatList) } 
 
-                { chatList.length > 0 && <ChatLoader onVisible={() => {}} /> }
+                { 
+                    chatList.length > 0 && 
+                    <div>
+                        <ChatLoader onVisible={() => loadChats()} /> 
+                        <div style={{  height: '8px' }} />
+                    </div>
+                }
             </div>
         </div>
     )
