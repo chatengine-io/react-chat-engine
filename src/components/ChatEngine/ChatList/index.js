@@ -65,7 +65,6 @@ const ChatList = props => {
 
     function loadChats() {
         count = count + interval
-        console.log('loading', count)
         getLatestChats(props, count, (chats) => onGetChats(chats, count))
     }
 
