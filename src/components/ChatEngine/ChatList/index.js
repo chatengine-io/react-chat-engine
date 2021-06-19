@@ -11,10 +11,11 @@ import NewChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
 let count = 100
-const interval = 50
+const interval = 75
 
 const ChatList = props => {
     const didMountRef = useRef(false)
+    const [loadChats, setLoadChats] = useState(false)
     const [hasMoreChats, setHasMoreChats] = useState(true)
     const { conn, chats, setChats, setActiveChat } = useContext(ChatEngineContext)
 
@@ -47,12 +48,12 @@ const ChatList = props => {
         })
     }
 
-    function onGetChats(newChats) {
-        setChats(_.mapKeys({...newChats}, 'id'))
-        
-        if(count && count > chatList.length) { 
-            setHasMoreChats(false) 
-        }
+    function onGetChats(chatList) {
+        const oldChats = chats !== null ? chats : {}
+        const newChats = _.mapKeys({...chatList}, 'id')
+        const allChats = {...oldChats, ...newChats}
+        setChats(allChats);
+        (count && count > Object.keys(allChats).length) && setHasMoreChats(false);
     }
 
     useEffect(() => {
@@ -61,7 +62,7 @@ const ChatList = props => {
 
             getLatestChats(
                 props, 
-                interval, 
+                count, 
                 (chats) => {
                     onGetChats(chats)
                     const chatList = sortChats(chats)
@@ -71,10 +72,15 @@ const ChatList = props => {
         }
     })
 
-    function loadChats() {
+    useEffect(() => {
+        if (!loadChats) return;
+        setLoadChats(false)
+
         count = count + interval
-        getLatestChats(props, count, (chats) => onGetChats(chats))
-    }
+        const chatList = sortChats(Object.values(chats))
+        const before = chatList[chatList.length - 1].created
+        getChatsBefore(props, before, interval, (chats) => onGetChats(chats))
+    }, [loadChats, chats])
 
     const chatList = sortChats(
         chats ? 
@@ -98,7 +104,7 @@ const ChatList = props => {
                 { 
                     hasMoreChats && chatList.length > 0 &&
                     <div>
-                        <ChatLoader onVisible={() => loadChats()} /> 
+                        <ChatLoader onVisible={() => setLoadChats(true)} />
                         <div style={{  height: '8px' }} />
                     </div>
                 }

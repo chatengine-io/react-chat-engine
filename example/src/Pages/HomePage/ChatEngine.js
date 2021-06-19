@@ -17,7 +17,7 @@ const ChatEngineApp = props => {
     }, [chats, messages, props, setActiveChat, hasSetLink, setLink])
 
     return (
-        <ChatEngine {...props} height='100vh' />
+        <ChatEngine {...props} height={props.height} />
     )
 }
 
