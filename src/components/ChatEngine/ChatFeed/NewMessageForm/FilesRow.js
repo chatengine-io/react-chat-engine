@@ -22,7 +22,12 @@ const FilesRow = props => {
     }
   
     return (
-        <div style={{ width: 'calc(100% - 24px)', padding: '6px 16px' }}>
+        <div 
+            style={{ 
+                width: 'calc(100% - 24px)', 
+                padding:  props.files.lenth > 0 ? '6px 16px' : '0px'
+            }}
+        >
             { renderFiles() }
         </div>
     )

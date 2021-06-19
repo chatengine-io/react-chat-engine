@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { ChatEngineContext } from '../../Context'
 
-import { getLatestChats } from '../../../actions/chats'
+import { getLatestChats, getChatsBefore } from '../../../actions/chats'
 
 import _ from 'lodash'
 
@@ -10,13 +10,14 @@ import ChatLoader from './ChatLoader'
 import NewChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
-let count = 25
-const interval = 25
+let count = 100
+const interval = 75
 
 const ChatList = props => {
     const didMountRef = useRef(false)
+    const [loadChats, setLoadChats] = useState(false)
     const [hasMoreChats, setHasMoreChats] = useState(true)
-    const { conn, chats, setChats, activeChat, setActiveChat } = useContext(ChatEngineContext)
+    const { conn, chats, setChats, setActiveChat } = useContext(ChatEngineContext)
 
     function renderChats(chats) {
         return chats.map((chat, index) => {
@@ -47,32 +48,45 @@ const ChatList = props => {
         })
     }
 
-    function onGetChats(chats, count) {
-        const chatList = sortChats(chats)
-    
-        if (chatList.length > 0 && activeChat === null) {
-            setActiveChat(chatList[0].id)
-        }
-
-        if(count && count > chatList.length) { setHasMoreChats(false) }
-        
-        const newChats = {...chats}
-        setChats(_.mapKeys(newChats, 'id'))
+    function onGetChats(chatList) {
+        const oldChats = chats !== null ? chats : {}
+        const newChats = _.mapKeys({...chatList}, 'id')
+        const allChats = {...oldChats, ...newChats}
+        setChats(allChats);
+        (count && count > Object.keys(allChats).length) && setHasMoreChats(false);
     }
 
     useEffect(() => {
         if (!didMountRef.current) {
             didMountRef.current = true
-            getLatestChats(props, interval, (chats) => onGetChats(chats))
+
+            getLatestChats(
+                props, 
+                count, 
+                (chats) => {
+                    onGetChats(chats)
+                    const chatList = sortChats(chats)
+                    chatList.length > 0 && setActiveChat(chatList[0].id)
+                }
+            )
         }
     })
 
-    function loadChats() {
-        count = count + interval
-        getLatestChats(props, count, (chats) => onGetChats(chats, count))
-    }
+    useEffect(() => {
+        if (!loadChats) return;
+        setLoadChats(false)
 
-    const chatList = sortChats(chats ? Object.values(chats) : [{}, {}, {}, {}, {}, {}, {}, {}, {}])
+        count = count + interval
+        const chatList = sortChats(Object.values(chats))
+        const before = chatList[chatList.length - 1].created
+        getChatsBefore(props, before, interval, (chats) => onGetChats(chats))
+    }, [loadChats, chats])
+
+    const chatList = sortChats(
+        chats ? 
+        Object.values(chats) : 
+        [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+    )
 
     if (props.renderChatList) return props.renderChatList(props)
 
@@ -87,7 +101,13 @@ const ChatList = props => {
 
                 { renderChats(chatList) } 
 
-                { hasMoreChats && chatList.length > 0 && <ChatLoader onVisible={() => loadChats()} /> }
+                { 
+                    hasMoreChats && chatList.length > 0 &&
+                    <div>
+                        <ChatLoader onVisible={() => setLoadChats(true)} />
+                        <div style={{  height: '8px' }} />
+                    </div>
+                }
             </div>
         </div>
     )

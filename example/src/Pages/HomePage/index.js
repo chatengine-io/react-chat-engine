@@ -57,21 +57,23 @@ const HomePage = props => {
 
     return (
         <div style={{ position: 'absolute', top: '0px', width: '100%' }}>
+            <div style={{ height: '20px' }}>
+                <button 
+                    id='home-page-logout-button'
+                    onClick={() => props.logout()}
+                >
+                    Logout!
+                </button>
+            </div>
             <ChatEngineWrapper>
                 <ChatEngine 
                     {...props.accounts}
+                    height={'calc(100vh - 20px)'}
                     development={DEVELOPMENT}
                     id={parseInt(id)}
                     projectID={PROJECT_ID}
                 />
             </ChatEngineWrapper>
-
-            <button 
-                id='home-page-logout-button'
-                onClick={() => props.logout()}
-            >
-                Logout!
-            </button>
         </div>
     )
 }

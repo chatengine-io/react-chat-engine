@@ -10,7 +10,7 @@ import { Avatar, Dot } from './components/ChatEngine/components/Avatar'
 import { TextInput, AutoCompleteInput } from './components/ChatEngine/components/Input'
 
 
-import { getChats, newChat, getLatestChats, getOrCreateChat, getChat, editChat, deleteChat } from './actions/chats'
+import { getChats, newChat, getLatestChats, getChatsBefore, getOrCreateChat, getChat, editChat, deleteChat } from './actions/chats'
 import { addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat } from './actions/people'
 import { getMessages, getLatestMessages, sendMessage, getMessage, editMessage, readMessage, deleteMessage } from './actions/messages'
 import { isTyping } from './actions/typing'
@@ -42,7 +42,7 @@ export {
   Button,
   TextInput, AutoCompleteInput,
   
-  getChats, newChat, getLatestChats, getOrCreateChat, getChat, editChat, deleteChat,
+  getChats, newChat, getLatestChats, getChatsBefore, getOrCreateChat, getChat, editChat, deleteChat,
   addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat,
   getMessages, getLatestMessages, sendMessage, getMessage, editMessage, readMessage, deleteMessage,
   isTyping,
