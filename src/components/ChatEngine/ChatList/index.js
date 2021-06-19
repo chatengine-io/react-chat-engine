@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { ChatEngineContext } from '../../Context'
 
-import { getLatestChats } from '../../../actions/chats'
+import { getLatestChats, getChatsBefore } from '../../../actions/chats'
 
 import _ from 'lodash'
 
@@ -15,7 +15,8 @@ const interval = 50
 
 const ChatList = props => {
     const didMountRef = useRef(false)
-    const { conn, chats, setChats, activeChat, setActiveChat } = useContext(ChatEngineContext)
+    const [hasMoreChats, setHasMoreChats] = useState(true)
+    const { conn, chats, setChats, setActiveChat } = useContext(ChatEngineContext)
 
     function renderChats(chats) {
         return chats.map((chat, index) => {
@@ -46,26 +47,33 @@ const ChatList = props => {
         })
     }
 
-    function onGetChats(chats, count) {
-        const chatList = sortChats(chats)
-    
-        if (chatList.length > 0 && activeChat === null) {
-            setActiveChat(chatList[0].id)
+    function onGetChats(newChats) {
+        setChats(_.mapKeys({...newChats}, 'id'))
+        
+        if(count && count > chatList.length) { 
+            setHasMoreChats(false) 
         }
-        const newChats = {...chats}
-        setChats(_.mapKeys(newChats, 'id'))
     }
 
     useEffect(() => {
         if (!didMountRef.current) {
             didMountRef.current = true
-            getLatestChats(props, interval, (chats) => onGetChats(chats))
+
+            getLatestChats(
+                props, 
+                interval, 
+                (chats) => {
+                    onGetChats(chats)
+                    const chatList = sortChats(chats)
+                    chatList.length > 0 && setActiveChat(chatList[0].id)
+                }
+            )
         }
     })
 
     function loadChats() {
         count = count + interval
-        getLatestChats(props, count, (chats) => onGetChats(chats, count))
+        getLatestChats(props, count, (chats) => onGetChats(chats))
     }
 
     const chatList = sortChats(
@@ -88,7 +96,7 @@ const ChatList = props => {
                 { renderChats(chatList) } 
 
                 { 
-                    chatList.length > 0 && 
+                    hasMoreChats && chatList.length > 0 &&
                     <div>
                         <ChatLoader onVisible={() => loadChats()} /> 
                         <div style={{  height: '8px' }} />
