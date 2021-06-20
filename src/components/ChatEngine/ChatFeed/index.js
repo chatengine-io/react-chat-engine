@@ -24,7 +24,6 @@ const ChatFeed = props => {
     const didMountRef = useRef(false)
     const [duration, setDuration] = useState(0)
     const [currentChat, setCurrentChat] = useState(null)
-    const [currentTime, setCurrentTime] = useState(Date.now())
     const { 
         conn,
         chats, setChats,
@@ -106,10 +105,6 @@ const ChatFeed = props => {
                 setDuration(100)
             }, 3000) // Start animating scroll post-load
 
-            setInterval(() => {
-                setCurrentTime(Date.now())
-            }, 1000) // Check time every second
-
         } else {
             // Scroll on new incoming messages
             if(isBottomVisible && !_.isEmpty(messages)) {
@@ -148,11 +143,15 @@ const ChatFeed = props => {
             >
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
 
+                {/* <MessageLoader /> TODO */}
+
+                {/* <Welcome /> v.s. <Messages /> <SendingMessages /> TODO */}
+
                 <Messages {...props} />
 
                 <SendingMessages {...props} />
 
-                <Typers currentTime={currentTime} />
+                <Typers />
 
                 <ConnectionBar />
 
