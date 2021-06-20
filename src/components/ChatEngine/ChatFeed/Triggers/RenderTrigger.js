@@ -32,7 +32,7 @@ const RenderTrigger = props => {
     const ref = useRef()
     const isVisible = useOnScreen(ref)
     
-    return <div ref={ref} />
+    return <div ref={ref}>{props.children}</div>
 }
 
 export default RenderTrigger
