@@ -15,7 +15,6 @@ const Typers = props => {
             didMountRef.current = true
             setInterval(() => {
                 setCurrentTime(Date.now())
-                console.log(Date.now())
             }, 1000) // Check time every second
         }
     })

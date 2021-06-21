@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 
-import { ChatEngineContext } from '../../Context'
-
-import { getLatestMessages, readMessage } from '../../../actions/messages'
+import { ChatEngineContext, getLatestMessages, readMessage } from 'react-chat-engine'
 
 import { AuthFail, ConnectionBar, Welcome } from './Steps'
+
+import { RenderTrigger } from './Triggers'
 
 import ChatHeader from './ChatHeader'
 import Messages from './Messages'
@@ -143,7 +143,10 @@ const ChatFeed = props => {
             >
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
 
-                {/* <MessageLoader /> TODO */}
+                {
+                    Object.keys(messages).length > 0 &&
+                    <RenderTrigger onEnter={() => setLoadMoreMessages(true)} />
+                }
 
                 {/* <Welcome /> v.s. <Messages /> <SendingMessages /> TODO */}
 
