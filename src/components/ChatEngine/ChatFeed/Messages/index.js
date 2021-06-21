@@ -12,7 +12,6 @@ const Messages = props => {
         chats,
         messages,
         activeChat,
-        setLoadMoreMessages,
         setIsBottomVisible,
     } = useContext(ChatEngineContext)
 
@@ -59,12 +58,6 @@ const Messages = props => {
                     lastMessage={messages[lastMessageKey]}
                     nextMessage={messages[nextMessageKey]}
                 />
-
-                {/* Load more if the bottom of top msg is visible */}
-                { 
-                    index === 0 && 
-                    <RenderTrigger onEnter={() => setLoadMoreMessages(true)} /> 
-                }
             </div>
         )
     })
