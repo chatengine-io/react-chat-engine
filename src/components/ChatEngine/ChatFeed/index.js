@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext, getLatestMessages, readMessage } from 'react-chat-engine'
 
-import { AuthFail, ConnectionBar, Welcome } from './Steps'
+import { AuthFail, CreateChat } from './Steps'
 
 import { RenderTrigger } from './Triggers'
 
@@ -11,6 +11,7 @@ import Messages from './Messages'
 import SendingMessages from './SendingMessages'
 import Typers from './Typers'
 import NewMessageForm from './NewMessageForm'
+import ConnectionBar from './ConnectionBar'
 
 import _ from 'lodash'
 
@@ -126,7 +127,7 @@ const ChatFeed = props => {
         return <AuthFail />
     
     } else if (conn && chats !== null && _.isEmpty(chats)) {
-        return <Welcome />
+        return <CreateChat />
     }
 
     return (
@@ -144,11 +145,15 @@ const ChatFeed = props => {
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
 
                 {
-                    Object.keys(messages).length > 0 &&
+                    messages !== null && Object.keys(messages).length > 0 &&
                     <RenderTrigger onEnter={() => setLoadMoreMessages(true)} />
                 }
 
                 {/* <Welcome /> v.s. <Messages /> <SendingMessages /> TODO */}
+                {
+                    messages !== null && _.isEmpty(messages) &&
+                    <div>Loading...</div>
+                }
 
                 <Messages {...props} />
 

@@ -1,9 +1,7 @@
 import AuthFail from './AuthFail'
-import Welcome from './Welcome'
-import ConnectionBar from './ConnectionBar'
+import CreateChat from './CreateChat'
 
 export {
     AuthFail,
-    Welcome,
-    ConnectionBar,
+    CreateChat,
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Welcome = () => {
+const CreateChat = () => {
     return (
         <div style={{ height: '100%', textAlign: 'center' }}>
 
@@ -20,4 +20,4 @@ const Welcome = () => {
     )
 }
 
-export default Welcome
+export default CreateChat

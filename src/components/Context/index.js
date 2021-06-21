@@ -7,7 +7,7 @@ export const ChatEngineWrapper = props => {
     const [conn, setConn] = useState(null)
     const [creds, setCreds] = useState(null)
     const [chats, setChats] = useState(null)
-    const [messages, setMessages] = useState({})
+    const [messages, setMessages] = useState(null)
     const [sendingMessages, setSendingMessages] = useState({})
     const [activeChat, setActiveChat] = useState(null)
     const [typingCounter, setTypingCounter] = useState({})
