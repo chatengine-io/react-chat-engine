@@ -16,7 +16,7 @@ const Messages = props => {
     } = useContext(ChatEngineContext)
 
     const chat = chats && chats[activeChat]
-    const keys = messages !== null ? Object.keys(messages) : []
+    const keys = Object.keys(messages)
 
     if (!conn || conn === null || !chat) return <div />
     

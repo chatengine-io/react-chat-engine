@@ -24,6 +24,7 @@ const interval = 33
 const ChatFeed = props => {
     const didMountRef = useRef(false)
     const [duration, setDuration] = useState(0)
+    const [hasFetchedMessages, setHasFetchedMessages] = useState(false)
     const [currentChat, setCurrentChat] = useState(null)
     const { 
         conn,
@@ -44,6 +45,7 @@ const ChatFeed = props => {
     }
 
     function onGetMessages(chatId, messages, scrollDownTo) {
+        setHasFetchedMessages(true)
         setMessages(_.mapKeys(messages, 'id'))
 
         if (messages.length > 0) {
@@ -119,7 +121,7 @@ const ChatFeed = props => {
 
 
     const chat = chats && chats[currentChat] 
-    const needsIceBreaker = messages !== null && _.isEmpty(messages)
+    const needsIceBreaker = hasFetchedMessages && _.isEmpty(messages)
 
     if(props.renderChatFeed) {
         return props.renderChatFeed(props)
@@ -146,7 +148,7 @@ const ChatFeed = props => {
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
 
                 {
-                    messages !== null && Object.keys(messages).length > 0 &&
+                    Object.keys(messages).length > 0 &&
                     <RenderTrigger onEnter={() => setLoadMoreMessages(true)} />
                 }
 
