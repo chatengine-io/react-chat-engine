@@ -18,7 +18,7 @@ const Messages = props => {
     const chat = chats && chats[activeChat]
     const keys = Object.keys(messages)
 
-    if (!conn || conn === null) return <div />
+    if (!conn || conn === null || !chat) return <div />
     
     return keys.map((key, index) => {
         const message = messages[key]

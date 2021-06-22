@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext, getLatestMessages, readMessage } from 'react-chat-engine'
 
-import { AuthFail, ConnectionBar, Welcome } from './Steps'
+import { AuthFail, CreateChat, IceBreaker } from './Steps'
 
 import { RenderTrigger } from './Triggers'
 
@@ -11,6 +11,7 @@ import Messages from './Messages'
 import SendingMessages from './SendingMessages'
 import Typers from './Typers'
 import NewMessageForm from './NewMessageForm'
+import ConnectionBar from './ConnectionBar'
 
 import _ from 'lodash'
 
@@ -23,6 +24,7 @@ const interval = 33
 const ChatFeed = props => {
     const didMountRef = useRef(false)
     const [duration, setDuration] = useState(0)
+    const [hasFetchedMessages, setHasFetchedMessages] = useState(false)
     const [currentChat, setCurrentChat] = useState(null)
     const { 
         conn,
@@ -43,6 +45,7 @@ const ChatFeed = props => {
     }
 
     function onGetMessages(chatId, messages, scrollDownTo) {
+        setHasFetchedMessages(true)
         setMessages(_.mapKeys(messages, 'id'))
 
         if (messages.length > 0) {
@@ -118,6 +121,7 @@ const ChatFeed = props => {
 
 
     const chat = chats && chats[currentChat] 
+    const needsIceBreaker = hasFetchedMessages && _.isEmpty(messages)
 
     if(props.renderChatFeed) {
         return props.renderChatFeed(props)
@@ -126,7 +130,7 @@ const ChatFeed = props => {
         return <AuthFail />
     
     } else if (conn && chats !== null && _.isEmpty(chats)) {
-        return <Welcome />
+        return <CreateChat />
     }
 
     return (
@@ -148,7 +152,9 @@ const ChatFeed = props => {
                     <RenderTrigger onEnter={() => setLoadMoreMessages(true)} />
                 }
 
-                {/* <Welcome /> v.s. <Messages /> <SendingMessages /> TODO */}
+                { needsIceBreaker && props.renderIceBreaker && props.renderIceBreaker(chat) }
+
+                { needsIceBreaker && !props.renderIceBreaker && <IceBreaker /> }
 
                 <Messages {...props} />
 
