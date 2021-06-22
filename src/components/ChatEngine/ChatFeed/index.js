@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext, getLatestMessages, readMessage } from 'react-chat-engine'
 
-import { AuthFail, CreateChat } from './Steps'
+import { AuthFail, CreateChat, IceBreaker } from './Steps'
 
 import { RenderTrigger } from './Triggers'
 
@@ -119,6 +119,7 @@ const ChatFeed = props => {
 
 
     const chat = chats && chats[currentChat] 
+    const needsIceBreaker = messages !== null && _.isEmpty(messages)
 
     if(props.renderChatFeed) {
         return props.renderChatFeed(props)
@@ -149,11 +150,9 @@ const ChatFeed = props => {
                     <RenderTrigger onEnter={() => setLoadMoreMessages(true)} />
                 }
 
-                {/* <Welcome /> v.s. <Messages /> <SendingMessages /> TODO */}
-                {
-                    messages !== null && _.isEmpty(messages) &&
-                    <div>Loading...</div>
-                }
+                { needsIceBreaker && props.renderIceBreaker && props.renderIceBreaker(chat) }
+
+                { needsIceBreaker && !props.renderIceBreaker && <IceBreaker /> }
 
                 <Messages {...props} />
 
