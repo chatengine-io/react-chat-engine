@@ -2,21 +2,30 @@ import React from 'react'
 
 const CreateChat = () => {
     return (
-        <div style={{ height: '100%', textAlign: 'center' }}>
-
-            <div style={{ width: '100%' }}>                    
-                <img
-                    style={{ width: '60%', paddingTop: '33vh' }}
-                    src='https://chat-engine-assets.s3.amazonaws.com/welcome.svg'
-                    alt='welcome-to-chat-engine'
-                />
+        <div
+            id='ce-ice-breaker' 
+            style={{ width: '100%', textAlign: 'center', paddingTop: 'calc(43% - 112px)' }}
+        >
+            <div 
+                id='ce-ice-breaker-text' 
+                style={{ color: '#afafaf', fontWeight: '600', marginBottom: '6px' }}
+            >
+                Welcome!
+            </div>
+            <div 
+                id='ce-ice-breaker-text' 
+                style={{ color: '#afafaf' }}
+            >
+                Create a new chat to get started.
             </div>
 
-            <div style={{ fontSize: '18px', paddingTop: '24px', width: '75%', paddingLeft: '12.5%' }}>
-                Create a new Chat form to get started.
-            </div>
-
-        </div>
+            <img
+                id='ce-ice-breaker-gif' 
+                style={{ width: '50%', maxWidth: '200px' }}
+                src='https://chat-engine-assets.s3.amazonaws.com/welcome_gifs/okay.gif'
+                alt='chat-engine-ice-breaker'
+            />
+        </div>   
     )
 }
 

@@ -13,7 +13,7 @@ const IceBreaker = () => {
     return (
         <div
             id='ce-ice-breaker' 
-            style={{ width: '100%', textAlign: 'center', paddingTop: 'calc(50% - 100px)' }}
+            style={{ width: '100%', textAlign: 'center', paddingTop: 'calc(43% - 112px)' }}
         >
             <div 
                 id='ce-ice-breaker-text' 
