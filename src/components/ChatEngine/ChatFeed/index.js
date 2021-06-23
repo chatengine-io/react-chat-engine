@@ -127,7 +127,7 @@ const ChatFeed = props => {
         return props.renderChatFeed(props)
     
     } else if (conn === undefined) {
-        return <AuthFail />
+        return <AuthFail {...props} />
     
     } else if (conn && chats !== null && _.isEmpty(chats)) {
         return <CreateChat />
