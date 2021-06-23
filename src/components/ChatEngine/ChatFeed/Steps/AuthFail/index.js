@@ -1,22 +1,26 @@
 import React from 'react'
 
-const AuthFail = () => {
+const AuthFail = (props) => {
+    const project = props.projectID ? props.projectID : props.publicKey
     return (
-        <div style={{ height: '100%', textAlign: 'center' }}>
-            
-            <div style={{ width: '100%' }}>
-                <img
-                    style={{ width: '40%', paddingTop: '25vh' }}
-                    src='https://chat-engine-assets.s3.amazonaws.com/denied.svg'
-                    alt='welcome-to-chat-engine'
-                />
+        <div
+            id='ce-login-fail-breaker' 
+            style={{ width: '100%', textAlign: 'center', paddingTop: 'calc(50% - 112px)' }}
+        >
+            <div 
+                id='ce-login-fail-text' 
+                style={{ color: '#afafaf', fontWeight: '600', fontSize: '14px', marginBottom: '6px', marginRight: '32px', marginLeft: '32px' }}
+            >
+                Your credentials are incorrect. Make sure your Project ID, Username, and Password are correct <a href={`https://chatengine.io/projects/${project}`}>here</a>.
             </div>
 
-            <div style={{ fontSize: '18px', paddingTop: '24px', width: '75%', paddingLeft: '12.5%' }}>
-                Your credentials are incorrect. Make sure your Public Key, Username, and Password are correct at <a href='https://chatengine.io'>chatengine.io</a>
-            </div>
-
-        </div>
+            <img
+                id='ce-login-fail-gif' 
+                style={{ width: '50%', maxWidth: '200px' }}
+                src='https://chat-engine-assets.s3.amazonaws.com/welcome_gifs/no.gif'
+                alt='chat-engine-login-fail'
+            />
+        </div>   
     )
 }
 
