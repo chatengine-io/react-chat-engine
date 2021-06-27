@@ -88,8 +88,6 @@ const ChatList = props => {
         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
     )
 
-    if (props.renderChatList) return props.renderChatList(props)
-
     return (
         <div style={styles.chatListContainer} className='ce-chat-list'>
             <div style={styles.chatsContainer} className='ce-chats-container'>

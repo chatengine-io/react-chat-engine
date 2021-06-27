@@ -1,8 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 
 import _ from 'lodash'
 
-import { ChatEngine, ChatEngineContext } from 'react-chat-engine'
+import { 
+    ChatEngine, 
+    ChatEngineContext,
+    ChatList,
+    ChatCard,
+    NewChatForm
+} from 'react-chat-engine'
 
 const ChatEngineApp = props => {
     const { chats, messages, setActiveChat } = useContext(ChatEngineContext)
@@ -17,8 +24,20 @@ const ChatEngineApp = props => {
     }, [chats, messages, props, setActiveChat, hasSetLink, setLink])
 
     return (
-        <ChatEngine {...props} height={props.height} />
+        <ChatEngine 
+            {...props.accounts} 
+            height={props.height} 
+            projectID={props.projectID} 
+            development={props.development} 
+            renderChatList={(chatAppState) => <ChatList {...chatAppState} />}
+            renderChatCard={(chat, index) => <ChatCard key={`card_${index}`} chat={chat} />}
+            // renderNewChatForm={() => <NewChatForm />}
+        />
     )
 }
 
-export default ChatEngineApp
+function mapStateToProps(state){
+    return { accounts: state.accounts }
+}
+
+export default connect(mapStateToProps, {})(ChatEngineApp)

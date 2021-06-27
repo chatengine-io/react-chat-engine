@@ -65,9 +65,9 @@ const HomePage = props => {
                     Logout!
                 </button>
             </div>
+            
             <ChatEngineWrapper>
                 <ChatEngine 
-                    {...props.accounts}
                     height={'calc(100vh - 20px)'}
                     development={DEVELOPMENT}
                     id={parseInt(id)}

@@ -26,7 +26,11 @@ const ChatEngine = props => {
 
       <Row>
         <Col xs={0} sm={3} style={{ height: height ? height : '' }}>
-          <ChatList {...propsAndContext} />
+          {
+            props.renderChatList ?
+            props.renderChatList(propsAndContext) :
+            <ChatList {...propsAndContext} />
+          }
         </Col>
 
         <Col xs={12} sm={6} style={{ height: height ? height : '' }}>
