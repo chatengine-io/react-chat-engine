@@ -14,7 +14,12 @@ import {
     IceBreaker,
     MessageBubble,
     IsTyping,
-    NewMessageForm
+    NewMessageForm,
+    ChatSettings,
+    ChatSettingsTop,
+    PeopleSettings,
+    PhotosSettings,
+    OptionsSettings
 } from 'react-chat-engine'
 
 const ChatEngineApp = props => {
@@ -44,7 +49,12 @@ const ChatEngineApp = props => {
             renderIceBreaker={(chat) => <IceBreaker />}
             renderMessageBubble={(creds, chat, lastMessage, message, nextMessage) => <MessageBubble lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
             renderIsTyping={(typers) => <IsTyping />}
-            renderNewMessageForm={() => <NewMessageForm />}
+            renderNewMessageForm={(creds, chatID) => <NewMessageForm />}
+            renderChatSettings={(chatAppState) => <ChatSettings {...chatAppState} />}
+            renderChatSettingsTop={(creds, chat) => <ChatSettingsTop />}
+            renderPeopleSettings={(creds, chat) => <PeopleSettings />}
+            renderPhotosSettings={(chat) => <PhotosSettings />}
+            renderOptionsSettings={(creds, chat) => <OptionsSettings />}
         />
     )
 }
