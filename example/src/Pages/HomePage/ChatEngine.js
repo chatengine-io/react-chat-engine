@@ -42,7 +42,7 @@ const ChatEngineApp = props => {
             renderChatHeader={(chat) => <ChatHeader />}
             renderIceBreaker={(chat) => <IceBreaker />}
             renderMessageBubble={(creds, chat, lastMessage, message, nextMessage) => <MessageBubble lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
-            renderIsTyping={(typers) => <MessageBubble lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
+            // renderIsTyping={(typers) => <MessageBubble lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
         />
     )
 }
