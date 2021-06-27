@@ -4,7 +4,7 @@ import { ChatEngineContext } from '../../../Context'
 
 import { stringToColor } from '../../Utilities/colorMapping'
 
-const Typers = props => {
+const IsTyping = () => {
     const didMountRef = useRef(false)
     const [currentTime, setCurrentTime] = useState(Date.now())
     const { conn, activeChat, typingCounter } = useContext(ChatEngineContext)
@@ -20,8 +20,6 @@ const Typers = props => {
     })
 
     if (!conn || conn === null) return <div />
-
-    if (props.renderIsTyping) { return props.renderIsTyping(typers) }
 
     return (
         <div>
@@ -46,4 +44,4 @@ const Typers = props => {
     )
 }
 
-export default Typers
+export default IsTyping

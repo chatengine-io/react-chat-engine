@@ -13,7 +13,8 @@ import {
     ChatHeader,
     IceBreaker,
     MessageBubble,
-    // IsTyping
+    IsTyping,
+    NewMessageForm
 } from 'react-chat-engine'
 
 const ChatEngineApp = props => {
@@ -42,7 +43,8 @@ const ChatEngineApp = props => {
             renderChatHeader={(chat) => <ChatHeader />}
             renderIceBreaker={(chat) => <IceBreaker />}
             renderMessageBubble={(creds, chat, lastMessage, message, nextMessage) => <MessageBubble lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
-            // renderIsTyping={(typers) => <MessageBubble lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
+            renderIsTyping={(typers) => <IsTyping />}
+            renderNewMessageForm={() => <NewMessageForm />}
         />
     )
 }

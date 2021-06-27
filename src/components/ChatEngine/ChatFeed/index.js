@@ -9,7 +9,7 @@ import { RenderTrigger } from './Triggers'
 import ChatHeader from './ChatHeader'
 import Messages from './Messages'
 import SendingMessages from './SendingMessages'
-import Typers from './Typers'
+import IsTyping from './IsTyping'
 import NewMessageForm from './NewMessageForm'
 import ConnectionBar from './ConnectionBar'
 
@@ -34,7 +34,10 @@ const ChatFeed = props => {
         activeChat, setActiveChat,
         loadMoreMessages, setLoadMoreMessages,
         isBottomVisible,
+        typingCounter
     } = useContext(ChatEngineContext)
+
+    const typers = typingCounter && typingCounter[activeChat] ? typingCounter[activeChat] : []
 
     function onReadMessage(chat) {
         if (chats) {
@@ -157,7 +160,11 @@ const ChatFeed = props => {
 
                 <SendingMessages {...props} />
 
-                <Typers />
+                {
+                    props.renderIsTyping ?
+                    props.renderIsTyping(typers) :
+                    <IsTyping />
+                }
 
                 <ConnectionBar />
 
