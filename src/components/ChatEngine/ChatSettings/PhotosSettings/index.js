@@ -4,8 +4,6 @@ import { ChatEngineContext } from 'react-chat-engine'
 
 import Thumbnail from './Thumbnail'
 
-import { LeftOutlined, DownOutlined } from '@ant-design/icons'
-
 import SettingsBlock from '../SettingsBlock'
 
 
@@ -38,12 +36,3 @@ const PhotosSettings = () => {
 }
 
 export default PhotosSettings
-
-const styles = {
-    collapseIcon: {
-        float: 'right',
-        position: 'relative',
-        bottom: '30px',
-        right: '12px'
-    }
-}

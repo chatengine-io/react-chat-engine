@@ -5,8 +5,6 @@ import { ChatEngineContext } from 'react-chat-engine'
 import PersonRow from './PersonRow'
 import PersonForm from './PersonForm'
 
-import { LeftOutlined, DownOutlined } from '@ant-design/icons'
-
 import SettingsBlock from '../SettingsBlock'
 
 const PeopleSettings = () => {
@@ -54,12 +52,3 @@ const PeopleSettings = () => {
 }
 
 export default PeopleSettings
-
-const styles = {
-    collapseIcon: {
-        float: 'right',
-        position: 'relative',
-        bottom: '30px',
-        right: '12px'
-    }
-}

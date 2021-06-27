@@ -11,8 +11,10 @@ const ChatSettings = props => {
     const { conn, chats, activeChat } = useContext(ChatEngineContext)  
     const chat = chats && chats[activeChat] 
 
+    if (conn === null) return <div />
+
     if (props.renderChatSettings) return props.renderChatSettings(props)
-    
+
     return (
         <div style={styles.settingsContainer} className='ce-settings'>
             <div style={{ width: '90%', paddingLeft: '5%' }} className='ce-settings-container'>
@@ -35,7 +37,7 @@ const ChatSettings = props => {
                 }
 
                 {
-                    props && chat && props.userName === chat.admin.username  &&
+                    conn && chat && conn.userName === chat.admin.username  &&
                     <div>
                         {
                             props.renderOptionsSettings ?
