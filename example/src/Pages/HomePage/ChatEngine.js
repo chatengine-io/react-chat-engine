@@ -8,7 +8,12 @@ import {
     ChatEngineContext,
     ChatList,
     ChatCard,
-    NewChatForm
+    NewChatForm,
+    ChatFeed,
+    ChatHeader,
+    IceBreaker,
+    MessageBubble,
+    // IsTyping
 } from 'react-chat-engine'
 
 const ChatEngineApp = props => {
@@ -29,9 +34,15 @@ const ChatEngineApp = props => {
             height={props.height} 
             projectID={props.projectID} 
             development={props.development} 
+            // You want the extra args for outside components
             renderChatList={(chatAppState) => <ChatList {...chatAppState} />}
             renderChatCard={(chat, index) => <ChatCard key={`card_${index}`} chat={chat} />}
-            // renderNewChatForm={() => <NewChatForm />}
+            renderNewChatForm={(creds) => <NewChatForm creds={creds} />} 
+            renderChatFeed={(chatAppState) => <ChatFeed {...chatAppState} />}
+            renderChatHeader={(chat) => <ChatHeader />}
+            renderIceBreaker={(chat) => <IceBreaker />}
+            renderMessageBubble={(creds, chat, lastMessage, message, nextMessage) => <MessageBubble lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
+            renderIsTyping={(typers) => <MessageBubble lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
         />
     )
 }

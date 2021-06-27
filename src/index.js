@@ -21,6 +21,7 @@ import NewChatForm from './components/ChatEngine/ChatList/NewChatForm'
 
 import ChatFeed from './components/ChatEngine/ChatFeed'
 import ChatHeader from './components/ChatEngine/ChatFeed/ChatHeader'
+import IceBreaker from './components/ChatEngine/ChatFeed/Steps/IceBreaker'
 import MessageBubble from './components/ChatEngine/ChatFeed/Messages/Bubble'
 import Typers from './components/ChatEngine/ChatFeed/Typers'
 import NewMessageForm from './components/ChatEngine/ChatFeed/NewMessageForm'
@@ -48,6 +49,6 @@ export {
   isTyping,
 
   ChatList, ChatCard, NewChatForm,
-  ChatFeed, ChatHeader, MessageBubble, Typers, NewMessageForm,
+  ChatFeed, ChatHeader, IceBreaker, MessageBubble, Typers, NewMessageForm,
   ChatSettings, ChatSettingsTop, PeopleSettings, PhotosSettings, OptionsSettings,
 }

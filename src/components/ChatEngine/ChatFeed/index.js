@@ -122,11 +122,8 @@ const ChatFeed = props => {
 
     const chat = chats && chats[currentChat] 
     const needsIceBreaker = hasFetchedMessages && _.isEmpty(messages)
-
-    if(props.renderChatFeed) {
-        return props.renderChatFeed(props)
     
-    } else if (conn === undefined) {
+    if (conn === undefined) {
         return <AuthFail {...props} />
     
     } else if (conn && chats !== null && _.isEmpty(chats)) {
