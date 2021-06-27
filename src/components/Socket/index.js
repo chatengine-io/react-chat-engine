@@ -47,6 +47,7 @@ const Socket = props => {
     }
 
     function onConnect() {
+        console.log('Connected')
         const { publicKey, projectID, userName, userPassword, userSecret } = props 
         const project = publicKey ? publicKey : projectID
         const secret = userPassword ? userPassword : userSecret
@@ -80,6 +81,7 @@ const Socket = props => {
 
     function handleEvent(event) {
         const eventJSON = JSON.parse(event)
+        console.log(eventJSON.action)
 
         if (eventJSON.action === 'login_success') {
             onAuthenticate(props)
@@ -196,7 +198,10 @@ const Socket = props => {
         }
     }
 
-    function onClose() { setConnecting(true) }
+    function onClose() { 
+        setConnecting(true) 
+        console.log('disconnected')
+    }
 
     const { development } = props 
     const wsStart = development ? 'ws://' : 'wss://'

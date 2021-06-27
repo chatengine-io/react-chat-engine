@@ -10,7 +10,7 @@ import ChatLoader from './ChatLoader'
 import NewChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
-let count = 100
+let count = 50
 const interval = 75
 
 const ChatList = props => {
