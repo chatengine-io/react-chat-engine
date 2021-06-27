@@ -77,9 +77,11 @@ const ChatList = props => {
         setLoadChats(false)
 
         count = count + interval
-        const chatList = sortChats(Object.values(chats))
-        const before = chatList[chatList.length - 1].created
-        getChatsBefore(props, before, interval, (chats) => onGetChats(chats))
+        const chatList = chats !== null ? sortChats(Object.values(chats)) : []
+        if (chatList.length > 0) {
+            const before = chatList[chatList.length - 1].created
+            getChatsBefore(props, before, interval, (chats) => onGetChats(chats))
+        }
     }, [loadChats, chats])
 
     const chatList = sortChats(
