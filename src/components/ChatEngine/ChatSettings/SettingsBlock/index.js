@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { LeftOutlined, DownOutlined } from '@ant-design/icons'
+import { LeftOutlined } from '@ant-design/icons'
 
 const SettingsBlock = (props) => {
     const [collapsed, setCollapsed] = useState(true)
@@ -44,12 +44,3 @@ const SettingsBlock = (props) => {
 }
 
 export default SettingsBlock
-
-const styles = {
-    collapseIcon: {
-        float: 'right',
-        position: 'relative',
-        bottom: '30px',
-        right: '12px'
-    }
-}

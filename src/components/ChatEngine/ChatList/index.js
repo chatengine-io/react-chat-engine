@@ -10,7 +10,7 @@ import ChatLoader from './ChatLoader'
 import NewChatForm from './NewChatForm'
 import ChatCard from './ChatCard'
 
-let count = 100
+let count = 50
 const interval = 75
 
 const ChatList = props => {
@@ -77,9 +77,11 @@ const ChatList = props => {
         setLoadChats(false)
 
         count = count + interval
-        const chatList = sortChats(Object.values(chats))
-        const before = chatList[chatList.length - 1].created
-        getChatsBefore(props, before, interval, (chats) => onGetChats(chats))
+        const chatList = chats !== null ? sortChats(Object.values(chats)) : []
+        if (chatList.length > 0) {
+            const before = chatList[chatList.length - 1].created
+            getChatsBefore(props, before, interval, (chats) => onGetChats(chats))
+        }
     }, [loadChats, chats])
 
     const chatList = sortChats(
@@ -87,8 +89,6 @@ const ChatList = props => {
         Object.values(chats) : 
         [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
     )
-
-    if (props.renderChatList) return props.renderChatList(props)
 
     return (
         <div style={styles.chatListContainer} className='ce-chat-list'>

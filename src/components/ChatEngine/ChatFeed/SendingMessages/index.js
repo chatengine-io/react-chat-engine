@@ -23,16 +23,25 @@ const SendingMessages = props => {
         const nextMessageKey = index === keys.length - 1 ? null : keys[index + 1]
 
         if(message && message.chat === activeChat) {
-            return (
-                <MessageBubble 
-                    sending
-                    key={`sending-msg-${index}`}
-                    chat={chat}
-                    message={message}
-                    lastMessage={sendingMessages[lastMessageKey]}
-                    nextMessage={sendingMessages[nextMessageKey]}
-                />
-            )
+            return <div key={`sending-msg-${index}`}>
+                {
+                    props.renderSendingMessages ?
+                    props.renderSendingMessages(
+                        conn, 
+                        chat, 
+                        sendingMessages[lastMessageKey], 
+                        message, 
+                        sendingMessages[nextMessageKey]
+                    ) :
+                    <MessageBubble 
+                        sending
+                        chat={chat}
+                        message={message}
+                        lastMessage={sendingMessages[lastMessageKey]}
+                        nextMessage={sendingMessages[nextMessageKey]}
+                    />
+                }
+            </div>
         }
     })
 }

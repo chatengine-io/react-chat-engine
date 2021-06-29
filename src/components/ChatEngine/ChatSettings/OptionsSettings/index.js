@@ -34,12 +34,3 @@ const OptionsSettings = () => {
 }
 
 export default OptionsSettings
-
-const styles = {
-    collapseIcon: {
-        float: 'right',
-        position: 'relative',
-        bottom: '30px',
-        right: '12px'
-    }
-}
