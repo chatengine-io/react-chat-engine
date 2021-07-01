@@ -23,7 +23,7 @@ import {
 } from 'react-chat-engine'
 
 const ChatEngineApp = props => {
-    const { chats, messages, setActiveChat, setConnecting } = useContext(ChatEngineContext)
+    const { chats, messages, setActiveChat } = useContext(ChatEngineContext)
     const [hasSetLink, setLink] = useState(false)
 
     useEffect(() => {
@@ -35,7 +35,6 @@ const ChatEngineApp = props => {
     }, [chats, messages, props, setActiveChat, hasSetLink, setLink])
 
     return (
-        <div>
         <ChatEngine 
             {...props.accounts} 
             height={props.height} 
@@ -58,8 +57,6 @@ const ChatEngineApp = props => {
             renderPhotosSettings={(chat) => <PhotosSettings />}
             renderOptionsSettings={(creds, chat) => <OptionsSettings />}
         />
-        <button onClick={() => setConnecting(true)}>reconnect</button>
-        </div>
     )
 }
 
