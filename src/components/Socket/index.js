@@ -1,23 +1,19 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext } from '../Context'
 
 import { getLatestChats, getLatestMessages, readMessage } from 'react-chat-engine'
+import { getOrCreateSession } from './getOrCreateSession'
 
 import { WebSocket } from 'nextjs-websocket'
 
-let socketRef = undefined;
-let dt = new Date().getTime();
 
 const Socket = props => {
-    const [uuid, setUuid] = useState('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (dt + Math.random()*16)%16 | 0;
-        dt = Math.floor(dt/16);
-        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-    }))
+    const didMountRef = useRef(false)
+    const [sessionToken, setSessionToken] = useState('')
     const [reconnect, reset] = useState(Date.now() + 10000)
     const {
-      setConnecting,
+      connecting, setConnecting,
       conn, setConn, setCreds,
       chats, setChats,
       messages, setMessages,
@@ -25,6 +21,23 @@ const Socket = props => {
       activeChat, setActiveChat,
       typingCounter, setTypingCounter,
     } = useContext(ChatEngineContext)
+
+    useEffect(() => {
+        if (!didMountRef.current) {
+            didMountRef.current = true
+            getOrCreateSession(
+                props, 
+                data => setSessionToken(data.token)
+            )
+        } else if (connecting) {
+            const temp = sessionToken
+            setSessionToken('')
+            setTimeout(() => {
+                setSessionToken(temp)
+            }, 500)
+        }
+        
+    }, [connecting])
 
     function sortChats(chats) {
         return Object.values(chats).sort((a, b) => { 
@@ -46,25 +59,14 @@ const Socket = props => {
         props.onEditChat && props.onEditChat(chat)
     }
 
-    function onConnect() {
-        console.log('Connected')
-        const { publicKey, projectID, userName, userPassword, userSecret } = props 
-        const project = publicKey ? publicKey : projectID
-        const secret = userPassword ? userPassword : userSecret
-        socketRef.sendMessage(JSON.stringify({
-            "project-id": project,
-            "user-name": userName,
-            "user-secret": secret,
-        }))
-    }
-
-    function onAuthenticate(conn) {
+    function onConnect(conn) {
+        console.log('connected')
         setConn(conn); setCreds(conn);
         setConnecting(false)
 
         getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
 
-        if (Date.now() > reconnect) {
+        if (Date.now() > reconnect) { // If this wasn't the first connection
             setSendingMessages({})
             getLatestMessages(
                 conn, activeChat, 45,
@@ -207,11 +209,12 @@ const Socket = props => {
     const wsStart = development ? 'ws://' : 'wss://'
     const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
 
+    if (sessionToken === '') return <div />
+
     return <WebSocket 
         reconnect={true}
-        childRef={ref => socketRef = ref}
-        url={`${wsStart}${rootHost}/person_v2/?connection_id=${uuid}`}
-        onOpen={onConnect.bind(this)}
+        url={`${wsStart}${rootHost}/person_v3/?session_token=${sessionToken}`}
+        onOpen={onConnect.bind(this, props)}
         onClose={onClose.bind(this)}
         onMessage={handleEvent.bind(this)}
         reconnectIntervalInMilliSeconds={3000}
