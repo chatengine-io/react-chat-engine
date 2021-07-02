@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { isImage } from './file'
 
@@ -12,6 +12,18 @@ import { Row, Col, setConfiguration } from 'react-grid-system'
 setConfiguration({ maxScreenClass: 'xl' })
 
 const SendingMessage = props => {
+    const didMountRef = useRef(false)
+
+    useEffect(() => {
+        if (!didMountRef.current) {
+            didMountRef.current = true
+            console.log("yoyo1")
+            setTimeout(() => {
+                console.log("yoyo")
+            }, 10*1000)
+        }
+    })
+
     function renderImages(attachments) {
         return attachments.map((attachment, index) => {
             if(isImage(attachment.name)) {
