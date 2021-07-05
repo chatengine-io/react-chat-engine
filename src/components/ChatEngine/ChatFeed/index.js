@@ -160,13 +160,9 @@ const ChatFeed = props => {
 
                 <SendingMessages {...props} />
 
-                {
-                    props.renderIsTyping ?
-                    props.renderIsTyping(typers) :
-                    <IsTyping />
-                }
+                { props.renderIsTyping ? props.renderIsTyping(typers) : <IsTyping /> }
 
-                <ConnectionBar />
+                { props.renderConnectionBar ? props.renderConnectionBar(chat) : <ConnectionBar /> }
 
                 <div style={{ height: '86px' }} className='ce-feed-container-bottom' />
             </div>
