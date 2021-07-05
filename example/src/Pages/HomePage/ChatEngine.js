@@ -15,11 +15,12 @@ import {
     MessageBubble,
     IsTyping,
     NewMessageForm,
+    ConnectionBar,
     ChatSettings,
     ChatSettingsTop,
     PeopleSettings,
     PhotosSettings,
-    OptionsSettings
+    OptionsSettings,
 } from 'react-chat-engine'
 
 const ChatEngineApp = props => {
@@ -50,6 +51,7 @@ const ChatEngineApp = props => {
             renderMessageBubble={(creds, chat, lastMessage, message, nextMessage) => <MessageBubble lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
             renderSendingMessage={(creds, chat, lastMessage, message, nextMessage) => <MessageBubble sending={true} lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
             renderIsTyping={(typers) => <IsTyping />}
+            renderConnectionBar={(chat) => <ConnectionBar />}
             renderNewMessageForm={(creds, chatID) => <NewMessageForm />}
             renderChatSettings={(chatAppState) => <ChatSettings {...chatAppState} />}
             renderChatSettingsTop={(creds, chat) => <ChatSettingsTop />}
