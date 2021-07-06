@@ -7,11 +7,24 @@ import { getOrCreateSession } from './getOrCreateSession'
 
 import { WebSocket } from 'nextjs-websocket'
 
+let socketRef = undefined;
+const pingInterval = 4444;
+const minSocketLag = 10*1000;
+const reconnect = Date.now() + 10*1000;
+
+function useForceUpdate(){
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => value + 1); // update the state to force render
+}
 
 const Socket = props => {
     const didMountRef = useRef(false)
     const [sessionToken, setSessionToken] = useState('')
-    const [reconnect, reset] = useState(Date.now() + 10000)
+
+    const [now, setNow] = useState(Date.now())
+    const [shouldPongBy, setShouldPongBy] = useState(Date.now() + minSocketLag)
+    const forceUpdate = useForceUpdate();
+    
     const {
       connecting, setConnecting,
       conn, setConn, setCreds,
@@ -23,21 +36,28 @@ const Socket = props => {
     } = useContext(ChatEngineContext)
 
     useEffect(() => {
+        // Get a session token to connect
         if (!didMountRef.current) {
             didMountRef.current = true
+            console.log('Socket Mounted')
             getOrCreateSession(
                 props, 
                 data => setSessionToken(data.token)
             )
-        } else if (connecting) {
-            const temp = sessionToken
-            setSessionToken('')
-            setTimeout(() => {
-                setSessionToken(temp)
-            }, 500)
-        }
+            setInterval(() => setNow(Date.now()), 1000)
         
+        // Re-render the Socket (i.e. reconnect)
+        } else if (connecting) { forceUpdate() }
     }, [connecting])
+
+    useEffect(() => {
+        if (shouldPongBy < now) {
+            console.log("Launching socket reconnect")
+            console.log(shouldPongBy, now)
+            setConnecting(true)
+            setShouldPongBy(Date.now() + minSocketLag)
+        }
+    }, [now, shouldPongBy])
 
     function sortChats(chats) {
         return Object.values(chats).sort((a, b) => { 
@@ -60,9 +80,20 @@ const Socket = props => {
     }
 
     function onConnect(conn) {
-        console.log('connected')
-        setConn(conn); setCreds(conn);
+        console.log('Connected')
+        setConn(conn) 
+        setCreds(conn)
         setConnecting(false)
+
+        if (connecting) {
+            setInterval(() => {
+                try {
+                    socketRef.sendMessage(JSON.stringify('ping'))
+                } catch (e) {
+                    console.log('Socker error', e)
+                }
+            }, pingInterval)
+        }
 
         getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
 
@@ -78,15 +109,12 @@ const Socket = props => {
         
         props.onConnect && props.onConnect(conn)
     }
-    
-    // Socket Events
 
     function handleEvent(event) {
         const eventJSON = JSON.parse(event)
-        console.log(eventJSON.action)
 
-        if (eventJSON.action === 'login_success') {
-            onAuthenticate(props)
+        if (eventJSON.action === 'pong') {
+            setShouldPongBy(Date.now() + minSocketLag)
 
         } else if (eventJSON.action === 'login_error') {
             console.log(
@@ -200,10 +228,7 @@ const Socket = props => {
         }
     }
 
-    function onClose() { 
-        setConnecting(true) 
-        console.log('disconnected')
-    }
+    function onClose() { setConnecting(true) }
 
     const { development } = props 
     const wsStart = development ? 'ws://' : 'wss://'
@@ -213,6 +238,7 @@ const Socket = props => {
 
     return <WebSocket 
         reconnect={true}
+        childRef={ref => socketRef = ref}
         url={`${wsStart}${rootHost}/person_v3/?session_token=${sessionToken}`}
         onOpen={onConnect.bind(this, props)}
         onClose={onClose.bind(this)}
