@@ -28,6 +28,6 @@ In the top-level dir, run `yarn` to install deps, then `yarn start` to start the
 
 Additionally the example dir is where we test the newest react-chat-engine instance. Run `yarn` to install deps for the example projects, then run `yarn start` to start the app in the browser.
 
-### Bonus: YouTube video
+<!-- ### Bonus: YouTube video
 
-You can also check out [this YouTube video](https://youtube.com) for a personalized, conversational tutorial on how to help.
+You can also check out [this YouTube video](https://youtube.com) for a personalized, conversational tutorial on how to help. -->
