@@ -43,7 +43,7 @@ const ChatCard = props => {
         const day = date.substr(8,2)
         const month = date.substr(5,2)
         const year = date.substr(0,4)
-        const sent = new Date(`${month} ${day} ${year}`).toString()
+        const sent = new Date(`${year}-${month}-${day}`).toString()
         return sent.substr(4, 6)
     }
 
