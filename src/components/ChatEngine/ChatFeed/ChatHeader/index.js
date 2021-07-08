@@ -106,11 +106,11 @@ const styles = {
         padding: '18px 0px',
         textAlign: 'center',
         color: 'rgb(24, 144, 255)',
+        overflowX: 'hidden'
     },
     titleText: {
         fontSize: '24px',
         fontWeight: '600',
-        overflowWrap: 'anywhere'
     },
     subtitleText: {
         fontSize: '12px',
