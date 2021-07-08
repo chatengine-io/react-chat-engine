@@ -1,8 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 
-import { ChatEngineContext } from '../Context'
-
-import { getLatestChats, getLatestMessages, readMessage } from 'react-chat-engine'
+import { ChatEngineContext, getLatestChats, getLatestMessages, readMessage } from 'react-chat-engine'
 import { getOrCreateSession } from './getOrCreateSession'
 
 import { WebSocket } from 'nextjs-websocket'

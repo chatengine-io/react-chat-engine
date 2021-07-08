@@ -1,6 +1,6 @@
 import axios from 'axios'
-import * as str from '../../actions'
-import { getHeaders } from '../../actions/auth'
+import * as str from '../../../actions'
+import { getHeaders } from '../../../actions/auth'
 
 export function getOrCreateSession(props, callback) {
     axios.get(

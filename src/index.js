@@ -2,8 +2,7 @@ import { ChatEngineWrapper, ChatEngineContext } from './components/Context'
 
 import ChatEngine from './components'
 
-import Socket from './components/Socket'
-import ChatSocket from './components/Socket/ChatSocket'
+import { Socket, ChatSocket } from './components/Sockets'
 
 import Button from './components/ChatEngine/components/Button'
 import { Avatar, Dot } from './components/ChatEngine/components/Avatar'
