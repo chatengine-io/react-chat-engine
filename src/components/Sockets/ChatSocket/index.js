@@ -1,15 +1,13 @@
 import React, { useContext, useState } from 'react'
 
-import { ChatEngineContext } from '../Context'
-
-import { getLatestChats, getLatestMessages, readMessage } from 'react-chat-engine'
+import { ChatEngineContext, getChat, getLatestMessages } from 'react-chat-engine'
 
 import { WebSocket } from 'nextjs-websocket'
 
 let socketRef = undefined;
 let dt = new Date().getTime();
 
-const Socket = props => {
+const ChatSocket = props => {
     const [uuid, setUuid] = useState('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = (dt + Math.random()*16)%16 | 0;
         dt = Math.floor(dt/16);
@@ -26,14 +24,6 @@ const Socket = props => {
       typingCounter, setTypingCounter,
     } = useContext(ChatEngineContext)
 
-    function sortChats(chats) {
-        return Object.values(chats).sort((a, b) => { 
-            const aDate = a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
-            const bDate = b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
-            return new Date(bDate) - new Date(aDate); 
-        })
-    }
-
     // Common Context Handlers
 
     function onEditChat(chat) {
@@ -46,34 +36,40 @@ const Socket = props => {
         props.onEditChat && props.onEditChat(chat)
     }
 
+    function onGetChat(chat) {
+        if (activeChat === null) {
+            setActiveChat(chat.id)
+        }
+
+        setChats(_.mapKeys([chat], 'id'))
+    }
+
     function onConnect() {
-        console.log('Connected')
-        const { publicKey, projectID, userName, userPassword, userSecret } = props 
+        const { publicKey, projectID, chatID, chatAccessKey } = props 
         const project = publicKey ? publicKey : projectID
-        const secret = userPassword ? userPassword : userSecret
         socketRef.sendMessage(JSON.stringify({
             "project-id": project,
-            "user-name": userName,
-            "user-secret": secret,
+            "chat-id": chatID,
+            "access-key": chatAccessKey,
         }))
     }
 
     function onAuthenticate(conn) {
         setConn(conn); setCreds(conn);
         setConnecting(false)
-
-        getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
-
+    
+        getChat(conn, props.chatID, (chat) => onGetChat(chat))
+    
         if (Date.now() > reconnect) {
             setSendingMessages({})
             getLatestMessages(
-                conn, activeChat, 45,
+                conn, props.chatID, 45,
                 (id, list) => {
                     setMessages({...messages, ..._.mapKeys(list, 'id')})
                 }
             )
         }
-        
+
         props.onConnect && props.onConnect(conn)
     }
     
@@ -81,17 +77,16 @@ const Socket = props => {
 
     function handleEvent(event) {
         const eventJSON = JSON.parse(event)
-        console.log(eventJSON.action)
 
         if (eventJSON.action === 'login_success') {
             onAuthenticate(props)
 
         } else if (eventJSON.action === 'login_error') {
             console.log(
-                `Your login credentials were not correct: \n
+                `Your chat auth credentials were not correct: \n
                 Project ID: ${props.projectID} \n
-                Username: ${props.userName} \n
-                User Secret: ${props.userSecret}\n
+                Chat ID: ${props.chatID} \n
+                Access Key: ${props.chatAccessKey}\n
                 Double check these credentials to make sure they're correct.\n
                 If all three are correct, try resetting the username and secret in the Online Dashboard or Private API.`
             )
@@ -99,18 +94,6 @@ const Socket = props => {
             setConn(undefined); setCreds(undefined);
 
             props.onFailAuth && props.onFailAuth(conn)
-
-        } else if (eventJSON.action === 'new_chat') {
-            const chat = eventJSON.data
-            
-            if (chats) {
-                const newChats = {...chats}
-                newChats[chat.id] = chat
-                setChats(newChats)
-                setActiveChat(chat.id)
-            }
-
-            props.onNewChat && props.onNewChat(eventJSON.data)
 
         } else if (eventJSON.action === 'edit_chat') {
             onEditChat(eventJSON.data)
@@ -122,11 +105,6 @@ const Socket = props => {
                 chats[chat.id] = undefined
                 
                 setChats(chats)
-          
-                if (!_.isEmpty(chats)) {
-                    const sortedChats = sortChats(chats)
-                    setActiveChat(sortedChats[0] ? parseInt(sortedChats[0].id) : 0)
-                }
             }
 
             props.onDeleteChat && props.onDeleteChat(chat)
@@ -153,10 +131,6 @@ const Socket = props => {
                 const newMessages = {...messages}
                 newMessages[message.id] = message
                 setMessages(newMessages)
-            }
-          
-            if (message.sender_username !== props.userName) {
-                readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
             }
 
             props.onNewMessage && props.onNewMessage(id, message)
@@ -191,26 +165,22 @@ const Socket = props => {
                     [person]: Date.now()
                 }
             }
-                
+
             setTypingCounter(newTypingCounter)
-                
+
             props.onTyping && props.onTyping(id, person)
         }
     }
 
-    function onClose() { 
-        setConnecting(true) 
-        console.log('disconnected')
-    }
+    function onClose() { setConnecting(true) }
 
     const { development } = props 
     const wsStart = development ? 'ws://' : 'wss://'
     const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
-
     return <WebSocket 
         reconnect={true}
         childRef={ref => socketRef = ref}
-        url={`${wsStart}${rootHost}/person_v2/?connection_id=${uuid}`}
+        url={`${wsStart}${rootHost}/chat_v2/?connection_id=${uuid}`}
         onOpen={onConnect.bind(this)}
         onClose={onClose.bind(this)}
         onMessage={handleEvent.bind(this)}
@@ -218,4 +188,4 @@ const Socket = props => {
     />
 }
 
-export default Socket
+export default ChatSocket

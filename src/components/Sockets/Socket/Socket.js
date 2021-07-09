@@ -1,23 +1,27 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 
-import { ChatEngineContext } from '../Context'
-
-import { getChat, getLatestMessages } from 'react-chat-engine'
+import { ChatEngineContext, getLatestChats, getLatestMessages, readMessage } from 'react-chat-engine'
+import { getOrCreateSession } from './getOrCreateSession'
 
 import { WebSocket } from 'nextjs-websocket'
 
 let socketRef = undefined;
-let dt = new Date().getTime();
+let pingIntervalID = 0;
+let timeIntervalID = 0;
 
-const ChatSocket = props => {
-    const [uuid, setUuid] = useState('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (dt + Math.random()*16)%16 | 0;
-        dt = Math.floor(dt/16);
-        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-    }))
-    const [reconnect, reset] = useState(Date.now() + 10000)
+const pingInterval = 4000;
+const minSocketLag = 15*1000;
+const reconnect = Date.now() + 10*1000;
+
+const Socket = props => {
+    const didMountRef = useRef(false)
+    const [sessionToken, setSessionToken] = useState('')
+
+    const [now, setNow] = useState(Date.now())
+    const [shouldPongBy, setShouldPongBy] = useState(Date.now() + minSocketLag)
+    
     const {
-      setConnecting,
+      connecting, setConnecting,
       conn, setConn, setCreds,
       chats, setChats,
       messages, setMessages,
@@ -25,6 +29,53 @@ const ChatSocket = props => {
       activeChat, setActiveChat,
       typingCounter, setTypingCounter,
     } = useContext(ChatEngineContext)
+
+    useEffect(() => {
+        // Get a session token to connect
+        if (!didMountRef.current) {
+            didMountRef.current = true
+            console.log('Socket Mounted')
+            getOrCreateSession(
+                props, 
+                data => setSessionToken(data.token)
+            )
+        
+        // Re-render the Socket (i.e. reconnect)
+        } else if (connecting) { props.reRender && props.reRender() }
+    }, [connecting])
+
+    useEffect(() => {
+        if (shouldPongBy < now) {
+            console.log("Reconnecting socket", shouldPongBy, now)
+            setConnecting(true)
+            setShouldPongBy(Date.now() + minSocketLag)
+        }
+
+        return () => {
+            console.log('Unmounting')
+            clearInterval(pingIntervalID)
+            clearInterval(timeIntervalID)
+        }
+    }, [])
+
+    function getDate(date) {
+        if (!date) return ''
+        const year = date.substr(0,4)
+        const month = date.substr(5,2)
+        const day = date.substr(8,2)
+        const hour = date.substr(11,2)
+        const minute = date.substr(14,2)
+        const second = date.substr(17,2)
+        return new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`)
+    }
+
+    function sortChats(chats) {
+        return Object.values(chats).sort((a, b) => { 
+            const aDate = a.last_message.created ? getDate(a.last_message.created) : getDate(a.created)
+            const bDate = b.last_message.created ? getDate(b.last_message.created) : getDate(b.created)
+            return new Date(bDate) - new Date(aDate); 
+        })
+    }
 
     // Common Context Handlers
 
@@ -38,57 +89,51 @@ const ChatSocket = props => {
         props.onEditChat && props.onEditChat(chat)
     }
 
-    function onGetChat(chat) {
-        if (activeChat === null) {
-            setActiveChat(chat.id)
+    function onConnect(conn) {
+        console.log('Connected')
+        setConn(conn) 
+        setCreds(conn)
+        setConnecting(false)
+
+        if (connecting) { 
+            pingIntervalID = setInterval(() => {
+                try {
+                    socketRef.sendMessage(JSON.stringify('ping'))
+                } catch (e) {
+                    console.log('Socker error', e)
+                }
+            }, pingInterval)
+            
+            timeIntervalID = setInterval(() => setNow(Date.now()), 1000)
         }
 
-        setChats(_.mapKeys([chat], 'id'))
-    }
+        getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
 
-    function onConnect() {
-        const { publicKey, projectID, chatID, chatAccessKey } = props 
-        const project = publicKey ? publicKey : projectID
-        socketRef.sendMessage(JSON.stringify({
-            "project-id": project,
-            "chat-id": chatID,
-            "access-key": chatAccessKey,
-        }))
-    }
-
-    function onAuthenticate(conn) {
-        setConn(conn); setCreds(conn);
-        setConnecting(false)
-    
-        getChat(conn, props.chatID, (chat) => onGetChat(chat))
-    
-        if (Date.now() > reconnect) {
+        if (Date.now() > reconnect) { // If this wasn't the first connection
             setSendingMessages({})
             getLatestMessages(
-                conn, props.chatID, 45,
+                conn, activeChat, 45,
                 (id, list) => {
                     setMessages({...messages, ..._.mapKeys(list, 'id')})
                 }
             )
         }
-
+        
         props.onConnect && props.onConnect(conn)
     }
-    
-    // Socket Events
 
     function handleEvent(event) {
         const eventJSON = JSON.parse(event)
 
-        if (eventJSON.action === 'login_success') {
-            onAuthenticate(props)
+        if (eventJSON.action === 'pong') {
+            setShouldPongBy(Date.now() + minSocketLag)
 
         } else if (eventJSON.action === 'login_error') {
             console.log(
-                `Your chat auth credentials were not correct: \n
+                `Your login credentials were not correct: \n
                 Project ID: ${props.projectID} \n
-                Chat ID: ${props.chatID} \n
-                Access Key: ${props.chatAccessKey}\n
+                Username: ${props.userName} \n
+                User Secret: ${props.userSecret}\n
                 Double check these credentials to make sure they're correct.\n
                 If all three are correct, try resetting the username and secret in the Online Dashboard or Private API.`
             )
@@ -96,6 +141,18 @@ const ChatSocket = props => {
             setConn(undefined); setCreds(undefined);
 
             props.onFailAuth && props.onFailAuth(conn)
+
+        } else if (eventJSON.action === 'new_chat') {
+            const chat = eventJSON.data
+            
+            if (chats) {
+                const newChats = {...chats}
+                newChats[chat.id] = chat
+                setChats(newChats)
+                setActiveChat(chat.id)
+            }
+
+            props.onNewChat && props.onNewChat(eventJSON.data)
 
         } else if (eventJSON.action === 'edit_chat') {
             onEditChat(eventJSON.data)
@@ -107,6 +164,11 @@ const ChatSocket = props => {
                 chats[chat.id] = undefined
                 
                 setChats(chats)
+          
+                if (!_.isEmpty(chats)) {
+                    const sortedChats = sortChats(chats)
+                    setActiveChat(sortedChats[0] ? parseInt(sortedChats[0].id) : 0)
+                }
             }
 
             props.onDeleteChat && props.onDeleteChat(chat)
@@ -133,6 +195,10 @@ const ChatSocket = props => {
                 const newMessages = {...messages}
                 newMessages[message.id] = message
                 setMessages(newMessages)
+            }
+          
+            if (message.sender_username !== props.userName) {
+                readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
             }
 
             props.onNewMessage && props.onNewMessage(id, message)
@@ -167,27 +233,33 @@ const ChatSocket = props => {
                     [person]: Date.now()
                 }
             }
-
+                
             setTypingCounter(newTypingCounter)
-
+                
             props.onTyping && props.onTyping(id, person)
         }
     }
 
-    function onClose() { setConnecting(true) }
+    function onClose() { 
+        console.log('Socket close')
+        setConnecting(true) 
+    }
 
     const { development } = props 
     const wsStart = development ? 'ws://' : 'wss://'
     const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
+
+    if (sessionToken === '') return <div />
+
     return <WebSocket 
         reconnect={true}
         childRef={ref => socketRef = ref}
-        url={`${wsStart}${rootHost}/chat_v2/?connection_id=${uuid}`}
-        onOpen={onConnect.bind(this)}
+        url={`${wsStart}${rootHost}/person_v3/?session_token=${sessionToken}`}
+        onOpen={onConnect.bind(this, props)}
         onClose={onClose.bind(this)}
         onMessage={handleEvent.bind(this)}
         reconnectIntervalInMilliSeconds={3000}
     />
 }
 
-export default ChatSocket
+export default Socket

@@ -4,7 +4,7 @@ import { ChatEngineContext } from '../Context'
 
 import _ from 'lodash'
 
-import Socket from '../Socket'
+import { Socket } from '../Sockets'
 
 import ChatList from './ChatList'
 import ChatFeed from './ChatFeed'

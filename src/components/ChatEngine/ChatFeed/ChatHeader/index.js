@@ -22,21 +22,14 @@ const ChatHeader = () => {
 
     function timeSinceDate(date) {
         if (!date) return ''
-    
-        const day = date.substr(8,2)
-        const month = date.substr(5,2)
         const year = date.substr(0,4)
-    
+        const month = date.substr(5,2)
+        const day = date.substr(8,2)
         const hour = date.substr(11,2)
         const minute = date.substr(14,2)
         const second = date.substr(17,2)
-    
-        var sent = new Date(`${month} ${day} ${year}`)
-        sent.setHours(hour)
-        sent.setMinutes(minute)
-        sent.setSeconds(second)
+        var sent = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`)
         sent = sent.toString()
-    
         const dayStr = sent.substr(0, 10)
         const timeStr = sent.substr(15, 6)
         return `${dayStr} at ${timeStr}`
@@ -113,11 +106,11 @@ const styles = {
         padding: '18px 0px',
         textAlign: 'center',
         color: 'rgb(24, 144, 255)',
+        overflowX: 'hidden'
     },
     titleText: {
         fontSize: '24px',
         fontWeight: '600',
-        overflowWrap: 'anywhere'
     },
     subtitleText: {
         fontSize: '12px',

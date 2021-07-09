@@ -40,10 +40,21 @@ const ChatList = props => {
         })
     }
 
+    function getDate(date) {
+        if (!date) return ''
+        const year = date.substr(0,4)
+        const month = date.substr(5,2)
+        const day = date.substr(8,2)
+        const hour = date.substr(11,2)
+        const minute = date.substr(14,2)
+        const second = date.substr(17,2)
+        return new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`)
+    }
+
     function sortChats(chats) {
         return chats.sort((a, b) => { 
-            const aDate = a.last_message && a.last_message.created ? new Date(a.last_message.created) : new Date(a.created)
-            const bDate = b.last_message && b.last_message.created ? new Date(b.last_message.created) : new Date(b.created)
+            const aDate = a.last_message && a.last_message.created ? getDate(a.last_message.created) : getDate(a.created)
+            const bDate = b.last_message && b.last_message.created ? getDate(b.last_message.created) : getDate(b.created)
             return new Date(bDate) - new Date(aDate); 
         })
     }
