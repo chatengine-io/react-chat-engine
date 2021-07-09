@@ -34,7 +34,7 @@ const Socket = props => {
         // Get a session token to connect
         if (!didMountRef.current) {
             didMountRef.current = true
-            console.log('Socket Mounted')
+            // console.log('Socket Mounted')
             getOrCreateSession(
                 props, 
                 data => setSessionToken(data.token)
@@ -46,13 +46,13 @@ const Socket = props => {
 
     useEffect(() => {
         if (shouldPongBy < now) {
-            console.log("Reconnecting socket", shouldPongBy, now)
+            // console.log("Reconnecting socket", shouldPongBy, now)
             setConnecting(true)
             setShouldPongBy(Date.now() + minSocketLag)
         }
 
         return () => {
-            console.log('Unmounting')
+            // console.log('Unmounting')
             clearInterval(pingIntervalID)
             clearInterval(timeIntervalID)
         }
@@ -90,7 +90,7 @@ const Socket = props => {
     }
 
     function onConnect(conn) {
-        console.log('Connected')
+        // console.log('Connected')
         setConn(conn) 
         setCreds(conn)
         setConnecting(false)
@@ -241,7 +241,7 @@ const Socket = props => {
     }
 
     function onClose() { 
-        console.log('Socket close')
+        // console.log('Socket close')
         setConnecting(true) 
     }
 
