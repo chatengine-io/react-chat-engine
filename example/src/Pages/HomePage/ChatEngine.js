@@ -39,6 +39,7 @@ const ChatEngineApp = props => {
         <ChatEngine 
             {...props.accounts} 
             height={props.height} 
+            offset={-7}
             projectID={props.projectID} 
             development={props.development} 
             // You want the extra args for outside components
