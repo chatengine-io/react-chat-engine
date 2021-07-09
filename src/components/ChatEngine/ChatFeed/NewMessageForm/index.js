@@ -20,7 +20,7 @@ const NewMessageForm = () => {
     sendingMessages, 
     setSendingMessages 
   } = useContext(ChatEngineContext)
-  
+  const [iter, setIter] = useState(0) // Forces attachments update
   const [value, setValue] = useState('')
   const [trigger, setTrigger] = useState(0)
   const [attachments, setAttachments] = useState([])
@@ -41,6 +41,7 @@ const NewMessageForm = () => {
     const newAttachments = attachments
     newAttachments.splice(index, 1)
     setAttachments(newAttachments)
+    setIter(iter + 1)
   }
   
   function handleChange(value) {
