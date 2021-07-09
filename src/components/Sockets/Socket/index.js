@@ -7,7 +7,7 @@ const Socket = props => {
     const [hide, setHide] = useState(false)
 
     function reRender() {
-        console.log('re-render')
+        // console.log('re-render')
         setHide(true)
         setTimeout(() => {
             setHide(false)
