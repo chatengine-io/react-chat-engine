@@ -8,6 +8,8 @@ import Loading from './Loading'
 
 import { Boop } from '../../components/Effects'
 
+import { getDateTime } from '../../Utilities/timezone'
+
 const { htmlToText } = require('html-to-text')
 
 const ChatCard = props => {
@@ -40,11 +42,7 @@ const ChatCard = props => {
 
     function daySinceSent(date) {
         if (!date) return ''
-        const day = date.substr(8,2)
-        const month = date.substr(5,2)
-        const year = date.substr(0,4)
-        const sent = new Date(`${year}-${month}-${day}`).toString()
-        return sent.substr(4, 6)
+        return getDateTime(date, conn.offset).toString().substr(4, 6)
     }
 
     return (

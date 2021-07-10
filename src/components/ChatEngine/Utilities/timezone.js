@@ -1,6 +1,7 @@
 export function getDateTime(date, offset) {
     if (!date) return ''
     
+    date = date.replace(' ', 'T')
     offset = offset ? offset : 0
 
     const year = date.substr(0,4)
@@ -11,12 +12,16 @@ export function getDateTime(date, offset) {
     const second = date.substr(17,2)
     
     var d = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`)
-    var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-    return new Date(utc + (3600000*offset));
+    d.setHours(d.getHours() + offset)
+    return d
 }
 
-// export function parseTime(offset) {
-//     const time = nd.toLocaleString().split(', ')[1].split(' ')[0].slice(0, -3)
-//     const half = nd.toLocaleString().split(', ')[1].split(' ')[1] // AM or PM
-//     return `${time} ${half}`
-// }
+const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }
+
+export function formatDateTime(dateTime) {
+    var time = dateTime.toLocaleString('en-US')
+    time = time.split(' ')[1].slice(0, -3) + ' ' + time.slice(-2)
+    var day = dateTime.toLocaleString('en-US', options)
+
+    return time + ', ' + day
+}

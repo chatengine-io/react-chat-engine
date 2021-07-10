@@ -24,6 +24,7 @@ const Message = props => {
                 <DatePartition 
                     lastCreated={lastMessage ? lastMessage.created : null} 
                     created={message.created} 
+                    offset={conn.offset}
                 />
             }
 
