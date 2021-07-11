@@ -5,6 +5,8 @@ import { ChatEngineContext } from 'react-chat-engine'
 import ChatListDrawer from './ChatListDrawer'
 import ChatSettingsDrawer from './ChatSettingsDrawer'
 
+import { getDateTime, formatDateTime } from '../../Utilities/timezone'
+
 import { LoadingOutlined } from '@ant-design/icons'
 
 import { Row, Col } from 'react-grid-system'
@@ -20,19 +22,14 @@ const ChatHeader = () => {
     const otherPerson = chat && conn && chat.people.find(person => person.person.username !== conn.userName)
     const title = chat ? (chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title) : undefined
 
-    function timeSinceDate(date) {
-        if (!date) return ''
-        const year = date.substr(0,4)
-        const month = date.substr(5,2)
-        const day = date.substr(8,2)
-        const hour = date.substr(11,2)
-        const minute = date.substr(14,2)
-        const second = date.substr(17,2)
-        var sent = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`)
-        sent = sent.toString()
-        const dayStr = sent.substr(0, 10)
-        const timeStr = sent.substr(15, 6)
-        return `${dayStr} at ${timeStr}`
+    if (conn === null) return <div/>
+    
+    var text = 'Say hello!'
+    if (!chat) {
+        text = 'Loading...'
+    } else if (chat.last_message.created && chat.last_message.created.length > 0) {
+        const dateTime = getDateTime(chat.last_message.created, conn.offset)
+        text = `Active ${formatDateTime(dateTime)}`
     }
 
     return (
@@ -63,13 +60,7 @@ const ChatHeader = () => {
                     { title ? title : <LoadingOutlined /> }
                 </div>
                 
-                <div style={styles.subtitleText} className='ce-chat-subtitle-text'>
-                    {
-                        chat ? chat.last_message.created && chat.last_message.created.length > 0 ?
-                        `Active ${timeSinceDate(chat.last_message.created)}` :
-                        'Say hello!' : 'Loading'
-                    }
-                </div>
+                <div style={styles.subtitleText} className='ce-chat-subtitle-text'>{text}</div>
             </Col>
 
             <Col 

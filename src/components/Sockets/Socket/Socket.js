@@ -3,6 +3,8 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 import { ChatEngineContext, getLatestChats, getLatestMessages, readMessage } from 'react-chat-engine'
 import { getOrCreateSession } from './getOrCreateSession'
 
+import { getDateTime } from '../../ChatEngine/Utilities/timezone'
+
 import { WebSocket } from 'nextjs-websocket'
 
 let socketRef = undefined;
@@ -58,21 +60,10 @@ const Socket = props => {
         }
     }, [])
 
-    function getDate(date) {
-        if (!date) return ''
-        const year = date.substr(0,4)
-        const month = date.substr(5,2)
-        const day = date.substr(8,2)
-        const hour = date.substr(11,2)
-        const minute = date.substr(14,2)
-        const second = date.substr(17,2)
-        return new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`)
-    }
-
     function sortChats(chats) {
         return Object.values(chats).sort((a, b) => { 
-            const aDate = a.last_message.created ? getDate(a.last_message.created) : getDate(a.created)
-            const bDate = b.last_message.created ? getDate(b.last_message.created) : getDate(b.created)
+            const aDate = a.last_message.created ? getDateTime(a.last_message.created, props.offset) : getDateTime(a.created, props.offset)
+            const bDate = b.last_message.created ? getDateTime(b.last_message.created, props.offset) : getDateTime(b.created, props.offset)
             return new Date(bDate) - new Date(aDate); 
         })
     }
