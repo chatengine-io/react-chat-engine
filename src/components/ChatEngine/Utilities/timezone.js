@@ -18,10 +18,15 @@ export function getDateTime(date, offset) {
 
 const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }
 
-export function formatDateTime(dateTime) {
+export function formatTime(dateTime) {
     var time = dateTime.toLocaleString('en-US')
-    time = time.split(' ')[1].slice(0, -3) + ' ' + time.slice(-2)
-    var day = dateTime.toLocaleString('en-US', options)
+    return time.split(' ')[1].slice(0, -3) + ' ' + time.slice(-2)
+}
 
-    return time + ', ' + day
+export function formatDate(dateTime) {
+    return dateTime.toLocaleString('en-US', options)
+}
+
+export function formatDateTime(dateTime) {
+    return formatTime(dateTime) + ', ' + formatDate(dateTime)
 }

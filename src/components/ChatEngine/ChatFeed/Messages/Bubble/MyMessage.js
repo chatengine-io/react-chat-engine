@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
+
+import { ChatEngineContext } from 'react-chat-engine'
 
 import { getFileName, isImage } from './file'
 
@@ -6,6 +8,7 @@ import Thumbnail from './Thumbnail'
 import FileView from './FileView'
 
 import Dot from '../../../components/Avatar/Dot'
+import { getDateTime, formatTime } from '../../../Utilities/timezone'
 
 import Body from './Body'
 
@@ -14,6 +17,9 @@ import { Row, Col, setConfiguration } from 'react-grid-system'
 setConfiguration({ maxScreenClass: 'xl' })
 
 const Message = props => {
+    const { conn } = useContext(ChatEngineContext)
+    const [hovered, setHovered] = useState(false)
+
     function renderReads() {
         const { chat, message } = props
 
@@ -97,18 +103,27 @@ const Message = props => {
                 style={{ paddingRight: '2px' }} 
                 className='ce-message-bubble-row ce-my-message-bubble-row'
             >
-                <Col xs={1} sm={2} md={3} />
-
-                <Col xs={11} sm={10} md={9}>
-                    {
-                        !attachments || message.text && 
-                        <div
-                            className='ce-message-bubble ce-my-message-bubble'
-                            style={{ ...styles.myMessage, ...{ borderRadius } }}
-                        >
-                            <Body myMessage={true} text={message.text} />
-                        </div>
-                    }
+                <Col xs={12} sm={12} md={12}>
+                    <div>
+                        {
+                            hovered &&
+                            <span style={{ position: 'relative', top: '11px', right: '8px', fontSize: '14px', color: 'rgb(24, 144, 255)' }}>
+                                { formatTime(getDateTime(message.created, conn !== null && conn.offset)) }
+                            </span>
+                        }
+                        
+                        {
+                            !attachments || message.text && 
+                            <div
+                                className='ce-message-bubble ce-my-message-bubble'
+                                style={{ ...styles.myMessage, ...{ borderRadius } }}
+                                onMouseEnter={() => setHovered(true)}
+                                onMouseLeave={() => setHovered(false)}
+                            >
+                                <Body myMessage={true} text={message.text} />
+                            </div>
+                        }
+                    </div>
                 </Col>
 
                 <Col xs={1} sm={2} md={3} />
@@ -132,6 +147,7 @@ const styles = {
         fontSize: '15px',
         whiteSpace: 'pre-line',
         backgroundColor: 'rgb(24, 144, 255)', 
-        overflowWrap: 'anywhere'
+        overflowWrap: 'anywhere',
+        maxWidth: 'calc(100% - 100px)'
     }
 }

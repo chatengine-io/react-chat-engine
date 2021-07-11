@@ -1,4 +1,8 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
+
+import { ChatEngineContext } from 'react-chat-engine'
+
+import { getDateTime, formatTime } from '../../../Utilities/timezone'
 
 import { getFileName, isImage } from './file'
 
@@ -15,6 +19,9 @@ setConfiguration({ maxScreenClass: 'xl' })
 
 
 const TheirMessage = props => {
+    const { conn } = useContext(ChatEngineContext)
+    const [hovered, setHovered] = useState(false)
+
     function renderReads() {
         const { chat, message } = props
 
@@ -88,7 +95,7 @@ const TheirMessage = props => {
             }
         
             <Row style={{ paddingLeft: '2px' }} className='ce-their-message-row'>
-                <Col xs={11} sm={10} md={9}>
+                <Col xs={12} sm={12} md={12}>
                     <div style={{ height: '0px' }} className='ce-their-message-avatar'>
                         {
                             (!nextMessage || nextMessage.sender_username !== message.sender_username) &&
@@ -120,10 +127,19 @@ const TheirMessage = props => {
                             <div
                                 className='ce-message-bubble ce-their-message-bubble'
                                 style={{ ...styles.theirMessage, ...{ borderRadius } }}
+                                onMouseEnter={() => setHovered(true)}
+                                onMouseLeave={() => setHovered(false)}
                             >
                                 <Body text={message.text} />
                             </div>
                         </div>  
+                    }
+
+                    {
+                        hovered &&
+                        <span style={{ position: 'relative', top: '11px', left: '8px', fontSize: '14px', color: 'rgba(0, 0, 0, 0.4)' }}>
+                            { formatTime(getDateTime(message.created, conn !== null && conn.offset)) }
+                        </span>
                     }
                 </Col>
 
@@ -144,14 +160,15 @@ export default TheirMessage
 
 const styles = {
     theirMessage: {
-        cusor: 'auto',
+        cursor: 'pointer',
         color: 'black', 
         float: 'left',
         padding: '12px',
         fontSize: '15px',
         whiteSpace: 'pre-line',
         backgroundColor: '#f1f0f0', 
-        overflowWrap: 'anywhere'
+        overflowWrap: 'anywhere',
+        maxWidth: 'calc(100% - 100px)',
     },
     nameText: { 
         paddingLeft: '62px', 
