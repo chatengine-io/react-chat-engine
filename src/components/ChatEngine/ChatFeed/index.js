@@ -26,7 +26,7 @@ const ChatFeed = props => {
     const [duration, setDuration] = useState(0)
     const [hasFetchedMessages, setHasFetchedMessages] = useState(false)
     const [currentChat, setCurrentChat] = useState(null)
-    const { 
+    const {
         conn,
         chats, setChats,
         sendingMessages,
@@ -41,7 +41,7 @@ const ChatFeed = props => {
 
     function onReadMessage(chat) {
         if (chats) {
-            const newChats = {...chats}
+            const newChats = { ...chats }
             newChats[chat.id] = chat
             setChats(newChats)
         }
@@ -62,39 +62,39 @@ const ChatFeed = props => {
         if (scrollDownTo) {
             animateScroll.scrollToBottom({ duration: 0, containerId: scrollDownTo })
         }
-        
+
         props.onGetMessages && props.onGetMessages(chatId, messages)
     }
 
     function loadMessages(loadMoreMessages) {
         // Message Loader triggers
-        if (loadMoreMessages) { 
+        if (loadMoreMessages) {
             count = count + interval
             setLoadMoreMessages(false)
 
             getLatestMessages(
-                conn, activeChat, count, 
+                conn, activeChat, count,
                 (chatId, messages) => onGetMessages(chatId, messages, false)
             )
 
-        // Active Chat passed by context
+            // Active Chat passed by context
         } else if (conn && !props.activeChat && activeChat !== null && activeChat !== currentChat) {
             count = initial
             setCurrentChat(activeChat)
 
             getLatestMessages(
-                conn, activeChat, count, 
+                conn, activeChat, count,
                 (chatId, messages) => onGetMessages(chatId, messages, "ce-feed-container")
             )
 
-        // Active Chat passed by props
+            // Active Chat passed by props
         } else if (conn && props.activeChat && props.activeChat !== currentChat) {
             count = initial
             setActiveChat(props.activeChat)
             setCurrentChat(props.activeChat)
 
             getLatestMessages(
-                conn, props.activeChat, count, 
+                conn, props.activeChat, count,
                 (chatId, messages) => onGetMessages(chatId, messages, "ce-feed-container")
             )
         }
@@ -106,14 +106,11 @@ const ChatFeed = props => {
     useEffect(() => {
         if (!didMountRef.current) {
             didMountRef.current = true
-            
-            setTimeout(() => {
-                setDuration(100)
-            }, 3000) // Start animating scroll post-load
+            setTimeout(() => setDuration(333), 3000) // Start animating scroll post-load
 
         } else {
             // Scroll on new incoming messages
-            if(isBottomVisible && !_.isEmpty(messages)) {
+            if (isBottomVisible && !_.isEmpty(messages)) {
                 animateScroll.scrollToBottom({
                     duration,
                     containerId: "ce-feed-container"
@@ -123,26 +120,26 @@ const ChatFeed = props => {
     }, [sendingMessages, messages, isBottomVisible])
 
 
-    const chat = chats && chats[currentChat] 
+    const chat = chats && chats[currentChat]
     const needsIceBreaker = hasFetchedMessages && _.isEmpty(messages)
-    
+
     if (conn === undefined) {
         return <AuthFail {...props} />
-    
+
     } else if (conn && chats !== null && _.isEmpty(chats)) {
         return <CreateChat />
     }
 
     return (
-        <div 
+        <div
             className='ce-chat-feed'
             style={{ height: '100%', maxHeight: '100vh', backgroundColor: '#f0f0f0' }}
         >
-            { props.renderChatHeader ?  props.renderChatHeader(chat) : <ChatHeader /> }
+            {props.renderChatHeader ? props.renderChatHeader(chat) : <ChatHeader />}
 
             <div
                 id='ce-feed-container'
-                style={styles.feedContainer} 
+                style={styles.feedContainer}
                 className='ce-chat-feed-container'
             >
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
@@ -152,22 +149,22 @@ const ChatFeed = props => {
                     <RenderTrigger onEnter={() => setLoadMoreMessages(true)} />
                 }
 
-                { needsIceBreaker && props.renderIceBreaker && props.renderIceBreaker(chat) }
+                {needsIceBreaker && props.renderIceBreaker && props.renderIceBreaker(chat)}
 
-                { needsIceBreaker && !props.renderIceBreaker && <IceBreaker /> }
+                {needsIceBreaker && !props.renderIceBreaker && <IceBreaker />}
 
                 <Messages {...props} />
 
                 <SendingMessages {...props} />
 
-                { props.renderIsTyping ? props.renderIsTyping(typers) : <IsTyping /> }
+                {props.renderIsTyping ? props.renderIsTyping(typers) : <IsTyping />}
 
-                { props.renderConnectionBar ? props.renderConnectionBar(chat) : <ConnectionBar /> }
+                {props.renderConnectionBar ? props.renderConnectionBar(chat) : <ConnectionBar />}
 
                 <div style={{ height: '86px' }} className='ce-feed-container-bottom' />
             </div>
 
-            { props.renderNewMessageForm ? props.renderNewMessageForm(props, currentChat) : <NewMessageForm /> }
+            {props.renderNewMessageForm ? props.renderNewMessageForm(props, currentChat) : <NewMessageForm />}
         </div>
     )
 }
@@ -175,7 +172,7 @@ const ChatFeed = props => {
 export default ChatFeed
 
 const styles = {
-    feedContainer: { 
+    feedContainer: {
         width: '100%',
         height: '100%',
         maxHeight: '100vh',
