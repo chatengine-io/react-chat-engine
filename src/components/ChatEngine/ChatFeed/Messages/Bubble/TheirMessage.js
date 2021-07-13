@@ -25,12 +25,12 @@ const TheirMessage = props => {
     function renderReads() {
         const { chat, message } = props
 
-        if(!chat) { return <div /> }
+        if (!chat) { return <div /> }
 
         return chat.people.map((person, index) => {
             if (message.id === person.last_read) {
                 return (
-                    <Dot 
+                    <Dot
                         key={`read_${index}`}
                         avatar={person.person.avatar}
                         username={person.person.username}
@@ -45,13 +45,13 @@ const TheirMessage = props => {
     function renderImages() {
         const { message } = props
         const attachments = message && message.attachments ? message.attachments : []
-        
+
         return attachments.map((attachment, index) => {
             const fileName = getFileName(attachment.file)
-            if(isImage(fileName)) {
+            if (isImage(fileName)) {
                 return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
-            } else { 
-                return <div key={`attachment${index}`} /> 
+            } else {
+                return <div key={`attachment${index}`} />
             }
         })
     }
@@ -59,12 +59,12 @@ const TheirMessage = props => {
     function renderFiles() {
         const { message } = props
         const attachments = message && message.attachments ? message.attachments : []
-        
+
         return attachments.map((attachment, index) => {
             const fileName = getFileName(attachment.file)
-            if(!isImage(fileName)) {
+            if (!isImage(fileName)) {
                 return <FileView attachment={attachment} key={`attachment_${index}`} />
-            } else { 
+            } else {
                 return <div key={`attachment${index}`} />
             }
         })
@@ -83,17 +83,17 @@ const TheirMessage = props => {
     const paddingBottom = !nextMessage || nextMessage.sender_username !== message.sender_username ? '12px' : '2px'
 
     return (
-        <div 
+        <div
             style={{ width: '100%', paddingBottom }}
             className='ce-message-row ce-their-message'
         >
             {
                 (!lastMessage || lastMessage.sender_username !== message.sender_username) &&
                 <div style={styles.nameText} className='ce-their-message-sender'>
-                    { message.sender_username }
+                    {message.sender_username}
                 </div>
             }
-        
+
             <Row style={{ paddingLeft: '2px' }} className='ce-their-message-row'>
                 <Col xs={12} sm={12} md={12}>
                     <div style={{ height: '0px' }} className='ce-their-message-avatar'>
@@ -107,18 +107,18 @@ const TheirMessage = props => {
                         }
                     </div>
 
-                    <div 
+                    <div
                         style={{ display: 'auto', paddingLeft: '50px' }}
                         className='ce-their-message-attachments-container ce-their-message-images-container'
                     >
-                        { renderImages() }
+                        {renderImages()}
                     </div>
 
-                    <div 
+                    <div
                         style={{ display: 'auto', paddingLeft: '50px' }}
                         className='ce-their-message-attachments-container ce-their-message-files-container'
                     >
-                        { renderFiles() }
+                        {renderFiles()}
                     </div>
 
                     {
@@ -132,24 +132,24 @@ const TheirMessage = props => {
                             >
                                 <Body text={message.text} />
                             </div>
-                        </div>  
+                        </div>
                     }
 
                     {
                         hovered &&
-                        <span style={{ position: 'relative', top: '11px', left: '8px', fontSize: '14px', color: 'rgba(0, 0, 0, 0.4)' }}>
-                            { formatTime(getDateTime(message.created, conn !== null && conn.offset)) }
+                        <span style={{ position: 'relative', top: 'calc(50% - 12px)', left: '8px', fontSize: '14px', color: 'rgba(0, 0, 0, 0.4)' }}>
+                            {formatTime(getDateTime(message.created, conn !== null && conn.offset))}
                         </span>
                     }
                 </Col>
 
                 {/* Col is 9 to not slipp into RHS */}
-                <Col 
-                    xs={9} 
-                    style={{ marginLeft: '48px' }} 
+                <Col
+                    xs={9}
+                    style={{ marginLeft: '48px' }}
                     className='ce-reads-row ce-their-reads-row'
                 >
-                    { renderReads() }
+                    {renderReads()}
                 </Col>
             </Row>
         </div>
@@ -161,19 +161,19 @@ export default TheirMessage
 const styles = {
     theirMessage: {
         cursor: 'pointer',
-        color: 'black', 
+        color: 'black',
         float: 'left',
         padding: '12px',
         fontSize: '15px',
         whiteSpace: 'pre-line',
-        backgroundColor: '#f1f0f0', 
+        backgroundColor: '#f1f0f0',
         overflowWrap: 'anywhere',
         maxWidth: 'calc(100% - 100px)',
     },
-    nameText: { 
-        paddingLeft: '62px', 
-        paddingBottom: '2px', 
-        color: 'rgba(0, 0, 0, .40)', 
-        fontSize: '15px' 
+    nameText: {
+        paddingLeft: '62px',
+        paddingBottom: '2px',
+        color: 'rgba(0, 0, 0, .40)',
+        fontSize: '15px'
     }
 }

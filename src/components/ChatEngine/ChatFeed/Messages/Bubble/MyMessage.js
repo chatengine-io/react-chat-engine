@@ -23,16 +23,16 @@ const Message = props => {
     function renderReads() {
         const { chat, message } = props
 
-        if(!chat) { return <div /> }
+        if (!chat) { return <div /> }
 
         return chat.people.map((chatPerson, index) => {
             if (message.id === chatPerson.last_read) {
                 return (
-                    <Dot 
+                    <Dot
                         key={`read_${index}`}
                         avatar={chatPerson.person.avatar}
                         username={chatPerson.person.username}
-                        style={{ float: 'right', marginLeft: '4px' }} 
+                        style={{ float: 'right', marginLeft: '4px' }}
                     />
                 )
             }
@@ -43,13 +43,13 @@ const Message = props => {
     function renderImages() {
         const { message } = props
         const attachments = message && message.attachments ? message.attachments : []
-        
+
         return attachments.map((attachment, index) => {
             const fileName = getFileName(attachment.file)
-            if(isImage(fileName)) {
+            if (isImage(fileName)) {
                 return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
-            } else { 
-                return <div key={`attachment${index}`} /> 
+            } else {
+                return <div key={`attachment${index}`} />
             }
         })
     }
@@ -57,12 +57,12 @@ const Message = props => {
     function renderFiles() {
         const { message } = props
         const attachments = message && message.attachments ? message.attachments : []
-        
+
         return attachments.map((attachment, index) => {
             const fileName = getFileName(attachment.file)
-            if(!isImage(fileName)) {
+            if (!isImage(fileName)) {
                 return <FileView attachment={attachment} key={`attachment_${index}`} />
-            } else { 
+            } else {
                 return <div key={`attachment${index}`} />
             }
         })
@@ -81,55 +81,53 @@ const Message = props => {
     const paddingBottom = !nextMessage || nextMessage.sender_username !== message.sender_username ? '12px' : '2px'
 
     return (
-        <div 
+        <div
             className='ce-message-row ce-my-message'
             style={{ width: '100%', textAlign: 'right', paddingBottom }}
         >
-            <div 
-                style={{ display: 'auto' }} 
+            <div
+                style={{ display: 'auto' }}
                 className='ce-my-message-attachments-container ce-my-message-images-container'
             >
-                { renderImages() }
+                {renderImages()}
             </div>
 
-            <div 
-                style={{ display: 'auto' }} 
+            <div
+                style={{ display: 'auto' }}
                 className='ce-my-message-attachments-container ce-my-message-files-container'
             >
-                { renderFiles() }
+                {renderFiles()}
             </div>
 
             <Row
-                style={{ paddingRight: '2px' }} 
+                style={{ paddingRight: '2px' }}
                 className='ce-message-bubble-row ce-my-message-bubble-row'
             >
                 <Col xs={12} sm={12} md={12}>
-                    <div>
-                        {
-                            hovered &&
-                            <span style={{ position: 'relative', top: '11px', right: '8px', fontSize: '14px', color: 'rgb(24, 144, 255)' }}>
-                                { formatTime(getDateTime(message.created, conn !== null && conn.offset)) }
-                            </span>
-                        }
-                        
-                        {
-                            !attachments || message.text && 
-                            <div
-                                className='ce-message-bubble ce-my-message-bubble'
-                                style={{ ...styles.myMessage, ...{ borderRadius } }}
-                                onMouseEnter={() => setHovered(true)}
-                                onMouseLeave={() => setHovered(false)}
-                            >
-                                <Body myMessage={true} text={message.text} />
-                            </div>
-                        }
-                    </div>
+                    {
+                        hovered &&
+                        <span style={{ position: 'relative', top: 'calc(50% - 12px)', right: '8px', fontSize: '14px', color: 'rgb(24, 144, 255)' }}>
+                            {formatTime(getDateTime(message.created, conn !== null && conn.offset))}
+                        </span>
+                    }
+
+                    {
+                        !attachments || message.text &&
+                        <div
+                            className='ce-message-bubble ce-my-message-bubble'
+                            style={{ ...styles.myMessage, ...{ borderRadius } }}
+                            onMouseEnter={() => setHovered(true)}
+                            onMouseLeave={() => setHovered(false)}
+                        >
+                            <Body myMessage={true} text={message.text} />
+                        </div>
+                    }
                 </Col>
 
                 <Col xs={1} sm={2} md={3} />
 
                 <Col xs={12} className='ce-reads-row ce-my-reads-row'>
-                    { renderReads() }
+                    {renderReads()}
                 </Col>
             </Row>
         </div>
@@ -140,13 +138,13 @@ export default Message
 
 const styles = {
     myMessage: {
-        color: 'white', 
+        color: 'white',
         cursor: 'pointer',
         float: 'right', textAlign: 'left', // Stay right but render text
         padding: '12px',
         fontSize: '15px',
         whiteSpace: 'pre-line',
-        backgroundColor: 'rgb(24, 144, 255)', 
+        backgroundColor: 'rgb(24, 144, 255)',
         overflowWrap: 'anywhere',
         maxWidth: 'calc(100% - 100px)'
     }

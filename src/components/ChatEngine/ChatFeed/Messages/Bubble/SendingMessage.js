@@ -14,19 +14,19 @@ setConfiguration({ maxScreenClass: 'xl' })
 const SendingMessage = props => {
     function renderImages(attachments) {
         return attachments.map((attachment, index) => {
-            if(isImage(attachment.name)) {
+            if (isImage(attachment.name)) {
                 return <Thumbnail key={`attachment_${index}`} />
-            } else { 
-                return <div key={`attachment${index}`} /> 
+            } else {
+                return <div key={`attachment${index}`} />
             }
         })
     }
 
     function renderFiles(attachments) {
         return attachments.map((attachment, index) => {
-            if(!isImage(attachment.name)) {
+            if (!isImage(attachment.name)) {
                 return <FileView key={`attachment_${index}`} />
-            } else { 
+            } else {
                 return <div key={`attachment${index}`} />
             }
         })
@@ -45,31 +45,29 @@ const SendingMessage = props => {
     const paddingBottom = !nextMessage || nextMessage.sender_username !== message.sender_username ? '12px' : '2px'
 
     return (
-        <div 
+        <div
             className='ce-message-row ce-my-message ce-my-message-sending'
             style={{ width: '100%', textAlign: 'right', paddingBottom }}
         >
-            <div 
-                style={{ display: 'auto' }} 
+            <div
+                style={{ display: 'auto' }}
                 className='ce-my-message-attachments-container ce-my-message-images-container'
             >
-                { renderImages(attachments) }
+                {renderImages(attachments)}
             </div>
-            
-            <div 
-                style={{ display: 'auto' }} 
+
+            <div
+                style={{ display: 'auto' }}
                 className='ce-my-message-attachments-container ce-my-message-files-container'
             >
-                { renderFiles(attachments) }
+                {renderFiles(attachments)}
             </div>
 
             <Row
-                style={{ paddingRight: '2px' }} 
+                style={{ paddingRight: '2px' }}
                 className='ce-message-bubble-row ce-my-message-bubble-row ce-my-message-sending-row'
             >
-                <Col xs={1} sm={2} md={3} />
-
-                <Col xs={11} sm={10} md={9}>
+                <Col xs={12} sm={12} md={12}>
                     {
                         message.text &&
                         <div
@@ -80,7 +78,7 @@ const SendingMessage = props => {
                         </div>
                     }
                 </Col>
-                
+
                 <Col xs={1} sm={2} md={3} />
             </Row>
         </div>
@@ -91,13 +89,14 @@ export default SendingMessage
 
 const styles = {
     myMessage: {
-        color: 'white', 
+        color: 'white',
         cursor: 'pointer',
         float: 'right', textAlign: 'left', // Stay right but render text
         padding: '12px',
         fontSize: '15px',
         whiteSpace: 'pre-line',
-        backgroundColor: '#40a9ff', 
-        overflowWrap: 'anywhere'
+        backgroundColor: '#40a9ff',
+        overflowWrap: 'anywhere',
+        maxWidth: 'calc(100% - 100px)',
     }
 }
