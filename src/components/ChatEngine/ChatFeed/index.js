@@ -177,7 +177,7 @@ const ChatFeed = props => {
 
                 {props.renderConnectionBar ? props.renderConnectionBar(chat) : <ConnectionBar />}
 
-                {props.renderScrollDownBar ? props.renderScrollDownBar(conn.userName, chat) : <ScrollDownBar userName={conn.userName} chat={chat} />}
+                {props.renderScrollDownBar ? props.renderScrollDownBar(chat) : <ScrollDownBar chat={chat} />}
 
                 <div style={{ height: '86px' }} className='ce-feed-container-bottom' />
             </div>

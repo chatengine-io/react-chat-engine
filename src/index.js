@@ -24,6 +24,7 @@ import IceBreaker from './components/ChatEngine/ChatFeed/Steps/IceBreaker'
 import MessageBubble from './components/ChatEngine/ChatFeed/Messages/Bubble'
 import IsTyping from './components/ChatEngine/ChatFeed/IsTyping'
 import ConnectionBar from './components/ChatEngine/ChatFeed/ConnectionBar'
+import ScrollDownBar from './components/ChatEngine/ChatFeed/ScrollDownBar'
 import NewMessageForm from './components/ChatEngine/ChatFeed/NewMessageForm'
 
 import ChatSettings from './components/ChatEngine/ChatSettings'
@@ -35,20 +36,20 @@ import OptionsSettings from './components/ChatEngine/ChatSettings/OptionsSetting
 export {
   ChatEngineWrapper, ChatEngineContext,
 
-  ChatEngine, 
-  
+  ChatEngine,
+
   Socket, ChatSocket,
 
   Avatar, Dot,
   Button,
   TextInput, AutoCompleteInput,
-  
+
   getChats, newChat, getLatestChats, getChatsBefore, getOrCreateChat, getChat, editChat, deleteChat,
   addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat,
   getMessages, getLatestMessages, sendMessage, getMessage, editMessage, readMessage, deleteMessage,
   isTyping,
 
   ChatList, ChatCard, NewChatForm,
-  ChatFeed, ChatHeader, IceBreaker, MessageBubble, IsTyping, ConnectionBar, NewMessageForm,
+  ChatFeed, ChatHeader, IceBreaker, MessageBubble, IsTyping, ConnectionBar, ScrollDownBar, NewMessageForm,
   ChatSettings, ChatSettingsTop, PeopleSettings, PhotosSettings, OptionsSettings,
 }

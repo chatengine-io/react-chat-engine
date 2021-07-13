@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 
 import _ from 'lodash'
 
-import { 
-    ChatEngine, 
+import {
+    ChatEngine,
     ChatEngineContext,
     ChatList,
     ChatCard,
@@ -16,6 +16,7 @@ import {
     IsTyping,
     NewMessageForm,
     ConnectionBar,
+    ScrollDownBar,
     ChatSettings,
     ChatSettingsTop,
     PeopleSettings,
@@ -36,16 +37,16 @@ const ChatEngineApp = props => {
     }, [chats, messages, props, setActiveChat, hasSetLink, setLink])
 
     return (
-        <ChatEngine 
-            {...props.accounts} 
-            height={props.height} 
+        <ChatEngine
+            {...props.accounts}
+            height={props.height}
             offset={-7}
-            projectID={props.projectID} 
-            development={props.development} 
+            projectID={props.projectID}
+            development={props.development}
             // You want the extra args for outside components
             renderChatList={(chatAppState) => <ChatList {...chatAppState} />}
             renderChatCard={(chat, index) => <ChatCard key={`card_${index}`} chat={chat} />}
-            renderNewChatForm={(creds) => <NewChatForm creds={creds} />} 
+            renderNewChatForm={(creds) => <NewChatForm creds={creds} />}
             renderChatFeed={(chatAppState) => <ChatFeed {...chatAppState} />}
             renderChatHeader={(chat) => <ChatHeader />}
             renderIceBreaker={(chat) => <IceBreaker />}
@@ -53,6 +54,7 @@ const ChatEngineApp = props => {
             renderSendingMessage={(creds, chat, lastMessage, message, nextMessage) => <MessageBubble sending={true} lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
             renderIsTyping={(typers) => <IsTyping />}
             renderConnectionBar={(chat) => <ConnectionBar />}
+            renderScrollDownBar={(chat, userName, isBottomVisible) => <ScrollDownBar chat={chat} userName={userName} />}
             renderNewMessageForm={(creds, chatID) => <NewMessageForm />}
             renderChatSettings={(chatAppState) => <ChatSettings {...chatAppState} />}
             renderChatSettingsTop={(creds, chat) => <ChatSettingsTop />}
@@ -63,7 +65,7 @@ const ChatEngineApp = props => {
     )
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return { accounts: state.accounts }
 }
 

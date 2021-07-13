@@ -8,11 +8,13 @@ import { animateScroll } from "react-scroll"
 
 const ScrollDownBar = (props) => {
     const { conn, isBottomVisible } = useContext(ChatEngineContext)
-    const { userName, chat } = props
+    const { chat } = props
+
+    if (conn === null) return <div />
 
     let lastReadMessage = undefined
     chat.people.map(person => {
-        if (person.person.username === userName) {
+        if (person.person.username === conn.userName) {
             lastReadMessage = person.last_read
         }
     })
@@ -21,7 +23,7 @@ const ScrollDownBar = (props) => {
         isBottomVisible ||
         chat.last_message.id === undefined ||
         chat.last_message.id === lastReadMessage
-    ) return <div />
+    ) { return <div /> }
 
     return (
         <div
