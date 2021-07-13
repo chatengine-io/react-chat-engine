@@ -12,8 +12,8 @@ let pingIntervalID = 0;
 let timeIntervalID = 0;
 
 const pingInterval = 4000;
-const minSocketLag = 15*1000;
-const reconnect = Date.now() + 10*1000;
+const minSocketLag = 15 * 1000;
+const reconnect = Date.now() + 10 * 1000;
 
 const Socket = props => {
     const didMountRef = useRef(false)
@@ -21,15 +21,16 @@ const Socket = props => {
 
     const [now, setNow] = useState(Date.now())
     const [shouldPongBy, setShouldPongBy] = useState(Date.now() + minSocketLag)
-    
+
     const {
-      connecting, setConnecting,
-      conn, setConn, setCreds,
-      chats, setChats,
-      messages, setMessages,
-      sendingMessages, setSendingMessages,
-      activeChat, setActiveChat,
-      typingCounter, setTypingCounter,
+        connecting, setConnecting,
+        conn, setConn, setCreds,
+        chats, setChats,
+        messages, setMessages,
+        sendingMessages, setSendingMessages,
+        activeChat, setActiveChat,
+        typingCounter, setTypingCounter,
+        isBottomVisible
     } = useContext(ChatEngineContext)
 
     useEffect(() => {
@@ -38,11 +39,11 @@ const Socket = props => {
             didMountRef.current = true
             // console.log('Socket Mounted')
             getOrCreateSession(
-                props, 
+                props,
                 data => setSessionToken(data.token)
             )
-        
-        // Re-render the Socket (i.e. reconnect)
+
+            // Re-render the Socket (i.e. reconnect)
         } else if (connecting) { props.reRender && props.reRender() }
     }, [connecting])
 
@@ -61,10 +62,10 @@ const Socket = props => {
     }, [])
 
     function sortChats(chats) {
-        return Object.values(chats).sort((a, b) => { 
+        return Object.values(chats).sort((a, b) => {
             const aDate = a.last_message.created ? getDateTime(a.last_message.created, props.offset) : getDateTime(a.created, props.offset)
             const bDate = b.last_message.created ? getDateTime(b.last_message.created, props.offset) : getDateTime(b.created, props.offset)
-            return new Date(bDate) - new Date(aDate); 
+            return new Date(bDate) - new Date(aDate);
         })
     }
 
@@ -72,7 +73,7 @@ const Socket = props => {
 
     function onEditChat(chat) {
         if (chats) {
-            const newChats = {...chats}
+            const newChats = { ...chats }
             newChats[chat.id] = chat
             setChats(newChats)
         }
@@ -82,11 +83,11 @@ const Socket = props => {
 
     function onConnect(conn) {
         // console.log('Connected')
-        setConn(conn) 
+        setConn(conn)
         setCreds(conn)
         setConnecting(false)
 
-        if (connecting) { 
+        if (connecting) {
             pingIntervalID = setInterval(() => {
                 try {
                     socketRef.sendMessage(JSON.stringify('ping'))
@@ -94,7 +95,7 @@ const Socket = props => {
                     console.log('Socker error', e)
                 }
             }, pingInterval)
-            
+
             timeIntervalID = setInterval(() => setNow(Date.now()), 1000)
         }
 
@@ -105,11 +106,11 @@ const Socket = props => {
             getLatestMessages(
                 conn, activeChat, 45,
                 (id, list) => {
-                    setMessages({...messages, ..._.mapKeys(list, 'id')})
+                    setMessages({ ...messages, ..._.mapKeys(list, 'id') })
                 }
             )
         }
-        
+
         props.onConnect && props.onConnect(conn)
     }
 
@@ -135,9 +136,9 @@ const Socket = props => {
 
         } else if (eventJSON.action === 'new_chat') {
             const chat = eventJSON.data
-            
+
             if (chats) {
-                const newChats = {...chats}
+                const newChats = { ...chats }
                 newChats[chat.id] = chat
                 setChats(newChats)
                 setActiveChat(chat.id)
@@ -147,15 +148,15 @@ const Socket = props => {
 
         } else if (eventJSON.action === 'edit_chat') {
             onEditChat(eventJSON.data)
-            
+
         } else if (eventJSON.action === 'delete_chat') {
-            const chat = eventJSON.data 
+            const chat = eventJSON.data
 
             if (chats) {
                 chats[chat.id] = undefined
-                
+
                 setChats(chats)
-          
+
                 if (!_.isEmpty(chats)) {
                     const sortedChats = sortChats(chats)
                     setActiveChat(sortedChats[0] ? parseInt(sortedChats[0].id) : 0)
@@ -166,7 +167,7 @@ const Socket = props => {
 
         } else if (eventJSON.action === 'add_person') {
             onEditChat(eventJSON.data)
-            
+
             props.onAddPerson && props.onAddPerson(eventJSON.data)
 
         } else if (eventJSON.action === 'remove_person') {
@@ -181,14 +182,14 @@ const Socket = props => {
                 sendingMessages[JSON.parse(message.custom_json).sender_id] = undefined
                 setSendingMessages(sendingMessages)
             }
-        
+
             if (id === activeChat) {
-                const newMessages = {...messages}
+                const newMessages = { ...messages }
                 newMessages[message.id] = message
                 setMessages(newMessages)
             }
-          
-            if (message.sender_username !== props.userName) {
+
+            if (message.sender_username !== props.userName && isBottomVisible) {
                 readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
             }
 
@@ -196,7 +197,7 @@ const Socket = props => {
 
         } else if (eventJSON.action === 'edit_message') {
             const { id, message } = eventJSON.data
-            
+
             if (id === activeChat) {
                 messages[message.id] = message
                 setMessages(messages)
@@ -213,10 +214,10 @@ const Socket = props => {
             }
 
             props.onDeleteMessage && props.onDeleteMessage(id, message)
-        
+
         } else if (eventJSON.action === 'is_typing') {
             const { id, person } = eventJSON.data
-            let newTypingCounter = {...typingCounter}
+            let newTypingCounter = { ...typingCounter }
             newTypingCounter = {
                 ...newTypingCounter,
                 [id]: {
@@ -224,25 +225,25 @@ const Socket = props => {
                     [person]: Date.now()
                 }
             }
-                
+
             setTypingCounter(newTypingCounter)
-                
+
             props.onTyping && props.onTyping(id, person)
         }
     }
 
-    function onClose() { 
+    function onClose() {
         // console.log('Socket close')
-        setConnecting(true) 
+        setConnecting(true)
     }
 
-    const { development } = props 
+    const { development } = props
     const wsStart = development ? 'ws://' : 'wss://'
     const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
 
     if (sessionToken === '') return <div />
 
-    return <WebSocket 
+    return <WebSocket
         reconnect={true}
         childRef={ref => socketRef = ref}
         url={`${wsStart}${rootHost}/person_v3/?session_token=${sessionToken}`}

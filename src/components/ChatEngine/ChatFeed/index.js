@@ -12,6 +12,7 @@ import SendingMessages from './SendingMessages'
 import IsTyping from './IsTyping'
 import NewMessageForm from './NewMessageForm'
 import ConnectionBar from './ConnectionBar'
+import ScrollDownBar from './ScrollDownBar'
 
 import _ from 'lodash'
 
@@ -38,6 +39,8 @@ const ChatFeed = props => {
     } = useContext(ChatEngineContext)
 
     const typers = typingCounter && typingCounter[activeChat] ? typingCounter[activeChat] : []
+    const chat = chats && chats[currentChat]
+    const needsIceBreaker = hasFetchedMessages && _.isEmpty(messages)
 
     function onReadMessage(chat) {
         if (chats) {
@@ -103,6 +106,16 @@ const ChatFeed = props => {
     useEffect(() => { loadMessages(false) }, [conn, activeChat, currentChat])
     useEffect(() => { loadMessages(loadMoreMessages) }, [loadMoreMessages])
 
+    function getMyLastMessage(userName, chat) {
+        let lastReadMessage = undefined
+        chat.people.map(person => {
+            if (person.person.username === userName) {
+                lastReadMessage = person.last_read
+            }
+        })
+        return lastReadMessage
+    }
+
     useEffect(() => {
         if (!didMountRef.current) {
             didMountRef.current = true
@@ -115,19 +128,22 @@ const ChatFeed = props => {
                     duration,
                     containerId: "ce-feed-container"
                 })
+
+                if (getMyLastMessage(conn.userName, chat) && getMyLastMessage(conn.userName, chat) !== chat.last_message.id) {
+                    readMessage(conn, currentChat, chat.last_message.id, (chat) => onReadMessage(chat))
+                }
             }
         }
     }, [sendingMessages, messages, isBottomVisible])
-
-
-    const chat = chats && chats[currentChat]
-    const needsIceBreaker = hasFetchedMessages && _.isEmpty(messages)
 
     if (conn === undefined) {
         return <AuthFail {...props} />
 
     } else if (conn && chats !== null && _.isEmpty(chats)) {
         return <CreateChat />
+
+    } else if (conn === null || !chat || chat === null) {
+        return <div />
     }
 
     return (
@@ -160,6 +176,8 @@ const ChatFeed = props => {
                 {props.renderIsTyping ? props.renderIsTyping(typers) : <IsTyping />}
 
                 {props.renderConnectionBar ? props.renderConnectionBar(chat) : <ConnectionBar />}
+
+                {props.renderScrollDownBar ? props.renderScrollDownBar(conn.userName, chat) : <ScrollDownBar userName={conn.userName} chat={chat} />}
 
                 <div style={{ height: '86px' }} className='ce-feed-container-bottom' />
             </div>
