@@ -7,7 +7,7 @@ import { CaretDownOutlined } from '@ant-design/icons'
 import { animateScroll } from "react-scroll"
 
 const ScrollDownBar = (props) => {
-    const { isBottomVisible } = useContext(ChatEngineContext)
+    const { conn, isBottomVisible } = useContext(ChatEngineContext)
     const { userName, chat } = props
 
     let lastReadMessage = undefined
@@ -40,7 +40,8 @@ const ScrollDownBar = (props) => {
             id='ce-scroll-down-bar'
             onClick={() => animateScroll.scrollToBottom({ duration: 333, containerId: "ce-feed-container" })}
         >
-            <CaretDownOutlined />{' '}Unread Messages
+            <CaretDownOutlined />
+            {conn.userName ? ' Unread Messages' : ' Scroll to Bottom'}
         </div>
     )
 }
