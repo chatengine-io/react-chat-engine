@@ -10,7 +10,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install & Build
+      - name: Install & Build Src
+        run: |
+          yarn install && yarn build
+      - name: Install & Build Example
         run: |
           cd example && yarn install && yarn build
       - name: Deploy to S3
