@@ -13,6 +13,9 @@ jobs:
       - name: Install & Build Src
         run: |
           yarn install && yarn build
+      - name: Create consts.js
+        run: |
+          echo "export const DEVELOPMENT = false; export const ROOT_URL = 'https://api.chatengine.io/'; export const PROJECT_ID = '8a1f9edb-a05a-4b55-9d6e-ec399a38f5a9'; export const USER_NAME = ''; export const USER_SECRET = ''; export const CHAT_ID = 0; export const CHAT_ACCESS_KEY = '123';" > example/src/consts.js   
       - name: Install & Build Example
         run: |
           cd example && yarn install && yarn build

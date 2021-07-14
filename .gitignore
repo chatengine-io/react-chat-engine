@@ -24,4 +24,4 @@ yarn-error.log*
 *.log
 tests_output
 
-example/src/consts/*
+example/src/consts.js
