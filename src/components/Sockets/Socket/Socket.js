@@ -189,7 +189,7 @@ const Socket = props => {
                 setSendingMessages(sendingMessages)
             }
 
-            if (id === activeChat) {
+            if (parseInt(id) === parseInt(activeChat)) {
                 const newMessages = { ...messages }
                 newMessages[message.id] = message
                 setMessages(newMessages)
