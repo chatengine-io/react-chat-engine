@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
+
+import { ChatEngineContext } from 'react-chat-engine'
 
 import { isImage } from './file'
 
@@ -11,7 +13,25 @@ import { Row, Col, setConfiguration } from 'react-grid-system'
 
 setConfiguration({ maxScreenClass: 'xl' })
 
+let reconnectID = 0;
+
 const SendingMessage = props => {
+    const didMountRef = useRef(false)
+    const { setConnecting } = useContext(ChatEngineContext)
+
+    // Reconnect if sending for 5 seconds
+    useEffect(() => {
+        if (!didMountRef.current) {
+            didMountRef.current = true
+            reconnectID = setTimeout(() => {
+                setConnecting(true)
+            }, 5000)
+        }
+        return () => {
+            clearInterval(reconnectID);
+        }
+    }, [])
+
     function renderImages(attachments) {
         return attachments.map((attachment, index) => {
             if (isImage(attachment.name)) {
