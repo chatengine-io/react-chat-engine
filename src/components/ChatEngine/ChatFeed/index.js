@@ -124,10 +124,12 @@ const ChatFeed = props => {
         } else {
             // Scroll on new incoming messages
             if (isBottomVisible && !_.isEmpty(messages)) {
-                animateScroll.scrollToBottom({
-                    duration,
-                    containerId: "ce-feed-container"
-                })
+                setTimeout(() => { // Slight lag for load latest messages to scroll immediately
+                    animateScroll.scrollToBottom({
+                        duration,
+                        containerId: "ce-feed-container"
+                    })
+                }, 333)
 
                 if (getMyLastMessage(conn.userName, chat) && getMyLastMessage(conn.userName, chat) !== chat.last_message.id) {
                     readMessage(conn, currentChat, chat.last_message.id, (chat) => onReadMessage(chat))
@@ -160,10 +162,7 @@ const ChatFeed = props => {
             >
                 <div style={{ height: '88px' }} className='ce-feed-container-top' />
 
-                {
-                    Object.keys(messages).length > 0 &&
-                    <RenderTrigger onEnter={() => setLoadMoreMessages(true)} />
-                }
+                {Object.keys(messages).length > 0 && <RenderTrigger onEnter={() => setLoadMoreMessages(true)} />}
 
                 {needsIceBreaker && props.renderIceBreaker && props.renderIceBreaker(chat)}
 
