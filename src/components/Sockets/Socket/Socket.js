@@ -33,15 +33,20 @@ const Socket = props => {
         isBottomVisible
     } = useContext(ChatEngineContext)
 
+    function getSession() {
+        getOrCreateSession(
+            props,
+            data => setSessionToken(data.token),
+            () => setTimeout(() => getSession(), 3000) // Try again on error
+        )
+    }
+
     useEffect(() => {
         // Get a session token to connect
         if (!didMountRef.current) {
             didMountRef.current = true
             // console.log('Socket Mounted')
-            getOrCreateSession(
-                props,
-                data => setSessionToken(data.token)
-            )
+            getSession()
 
             // Re-render the Socket (i.e. reconnect)
         } else if (connecting) { props.reRender && props.reRender() }
@@ -49,11 +54,12 @@ const Socket = props => {
 
     useEffect(() => {
         if (shouldPongBy < now) {
-            // console.log("Reconnecting socket", shouldPongBy, now)
             setConnecting(true)
             setShouldPongBy(Date.now() + minSocketLag)
         }
+    }, [now, shouldPongBy])
 
+    useEffect(() => {
         return () => {
             // console.log('Unmounting')
             clearInterval(pingIntervalID)
