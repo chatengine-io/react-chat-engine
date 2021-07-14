@@ -12,7 +12,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { Row, Col } from 'react-grid-system'
 
 import { setConfiguration } from 'react-grid-system';
- 
+
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
 const ChatHeader = () => {
@@ -22,50 +22,48 @@ const ChatHeader = () => {
     const otherPerson = chat && conn && chat.people.find(person => person.person.username !== conn.userName)
     const title = chat ? (chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title) : undefined
 
-    if (conn === null) return <div/>
-    
     var text = 'Say hello!'
     if (!chat) {
         text = 'Loading...'
     } else if (chat.last_message.created && chat.last_message.created.length > 0) {
-        const dateTime = getDateTime(chat.last_message.created, conn.offset)
+        const dateTime = getDateTime(chat.last_message.created, conn ? conn.offset : undefined)
         text = `Active ${formatDateTime(dateTime)}`
     }
 
     return (
-        <Row 
+        <Row
             className='ce-chat-title'
             style={styles.titleSection}
         >
-            <Col 
-                xs={2} 
-                sm={0} 
+            <Col
+                xs={2}
+                sm={0}
                 style={{ ...styles.mobileOptiom, ...{ left: '6px' } }}
                 className='ce-chat-list-mobile-option'
             >
                 <ChatListDrawer />
             </Col>
 
-            <Col 
+            <Col
                 xs={8}
                 sm={12}
-                style={styles.titleContainer} 
+                style={styles.titleContainer}
                 className='ce-chat-title-container'
             >
-                <div 
-                    style={styles.titleText} 
-                    className='ce-chat-title-text' 
+                <div
+                    style={styles.titleText}
+                    className='ce-chat-title-text'
                     id={`ce-chat-feed-title-${title}`}
                 >
-                    { title ? title : <LoadingOutlined /> }
+                    {title ? title : <LoadingOutlined />}
                 </div>
-                
+
                 <div style={styles.subtitleText} className='ce-chat-subtitle-text'>{text}</div>
             </Col>
 
-            <Col 
-                xs={2} 
-                sm={0} 
+            <Col
+                xs={2}
+                sm={0}
                 style={{ ...styles.mobileOptiom, ...{ right: '6px' } }}
                 className='ce-chat-settings-mobile-option'
             >
@@ -78,7 +76,7 @@ const ChatHeader = () => {
 export default ChatHeader
 
 const styles = {
-    titleSection: { 
+    titleSection: {
         position: 'absolute',
         top: '0px',
         width: '100%',

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
 import { ChatEngineContext, getLatestMessages, readMessage } from 'react-chat-engine'
 
@@ -23,8 +23,6 @@ let count = initial
 const interval = 33
 
 const ChatFeed = props => {
-    const didMountRef = useRef(false)
-    const [duration, setDuration] = useState(0)
     const [hasFetchedMessages, setHasFetchedMessages] = useState(false)
     const [currentChat, setCurrentChat] = useState(null)
     const {
@@ -117,23 +115,15 @@ const ChatFeed = props => {
     }
 
     useEffect(() => {
-        if (!didMountRef.current) {
-            didMountRef.current = true
-            setTimeout(() => setDuration(333), 3000) // Start animating scroll post-load
+        // Scroll on new incoming messages
+        if (isBottomVisible && !_.isEmpty(messages)) {
+            animateScroll.scrollToBottom({
+                duration: 333,
+                containerId: "ce-feed-container"
+            })
 
-        } else {
-            // Scroll on new incoming messages
-            if (isBottomVisible && !_.isEmpty(messages)) {
-                setTimeout(() => { // Slight lag for load latest messages to scroll immediately
-                    animateScroll.scrollToBottom({
-                        duration,
-                        containerId: "ce-feed-container"
-                    })
-                }, 333)
-
-                if (getMyLastMessage(conn.userName, chat) && getMyLastMessage(conn.userName, chat) !== chat.last_message.id) {
-                    readMessage(conn, currentChat, chat.last_message.id, (chat) => onReadMessage(chat))
-                }
+            if (getMyLastMessage(conn.userName, chat) && getMyLastMessage(conn.userName, chat) !== chat.last_message.id) {
+                readMessage(conn, currentChat, chat.last_message.id, (chat) => onReadMessage(chat))
             }
         }
     }, [sendingMessages, messages, isBottomVisible])
@@ -144,8 +134,6 @@ const ChatFeed = props => {
     } else if (conn && chats !== null && _.isEmpty(chats)) {
         return <CreateChat />
 
-    } else if (conn === null || !chat || chat === null) {
-        return <div />
     }
 
     return (

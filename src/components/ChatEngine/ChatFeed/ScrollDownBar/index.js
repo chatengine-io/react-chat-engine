@@ -10,7 +10,7 @@ const ScrollDownBar = (props) => {
     const { conn, isBottomVisible } = useContext(ChatEngineContext)
     const { chat } = props
 
-    if (conn === null) return <div />
+    if (conn === null || !chat || chat === null) return <div />
 
     let lastReadMessage = undefined
     chat.people.map(person => {
