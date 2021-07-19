@@ -25,8 +25,8 @@ const SendingMessages = props => {
         if(message && message.chat === activeChat) {
             return <div key={`sending-msg-${index}`}>
                 {
-                    props.renderSendingMessages ?
-                    props.renderSendingMessages(
+                    props.renderSendingMessage ?
+                    props.renderSendingMessage(
                         conn, 
                         chat, 
                         sendingMessages[lastMessageKey], 

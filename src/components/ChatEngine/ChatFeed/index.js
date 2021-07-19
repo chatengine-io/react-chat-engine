@@ -38,7 +38,7 @@ const ChatFeed = props => {
 
     const typers = typingCounter && typingCounter[activeChat] ? typingCounter[activeChat] : []
     const chat = chats && chats[currentChat]
-    const needsIceBreaker = hasFetchedMessages && _.isEmpty(messages)
+    const needsIceBreaker = hasFetchedMessages && _.isEmpty(messages) && _.isEmpty(sendingMessages)
 
     function onReadMessage(chat) {
         if (chats) {
