@@ -5,7 +5,7 @@ import { getHeaders } from '../auth'
 
 export function getMyData(props, callback) {
     axios.get(
-        `${str.getApiUrl(props)}/chats/me/`,
+        `${str.getApiUrl(props)}/users/me/`,
         { headers: getHeaders(props) }
     )
 
