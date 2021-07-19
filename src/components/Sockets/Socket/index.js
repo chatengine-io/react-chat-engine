@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import SocketChild from './Socket2'
+import SocketChild from './Socket3'
 
 
 const Socket = props => {
