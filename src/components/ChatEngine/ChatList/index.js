@@ -19,42 +19,11 @@ const ChatList = props => {
     const [hasMoreChats, setHasMoreChats] = useState(true)
     const { conn, chats, setChats, setActiveChat } = useContext(ChatEngineContext)
 
-    function renderChats(chats) {
-        return chats.map((chat, index) => {
-            if (!chat) {
-                return <div key={`chat_${index}`} />
-
-            } else if (props.renderChatCard) {
-                return <div key={`chat_${index}`}>{props.renderChatCard(chat, index)}</div>
-                
-            } else {
-                return (
-                    <div 
-                        key={`chat_${index}`}
-                        onClick={() => props.onChatClick && props.onChatClick()}
-                    >
-                        <ChatCard chat={chat} />
-                    </div>
-                )
-            }
-        })
-    }
-
-    function sortChats(chats) {
-        return chats.sort((a, b) => { 
-            const aDate = a.last_message && a.last_message.created ? getDateTime(a.last_message.created, props.offset) : getDateTime(a.created, props.offset)
-            const bDate = b.last_message && b.last_message.created ? getDateTime(b.last_message.created, props.offset) : getDateTime(b.created, props.offset)
-            return new Date(bDate) - new Date(aDate); 
-        })
-    }
-
-    function onGetChats(chatList) {
-        const oldChats = chats !== null ? chats : {}
-        const newChats = _.mapKeys({...chatList}, 'id')
-        const allChats = {...oldChats, ...newChats}
-        setChats(allChats);
-        (count && count > Object.keys(allChats).length) && setHasMoreChats(false);
-    }
+    const chatList = sortChats(
+        chats ? 
+        Object.values(chats) : 
+        [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+    )
 
     useEffect(() => {
         if (!didMountRef.current) {
@@ -76,19 +45,49 @@ const ChatList = props => {
         if (!loadChats) return;
         setLoadChats(false)
 
-        count = count + interval
         const chatList = chats !== null ? sortChats(Object.values(chats)) : []
         if (chatList.length > 0) {
             const before = chatList[chatList.length - 1].created
             getChatsBefore(props, before, interval, (chats) => onGetChats(chats))
         }
-    }, [loadChats, chats])
+    }, [loadChats])
 
-    const chatList = sortChats(
-        chats ? 
-        Object.values(chats) : 
-        [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
-    )
+    function sortChats(chats) {
+        return chats.sort((a, b) => { 
+            const aDate = a.last_message && a.last_message.created ? getDateTime(a.last_message.created, props.offset) : getDateTime(a.created, props.offset)
+            const bDate = b.last_message && b.last_message.created ? getDateTime(b.last_message.created, props.offset) : getDateTime(b.created, props.offset)
+            return new Date(bDate) - new Date(aDate); 
+        })
+    }
+
+    function onGetChats(chatList) {
+        const oldChats = chats !== null ? chats : {}
+        const newChats = _.mapKeys({...chatList}, 'id')
+        const allChats = {...oldChats, ...newChats}
+        setChats(allChats);
+        (count && count > Object.keys(allChats).length) && setHasMoreChats(false);
+    }
+
+    function renderChats(chats) {
+        return chats.map((chat, index) => {
+            if (!chat) {
+                return <div key={`chat_${index}`} />
+
+            } else if (props.renderChatCard) {
+                return <div key={`chat_${index}`}>{props.renderChatCard(chat, index)}</div>
+                
+            } else {
+                return (
+                    <div 
+                        key={`chat_${index}`}
+                        onClick={() => props.onChatClick && props.onChatClick()}
+                    >
+                        <ChatCard chat={chat} />
+                    </div>
+                )
+            }
+        })
+    }
 
     return (
         <div style={styles.chatListContainer} className='ce-chat-list'>
