@@ -18,6 +18,7 @@ import _ from 'lodash'
 
 import { animateScroll } from "react-scroll"
 
+const chatFeedContainerID = 'ce-feed-container'
 const initial = 45
 let count = initial
 const interval = 33
@@ -40,6 +41,10 @@ const ChatFeed = props => {
     const chat = chats && chats[currentChat]
     const needsIceBreaker = hasFetchedMessages && _.isEmpty(messages) && _.isEmpty(sendingMessages)
 
+    function isChatFeedContainerPresent() {
+        return document.getElementById(chatFeedContainerID) !== null
+    }
+
     function onReadMessage(chat) {
         if (chats) {
             const newChats = { ...chats }
@@ -48,7 +53,7 @@ const ChatFeed = props => {
         }
     }
 
-    function onGetMessages(chatId, messages, scrollDownTo) {
+    function onGetMessages(chatId, messages, shouldScrollDown) {
         setHasFetchedMessages(true)
         setMessages(_.mapKeys(messages, 'id'))
 
@@ -60,8 +65,8 @@ const ChatFeed = props => {
             }
         }
 
-        if (scrollDownTo) {
-            animateScroll.scrollToBottom({ duration: 0, containerId: scrollDownTo })
+        if (shouldScrollDown && isChatFeedContainerPresent()) {
+            animateScroll.scrollToBottom({ duration: 0, containerId: chatFeedContainerID })
         }
 
         props.onGetMessages && props.onGetMessages(chatId, messages)
@@ -85,7 +90,7 @@ const ChatFeed = props => {
 
             getLatestMessages(
                 conn, activeChat, count,
-                (chatId, messages) => onGetMessages(chatId, messages, "ce-feed-container")
+                (chatId, messages) => onGetMessages(chatId, messages, true)
             )
 
             // Active Chat passed by props
@@ -96,7 +101,7 @@ const ChatFeed = props => {
 
             getLatestMessages(
                 conn, props.activeChat, count,
-                (chatId, messages) => onGetMessages(chatId, messages, "ce-feed-container")
+                (chatId, messages) => onGetMessages(chatId, messages, true)
             )
         }
     }
@@ -116,10 +121,10 @@ const ChatFeed = props => {
 
     useEffect(() => {
         // Scroll on new incoming messages
-        if (isBottomVisible && !_.isEmpty(messages)) {
+        if (isBottomVisible && !_.isEmpty(messages) && isChatFeedContainerPresent()) {
             animateScroll.scrollToBottom({
                 duration: 333,
-                containerId: "ce-feed-container"
+                containerId: chatFeedContainerID
             })
 
             if (getMyLastMessage(conn.userName, chat) && getMyLastMessage(conn.userName, chat) !== chat.last_message.id) {
@@ -144,7 +149,7 @@ const ChatFeed = props => {
             {props.renderChatHeader ? props.renderChatHeader(chat) : <ChatHeader />}
 
             <div
-                id='ce-feed-container'
+                id={chatFeedContainerID}
                 style={styles.feedContainer}
                 className='ce-chat-feed-container'
             >
