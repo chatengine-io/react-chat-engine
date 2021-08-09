@@ -9,6 +9,8 @@ import Thumbnail from './Thumbnail'
 
 import Body from './Body'
 
+import Dot from '../../../components/Avatar/Dot'
+
 import { Row, Col, setConfiguration } from 'react-grid-system'
 
 setConfiguration({ maxScreenClass: 'xl' })
@@ -17,7 +19,24 @@ let reconnectID = 0;
 
 const SendingMessage = props => {
     const didMountRef = useRef(false)
-    const { setConnecting } = useContext(ChatEngineContext)
+    const { conn, setConnecting } = useContext(ChatEngineContext)
+
+    function renderSender() {
+        var sender = {}
+        props.chat.people.map(chat_person => {
+            if (conn.userName === chat_person.person.username) {
+                sender = chat_person.person
+            }
+        })
+
+        return (
+            <Dot
+                avatar={sender.avatar}
+                username={sender.username}
+                style={{ float: 'right', marginLeft: '4px' }}
+            />
+        )
+    }
 
     // Reconnect if sending for 5 seconds
     useEffect(() => {
@@ -100,6 +119,10 @@ const SendingMessage = props => {
                 </Col>
 
                 <Col xs={1} sm={2} md={3} />
+
+                <Col xs={12} className='ce-reads-row ce-my-reads-row'>
+                    { !nextMessage && renderSender() }
+                </Col>
             </Row>
         </div>
     )

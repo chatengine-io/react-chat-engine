@@ -1,0 +1,10 @@
+export const DEVELOPMENT = false
+
+export const ROOT_URL = 'https://api.chatengine.dev/'
+
+export const PROJECT_ID = 'aafaed6f-f0c4-4c9a-af5e-227eca8cf5a1'
+export const USER_NAME = ''
+export const USER_SECRET = ''
+
+export const CHAT_ID = 0
+export const CHAT_ACCESS_KEY = ''

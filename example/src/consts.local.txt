@@ -1,0 +1,10 @@
+export const DEVELOPMENT = true
+
+export const ROOT_URL = DEVELOPMENT ? '' : 'https://api.chatengine.io/'
+
+export const PROJECT_ID = DEVELOPMENT ? '1ed59673-1fd6-46ed-9eb9-56239a6a4f82' : '077b8cbe-d06d-4a92-9d3f-6d13a0fa6c40'
+export const USER_NAME = DEVELOPMENT ? 'Adam_La_Morre' : ''
+export const USER_SECRET = DEVELOPMENT ? 'pass1234' : ''
+
+export const CHAT_ID = DEVELOPMENT ? 289 : 0
+export const CHAT_ACCESS_KEY = DEVELOPMENT ? 'ca-0d21f8cb-b884-4a8b-9e2e-a2acbdbc3792' : ''

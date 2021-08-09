@@ -2,6 +2,8 @@ import React, { useState, useContext } from 'react'
 
 import { ChatEngineContext } from 'react-chat-engine'
 
+import _ from 'lodash'
+
 import { getFileName, isImage } from './file'
 
 import Thumbnail from './Thumbnail'
@@ -17,8 +19,18 @@ import { Row, Col, setConfiguration } from 'react-grid-system'
 setConfiguration({ maxScreenClass: 'xl' })
 
 const Message = props => {
-    const { conn } = useContext(ChatEngineContext)
+    const { conn, sendingMessages } = useContext(ChatEngineContext)
     const [hovered, setHovered] = useState(false)
+
+    function hasSendingMessages() {
+        var hasSendingMessages = false
+        Object.values(sendingMessages).map(sendingMessage => {
+            if (sendingMessage) { 
+                hasSendingMessages = true 
+            }
+        })
+        return hasSendingMessages
+    }
 
     function renderReads() {
         const { chat, message } = props
@@ -27,6 +39,11 @@ const Message = props => {
 
         return chat.people.map((chatPerson, index) => {
             if (message.id === chatPerson.last_read) {
+                // Handle sending messages
+                if (conn.userName === message.sender_username && hasSendingMessages()) {
+                    return <div key={`read_${index}`} />
+                }
+
                 return (
                     <Dot
                         key={`read_${index}`}
@@ -78,7 +95,7 @@ const Message = props => {
     const bottomRightRadius = !nextMessage || nextMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
 
     const borderRadius = `1.3em ${topRightRadius} ${bottomRightRadius} 1.3em`
-    const paddingBottom = !nextMessage || nextMessage.sender_username !== message.sender_username ? '12px' : '2px'
+    const paddingBottom = !hasSendingMessages() && (!nextMessage || nextMessage.sender_username !== message.sender_username) ? '12px' : '2px'
 
     return (
         <div
