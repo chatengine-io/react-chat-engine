@@ -19,7 +19,7 @@ const HomePage = props => {
 
     function submit(){
         setLoading(true)
-
+        console.log({ rootUrl: ROOT_URL, projectID: PROJECT_ID, userName, userSecret })
         props.login(
             { rootUrl: ROOT_URL, projectID: PROJECT_ID, userName, userSecret },
             () => setLoading(false),

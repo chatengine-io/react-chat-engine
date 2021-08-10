@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 
-import { ChatEngineContext } from '../../../Context'
+import { sendMessage, isTyping, ChatEngineContext } from 'react-chat-engine'
 
-import { sendMessage, isTyping } from 'react-chat-engine'
+import { pythonFormatDate } from '../../Utilities/timezone'
 
 import FilesRow from './FilesRow'
 import ImagesRow from './ImagesRow'
@@ -58,7 +58,8 @@ const NewMessageForm = () => {
 
     const custom_json = { sender_id: Date.now().toString() }
     const sender_username = conn.userName ? conn.userName : conn.senderUsername
-    const data = { text, attachments, custom_json, sender_username, chat: activeChat }
+    const created = pythonFormatDate(new Date(), conn.offset ? conn.offset : 0)
+    const data = { text, attachments, custom_json, sender_username, chat: activeChat, created }
 
     if (text.length > 0 || attachments.length > 0) {
       sendMessage(conn, activeChat, data, () => {})

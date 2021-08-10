@@ -37,7 +37,25 @@ const Socket = props => {
         getOrCreateSession(
             props,
             data => setSessionToken(data.token),
-            () => setTimeout(() => getSession(), 3000) // Try again on error
+            e => {
+                if (e.response.status === 403) {
+                    console.log(
+                        `Your login credentials were not correct: \n
+                        Project ID: ${props.projectID} \n
+                        Username: ${props.userName} \n
+                        User Secret: ${props.userSecret}\n
+                        Double check these credentials to make sure they're correct.\n
+                        If all three are correct, try resetting the username and secret in the Online Dashboard or Private API.`
+                    )
+        
+                    setConn(undefined); setCreds(undefined);
+        
+                    props.onFailAuth && props.onFailAuth(conn)
+                }
+                
+                // Try again on error
+                setTimeout(() => getSession(), 3000)
+            }
         )
     }
 
@@ -125,20 +143,6 @@ const Socket = props => {
 
         if (eventJSON.action === 'pong') {
             setShouldPongBy(Date.now() + minSocketLag)
-
-        } else if (eventJSON.action === 'login_error') {
-            console.log(
-                `Your login credentials were not correct: \n
-                Project ID: ${props.projectID} \n
-                Username: ${props.userName} \n
-                User Secret: ${props.userSecret}\n
-                Double check these credentials to make sure they're correct.\n
-                If all three are correct, try resetting the username and secret in the Online Dashboard or Private API.`
-            )
-
-            setConn(undefined); setCreds(undefined);
-
-            props.onFailAuth && props.onFailAuth(conn)
 
         } else if (eventJSON.action === 'new_chat') {
             const chat = eventJSON.data

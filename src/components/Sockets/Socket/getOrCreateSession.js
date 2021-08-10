@@ -14,6 +14,6 @@ export function getOrCreateSession(props, callback, errorFunc) {
 
         .catch((error) => {
             console.log('Get or Create Session Error', error)
-            errorFunc && errorFunc()
+            errorFunc && errorFunc(error)
         });
 }

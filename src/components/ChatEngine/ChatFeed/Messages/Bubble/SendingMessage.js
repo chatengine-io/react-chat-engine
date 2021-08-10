@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 
 import { ChatEngineContext } from 'react-chat-engine'
 
@@ -9,6 +9,9 @@ import Thumbnail from './Thumbnail'
 
 import Body from './Body'
 
+import Dot from '../../../components/Avatar/Dot'
+import { getDateTime, formatTime } from '../../../Utilities/timezone'
+
 import { Row, Col, setConfiguration } from 'react-grid-system'
 
 setConfiguration({ maxScreenClass: 'xl' })
@@ -17,7 +20,25 @@ let reconnectID = 0;
 
 const SendingMessage = props => {
     const didMountRef = useRef(false)
-    const { setConnecting } = useContext(ChatEngineContext)
+    const { conn, setConnecting } = useContext(ChatEngineContext)
+    const [hovered, setHovered] = useState(false)
+
+    function renderSender() {
+        var sender = {}
+        props.chat.people.map(chat_person => {
+            if (conn.userName === chat_person.person.username) {
+                sender = chat_person.person
+            }
+        })
+
+        return (
+            <Dot
+                avatar={sender.avatar}
+                username={sender.username}
+                style={{ float: 'right', marginLeft: '4px' }}
+            />
+        )
+    }
 
     // Reconnect if sending for 5 seconds
     useEffect(() => {
@@ -89,10 +110,19 @@ const SendingMessage = props => {
             >
                 <Col xs={12} sm={12} md={12}>
                     {
+                        hovered &&
+                        <span style={{ position: 'relative', top: 'calc(50% - 12px)', right: '8px', fontSize: '14px', color: 'rgb(24, 144, 255)' }}>
+                            {formatTime(getDateTime(message.created, conn !== null && conn.offset))}
+                        </span>
+                    }
+
+                    {
                         message.text &&
                         <div
                             className='ce-message-bubble ce-my-message-bubble'
                             style={{ ...styles.myMessage, ...{ borderRadius } }}
+                            onMouseEnter={() => setHovered(true)}
+                            onMouseLeave={() => setHovered(false)}
                         >
                             <Body text={message.text} />
                         </div>
@@ -100,6 +130,10 @@ const SendingMessage = props => {
                 </Col>
 
                 <Col xs={1} sm={2} md={3} />
+
+                <Col xs={12} className='ce-reads-row ce-my-reads-row'>
+                    { !nextMessage && renderSender() }
+                </Col>
             </Row>
         </div>
     )
