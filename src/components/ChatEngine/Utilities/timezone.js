@@ -31,13 +31,14 @@ export function formatDateTime(dateTime) {
     return formatTime(dateTime) + ', ' + formatDate(dateTime)
 }
 
-export function pythonFormatDate(d) {
+export function pythonFormatDate(d, offset) {
     var month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
-        year = d.getFullYear(),
-        hour = d.getHours(),
-        minute = d.getMinutes(),
-        second = d.getSeconds();
+        year = '' + d.getFullYear(),
+        hour = '' + ((12 + d.getHours() - offset) % 12),
+        minute = '' + d.getMinutes(),
+        second = '' + d.getSeconds();
+    
 
     if (month.length < 2) 
         month = '0' + month;

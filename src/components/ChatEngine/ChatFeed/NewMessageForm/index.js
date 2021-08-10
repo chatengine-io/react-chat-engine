@@ -58,9 +58,9 @@ const NewMessageForm = () => {
 
     const custom_json = { sender_id: Date.now().toString() }
     const sender_username = conn.userName ? conn.userName : conn.senderUsername
-    const created = pythonFormatDate(new Date())
+    const created = pythonFormatDate(new Date(), conn.offset ? conn.offset : 0)
     const data = { text, attachments, custom_json, sender_username, chat: activeChat, created }
-    console.log(data)
+
     if (text.length > 0 || attachments.length > 0) {
       sendMessage(conn, activeChat, data, () => {})
     }

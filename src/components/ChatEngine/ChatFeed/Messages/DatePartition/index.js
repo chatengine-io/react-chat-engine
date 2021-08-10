@@ -11,7 +11,7 @@ const DatePartition = props => {
     const lastDate = getDate(lastCreated)
     const thisDate = getDate(created)
 
-    if (lastCreated && lastDate === thisDate ) return <div />
+    if (lastCreated && lastDate === thisDate) return <div />
 
     return (
         <div style={styles.dateText} className='ce-message-date-text'>
