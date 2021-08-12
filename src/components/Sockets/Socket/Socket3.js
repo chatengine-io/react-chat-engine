@@ -125,7 +125,8 @@ const Socket = props => {
 
         getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
 
-        if (Date.now() > reconnect) { // If this wasn't the first connection
+        // If this wasn't the first connection
+        if (Date.now() > reconnect || conn.renderChatFeed) { // TODO: This conn.renderChatFeed is a hacky patch
             setSendingMessages({})
             getLatestMessages(
                 conn, activeChat, 45,
