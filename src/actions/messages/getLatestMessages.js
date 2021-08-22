@@ -3,6 +3,8 @@ import * as str from '../../actions'
 import { getHeaders } from '../auth'
 
 export function getLatestMessages(props, chatId, count, callback) {
+    if (!getHeaders(props)) return;
+
     axios.get(
         `${str.getApiUrl(props)}/chats/${chatId}/messages/latest/${count}/`,
         { headers: getHeaders(props) }

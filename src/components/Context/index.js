@@ -6,6 +6,7 @@ export const ChatEngineWrapper = props => {
     const [connecting, setConnecting] = useState(true)
     const [conn, setConn] = useState(null)
     const [creds, setCreds] = useState(null)
+    const [sessionToken, setSessionToken] = useState('')
     const [chats, setChats] = useState(null)
     const [messages, setMessages] = useState({})
     const [sendingMessages, setSendingMessages] = useState({})
@@ -18,6 +19,7 @@ export const ChatEngineWrapper = props => {
         connecting, setConnecting,
         conn, setConn,
         creds, setCreds,
+        sessionToken, setSessionToken,
         chats, setChats,
         messages, setMessages,
         sendingMessages, setSendingMessages,
