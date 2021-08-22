@@ -162,7 +162,7 @@ const ChatFeed = props => {
 
                 {props.renderIsTyping ? props.renderIsTyping(typers) : <IsTyping />}
 
-                {props.renderConnectionBar ? props.renderConnectionBar(chat) : <ConnectionBar />}
+                {props.renderConnectionBar ? props.renderConnectionBar(chat) : <ConnectionBar renderDelay={3000} />}
 
                 {props.renderScrollDownBar ? props.renderScrollDownBar(chat) : <ScrollDownBar chat={chat} />}
 

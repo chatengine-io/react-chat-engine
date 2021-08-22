@@ -19,6 +19,14 @@ const DataLoader = props => {
         setSendingMessages,
     } = useContext(ChatEngineContext)
 
+    useEffect(() => {
+        if (!didMountRef.current) {
+            didMountRef.current = true
+            getSession()
+            getLatestChats(props, 25, (chats) => onGetChats(chats))
+        }
+    })
+
     function getSession() {
         getOrCreateSession(
             props,
@@ -71,14 +79,6 @@ const DataLoader = props => {
             }
         )
     }
-
-    useEffect(() => {
-        if (!didMountRef.current) {
-            didMountRef.current = true
-            getSession()
-            getLatestChats(props, 25, (chats) => onGetChats(chats))
-        }
-    })
 
     return <div />
 }
