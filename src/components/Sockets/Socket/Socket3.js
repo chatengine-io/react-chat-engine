@@ -38,7 +38,7 @@ const Socket = props => {
             props,
             data => setSessionToken(data.token),
             e => {
-                if (e.response.status === 403) {
+                if (e.response && e.response.status === 403) {
                     console.log(
                         `Your login credentials were not correct: \n
                         Project ID: ${props.projectID} \n
@@ -63,7 +63,6 @@ const Socket = props => {
         // Get a session token to connect
         if (!didMountRef.current) {
             didMountRef.current = true
-            // console.log('Socket Mounted')
             getSession()
 
             // Re-render the Socket (i.e. reconnect)
@@ -79,7 +78,6 @@ const Socket = props => {
 
     useEffect(() => {
         return () => {
-            // console.log('Unmounting')
             clearInterval(pingIntervalID)
             clearInterval(timeIntervalID)
         }
@@ -91,22 +89,9 @@ const Socket = props => {
             const bDate = b.last_message.created ? getDateTime(b.last_message.created, props.offset) : getDateTime(b.created, props.offset)
             return new Date(bDate) - new Date(aDate);
         })
-    }
-
-    // Common Context Handlers
-
-    function onEditChat(chat) {
-        if (chats) {
-            const newChats = { ...chats }
-            newChats[chat.id] = chat
-            setChats(newChats)
-        }
-
-        props.onEditChat && props.onEditChat(chat)
-    }
+    }    
 
     function onConnect(conn) {
-        // console.log('Connected')
         setConn(conn)
         setCreds(conn)
         setConnecting(false)
@@ -131,12 +116,25 @@ const Socket = props => {
             getLatestMessages(
                 conn, activeChat, 45,
                 (id, list) => {
+                    // TODO: Maybe move setSendingMessages({}) here
                     setMessages({ ...messages, ..._.mapKeys(list, 'id') })
                 }
             )
         }
 
         props.onConnect && props.onConnect(conn)
+    }
+
+    // Event Handlers
+
+    function handleEditChat(chat) {
+        if (chats) {
+            const newChats = { ...chats }
+            newChats[chat.id] = chat
+            setChats(newChats)
+        }
+
+        props.onEditChat && props.onEditChat(chat)
     }
 
     function handleEvent(event) {
@@ -158,7 +156,7 @@ const Socket = props => {
             props.onNewChat && props.onNewChat(eventJSON.data)
 
         } else if (eventJSON.action === 'edit_chat') {
-            onEditChat(eventJSON.data)
+            handleEditChat(eventJSON.data)
 
         } else if (eventJSON.action === 'delete_chat') {
             const chat = eventJSON.data
@@ -177,12 +175,12 @@ const Socket = props => {
             props.onDeleteChat && props.onDeleteChat(chat)
 
         } else if (eventJSON.action === 'add_person') {
-            onEditChat(eventJSON.data)
+            handleEditChat(eventJSON.data)
 
             props.onAddPerson && props.onAddPerson(eventJSON.data)
 
         } else if (eventJSON.action === 'remove_person') {
-            onEditChat(eventJSON.data)
+            handleEditChat(eventJSON.data)
 
             props.onRemovePerson && props.onRemovePerson(eventJSON.data)
 
@@ -201,7 +199,7 @@ const Socket = props => {
             }
 
             if (message.sender_username !== props.userName && isBottomVisible) {
-                readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
+                readMessage(conn, activeChat, message.id, (chat) => handleEditChat(chat))
             }
 
             props.onNewMessage && props.onNewMessage(id, message)
@@ -243,26 +241,27 @@ const Socket = props => {
         }
     }
 
-    function onClose() {
-        // console.log('Socket close')
-        setConnecting(true)
-    }
-
     const { development } = props
     const wsStart = development ? 'ws://' : 'wss://'
     const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
 
     if (sessionToken === '') return <div />
 
-    return <WebSocket
-        reconnect={true}
-        childRef={ref => socketRef = ref}
-        url={`${wsStart}${rootHost}/person_v3/?session_token=${sessionToken}`}
-        onOpen={onConnect.bind(this, props)}
-        onClose={onClose.bind(this)}
-        onMessage={handleEvent.bind(this)}
-        reconnectIntervalInMilliSeconds={3000}
-    />
+    return (
+        <div>
+            {/* <DataLoader /> */}
+
+            <WebSocket
+                reconnect={true}
+                childRef={ref => socketRef = ref}
+                url={`${wsStart}${rootHost}/person_v3/?session_token=${sessionToken}`}
+                onOpen={onConnect.bind(this, props)}
+                onClose={() => setConnecting(true)}
+                onMessage={handleEvent.bind(this)}
+                reconnectIntervalInMilliSeconds={3000}
+            />
+        </div>
+    )
 }
 
 export default Socket
