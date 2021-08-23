@@ -12,6 +12,9 @@ import ChatSettings from './ChatSettings'
 
 import { Row, Col } from 'react-grid-system'
 import { setConfiguration } from 'react-grid-system';
+
+// TODO: One off imports for Teams tutorial
+import { getLatestMessages } from 'react-chat-engine'
  
 setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
@@ -29,7 +32,21 @@ const ChatEngine = props => {
           {
             props.renderChatList ?
             props.renderChatList(propsAndContext) :
-            <ChatList {...propsAndContext} />
+            <ChatList 
+              {...propsAndContext} 
+              // TODO: One off code for Teams tutorial
+              onChatClick={(chatID) => {
+                if (props.renderChatFeed) {
+                  getLatestMessages(
+                    props, chatID, 45,
+                    (id, list) => {
+                      console.log(list)
+                      context.setMessages({..._.mapKeys(list, 'id')})
+                    }
+                  )
+                }
+              }}
+            />
           }
         </Col>
 
