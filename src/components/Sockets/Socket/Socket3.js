@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext, getLatestChats, getLatestMessages, readMessage } from 'react-chat-engine'
-import { getOrCreateSession } from './getOrCreateSession'
 
 import { getDateTime } from '../../ChatEngine/Utilities/timezone'
 
 import { WebSocket } from 'nextjs-websocket'
+
+import DataLoader from './DataLoader'
 
 let socketRef = undefined;
 let pingIntervalID = 0;
@@ -17,14 +18,12 @@ const reconnect = Date.now() + 10 * 1000;
 
 const Socket = props => {
     const didMountRef = useRef(false)
-    const [sessionToken, setSessionToken] = useState('')
-
     const [now, setNow] = useState(Date.now())
     const [shouldPongBy, setShouldPongBy] = useState(Date.now() + minSocketLag)
 
     const {
         connecting, setConnecting,
-        conn, setConn, setCreds,
+        conn, sessionToken, 
         chats, setChats,
         messages, setMessages,
         sendingMessages, setSendingMessages,
@@ -33,41 +32,10 @@ const Socket = props => {
         isBottomVisible
     } = useContext(ChatEngineContext)
 
-    function getSession() {
-        getOrCreateSession(
-            props,
-            data => setSessionToken(data.token),
-            e => {
-                if (e.response.status === 403) {
-                    console.log(
-                        `Your login credentials were not correct: \n
-                        Project ID: ${props.projectID} \n
-                        Username: ${props.userName} \n
-                        User Secret: ${props.userSecret}\n
-                        Double check these credentials to make sure they're correct.\n
-                        If all three are correct, try resetting the username and secret in the Online Dashboard or Private API.`
-                    )
-        
-                    setConn(undefined); setCreds(undefined);
-        
-                    props.onFailAuth && props.onFailAuth(conn)
-                }
-                
-                // Try again on error
-                setTimeout(() => getSession(), 3000)
-            }
-        )
-    }
-
     useEffect(() => {
-        // Get a session token to connect
-        if (!didMountRef.current) {
-            didMountRef.current = true
-            // console.log('Socket Mounted')
-            getSession()
-
-            // Re-render the Socket (i.e. reconnect)
-        } else if (connecting) { props.reRender && props.reRender() }
+        if (!didMountRef.current) { didMountRef.current = true
+        // Re-render the Socket (on reconnect)
+        } else if (didMountRef.current && connecting) { props.reRender && props.reRender() }
     }, [connecting])
 
     useEffect(() => {
@@ -79,7 +47,6 @@ const Socket = props => {
 
     useEffect(() => {
         return () => {
-            // console.log('Unmounting')
             clearInterval(pingIntervalID)
             clearInterval(timeIntervalID)
         }
@@ -93,22 +60,7 @@ const Socket = props => {
         })
     }
 
-    // Common Context Handlers
-
-    function onEditChat(chat) {
-        if (chats) {
-            const newChats = { ...chats }
-            newChats[chat.id] = chat
-            setChats(newChats)
-        }
-
-        props.onEditChat && props.onEditChat(chat)
-    }
-
     function onConnect(conn) {
-        // console.log('Connected')
-        setConn(conn)
-        setCreds(conn)
         setConnecting(false)
 
         if (connecting) {
@@ -119,24 +71,34 @@ const Socket = props => {
                     console.log('Socker error', e)
                 }
             }, pingInterval)
-
             timeIntervalID = setInterval(() => setNow(Date.now()), 1000)
         }
 
         getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
-
         // If this wasn't the first connection
         if (Date.now() > reconnect || conn.renderChatFeed) { // TODO: This conn.renderChatFeed is a hacky patch
-            setSendingMessages({})
             getLatestMessages(
-                conn, activeChat, 45,
+                conn, 
+                activeChat, 
+                45,
                 (id, list) => {
-                    setMessages({ ...messages, ..._.mapKeys(list, 'id') })
+                    setSendingMessages({});
+                    setMessages({ ...messages, ..._.mapKeys(list, 'id') });
                 }
             )
         }
 
         props.onConnect && props.onConnect(conn)
+    }
+
+    function handleEditChat(chat) {
+        if (chats) {
+            const newChats = { ...chats }
+            newChats[chat.id] = chat
+            setChats(newChats)
+        }
+
+        props.onEditChat && props.onEditChat(chat)
     }
 
     function handleEvent(event) {
@@ -158,7 +120,7 @@ const Socket = props => {
             props.onNewChat && props.onNewChat(eventJSON.data)
 
         } else if (eventJSON.action === 'edit_chat') {
-            onEditChat(eventJSON.data)
+            handleEditChat(eventJSON.data)
 
         } else if (eventJSON.action === 'delete_chat') {
             const chat = eventJSON.data
@@ -177,12 +139,12 @@ const Socket = props => {
             props.onDeleteChat && props.onDeleteChat(chat)
 
         } else if (eventJSON.action === 'add_person') {
-            onEditChat(eventJSON.data)
+            handleEditChat(eventJSON.data)
 
             props.onAddPerson && props.onAddPerson(eventJSON.data)
 
         } else if (eventJSON.action === 'remove_person') {
-            onEditChat(eventJSON.data)
+            handleEditChat(eventJSON.data)
 
             props.onRemovePerson && props.onRemovePerson(eventJSON.data)
 
@@ -201,7 +163,7 @@ const Socket = props => {
             }
 
             if (message.sender_username !== props.userName && isBottomVisible) {
-                readMessage(conn, activeChat, message.id, (chat) => onEditChat(chat))
+                readMessage(conn, activeChat, message.id, (chat) => handleEditChat(chat))
             }
 
             props.onNewMessage && props.onNewMessage(id, message)
@@ -243,26 +205,28 @@ const Socket = props => {
         }
     }
 
-    function onClose() {
-        // console.log('Socket close')
-        setConnecting(true)
-    }
-
     const { development } = props
     const wsStart = development ? 'ws://' : 'wss://'
     const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
 
-    if (sessionToken === '') return <div />
+    return (
+        <div>
+            <DataLoader {...props} />
 
-    return <WebSocket
-        reconnect={true}
-        childRef={ref => socketRef = ref}
-        url={`${wsStart}${rootHost}/person_v3/?session_token=${sessionToken}`}
-        onOpen={onConnect.bind(this, props)}
-        onClose={onClose.bind(this)}
-        onMessage={handleEvent.bind(this)}
-        reconnectIntervalInMilliSeconds={3000}
-    />
+            {
+                sessionToken !== '' &&
+                <WebSocket
+                    reconnect={true}
+                    childRef={ref => socketRef = ref}
+                    url={`${wsStart}${rootHost}/person_v3/?session_token=${sessionToken}`}
+                    onOpen={onConnect.bind(this, props)}
+                    onClose={() => setConnecting(true)}
+                    onMessage={handleEvent.bind(this)}
+                    reconnectIntervalInMilliSeconds={3000}
+                />
+            }
+        </div>
+    )
 }
 
 export default Socket

@@ -79,7 +79,7 @@ const ChatList = props => {
                 return (
                     <div 
                         key={`chat_${index}`}
-                        onClick={() => props.onChatClick && props.onChatClick()}
+                        onClick={() => props.onChatClick && props.onChatClick(chat.id)}
                     >
                         <ChatCard chat={chat} />
                     </div>

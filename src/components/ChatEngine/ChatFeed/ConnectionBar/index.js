@@ -1,13 +1,25 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext } from '../../../Context'
 
 import { SyncOutlined } from '@ant-design/icons'
 
-const ConnectionBar  = () => {
+const ConnectionBar = props => {
+    const didMountRef = useRef(false)
+    const [isVisible, setIsVisible] = useState(false)
     const { connecting } = useContext(ChatEngineContext)
 
-    if (!connecting) return <div />
+    useEffect(() => {
+        if (!didMountRef.current) {
+            didMountRef.current = true
+            setTimeout(
+                () => setIsVisible(true), 
+                props.renderDelay ? props.renderDelay : 0
+            )
+        }
+    })
+
+    if (!connecting || !isVisible) return <div />
 
     return (
         <div 
@@ -24,9 +36,7 @@ const ConnectionBar  = () => {
             }}
             id='ce-connecting-popup'
         >
-            <SyncOutlined spin />
-            {' '}
-            Connecting
+            <SyncOutlined spin />{' '}Connecting
         </div>
     )
 }
