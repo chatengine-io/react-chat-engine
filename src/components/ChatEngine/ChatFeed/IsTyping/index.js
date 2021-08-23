@@ -29,6 +29,7 @@ const IsTyping = () => {
                         return (
                             <div 
                                 key={`typer_${index}`} 
+                                className='ce-user-typing-text'
                                 style={{ color: stringToColor(username), padding: '2px', paddingLeft: '12px' }}
                             >
                                 {`${username} is typing...`}
