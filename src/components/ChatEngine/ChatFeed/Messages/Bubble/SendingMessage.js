@@ -16,8 +16,6 @@ import { Row, Col, setConfiguration } from 'react-grid-system'
 
 setConfiguration({ maxScreenClass: 'xl' })
 
-let reconnectID = 0;
-
 const SendingMessage = props => {
     const didMountRef = useRef(false)
     const { conn, setConnecting } = useContext(ChatEngineContext)
@@ -40,14 +38,17 @@ const SendingMessage = props => {
         )
     }
 
-    // Reconnect if sending for 5 seconds
     useEffect(() => {
+        let reconnectID = 0;
+
         if (!didMountRef.current) {
             didMountRef.current = true
             reconnectID = setTimeout(() => {
                 setConnecting(true)
-            }, 5000)
+            }, 4500 + Math.floor(Math.random() * 2000))
+            // Random timeout avoids reconnectID clashes between sending messages
         }
+
         return () => {
             clearInterval(reconnectID);
         }
