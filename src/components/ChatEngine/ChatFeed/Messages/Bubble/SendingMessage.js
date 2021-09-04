@@ -49,9 +49,7 @@ const SendingMessage = props => {
             // Random timeout avoids reconnectID clashes between sending messages
         }
 
-        return () => {
-            clearInterval(reconnectID);
-        }
+        return () => clearInterval(reconnectID);
     }, [])
 
     function renderImages(attachments) {
