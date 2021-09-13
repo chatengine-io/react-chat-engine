@@ -21,6 +21,8 @@ Try our free plan at [chatengine.io](https://chatengine.io)
 - Using [npm](https://www.npmjs.com/#getting-started): `npm install react-chat-engine --save`
 - Using [Yarn](https://yarnpkg.com/): `yarn add react-chat-engine`
 
+- NOTE: When you use `import {} from 'nextjs-chat-engine';` you will also likely need to import css assets from react quill. Add `require('react-quill/dist/quill.snow.css');` alongside your Chat Engine import.
+
 ## Quick Start
 
 Add serverless chat to your React app in 3 minutes.

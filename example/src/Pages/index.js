@@ -12,6 +12,8 @@ import ChatTutorial from './ChatTutorial'
 import HomePage from './HomePage'
 import GifPage from './GifPage'
 
+require('react-quill/dist/quill.snow.css');
+
 class RootPage extends Component {
   render() {    
     return (
