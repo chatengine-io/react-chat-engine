@@ -11,7 +11,6 @@ import AttachmentsInput from './AttachmentsInput'
 import SendButton from './SendButton'
 
 const ReactQuill = require('react-quill');
-require('react-quill/dist/quill.snow.css');
 
 const NewMessageForm = () => {
   const { 
