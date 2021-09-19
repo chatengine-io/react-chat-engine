@@ -1,5 +1,5 @@
 {
-  "name": "react-chat-engine-example",
+  "name": "nextjs-chat-engine-example",
   "homepage": ".",
   "version": "0.0.0",
   "private": true,
@@ -13,7 +13,7 @@
   "dependencies": {
     "history": "^5.0.0",
     "react": "link:../node_modules/react",
-    "react-chat-engine": "link:..",
+    "nextjs-chat-engine": "link:..",
     "react-dom": "link:../node_modules/react-dom",
     "react-grid-system": "^7.1.2",
     "react-redux": "^7.2.2",

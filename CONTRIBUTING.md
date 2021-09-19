@@ -26,7 +26,7 @@ export const CHAT_ACCESS_KEY = 'ca-00000000-0000-0000-0000-000000000000'
 
 In the top-level dir, run `yarn` to install deps, then `yarn start` to start the ongiong build.
 
-Additionally the example dir is where we test the newest react-chat-engine instance. Run `yarn` to install deps for the example projects, then run `yarn start` to start the app in the browser.
+Additionally the example dir is where we test the newest nextjs-chat-engine instance. Run `yarn` to install deps for the example projects, then run `yarn start` to start the app in the browser.
 
 <!-- ### Bonus: YouTube video
 
