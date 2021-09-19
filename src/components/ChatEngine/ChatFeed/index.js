@@ -50,7 +50,7 @@ const ChatFeed = props => {
 
     function onGetMessages(chatId, messages, scrollDownTo) {
         setHasFetchedMessages(true)
-        setMessages(_.mapKeys(messages, 'id'))
+        setMessages(_.mapKeys(messages, 'created'))
 
         if (messages.length > 0) {
             const message = messages[messages.length - 1]
