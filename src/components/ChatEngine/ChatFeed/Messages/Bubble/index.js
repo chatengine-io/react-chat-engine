@@ -19,17 +19,14 @@ const Message = props => {
 
     return (
         <div className='ce-message-and-date'>
-            {
-                !sending &&
-                <DatePartition 
-                    lastCreated={lastMessage ? lastMessage.created : null} 
-                    created={message.created} 
-                    offset={conn.offset}
-                />
-            }
+            <DatePartition 
+                lastCreated={lastMessage ? lastMessage.created : null} 
+                created={message.created} 
+                offset={conn.offset}
+            />
 
             {
-                sending ? 
+                !message.id ? 
                 <SendingMessage 
                     chat={chat} 
                     conn={conn} 

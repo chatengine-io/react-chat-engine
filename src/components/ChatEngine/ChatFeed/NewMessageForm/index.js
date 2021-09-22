@@ -17,8 +17,8 @@ const NewMessageForm = () => {
   const { 
     conn, 
     activeChat, 
-    sendingMessages, 
-    setSendingMessages 
+    messages, 
+    setMessages 
   } = useContext(ChatEngineContext)
   const [iter, setIter] = useState(0) // Forces attachments update
   const [value, setValue] = useState('')
@@ -68,9 +68,9 @@ const NewMessageForm = () => {
     setValue('')
     setAttachments([])
 
-    let newSendingMessages = {...sendingMessages}
-    newSendingMessages[data.custom_json.sender_id] = data
-    setSendingMessages(newSendingMessages)
+    let newMessages = {...messages}
+    newMessages[data.created] = data
+    setMessages(newMessages)
   }
 
   return (
