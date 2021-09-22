@@ -19,18 +19,8 @@ import { Row, Col, setConfiguration } from 'react-grid-system'
 setConfiguration({ maxScreenClass: 'xl' })
 
 const Message = props => {
-    const { conn, sendingMessages } = useContext(ChatEngineContext)
+    const { conn } = useContext(ChatEngineContext)
     const [hovered, setHovered] = useState(false)
-
-    function hasSendingMessages() {
-        var hasSendingMessages = false
-        Object.values(sendingMessages).map(sendingMessage => {
-            if (sendingMessage) { 
-                hasSendingMessages = true 
-            }
-        })
-        return hasSendingMessages
-    }
 
     function renderReads() {
         const { chat, message } = props
@@ -38,12 +28,7 @@ const Message = props => {
         if (!chat) { return <div /> }
 
         return chat.people.map((chatPerson, index) => {
-            if (message.id === chatPerson.last_read) {
-                // Handle sending messages
-                if (conn.userName === message.sender_username && hasSendingMessages()) {
-                    return <div key={`read_${index}`} />
-                }
-
+            if (conn.userName !== message.sender_username && message.id === chatPerson.last_read) {
                 return (
                     <Dot
                         key={`read_${index}`}
@@ -95,7 +80,7 @@ const Message = props => {
     const bottomRightRadius = !nextMessage || nextMessage.sender_username !== message.sender_username ? '1.3em' : '0.3em'
 
     const borderRadius = `1.3em ${topRightRadius} ${bottomRightRadius} 1.3em`
-    const paddingBottom = !hasSendingMessages() && (!nextMessage || nextMessage.sender_username !== message.sender_username) ? '12px' : '2px'
+    const paddingBottom = (!nextMessage || nextMessage.sender_username !== message.sender_username) ? '12px' : '2px'
 
     return (
         <div
@@ -121,18 +106,23 @@ const Message = props => {
                 className='ce-message-bubble-row ce-my-message-bubble-row'
             >
                 <Col xs={12} sm={12} md={12}>
-                    {
-                        hovered &&
-                        <span style={{ position: 'relative', top: 'calc(50% - 12px)', right: '8px', fontSize: '14px', color: 'rgb(24, 144, 255)' }}>
-                            {formatTime(getDateTime(message.created, conn !== null && conn.offset))}
-                        </span>
-                    }
+                    <span 
+                        style={{
+                            ...styles.timeTag,
+                            ...{ opacity: hovered ? '1' : '0' }
+                        }}>
+                        {formatTime(getDateTime(message.created, conn !== null && conn.offset))}
+                    </span>
 
                     {
                         !attachments || message.text &&
                         <div
                             className='ce-message-bubble ce-my-message-bubble'
-                            style={{ ...styles.myMessage, ...{ borderRadius } }}
+                            style={{ 
+                                ...styles.myMessage, 
+                                ...{ borderRadius },
+                                ...{ backgroundColor: message.id ? 'rgb(24, 144, 255)' : '#40a9ff'}
+                            }}
                             onMouseEnter={() => setHovered(true)}
                             onMouseLeave={() => setHovered(false)}
                         >
@@ -161,8 +151,22 @@ const styles = {
         padding: '12px',
         fontSize: '15px',
         whiteSpace: 'pre-line',
-        backgroundColor: 'rgb(24, 144, 255)',
         overflowWrap: 'anywhere',
-        maxWidth: 'calc(100% - 100px)'
+        maxWidth: 'calc(100% - 100px)',
+        // Color transition
+        transition: "all .33s ease",
+        WebkitTransition: "all .33s ease",
+        MozTransition: "all .33s ease",
+    },
+    timeTag: { 
+        position: 'relative', 
+        top: 'calc(50% - 12px)', 
+        right: '8px', 
+        fontSize: '14px', 
+        color: 'rgb(24, 144, 255)',
+        // Color transition
+        transition: "all .15s ease",
+        WebkitTransition: "all .15s ease",
+        MozTransition: "all .15s ease",
     }
 }

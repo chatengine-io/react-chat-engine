@@ -8,7 +8,6 @@ import { RenderTrigger } from './Triggers'
 
 import ChatHeader from './ChatHeader'
 import Messages from './Messages'
-import SendingMessages from './SendingMessages'
 import IsTyping from './IsTyping'
 import NewMessageForm from './NewMessageForm'
 import ConnectionBar from './ConnectionBar'
@@ -28,7 +27,6 @@ const ChatFeed = props => {
     const {
         conn,
         chats, setChats,
-        sendingMessages,
         messages, setMessages,
         activeChat, setActiveChat,
         loadMoreMessages, setLoadMoreMessages,
@@ -38,7 +36,7 @@ const ChatFeed = props => {
 
     const typers = typingCounter && typingCounter[activeChat] ? typingCounter[activeChat] : []
     const chat = chats && chats[currentChat]
-    const needsIceBreaker = hasFetchedMessages && _.isEmpty(messages) && _.isEmpty(sendingMessages)
+    const needsIceBreaker = hasFetchedMessages && _.isEmpty(messages)
 
     function onReadMessage(chat) {
         if (chats) {
@@ -126,7 +124,7 @@ const ChatFeed = props => {
                 readMessage(conn, currentChat, chat.last_message.id, (chat) => onReadMessage(chat))
             }
         }
-    }, [sendingMessages, messages, isBottomVisible])
+    }, [messages, isBottomVisible])
 
     if (conn === undefined) {
         return <AuthFail {...props} />
@@ -157,8 +155,6 @@ const ChatFeed = props => {
                 {needsIceBreaker && !props.renderIceBreaker && <IceBreaker />}
 
                 <Messages {...props} />
-
-                <SendingMessages {...props} />
 
                 {props.renderIsTyping ? props.renderIsTyping(typers) : <IsTyping />}
 
