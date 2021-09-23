@@ -30,34 +30,3 @@ export function formatDate(dateTime) {
 export function formatDateTime(dateTime) {
     return formatTime(dateTime) + ', ' + formatDate(dateTime)
 }
-
-export function pythonFormatDate(d, offset) {
-    var month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = '' + d.getFullYear(),
-        hour = '' + ((12 + d.getHours() - offset) % 12),
-        minute = '' + d.getMinutes(),
-        second = '' + d.getSeconds(),
-        milliseconds = '' + d.getMilliseconds();
-    
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-    if (hour.length < 2) 
-        hour = '0' + hour;
-    if (minute.length < 2) 
-        minute = '0' + minute;
-    if (second.length < 2) 
-        second = '0' + second;
-    if (milliseconds.length < 2) {
-        milliseconds = '00' + milliseconds;
-    } else if (milliseconds.length < 3) {
-        milliseconds = '0' + milliseconds;
-    }
-    const trail = 100 + Math.floor(Math.random() * 899)   
-
-    const date = [year, month, day].join('-');
-    const time = `${hour}:${minute}:${second}.${milliseconds}${trail}+00:00`
-    return `${date} ${time}`
-}
