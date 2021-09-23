@@ -51,7 +51,6 @@ const ChatEngineApp = props => {
             renderChatHeader={(chat) => <ChatHeader />}
             renderIceBreaker={(chat) => <IceBreaker />}
             renderMessageBubble={(creds, chat, lastMessage, message, nextMessage) => <MessageBubble lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
-            renderSendingMessage={(creds, chat, lastMessage, message, nextMessage) => <MessageBubble sending={true} lastMessage={lastMessage} message={message} nextMessage={nextMessage} chat={chat} />}
             renderIsTyping={(typers) => <IsTyping />}
             renderConnectionBar={(chat) => <ConnectionBar renderDelay={3000} />}
             renderScrollDownBar={(chat, userName, isBottomVisible) => <ScrollDownBar chat={chat} userName={userName} />}

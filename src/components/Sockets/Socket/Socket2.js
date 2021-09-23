@@ -27,7 +27,6 @@ const Socket = props => {
         conn, setConn, setCreds,
         chats, setChats,
         messages, setMessages,
-        sendingMessages, setSendingMessages,
         activeChat, setActiveChat,
         typingCounter, setTypingCounter,
         isBottomVisible
@@ -105,7 +104,6 @@ const Socket = props => {
         getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
 
         if (Date.now() > reconnect) { // If this wasn't the first connection
-            setSendingMessages({})
             getLatestMessages(
                 conn, activeChat, 45,
                 (id, list) => {
@@ -183,11 +181,6 @@ const Socket = props => {
 
         } else if (eventJSON.action === 'new_message') {
             const { id, message } = eventJSON.data
-
-            if (typeof message.custom_json === "string" && message.custom_json.indexOf('sender_id') !== -1) {
-                sendingMessages[JSON.parse(message.custom_json).sender_id] = undefined
-                setSendingMessages(sendingMessages)
-            }
 
             if (parseInt(id) === parseInt(activeChat)) {
                 const newMessages = { ...messages }

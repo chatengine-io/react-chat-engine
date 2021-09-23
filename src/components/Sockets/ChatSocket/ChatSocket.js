@@ -24,7 +24,6 @@ const SocketChild = props => {
       conn, setConn, setCreds,
       chats, setChats,
       messages, setMessages,
-      sendingMessages, setSendingMessages,
       activeChat, setActiveChat,
       typingCounter, setTypingCounter,
     } = useContext(ChatEngineContext)
@@ -92,7 +91,6 @@ const SocketChild = props => {
         getChat(conn, props.chatID, (chat) => onGetChat(chat))
     
         if (Date.now() > reconnect) {
-            setSendingMessages({})
             getLatestMessages(
                 conn, props.chatID, 45,
                 (id, list) => {
@@ -152,11 +150,6 @@ const SocketChild = props => {
 
         } else if (eventJSON.action === 'new_message') {
             const { id, message } = eventJSON.data
-
-            if (typeof message.custom_json === "string" && message.custom_json.indexOf('sender_id') !== -1) {
-                sendingMessages[JSON.parse(message.custom_json).sender_id] = undefined
-                setSendingMessages(sendingMessages)
-            }
         
             if (id === activeChat) {
                 const newMessages = {...messages}

@@ -9,7 +9,6 @@ export const ChatEngineWrapper = props => {
     const [sessionToken, setSessionToken] = useState('')
     const [chats, setChats] = useState(null)
     const [messages, setMessages] = useState({})
-    const [sendingMessages, setSendingMessages] = useState({})
     const [activeChat, setActiveChat] = useState(null)
     const [typingCounter, setTypingCounter] = useState({})
     const [loadMoreMessages, setLoadMoreMessages] = useState(false)
@@ -22,7 +21,6 @@ export const ChatEngineWrapper = props => {
         sessionToken, setSessionToken,
         chats, setChats,
         messages, setMessages,
-        sendingMessages, setSendingMessages,
         activeChat, setActiveChat,
         typingCounter, setTypingCounter,
         loadMoreMessages, setLoadMoreMessages,

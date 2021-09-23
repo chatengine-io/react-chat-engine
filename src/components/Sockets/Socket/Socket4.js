@@ -26,7 +26,6 @@ const Socket = props => {
         conn, sessionToken, 
         chats, setChats,
         messages, setMessages,
-        sendingMessages, setSendingMessages,
         activeChat, setActiveChat,
         typingCounter, setTypingCounter,
         isBottomVisible
@@ -82,7 +81,6 @@ const Socket = props => {
                 activeChat, 
                 45,
                 (id, list) => {
-                    setSendingMessages({});
                     setMessages({ ...messages, ..._.mapKeys(list, 'created') });
                 }
             )
@@ -150,11 +148,6 @@ const Socket = props => {
 
         } else if (eventJSON.action === 'new_message') {
             const { id, message } = eventJSON.data
-
-            if (typeof message.custom_json === "string" && message.custom_json.indexOf('sender_id') !== -1) {
-                sendingMessages[JSON.parse(message.custom_json).sender_id] = undefined
-                setSendingMessages(sendingMessages)
-            }
 
             if (parseInt(id) === parseInt(activeChat)) {
                 const newMessages = { ...messages }
