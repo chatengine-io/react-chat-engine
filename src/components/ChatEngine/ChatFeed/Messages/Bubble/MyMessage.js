@@ -45,12 +45,10 @@ const Message = props => {
     function renderImages() {
         const { message } = props
         const attachments = message && message.attachments ? message.attachments : []
-
         return attachments.map((attachment, index) => {
-            // TODO: Handle sending files
-            const fileName = getFileName(attachment.file)
+            const fileName = getFileName(attachment.file ? attachment.file : attachment.name)
             if (isImage(fileName)) {
-                return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
+                return <Thumbnail attachment={attachment.file && attachment} key={`attachment_${index}`} />
             } else {
                 return <div key={`attachment${index}`} />
             }
@@ -60,12 +58,10 @@ const Message = props => {
     function renderFiles() {
         const { message } = props
         const attachments = message && message.attachments ? message.attachments : []
-
         return attachments.map((attachment, index) => {
-            // TODO: Handle sending files
-            const fileName = getFileName(attachment.file)
+            const fileName = getFileName(attachment.file ? attachment.file : attachment.name)
             if (!isImage(fileName)) {
-                return <FileView attachment={attachment} key={`attachment_${index}`} />
+                return <FileView attachment={attachment.file && attachment} key={`attachment_${index}`} />
             } else {
                 return <div key={`attachment${index}`} />
             }
