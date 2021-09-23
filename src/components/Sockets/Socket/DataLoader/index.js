@@ -75,7 +75,7 @@ const DataLoader = props => {
             45,
             (id, list) => {
                 setSendingMessages({});
-                setMessages(_.mapKeys(list, 'id'));
+                setMessages(_.mapKeys(list, 'created'));
             }
         )
     }

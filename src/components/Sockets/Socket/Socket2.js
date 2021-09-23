@@ -109,7 +109,7 @@ const Socket = props => {
             getLatestMessages(
                 conn, activeChat, 45,
                 (id, list) => {
-                    setMessages({ ...messages, ..._.mapKeys(list, 'id') })
+                    setMessages({ ...messages, ..._.mapKeys(list, 'created') })
                 }
             )
         }
@@ -191,7 +191,7 @@ const Socket = props => {
 
             if (parseInt(id) === parseInt(activeChat)) {
                 const newMessages = { ...messages }
-                newMessages[message.id] = message
+                newMessages[message.created] = message
                 setMessages(newMessages)
             }
 
@@ -205,7 +205,7 @@ const Socket = props => {
             const { id, message } = eventJSON.data
 
             if (id === activeChat) {
-                messages[message.id] = message
+                messages[message.created] = message
                 setMessages(messages)
             }
 
@@ -215,7 +215,7 @@ const Socket = props => {
             const { id, message } = eventJSON.data
 
             if (id === activeChat) {
-                messages[message.id] = undefined
+                messages[message.created] = undefined
                 setMessages(messages)
             }
 

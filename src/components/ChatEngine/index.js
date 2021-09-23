@@ -40,7 +40,7 @@ const ChatEngine = props => {
                   getLatestMessages(
                     props, chatID, 45,
                     (id, list) => {
-                      context.setMessages({..._.mapKeys(list, 'id')})
+                      context.setMessages({..._.mapKeys(list, 'created')})
                     }
                   )
                 }

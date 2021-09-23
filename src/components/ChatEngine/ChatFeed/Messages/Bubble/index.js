@@ -6,10 +6,9 @@ import DatePartition from '../DatePartition'
 
 import MyMessage from './MyMessage'
 import TheirMessage from './TheirMessage'
-import SendingMessage from './SendingMessage'
 
 const Message = props => {
-    const { lastMessage, message, nextMessage, sending, chat } = props
+    const { lastMessage, message, nextMessage, chat } = props
 
     const { conn } = useContext(ChatEngineContext)
 
@@ -19,43 +18,29 @@ const Message = props => {
 
     return (
         <div className='ce-message-and-date'>
-            {
-                !sending &&
-                <DatePartition 
-                    lastCreated={lastMessage ? lastMessage.created : null} 
-                    created={message.created} 
-                    offset={conn.offset}
-                />
-            }
+            <DatePartition 
+                lastCreated={lastMessage ? lastMessage.created : null} 
+                created={message.created} 
+                offset={conn.offset}
+            />
 
             {
-                sending ? 
-                <SendingMessage 
-                    chat={chat} 
-                    conn={conn} 
-                    lastMessage={lastMessage} 
-                    message={message} 
-                    nextMessage={nextMessage} 
+                message.sender_username === conn.userName || message.sender_username === conn.senderUsername ?
+                <MyMessage 
+                    chat={chat}
+                    conn={conn}
+                    sending={!message.id}
+                    lastMessage={lastMessage}
+                    message={message}
+                    nextMessage={nextMessage}
                 /> :
-                <div>
-                    {
-                        message.sender_username === conn.userName || message.sender_username === conn.senderUsername ?
-                        <MyMessage 
-                            chat={chat}
-                            conn={conn}
-                            lastMessage={lastMessage}
-                            message={message}
-                            nextMessage={nextMessage}
-                        /> :
-                        <TheirMessage 
-                            chat={chat}
-                            conn={conn}
-                            lastMessage={lastMessage}
-                            message={message}
-                            nextMessage={nextMessage}
-                        />
-                    }
-                </div>
+                <TheirMessage 
+                    chat={chat}
+                    conn={conn}
+                    lastMessage={lastMessage}
+                    message={message}
+                    nextMessage={nextMessage}
+                />
             }
         </div>
     ) 
