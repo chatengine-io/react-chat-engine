@@ -47,6 +47,7 @@ const Message = props => {
         const attachments = message && message.attachments ? message.attachments : []
 
         return attachments.map((attachment, index) => {
+            // TODO: Handle sending files
             const fileName = getFileName(attachment.file)
             if (isImage(fileName)) {
                 return <Thumbnail attachment={attachment} key={`attachment_${index}`} />
@@ -61,6 +62,7 @@ const Message = props => {
         const attachments = message && message.attachments ? message.attachments : []
 
         return attachments.map((attachment, index) => {
+            // TODO: Handle sending files
             const fileName = getFileName(attachment.file)
             if (!isImage(fileName)) {
                 return <FileView attachment={attachment} key={`attachment_${index}`} />
@@ -114,14 +116,14 @@ const Message = props => {
                         {formatTime(getDateTime(message.created, conn !== null && conn.offset))}
                     </span>
 
-                    {
+                    {   // TODO: What is !attachments for?
                         !attachments || message.text &&
                         <div
                             className='ce-message-bubble ce-my-message-bubble'
                             style={{ 
                                 ...styles.myMessage, 
                                 ...{ borderRadius },
-                                ...{ backgroundColor: message.id ? 'rgb(24, 144, 255)' : '#40a9ff'}
+                                ...{ backgroundColor: props.sending ? '#40a9ff' : 'rgb(24, 144, 255)' }
                             }}
                             onMouseEnter={() => setHovered(true)}
                             onMouseLeave={() => setHovered(false)}

@@ -29,6 +29,7 @@ const Message = props => {
                 <MyMessage 
                     chat={chat}
                     conn={conn}
+                    sending={!message.id}
                     lastMessage={lastMessage}
                     message={message}
                     nextMessage={nextMessage}
