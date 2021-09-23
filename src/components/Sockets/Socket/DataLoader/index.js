@@ -16,7 +16,6 @@ const DataLoader = props => {
         setChats,
         setActiveChat,
         setMessages,
-        setSendingMessages,
     } = useContext(ChatEngineContext)
 
     useEffect(() => {
@@ -74,7 +73,6 @@ const DataLoader = props => {
             activeChatID, 
             45,
             (id, list) => {
-                setSendingMessages({});
                 setMessages(_.mapKeys(list, 'created'));
             }
         )
