@@ -135,12 +135,12 @@ const TheirMessage = props => {
                         </div>
                     }
 
-                    {
-                        hovered &&
-                        <span style={{ position: 'relative', top: 'calc(50% - 12px)', left: '8px', fontSize: '14px', color: 'rgba(0, 0, 0, 0.4)' }}>
-                            {formatTime(getDateTime(message.created, conn !== null && conn.offset))}
-                        </span>
-                    }
+                    <span style={{
+                        ...styles.timeTag,
+                        ...{ opacity: hovered ? '1' : '0' }
+                    }}>
+                        {formatTime(getDateTime(message.created, conn !== null && conn.offset))}
+                    </span>
                 </Col>
 
                 {/* Col is 9 to not slipp into RHS */}
@@ -169,11 +169,26 @@ const styles = {
         backgroundColor: '#f1f0f0',
         overflowWrap: 'anywhere',
         maxWidth: 'calc(100% - 100px)',
+        // CSS Transitions
+        transition: "all .33s ease",
+        WebkitTransition: "all .33s ease",
+        MozTransition: "all .33s ease",
     },
     nameText: {
         paddingLeft: '62px',
         paddingBottom: '2px',
         color: 'rgba(0, 0, 0, .40)',
         fontSize: '15px'
+    },
+    timeTag: { 
+        position: 'relative', 
+        top: 'calc(50% - 12px)', 
+        left: '8px', 
+        fontSize: '14px', 
+        color: 'rgba(0, 0, 0, 0.4)',
+        // CSS Transitions
+        transition: "all .15s ease",
+        WebkitTransition: "all .15s ease",
+        MozTransition: "all .15s ease",
     }
 }

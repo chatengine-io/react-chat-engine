@@ -151,7 +151,7 @@ const styles = {
         whiteSpace: 'pre-line',
         overflowWrap: 'anywhere',
         maxWidth: 'calc(100% - 100px)',
-        // Color transition
+        // CSS Transitions
         transition: "all .33s ease",
         WebkitTransition: "all .33s ease",
         MozTransition: "all .33s ease",
@@ -162,7 +162,7 @@ const styles = {
         right: '8px', 
         fontSize: '14px', 
         color: 'rgb(24, 144, 255)',
-        // Color transition
+        // CSS Transitions
         transition: "all .15s ease",
         WebkitTransition: "all .15s ease",
         MozTransition: "all .15s ease",
