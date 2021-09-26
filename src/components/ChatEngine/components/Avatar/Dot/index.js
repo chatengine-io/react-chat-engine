@@ -36,7 +36,10 @@ export default class Dot extends Component {
                         backgroundImage: this.state.avatar && `url(${this.state.avatar})`,
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
-                        backgroundSize: '14px'
+                        backgroundSize: '14px',
+                        // Size Animations
+                        width: this.props.visible ? '13px' : '0px',
+                        height: this.props.visible ? '13px' : '0px',
                     }
                 }}
             />
@@ -46,10 +49,12 @@ export default class Dot extends Component {
 
 const styles = {
     dot: {
-        width: '13px',
-        height: '13px',
         borderRadius: '13px',
         textAlign: 'center',
+        // CSS Transitions
+        transition: "all .33s ease",
+        WebkitTransition: "all .33s ease",
+        MozTransition: "all .33s ease",
     }
 }
 

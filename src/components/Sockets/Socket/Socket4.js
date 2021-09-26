@@ -38,10 +38,7 @@ const Socket = props => {
     }, [connecting])
 
     useEffect(() => {
-        console.log('now', now)
-        console.log('shouldPongBy', shouldPongBy)
         if (shouldPongBy < now) {
-            console.log(now, shouldPongBy)
             setConnecting(true)
             setShouldPongBy(Date.now() + minSocketLag)
         }

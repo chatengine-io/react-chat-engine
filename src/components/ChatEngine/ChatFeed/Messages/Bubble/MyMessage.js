@@ -28,17 +28,15 @@ const Message = props => {
         if (!chat) { return <div /> }
 
         return chat.people.map((chatPerson, index) => {
-            if (conn.userName !== message.sender_username && message.id === chatPerson.last_read) {
-                return (
-                    <Dot
-                        key={`read_${index}`}
-                        avatar={chatPerson.person.avatar}
-                        username={chatPerson.person.username}
-                        style={{ float: 'right', marginLeft: '4px' }}
-                    />
-                )
-            }
-            return <div key={`read_${index}`} />
+            return (
+                <Dot
+                    key={`read_${index}`}
+                    avatar={chatPerson.person.avatar}
+                    username={chatPerson.person.username}
+                    visible={message.id === chatPerson.last_read}
+                    style={{ float: 'right', marginLeft: '4px' }}
+                />
+            )
         })
     }
 
