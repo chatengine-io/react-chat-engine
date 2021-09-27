@@ -160,7 +160,7 @@ const ChatFeed = props => {
 
                 {props.renderConnectionBar ? props.renderConnectionBar(chat) : <ConnectionBar renderDelay={10000} />}
 
-                {props.renderScrollDownBar ? props.renderScrollDownBar(chat) : <ScrollDownBar chat={chat} />}
+                {props.renderScrollDownBar ? props.renderScrollDownBar(chat) : <ScrollDownBar chat={chat} renderDelay={3000} />}
 
                 <div style={{ height: '86px' }} className='ce-feed-container-bottom' />
             </div>
