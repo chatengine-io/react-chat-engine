@@ -39,6 +39,10 @@ const Socket = props => {
 
     useEffect(() => {
         if (shouldPongBy < now) {
+            console.log('pingIntervalID', pingIntervalID)
+            console.log('timeIntervalID', timeIntervalID)
+            console.log('shouldPongBy', shouldPongBy)
+            console.log('now', now)
             setConnecting(true)
             setShouldPongBy(Date.now() + minSocketLag)
         }
@@ -63,6 +67,7 @@ const Socket = props => {
         setConnecting(false)
 
         if (connecting) {
+            // We might need to fuze timeIntervalID and pingIntervalID into one
             pingIntervalID = setInterval(() => {
                 try {
                     socketRef.sendMessage(JSON.stringify('ping'))
@@ -213,7 +218,7 @@ const Socket = props => {
                     childRef={ref => socketRef = ref}
                     url={`${wsStart}${rootHost}/person_v4/?session_token=${sessionToken}`}
                     onOpen={onConnect.bind(this, props)}
-                    onClose={() => setConnecting(true)}
+                    onClose={() => { console.log('Socket Closed'); setConnecting(true) }}
                     onMessage={handleEvent.bind(this)}
                     reconnectIntervalInMilliSeconds={3000}
                 />

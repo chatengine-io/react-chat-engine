@@ -28,17 +28,15 @@ const Message = props => {
         if (!chat) { return <div /> }
 
         return chat.people.map((chatPerson, index) => {
-            if (conn.userName !== message.sender_username && message.id === chatPerson.last_read) {
-                return (
-                    <Dot
-                        key={`read_${index}`}
-                        avatar={chatPerson.person.avatar}
-                        username={chatPerson.person.username}
-                        style={{ float: 'right', marginLeft: '4px' }}
-                    />
-                )
-            }
-            return <div key={`read_${index}`} />
+            return (
+                <Dot
+                    key={`read_${index}`}
+                    avatar={chatPerson.person.avatar}
+                    username={chatPerson.person.username}
+                    visible={message.id === chatPerson.last_read}
+                    style={{ float: 'right', marginLeft: '4px' }}
+                />
+            )
         })
     }
 
@@ -151,7 +149,7 @@ const styles = {
         whiteSpace: 'pre-line',
         overflowWrap: 'anywhere',
         maxWidth: 'calc(100% - 100px)',
-        // Color transition
+        // CSS Transitions
         transition: "all .33s ease",
         WebkitTransition: "all .33s ease",
         MozTransition: "all .33s ease",
@@ -162,7 +160,7 @@ const styles = {
         right: '8px', 
         fontSize: '14px', 
         color: 'rgb(24, 144, 255)',
-        // Color transition
+        // CSS Transitions
         transition: "all .15s ease",
         WebkitTransition: "all .15s ease",
         MozTransition: "all .15s ease",

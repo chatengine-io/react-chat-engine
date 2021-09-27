@@ -15,8 +15,11 @@ export function sendMessage(props, chatId, data, callback) {
         }
     }
 
+    if (data.created) {
+        formdata.append('created', data.created)
+    }
+
     formdata.append('text', data.text)
-    formdata.append('created', data.created)
     formdata.append('sender_username', data.sender_username)
     formdata.append('custom_json', JSON.stringify(data.custom_json ? data.custom_json : {}))
     

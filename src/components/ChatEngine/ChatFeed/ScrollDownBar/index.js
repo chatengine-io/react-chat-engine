@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 
 import { ChatEngineContext } from 'react-chat-engine'
 
@@ -7,8 +7,20 @@ import { CaretDownOutlined } from '@ant-design/icons'
 import { animateScroll } from "react-scroll"
 
 const ScrollDownBar = (props) => {
+    const didMountRef = useRef(false)
+    const [isVisible, setIsVisible] = useState(false)
     const { conn, isBottomVisible } = useContext(ChatEngineContext)
     const { chat } = props
+
+    useEffect(() => {
+        if (!didMountRef.current) {
+            didMountRef.current = true
+            setTimeout(
+                () => setIsVisible(true), 
+                props.renderDelay ? props.renderDelay : 0
+            )
+        }
+    })
 
     if (conn === null || !chat || chat === null) return <div />
 
@@ -20,6 +32,7 @@ const ScrollDownBar = (props) => {
     })
 
     if (
+        !isVisible ||
         isBottomVisible ||
         chat.last_message.id === undefined ||
         chat.last_message.id === lastReadMessage

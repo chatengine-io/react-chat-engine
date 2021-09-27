@@ -28,17 +28,15 @@ const TheirMessage = props => {
         if (!chat) { return <div /> }
 
         return chat.people.map((person, index) => {
-            if (message.id === person.last_read) {
-                return (
-                    <Dot
-                        key={`read_${index}`}
-                        avatar={person.person.avatar}
-                        username={person.person.username}
-                        style={{ float: 'left', marginLeft: '4px' }}
-                    />
-                )
-            }
-            return <div key={`read_${index}`} />
+            return (
+                <Dot
+                    key={`read_${index}`}
+                    avatar={person.person.avatar}
+                    username={person.person.username}
+                    visible={message.id === person.last_read}
+                    style={{ float: 'left', marginLeft: '4px' }}
+                />
+            )
         })
     }
 
@@ -135,12 +133,12 @@ const TheirMessage = props => {
                         </div>
                     }
 
-                    {
-                        hovered &&
-                        <span style={{ position: 'relative', top: 'calc(50% - 12px)', left: '8px', fontSize: '14px', color: 'rgba(0, 0, 0, 0.4)' }}>
-                            {formatTime(getDateTime(message.created, conn !== null && conn.offset))}
-                        </span>
-                    }
+                    <span style={{
+                        ...styles.timeTag,
+                        ...{ opacity: hovered ? '1' : '0' }
+                    }}>
+                        {formatTime(getDateTime(message.created, conn !== null && conn.offset))}
+                    </span>
                 </Col>
 
                 {/* Col is 9 to not slipp into RHS */}
@@ -169,11 +167,26 @@ const styles = {
         backgroundColor: '#f1f0f0',
         overflowWrap: 'anywhere',
         maxWidth: 'calc(100% - 100px)',
+        // CSS Transitions
+        transition: "all .33s ease",
+        WebkitTransition: "all .33s ease",
+        MozTransition: "all .33s ease",
     },
     nameText: {
         paddingLeft: '62px',
         paddingBottom: '2px',
         color: 'rgba(0, 0, 0, .40)',
         fontSize: '15px'
+    },
+    timeTag: { 
+        position: 'relative', 
+        top: 'calc(50% - 12px)', 
+        left: '8px', 
+        fontSize: '14px', 
+        color: 'rgba(0, 0, 0, 0.4)',
+        // CSS Transitions
+        transition: "all .15s ease",
+        WebkitTransition: "all .15s ease",
+        MozTransition: "all .15s ease",
     }
 }

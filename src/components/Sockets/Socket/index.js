@@ -8,7 +8,9 @@ const Socket = props => {
 
     function reRender() {
         setHide(true)
+        console.log('Hiding')
         setTimeout(() => {
+            console.log('Not hiding')
             setHide(false)
         }, 100)
     }
