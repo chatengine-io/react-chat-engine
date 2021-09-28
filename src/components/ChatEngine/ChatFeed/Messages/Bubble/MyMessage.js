@@ -103,10 +103,12 @@ const Message = props => {
             >
                 <Col xs={12} sm={12} md={12}>
                     <span 
+                        className='ce-message-timestamp ce-my-message-timestamp'
                         style={{
                             ...styles.timeTag,
                             ...{ opacity: hovered ? '1' : '0' }
-                        }}>
+                        }}
+                    >
                         {formatTime(getDateTime(message.created, conn !== null && conn.offset))}
                     </span>
 
