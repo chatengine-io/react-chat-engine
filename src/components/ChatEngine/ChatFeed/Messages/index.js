@@ -32,6 +32,7 @@ const Messages = props => {
                     {
                         index === keys.length - 1 &&
                         <RenderTrigger
+                            id='ce-first-message-render-trigger'
                             onEnter={() => setIsBottomVisible(true)}
                             onLeave={() => setIsBottomVisible(false)}
                         />
@@ -56,6 +57,7 @@ const Messages = props => {
                 {
                     index === keys.length - 1 &&
                     <RenderTrigger
+                        id='ce-last-message-render-trigger'
                         onEnter={() => setIsBottomVisible(true)}
                         onLeave={() => setIsBottomVisible(false)}
                     />
