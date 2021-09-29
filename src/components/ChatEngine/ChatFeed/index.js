@@ -115,10 +115,12 @@ const ChatFeed = props => {
     useEffect(() => {
         // Scroll on new incoming messages
         if (isBottomVisible && !_.isEmpty(messages)) {
-            animateScroll.scrollToBottom({
-                duration: 333,
-                containerId: "ce-feed-container"
-            })
+            setTimeout(() => {
+                animateScroll.scrollToBottom({
+                    duration: 333,
+                    containerId: "ce-feed-container"
+                })
+            }, 100)
 
             if (getMyLastMessage(conn.userName, chat) && getMyLastMessage(conn.userName, chat) !== chat.last_message.id) {
                 readMessage(conn, currentChat, chat.last_message.id, (chat) => onReadMessage(chat))

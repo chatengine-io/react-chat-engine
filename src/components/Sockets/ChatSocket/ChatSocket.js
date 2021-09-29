@@ -209,6 +209,7 @@ const SocketChild = props => {
         url={`${wsStart}${rootHost}/chat/?projectID=${project}&chatID=${chatID}&accessKey=${chatAccessKey}`}
         onOpen={onConnect.bind(this, props)}
         onClose={onClose.bind(this)}
+        onError={e => console.log('Socket Error', e)}
         onMessage={handleEvent.bind(this)}
         reconnectIntervalInMilliSeconds={3000}
     />

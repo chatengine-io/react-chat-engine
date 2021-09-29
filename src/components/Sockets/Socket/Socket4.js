@@ -218,7 +218,8 @@ const Socket = props => {
                     childRef={ref => socketRef = ref}
                     url={`${wsStart}${rootHost}/person_v4/?session_token=${sessionToken}`}
                     onOpen={onConnect.bind(this, props)}
-                    onClose={() => { console.log('Socket Closed'); setConnecting(true) }}
+                    onClose={() => { console.log('Socket Closed'); setConnecting(true); }}
+                    onError={e => console.log('Socket Error', e)}
                     onMessage={handleEvent.bind(this)}
                     reconnectIntervalInMilliSeconds={3000}
                 />
