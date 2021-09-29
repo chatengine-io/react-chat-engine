@@ -27,16 +27,7 @@ const Messages = props => {
 
         if (props.renderMessageBubble) {
             return (
-                <div key={`message_${index}`}>
-                    {/* Scroll down if the top of last msg is visible */}
-                    {
-                        index === keys.length - 1 &&
-                        <RenderTrigger
-                            onEnter={() => setIsBottomVisible(true)}
-                            onLeave={() => setIsBottomVisible(false)}
-                        />
-                    }
-
+                <div key={`message_${index}`}>                    
                     {
                         props.renderMessageBubble(
                             conn,
@@ -46,13 +37,27 @@ const Messages = props => {
                             messages[nextMessageKey]
                         )
                     }
+
+                    {
+                        index === keys.length - 1 &&
+                        <RenderTrigger
+                            onEnter={() => setIsBottomVisible(true)}
+                            onLeave={() => setIsBottomVisible(false)}
+                        />
+                    }
                 </div>
             )
         }
 
         return (
             <div key={`message_${index}`} id={`ce-message-${message.id}`}>
-                {/* Scroll down if the top of last msg is visible */}
+                <MessageBubble
+                    chat={chat}
+                    message={message}
+                    lastMessage={messages[lastMessageKey]}
+                    nextMessage={messages[nextMessageKey]}
+                />
+
                 {
                     index === keys.length - 1 &&
                     <RenderTrigger
@@ -60,13 +65,6 @@ const Messages = props => {
                         onLeave={() => setIsBottomVisible(false)}
                     />
                 }
-
-                <MessageBubble
-                    chat={chat}
-                    message={message}
-                    lastMessage={messages[lastMessageKey]}
-                    nextMessage={messages[nextMessageKey]}
-                />
             </div>
         )
     })
