@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 import { SettingOutlined, CloseOutlined } from '@ant-design/icons'
+
+import { ChatEngineContext } from 'react-chat-engine'
 
 import ChatSettings from '../../ChatSettings'
 
 const ChatSettingsDrawer = props => {
     const [isOpen, setIsOpen] = useState(false)
+    const context = useContext(ChatEngineContext)
+    const allProps = {...props, ...context.conn}
 
     return (
         <div> 
@@ -28,7 +32,11 @@ const ChatSettingsDrawer = props => {
                         </div>
                     </div>
 
-                    <ChatSettings {...props} />
+                    {
+                        context.conn !== null && context.conn.renderChatSettings ?
+                        context.conn.renderChatSettings(context) :
+                        <ChatSettings {...allProps} />
+                    }
                 </div>
             }
         </div>

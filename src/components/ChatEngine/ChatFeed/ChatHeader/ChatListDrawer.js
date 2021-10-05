@@ -9,7 +9,7 @@ import ChatList from '../../ChatList'
 const ChatListDrawer = props => {
     const [isOpen, setIsOpen] = useState(false)
     const context = useContext(ChatEngineContext)
-    const propsAndContext = {...props, ...context}
+    const allProps = {...props, ...context.conn}
 
     return (
         <div> 
@@ -21,11 +21,15 @@ const ChatListDrawer = props => {
             { 
                 isOpen &&
                 <div style={styles.drawerContainer}>
-                    <ChatList 
-                        {...propsAndContext} 
-                        onClose={() => setIsOpen(false)} 
-                        onChatClick={() => setIsOpen(false)} 
-                    />
+                    {
+                        context.conn !== null && context.conn.renderChatList ?
+                        context.conn.renderChatList(context) :
+                        <ChatList 
+                            {...allProps} 
+                            onClose={() => setIsOpen(false)} 
+                            onChatClick={() => setIsOpen(false)} 
+                        />
+                    }
                 </div>
             }
         </div>
