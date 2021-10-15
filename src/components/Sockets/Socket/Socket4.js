@@ -33,16 +33,29 @@ const Socket = props => {
 
     useEffect(() => {
         if (!didMountRef.current) { didMountRef.current = true
-        // Re-render the Socket (on reconnect)
-        } else if (didMountRef.current && connecting) { props.reRender && props.reRender() }
-    }, [connecting])
+        
+        // The issue here (might be) something is triggering while the socket is rendered + connecting
+        // basically triggering a rerender continuously
+        } {/* else if (didMountRef.current && connecting) { props.reRender && props.reRender() } */}
+    }, [])
+    // removed connecting from the array...
 
     useEffect(() => {
-        if (shouldPongBy < now) {
+        if (now > shouldPongBy) {
             console.log('pingIntervalID', pingIntervalID)
             console.log('timeIntervalID', timeIntervalID)
             console.log('shouldPongBy', shouldPongBy)
             console.log('now', now)
+
+            // Here we trigger if (now > shouldPongBy) and (mounted && connected)
+            if (didMountRef.current && !connecting) {
+                console.log('didMountRef.current', didMountRef.current)
+                console.log('connecting', connecting)
+                props.reRender && props.reRender()
+            }
+            // The issue will not persist here because: (now > shouldPongBy) is checked 
+            // which seems to be working based off logs
+
             setConnecting(true)
             setShouldPongBy(Date.now() + minSocketLag)
         }
