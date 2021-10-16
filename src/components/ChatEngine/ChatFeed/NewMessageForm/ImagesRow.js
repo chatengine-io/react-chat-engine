@@ -22,7 +22,10 @@ const ImagesRow = props => {
     }
   
     return (
-        <div style={{ width: 'calc(100% - 24px)', paddingLeft: '12px' }}>
+        <div
+            className='ce-message-images-row' 
+            style={{ width: '100%', paddingLeft: '12px' }}
+        >
             { renderFiles() }
         </div>
     )

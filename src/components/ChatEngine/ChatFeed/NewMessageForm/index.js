@@ -19,9 +19,6 @@ const NewMessageForm = () => {
   const [value, setValue] = useState('')
   const [trigger, setTrigger] = useState(0)
   const [attachments, setAttachments] = useState([])
-  const [loadQuill, setLoadQuill] = useState(false)
-
-  useEffect(() => setLoadQuill(true), 100) // See if this makes an impact for NextJS
 
   function onRemove(index) {
     const newAttachments = attachments
@@ -69,16 +66,13 @@ const NewMessageForm = () => {
 
       <FilesRow files={attachments} onRemove={(i) => onRemove(i)} />
 
-      {
-        loadQuill &&
-        <NextQuill
-          theme='snow'
-          value={value}
-          onChange={handleChange.bind(this)}
-          onSubmit={handleSubmit.bind(this)}
-          onAttach={setAttachments.bind(this)}
-        />
-      }
+      <NextQuill
+        theme='snow'
+        value={value}
+        onChange={handleChange.bind(this)}
+        onSubmit={handleSubmit.bind(this)}
+        onAttach={setAttachments.bind(this)}
+      />
     </div>
   );
 }

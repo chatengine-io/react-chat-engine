@@ -23,8 +23,9 @@ const FilesRow = props => {
   
     return (
         <div 
+            className='ce-message-files-row' 
             style={{ 
-                width: 'calc(100% - 24px)', 
+                width: '100%', 
                 padding:  props.files.lenth > 0 ? '6px 16px' : '0px'
             }}
         >
