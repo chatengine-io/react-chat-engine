@@ -115,7 +115,11 @@ const Message = props => {
                     {   // TODO: What is !attachments for?
                         !attachments || message.text &&
                         <div
-                            className='ce-message-bubble ce-my-message-bubble'
+                            className={`
+                                ce-message-bubble 
+                                ce-my-message-bubble 
+                                ${props.sending && 'ce-my-message-sinding-bubble'}
+                            `}
                             style={{ 
                                 ...styles.myMessage, 
                                 ...{ borderRadius },
