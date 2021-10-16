@@ -86,9 +86,4 @@ const styles = {
     width: '100%', 
     backgroundColor: 'white',
   },
-  inputContainer: { 
-    minHeight: '36px',
-    paddingTop: '10px',
-    paddingBottom: '6px',
-  },
 }
