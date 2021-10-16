@@ -28,7 +28,7 @@ export default class FormHtmlEditor extends Component {
         if (!Quill) return <div />
     
         return (
-            <div>
+            <div className='ce-quill-container'>
                 <Quill
                     theme="snow"
                     modules={modules}
@@ -51,6 +51,7 @@ export default class FormHtmlEditor extends Component {
                     />
 
                     <div 
+                        className='ce-send-button-container'
                         onClick={this.props.onSubmit.bind(this)}
                         style={{ position: 'absolute', right: '5px', bottom: '37px' }} 
                     >

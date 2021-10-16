@@ -26,6 +26,7 @@ import IsTyping from './components/ChatEngine/ChatFeed/IsTyping'
 import ConnectionBar from './components/ChatEngine/ChatFeed/ConnectionBar'
 import ScrollDownBar from './components/ChatEngine/ChatFeed/ScrollDownBar'
 import NewMessageForm from './components/ChatEngine/ChatFeed/NewMessageForm'
+import MessageFormSocial from './components/ChatEngine/ChatFeed/MessageFormSocial'
 
 import ChatSettings from './components/ChatEngine/ChatSettings'
 import ChatSettingsTop from './components/ChatEngine/ChatSettings/ChatSettingsTop'
@@ -50,6 +51,6 @@ export {
   isTyping,
 
   ChatList, ChatCard, NewChatForm,
-  ChatFeed, ChatHeader, IceBreaker, MessageBubble, IsTyping, ConnectionBar, ScrollDownBar, NewMessageForm,
+  ChatFeed, ChatHeader, IceBreaker, MessageBubble, IsTyping, ConnectionBar, ScrollDownBar, NewMessageForm, MessageFormSocial,
   ChatSettings, ChatSettingsTop, PeopleSettings, PhotosSettings, OptionsSettings,
 }

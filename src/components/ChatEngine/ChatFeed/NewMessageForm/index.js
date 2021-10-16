@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
 import { sendMessage, isTyping, ChatEngineContext } from 'react-chat-engine'
 
@@ -19,6 +19,9 @@ const NewMessageForm = () => {
   const [value, setValue] = useState('')
   const [trigger, setTrigger] = useState(0)
   const [attachments, setAttachments] = useState([])
+  const [loadQuill, setLoadQuill] = useState(false)
+
+  useEffect(() => setLoadQuill(true), 100) // See if this makes an impact for NextJS
 
   function onRemove(index) {
     const newAttachments = attachments
@@ -66,13 +69,16 @@ const NewMessageForm = () => {
 
       <FilesRow files={attachments} onRemove={(i) => onRemove(i)} />
 
-      <NextQuill
-        theme='snow'
-        value={value}
-        onChange={handleChange.bind(this)}
-        onSubmit={handleSubmit.bind(this)}
-        onAttach={setAttachments.bind(this)}
-      />
+      {
+        loadQuill &&
+        <NextQuill
+          theme='snow'
+          value={value}
+          onChange={handleChange.bind(this)}
+          onSubmit={handleSubmit.bind(this)}
+          onAttach={setAttachments.bind(this)}
+        />
+      }
     </div>
   );
 }
@@ -85,10 +91,5 @@ const styles = {
     bottom: '0px', 
     width: '100%', 
     backgroundColor: 'white',
-  },
-  inputContainer: { 
-    minHeight: '36px',
-    paddingTop: '10px',
-    paddingBottom: '6px',
   },
 }

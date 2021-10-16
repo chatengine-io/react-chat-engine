@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { PaperClipOutlined } from '@ant-design/icons'
 
-const AttachmentsInput = props => {
+const ImagesInput = props => {
     const [state, setState] = useState({
         hovered: false,
     })
@@ -13,49 +13,38 @@ const AttachmentsInput = props => {
     }
 
     return (
-        <form
+        <div
             className="uploader"
             encType="multipart/form-data"
             style={{ height: '0px' }}
+            className='ce-upload-document-form'
         >
             <label
                 htmlFor="files"
-                id='upload-document-button'
+                id='ce-upload-document-button'
             >
                 <PaperClipOutlined 
-                    className='ce-attachment-icon'
+                    id='ce-upload-document-icon'
                     onMouseEnter={() => setState({ ...state, hovered: true })}
                     onMouseLeave={() => setState({ ...state, hovered: false })}
                     style={{
-                        ...styles.icon,
-                        ...{ color: state.hovered ? '#06c' : '#444' }
+                        ...{ cursor: 'pointer', position: 'absolute', bottom: '20px', right: '63px', fontSize: '18px' },
+                        ...{ color: state.hovered ? '#69c0ff' : '#1890ff' }
                     }}
                 />
             </label>
 
             <input
-                multiple
+               
                 id="files"
+                accept="image/x-png,image/gif,image/jpeg"
                 style={{ visibility: "hidden" }}
                 type="file"
                 onChange={(e) => onSelect(e)}
                 onClick={(e) => e.target.value = null}
             />
-        </form>
+        </div>
     );
 }
 
-const styles = {
-    icon: {
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        display: 'inline-block',
-        float: 'left',
-        height: '24px',
-        padding: '4px 5px',
-        width: '28px',
-    }
-}
-
-export default AttachmentsInput
+export default ImagesInput
