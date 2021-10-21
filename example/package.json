@@ -16,7 +16,7 @@
     "react-chat-engine": "link:..",
     "react-dom": "link:../node_modules/react-dom",
     "react-grid-system": "^7.1.2",
-    "react-redux": "^7.2.2",
+    "react-redux": "^7.2.5",
     "react-router-dom": "^5.2.0",
     "react-scripts": "link:../node_modules/react-scripts",
     "redux": "^4.0.5",
