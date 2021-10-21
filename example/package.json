@@ -11,7 +11,7 @@
     "deploy": "node ../node_modules/react-scripts/bin/react-scripts.js build && aws s3 cp --recursive ./build s3://support.chatengine.io"
   },
   "dependencies": {
-    "history": "^5.0.0",
+    "history": "^5.0.1",
     "react": "link:../node_modules/react",
     "react-chat-engine": "link:..",
     "react-dom": "link:../node_modules/react-dom",
