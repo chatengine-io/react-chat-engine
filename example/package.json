@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "history": "^5.0.0",
-    "react": "link:../node_modules/react",
+    "react": "0.14.10",
     "react-chat-engine": "link:..",
-    "react-dom": "link:../node_modules/react-dom",
+    "react-dom": "0.14.10",
     "react-grid-system": "^7.1.2",
     "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",
