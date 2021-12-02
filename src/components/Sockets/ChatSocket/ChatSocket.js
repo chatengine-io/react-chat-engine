@@ -52,6 +52,7 @@ const SocketChild = (props) => {
     if (shouldPongBy < now) {
       // console.log("Reconnecting socket", shouldPongBy, now)
       setConnecting(true)
+      props.reRender && props.reRender()
       setShouldPongBy(Date.now() + minSocketLag)
     }
 
@@ -198,6 +199,7 @@ const SocketChild = (props) => {
 
   function onClose() {
     setConnecting(true)
+    props.reRender && props.reRender()
   }
 
   const { development, publicKey, projectID, chatID, chatAccessKey } = props

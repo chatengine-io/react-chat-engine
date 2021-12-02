@@ -9,6 +9,8 @@ build
 dist
 .rpt2_cache
 
+.dccache
+
 # misc
 .DS_Store
 .env
