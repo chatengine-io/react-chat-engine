@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
 import {
   ChatEngineContext,
@@ -15,14 +15,12 @@ let pingIntervalID = 0
 let timeIntervalID = 0
 
 const pingInterval = 4000
-const minSocketLag = 15 * 1000
+const minLag = 15 * 1000
 const reconnect = Date.now() + 10 * 1000
 
 const SocketChild = (props) => {
-  const didMountRef = useRef(false)
-
   const [now, setNow] = useState(Date.now())
-  const [shouldPongBy, setShouldPongBy] = useState(Date.now() + minSocketLag)
+  const [shouldPongBy, setShouldPongBy] = useState(Date.now() + minLag)
 
   const {
     connecting,
@@ -41,23 +39,16 @@ const SocketChild = (props) => {
   } = useContext(ChatEngineContext)
 
   useEffect(() => {
-    if (!didMountRef.current) {
-      didMountRef.current = true
-    } else if (connecting) {
-      props.reRender && props.reRender()
-    }
-  }, [connecting])
-
-  useEffect(() => {
-    if (shouldPongBy < now) {
-      // console.log("Reconnecting socket", shouldPongBy, now)
+    if (now > shouldPongBy) {
+      console.log('shouldPongBy', shouldPongBy)
+      console.log('now', now)
       setConnecting(true)
       props.reRender && props.reRender()
-      setShouldPongBy(Date.now() + minSocketLag)
+      setShouldPongBy(Date.now() + minLag)
     }
-
+  }, [now, shouldPongBy])
+  useEffect(() => {
     return () => {
-      // console.log('Unmounting')
       clearInterval(pingIntervalID)
       clearInterval(timeIntervalID)
     }
@@ -117,7 +108,7 @@ const SocketChild = (props) => {
     const eventJSON = JSON.parse(event)
 
     if (eventJSON.action === 'pong') {
-      setShouldPongBy(Date.now() + minSocketLag)
+      setShouldPongBy(Date.now() + minLag)
     } else if (eventJSON.action === 'login_error') {
       console.log(
         `Your chat auth credentials were not correct: \n
