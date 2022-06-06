@@ -1,25 +1,22 @@
 import React, { useState } from 'react'
 
+import DataLoader from './DataLoader'
 import SocketChild from './Socket4'
 
+const Socket = (props) => {
+  const [hide, setHide] = useState(false)
 
-const Socket = props => {
-    const [hide, setHide] = useState(false)
+  function reRender() {
+    setHide(true)
+    setTimeout(() => setHide(false), 100)
+  }
 
-    function reRender() {
-        setHide(true)
-        console.log('Hiding')
-        setTimeout(() => {
-            console.log('Not hiding')
-            setHide(false)
-        }, 100)
-    }
-
-    if (hide) {
-        return <div />
-    } else {
-        return <SocketChild {...props} reRender={() => reRender()} />
-    }
+  return (
+    <div>
+      {!hide && <DataLoader {...props} />}
+      {!hide && <SocketChild {...props} reRender={() => reRender()} />}
+    </div>
+  )
 }
 
 export default Socket

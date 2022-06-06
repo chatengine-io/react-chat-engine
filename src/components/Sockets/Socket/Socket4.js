@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
 import {
   ChatEngineContext,
@@ -11,20 +11,17 @@ import { getDateTime } from '../../ChatEngine/Utilities/timezone'
 
 import { WebSocket } from 'nextjs-websocket'
 
-import DataLoader from './DataLoader'
-
 let socketRef = undefined
 let pingIntervalID = 0
 let timeIntervalID = 0
 
 const pingInterval = 4000
-const minSocketLag = 15 * 1000
+const minLag = 15 * 1000
 const reconnect = Date.now() + 10 * 1000
 
 const Socket = (props) => {
-  const didMountRef = useRef(false)
   const [now, setNow] = useState(Date.now())
-  const [shouldPongBy, setShouldPongBy] = useState(Date.now() + minSocketLag)
+  const [shouldPongBy, setShouldPongBy] = useState(Date.now() + minLag)
 
   const {
     connecting,
@@ -43,36 +40,15 @@ const Socket = (props) => {
   } = useContext(ChatEngineContext)
 
   useEffect(() => {
-    if (!didMountRef.current) {
-      didMountRef.current = true
-
-      // The issue here (might be) something is triggering while the socket is rendered + connecting
-      // basically triggering a rerender continuously
-    }
-    {
-      /* else if (didMountRef.current && connecting) { props.reRender && props.reRender() } */
-    }
-  }, [])
-  // removed connecting from the array...
-
-  useEffect(() => {
     if (now > shouldPongBy) {
       console.log('pingIntervalID', pingIntervalID)
       console.log('timeIntervalID', timeIntervalID)
       console.log('shouldPongBy', shouldPongBy)
       console.log('now', now)
 
-      // Here we trigger if (now > shouldPongBy) and (mounted && connected)
-      if (didMountRef.current && !connecting) {
-        console.log('didMountRef.current', didMountRef.current)
-        console.log('connecting', connecting)
-        props.reRender && props.reRender()
-      }
-      // The issue will not persist here because: (now > shouldPongBy) is checked
-      // which seems to be working based off logs
       setConnecting(true)
       props.reRender && props.reRender()
-      setShouldPongBy(Date.now() + minSocketLag)
+      setShouldPongBy(Date.now() + minLag)
     }
   }, [now, shouldPongBy])
 
@@ -96,6 +72,7 @@ const Socket = (props) => {
   }
 
   function onConnect(conn) {
+    console.log('connected')
     setConnecting(false)
 
     if (connecting) {
@@ -136,7 +113,7 @@ const Socket = (props) => {
     const eventJSON = JSON.parse(event)
 
     if (eventJSON.action === 'pong') {
-      setShouldPongBy(Date.now() + minSocketLag)
+      setShouldPongBy(Date.now() + minLag)
     } else if (eventJSON.action === 'new_chat') {
       const chat = eventJSON.data
 
@@ -228,27 +205,23 @@ const Socket = (props) => {
   const wsStart = development ? 'ws://' : 'wss://'
   const rootHost = development ? '127.0.0.1:8000' : 'api.chatengine.io'
 
-  return (
-    <div>
-      <DataLoader {...props} />
+  if (!sessionToken || sessionToken === '') return <div />
 
-      {sessionToken !== '' && (
-        <WebSocket
-          reconnect={true}
-          childRef={(ref) => (socketRef = ref)}
-          url={`${wsStart}${rootHost}/person_v4/?session_token=${sessionToken}`}
-          onOpen={onConnect.bind(this, props)}
-          onClose={() => {
-            console.log('Socket Closed')
-            setConnecting(true)
-            props.reRender && props.reRender()
-          }}
-          onError={(e) => console.log('Socket Error', e)}
-          onMessage={handleEvent.bind(this)}
-          reconnectIntervalInMilliSeconds={3000}
-        />
-      )}
-    </div>
+  return (
+    <WebSocket
+      url={`${wsStart}${rootHost}/person_v4/?session_token=${sessionToken}`}
+      reconnect={true}
+      reconnectIntervalInMilliSeconds={3000}
+      childRef={(ref) => (socketRef = ref)}
+      onOpen={onConnect.bind(this, props)}
+      onError={(e) => console.log('Socket Error', e)}
+      onMessage={handleEvent.bind(this)}
+      onClose={() => {
+        console.log('Socket Closed')
+        setConnecting(true)
+        props.reRender && props.reRender()
+      }}
+    />
   )
 }
 
