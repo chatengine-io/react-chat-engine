@@ -15,7 +15,6 @@ import {
   MessageBubble,
   IsTyping,
   NewMessageForm,
-  ConnectionBar,
   ScrollDownBar,
   ChatSettings,
   ChatSettingsTop,
@@ -44,12 +43,12 @@ const ChatEngineApp = (props) => {
       projectID={props.projectID}
       development={props.development}
       // You want the extra args for outside components
-      renderChatList={(chatAppState) => <ChatList {...chatAppState} />}
+      // renderChatList={(chatAppState) => <ChatList {...chatAppState} />}
       renderChatCard={(chat, index) => (
         <ChatCard key={`card_${index}`} chat={chat} />
       )}
       renderNewChatForm={(creds) => <NewChatForm creds={creds} />}
-      renderChatFeed={(chatAppState) => <ChatFeed {...chatAppState} />}
+      // renderChatFeed={(chatAppState) => <ChatFeed {...chatAppState} />}
       renderChatHeader={(chat) => <ChatHeader />}
       renderIceBreaker={(chat) => <IceBreaker />}
       renderMessageBubble={(creds, chat, lastMessage, message, nextMessage) => (
@@ -61,7 +60,6 @@ const ChatEngineApp = (props) => {
         />
       )}
       renderIsTyping={(typers) => <IsTyping />}
-      renderConnectionBar={(chat) => <ConnectionBar renderDelay={3000} />}
       renderScrollDownBar={(chat, userName, isBottomVisible) => (
         <ScrollDownBar chat={chat} userName={userName} />
       )}

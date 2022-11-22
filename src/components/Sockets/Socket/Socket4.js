@@ -2,11 +2,10 @@ import React, { useContext, useState, useEffect } from 'react'
 
 import {
   ChatEngineContext,
+  readMessage,
   getLatestChats,
-  getLatestMessages,
-  readMessage
+  getLatestMessages
 } from 'react-chat-engine'
-
 import { getDateTime } from '../../ChatEngine/Utilities/timezone'
 
 import { WebSocket } from 'nextjs-websocket'
@@ -17,15 +16,13 @@ let timeIntervalID = 0
 
 const pingInterval = 4000
 const minLag = 15 * 1000
-const reconnect = Date.now() + 10 * 1000
+const initialLoadTime = Date.now() + 10 * 1000
 
 const Socket = (props) => {
   const [now, setNow] = useState(Date.now())
   const [shouldPongBy, setShouldPongBy] = useState(Date.now() + minLag)
 
   const {
-    connecting,
-    setConnecting,
     conn,
     sessionToken,
     chats,
@@ -39,17 +36,16 @@ const Socket = (props) => {
     isBottomVisible
   } = useContext(ChatEngineContext)
 
-  useEffect(() => {
-    if (now > shouldPongBy) {
-      console.log('pingIntervalID', pingIntervalID)
-      console.log('timeIntervalID', timeIntervalID)
-      console.log('shouldPongBy', shouldPongBy)
-      console.log('now', now)
-      // setConnecting(true)
-      props.reRender && props.reRender()
-      setShouldPongBy(Date.now() + minLag)
-    }
-  }, [now, shouldPongBy])
+  //   useEffect(() => {
+  //     if (now > shouldPongBy) {
+  //       console.log('pingIntervalID', pingIntervalID)
+  //       console.log('timeIntervalID', timeIntervalID)
+  //       console.log('shouldPongBy', new Date(shouldPongBy).toLocaleString())
+  //       console.log('now', new Date(now).toLocaleString())
+  //       props.reRender && props.reRender()
+  //       setShouldPongBy(Date.now() + minLag)
+  //     }
+  //   }, [now, shouldPongBy])
 
   useEffect(() => {
     return () => {
@@ -70,26 +66,24 @@ const Socket = (props) => {
     })
   }
 
-  function onConnect(conn) {
-    console.log('connected')
-    setConnecting(false)
+  function onConnect() {
+    // pingIntervalID = setInterval(() => {
+    //   try {
+    //     socketRef.sendMessage(JSON.stringify('ping'))
+    //   } catch (e) {
+    //     console.log('Socker error', e)
+    //   }
+    // }, pingInterval)
+    // timeIntervalID = setInterval(() => setNow(Date.now()), 1000)
 
-    if (connecting) {
-      // We might need to fuze timeIntervalID and pingIntervalID into one
-      pingIntervalID = setInterval(() => {
-        try {
-          socketRef.sendMessage(JSON.stringify('ping'))
-        } catch (e) {
-          console.log('Socker error', e)
-        }
-      }, pingInterval)
-      timeIntervalID = setInterval(() => setNow(Date.now()), 1000)
-    }
-
-    getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
     // If this wasn't the first connection
-    if (Date.now() > reconnect || conn.renderChatFeed) {
-      // TODO: This conn.renderChatFeed is a hacky patch
+    if (
+      Date.now() > initialLoadTime ||
+      conn.renderChatFeed ||
+      conn.renderChatList
+    ) {
+      console.log('Refresh')
+      getLatestChats(conn, 25, (chats) => setChats(_.mapKeys(chats, 'id')))
       getLatestMessages(conn, activeChat, 45, (id, list) => {
         setMessages({ ...messages, ..._.mapKeys(list, 'created') })
       })
@@ -104,7 +98,6 @@ const Socket = (props) => {
       newChats[chat.id] = chat
       setChats(newChats)
     }
-
     props.onEditChat && props.onEditChat(chat)
   }
 
@@ -115,73 +108,58 @@ const Socket = (props) => {
       setShouldPongBy(Date.now() + minLag)
     } else if (eventJSON.action === 'new_chat') {
       const chat = eventJSON.data
-
       if (chats) {
         const newChats = { ...chats }
         newChats[chat.id] = chat
         setChats(newChats)
         setActiveChat(chat.id)
       }
-
       props.onNewChat && props.onNewChat(eventJSON.data)
     } else if (eventJSON.action === 'edit_chat') {
       handleEditChat(eventJSON.data)
     } else if (eventJSON.action === 'delete_chat') {
       const chat = eventJSON.data
-
       if (chats) {
         chats[chat.id] = undefined
-
         setChats(chats)
-
         if (!_.isEmpty(chats)) {
           const sortedChats = sortChats(chats)
           setActiveChat(sortedChats[0] ? parseInt(sortedChats[0].id) : 0)
         }
       }
-
       props.onDeleteChat && props.onDeleteChat(chat)
     } else if (eventJSON.action === 'add_person') {
       handleEditChat(eventJSON.data)
-
       props.onAddPerson && props.onAddPerson(eventJSON.data)
     } else if (eventJSON.action === 'remove_person') {
       handleEditChat(eventJSON.data)
-
       props.onRemovePerson && props.onRemovePerson(eventJSON.data)
     } else if (eventJSON.action === 'new_message') {
       const { id, message } = eventJSON.data
-
       if (parseInt(id) === parseInt(activeChat)) {
         const newMessages = { ...messages }
         newMessages[message.created] = message
         setMessages(newMessages)
       }
-
       if (message.sender_username !== props.userName && isBottomVisible) {
         readMessage(conn, activeChat, message.id, (chat) =>
           handleEditChat(chat)
         )
       }
-
       props.onNewMessage && props.onNewMessage(id, message)
     } else if (eventJSON.action === 'edit_message') {
       const { id, message } = eventJSON.data
-
       if (id === activeChat) {
         messages[message.created] = message
         setMessages(messages)
       }
-
       props.onEditMessage && props.onEditMessage(id, message)
     } else if (eventJSON.action === 'delete_message') {
       const { id, message } = eventJSON.data
-
       if (id === activeChat) {
         messages[message.created] = undefined
         setMessages(messages)
       }
-
       props.onDeleteMessage && props.onDeleteMessage(id, message)
     } else if (eventJSON.action === 'is_typing') {
       const { id, person } = eventJSON.data
@@ -193,9 +171,7 @@ const Socket = (props) => {
           [person]: Date.now()
         }
       }
-
       setTypingCounter(newTypingCounter)
-
       props.onTyping && props.onTyping(id, person)
     }
   }
@@ -212,14 +188,10 @@ const Socket = (props) => {
       reconnect={true}
       reconnectIntervalInMilliSeconds={3000}
       childRef={(ref) => (socketRef = ref)}
-      onOpen={onConnect.bind(this, props)}
+      onOpen={onConnect}
       onError={(e) => console.log('Socket Error', e)}
       onMessage={handleEvent.bind(this)}
-      onClose={() => {
-        console.log('Socket Closed')
-        // setConnecting(true)
-        props.reRender && setTimeout(() => props.reRender(), 1500)
-      }}
+      onClose={() => console.log('Socket Closed')}
     />
   )
 }
