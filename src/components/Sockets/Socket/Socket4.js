@@ -6,7 +6,6 @@ import {
   getLatestChats,
   getLatestMessages
 } from 'react-chat-engine'
-
 import { getDateTime } from '../../ChatEngine/Utilities/timezone'
 
 import { WebSocket } from 'nextjs-websocket'
@@ -37,16 +36,16 @@ const Socket = (props) => {
     isBottomVisible
   } = useContext(ChatEngineContext)
 
-  useEffect(() => {
-    if (now > shouldPongBy) {
-      console.log('pingIntervalID', pingIntervalID)
-      console.log('timeIntervalID', timeIntervalID)
-      console.log('shouldPongBy', shouldPongBy)
-      console.log('now', now)
-      props.reRender && props.reRender()
-      setShouldPongBy(Date.now() + minLag)
-    }
-  }, [now, shouldPongBy])
+  //   useEffect(() => {
+  //     if (now > shouldPongBy) {
+  //       console.log('pingIntervalID', pingIntervalID)
+  //       console.log('timeIntervalID', timeIntervalID)
+  //       console.log('shouldPongBy', new Date(shouldPongBy).toLocaleString())
+  //       console.log('now', new Date(now).toLocaleString())
+  //       props.reRender && props.reRender()
+  //       setShouldPongBy(Date.now() + minLag)
+  //     }
+  //   }, [now, shouldPongBy])
 
   useEffect(() => {
     return () => {
@@ -68,14 +67,14 @@ const Socket = (props) => {
   }
 
   function onConnect() {
-    pingIntervalID = setInterval(() => {
-      try {
-        socketRef.sendMessage(JSON.stringify('ping'))
-      } catch (e) {
-        console.log('Socker error', e)
-      }
-    }, pingInterval)
-    timeIntervalID = setInterval(() => setNow(Date.now()), 1000)
+    // pingIntervalID = setInterval(() => {
+    //   try {
+    //     socketRef.sendMessage(JSON.stringify('ping'))
+    //   } catch (e) {
+    //     console.log('Socker error', e)
+    //   }
+    // }, pingInterval)
+    // timeIntervalID = setInterval(() => setNow(Date.now()), 1000)
 
     // If this wasn't the first connection
     if (
