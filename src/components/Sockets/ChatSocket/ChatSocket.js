@@ -23,8 +23,6 @@ const SocketChild = (props) => {
   const [shouldPongBy, setShouldPongBy] = useState(Date.now() + minLag)
 
   const {
-    connecting,
-    setConnecting,
     conn,
     setConn,
     setCreds,
@@ -42,7 +40,6 @@ const SocketChild = (props) => {
     if (now > shouldPongBy) {
       console.log('shouldPongBy', shouldPongBy)
       console.log('now', now)
-      // setConnecting(true)
       props.reRender && props.reRender()
       setShouldPongBy(Date.now() + minLag)
     }
@@ -77,19 +74,16 @@ const SocketChild = (props) => {
   function onConnect(conn) {
     setConn(conn)
     setCreds(conn)
-    setConnecting(false)
 
-    if (connecting) {
-      pingIntervalID = setInterval(() => {
-        try {
-          socketRef.sendMessage(JSON.stringify('ping'))
-        } catch (e) {
-          console.log('Socker error', e)
-        }
-      }, pingInterval)
+    // pingIntervalID = setInterval(() => {
+    //   try {
+    //     socketRef.sendMessage(JSON.stringify('ping'))
+    //   } catch (e) {
+    //     console.log('Socker error', e)
+    //   }
+    // }, pingInterval)
 
-      timeIntervalID = setInterval(() => setNow(Date.now()), 1000)
-    }
+    // timeIntervalID = setInterval(() => setNow(Date.now()), 1000)
 
     getChat(conn, props.chatID, (chat) => onGetChat(chat))
 
@@ -189,7 +183,6 @@ const SocketChild = (props) => {
   }
 
   function onClose() {
-    // setConnecting(true)
     props.reRender && props.reRender()
   }
 

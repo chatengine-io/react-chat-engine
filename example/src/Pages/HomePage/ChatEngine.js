@@ -15,7 +15,6 @@ import {
   MessageBubble,
   IsTyping,
   NewMessageForm,
-  ConnectionBar,
   ScrollDownBar,
   ChatSettings,
   ChatSettingsTop,
@@ -61,7 +60,6 @@ const ChatEngineApp = (props) => {
         />
       )}
       renderIsTyping={(typers) => <IsTyping />}
-      renderConnectionBar={(chat) => <ConnectionBar renderDelay={3000} />}
       renderScrollDownBar={(chat, userName, isBottomVisible) => (
         <ScrollDownBar chat={chat} userName={userName} />
       )}

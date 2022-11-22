@@ -17,6 +17,7 @@ const Socket = (props) => {
   })
 
   function getSession() {
+    console.log('Get session')
     getOrCreateSession(
       props,
       (data) => {

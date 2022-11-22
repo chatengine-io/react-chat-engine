@@ -49,7 +49,6 @@ import ChatHeader from './components/ChatEngine/ChatFeed/ChatHeader'
 import IceBreaker from './components/ChatEngine/ChatFeed/Steps/IceBreaker'
 import MessageBubble from './components/ChatEngine/ChatFeed/Messages/Bubble'
 import IsTyping from './components/ChatEngine/ChatFeed/IsTyping'
-import ConnectionBar from './components/ChatEngine/ChatFeed/ConnectionBar'
 import ScrollDownBar from './components/ChatEngine/ChatFeed/ScrollDownBar'
 import NewMessageForm from './components/ChatEngine/ChatFeed/NewMessageForm'
 import MessageFormSocial from './components/ChatEngine/ChatFeed/MessageFormSocial'
@@ -101,7 +100,6 @@ export {
   IceBreaker,
   MessageBubble,
   IsTyping,
-  ConnectionBar,
   ScrollDownBar,
   NewMessageForm,
   MessageFormSocial,
