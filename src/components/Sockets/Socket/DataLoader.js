@@ -30,6 +30,7 @@ const DataLoader = (props) => {
   })
 
   function getSession() {
+    console.log('get session')
     getOrCreateSession(
       props,
       (data) => {

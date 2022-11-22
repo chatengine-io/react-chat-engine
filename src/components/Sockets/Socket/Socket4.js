@@ -45,8 +45,7 @@ const Socket = (props) => {
       console.log('timeIntervalID', timeIntervalID)
       console.log('shouldPongBy', shouldPongBy)
       console.log('now', now)
-
-      setConnecting(true)
+      // setConnecting(true)
       props.reRender && props.reRender()
       setShouldPongBy(Date.now() + minLag)
     }
@@ -218,7 +217,7 @@ const Socket = (props) => {
       onMessage={handleEvent.bind(this)}
       onClose={() => {
         console.log('Socket Closed')
-        setConnecting(true)
+        // setConnecting(true)
         props.reRender && props.reRender()
       }}
     />
