@@ -218,7 +218,7 @@ const Socket = (props) => {
       onClose={() => {
         console.log('Socket Closed')
         // setConnecting(true)
-        props.reRender && props.reRender()
+        props.reRender && setTimeout(() => props.reRender(), 1500)
       }}
     />
   )
