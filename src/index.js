@@ -6,12 +6,38 @@ import { Socket, ChatSocket } from './components/Sockets'
 
 import Button from './components/ChatEngine/components/Button'
 import { Avatar, Dot } from './components/ChatEngine/components/Avatar'
-import { TextInput, AutoCompleteInput } from './components/ChatEngine/components/Input'
+import {
+  TextInput,
+  AutoCompleteInput
+} from './components/ChatEngine/components/Input'
 
-
-import { getChats, newChat, getLatestChats, getChatsBefore, getOrCreateChat, getChat, editChat, deleteChat } from './actions/chats'
-import { addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat } from './actions/people'
-import { getMessages, getLatestMessages, sendMessage, getMessage, editMessage, readMessage, deleteMessage } from './actions/messages'
+import {
+  getChats,
+  newChat,
+  getLatestChats,
+  getChatsBefore,
+  getOrCreateChat,
+  getChat,
+  editChat,
+  deleteChat
+} from './actions/chats'
+import {
+  addPerson,
+  removePerson,
+  getOtherPeople,
+  getMyData,
+  editMyData,
+  leaveChat
+} from './actions/people'
+import {
+  getMessages,
+  getLatestMessages,
+  sendMessage,
+  getMessage,
+  editMessage,
+  readMessage,
+  deleteMessage
+} from './actions/messages'
 import { isTyping } from './actions/typing'
 
 import ChatList from './components/ChatEngine/ChatList'
@@ -35,22 +61,53 @@ import PhotosSettings from './components/ChatEngine/ChatSettings/PhotosSettings'
 import OptionsSettings from './components/ChatEngine/ChatSettings/OptionsSettings'
 
 export {
-  ChatEngineWrapper, ChatEngineContext,
-
+  ChatEngineWrapper,
+  ChatEngineContext,
   ChatEngine,
-
-  Socket, ChatSocket,
-
-  Avatar, Dot,
+  Socket,
+  ChatSocket,
+  Avatar,
+  Dot,
   Button,
-  TextInput, AutoCompleteInput,
-
-  getChats, newChat, getLatestChats, getChatsBefore, getOrCreateChat, getChat, editChat, deleteChat,
-  addPerson, removePerson, getOtherPeople, getMyData, editMyData, leaveChat,
-  getMessages, getLatestMessages, sendMessage, getMessage, editMessage, readMessage, deleteMessage,
+  TextInput,
+  AutoCompleteInput,
+  getChats,
+  newChat,
+  getLatestChats,
+  getChatsBefore,
+  getOrCreateChat,
+  getChat,
+  editChat,
+  deleteChat,
+  addPerson,
+  removePerson,
+  getOtherPeople,
+  getMyData,
+  editMyData,
+  leaveChat,
+  getMessages,
+  getLatestMessages,
+  sendMessage,
+  getMessage,
+  editMessage,
+  readMessage,
+  deleteMessage,
   isTyping,
-
-  ChatList, ChatCard, NewChatForm,
-  ChatFeed, ChatHeader, IceBreaker, MessageBubble, IsTyping, ConnectionBar, ScrollDownBar, NewMessageForm, MessageFormSocial,
-  ChatSettings, ChatSettingsTop, PeopleSettings, PhotosSettings, OptionsSettings,
+  ChatList,
+  ChatCard,
+  NewChatForm,
+  ChatFeed,
+  ChatHeader,
+  IceBreaker,
+  MessageBubble,
+  IsTyping,
+  ConnectionBar,
+  ScrollDownBar,
+  NewMessageForm,
+  MessageFormSocial,
+  ChatSettings,
+  ChatSettingsTop,
+  PeopleSettings,
+  PhotosSettings,
+  OptionsSettings
 }

@@ -42,7 +42,7 @@ const SocketChild = (props) => {
     if (now > shouldPongBy) {
       console.log('shouldPongBy', shouldPongBy)
       console.log('now', now)
-      setConnecting(true)
+      // setConnecting(true)
       props.reRender && props.reRender()
       setShouldPongBy(Date.now() + minLag)
     }
@@ -189,7 +189,7 @@ const SocketChild = (props) => {
   }
 
   function onClose() {
-    setConnecting(true)
+    // setConnecting(true)
     props.reRender && props.reRender()
   }
 
