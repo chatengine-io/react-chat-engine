@@ -6,7 +6,7 @@ import { ChatEngineContext } from 'react-chat-engine'
 
 const Socket = (props) => {
   const didMountRef = useRef(false)
-  const [reload, setReload] = useState(false)
+  const [isHidden, setIsHidden] = useState(false)
   const { setConn, setCreds, setSessionToken } = useContext(ChatEngineContext)
 
   useEffect(() => {
@@ -45,15 +45,13 @@ const Socket = (props) => {
   }
 
   function reRender() {
-    setReload(true)
-    setTimeout(() => setReload(false), 100)
+    setIsHidden(true)
+    setTimeout(() => setIsHidden(false), 100)
   }
 
-  return (
-    <div>
-      {!reload && <SocketChild {...props} reRender={() => reRender()} />}
-    </div>
-  )
+  if (isHidden) return <div />
+
+  return <SocketChild {...props} reRender={() => reRender()} />
 }
 
 export default Socket

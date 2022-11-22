@@ -43,12 +43,12 @@ const ChatEngineApp = (props) => {
       projectID={props.projectID}
       development={props.development}
       // You want the extra args for outside components
-      renderChatList={(chatAppState) => <ChatList {...chatAppState} />}
+      // renderChatList={(chatAppState) => <ChatList {...chatAppState} />}
       renderChatCard={(chat, index) => (
         <ChatCard key={`card_${index}`} chat={chat} />
       )}
       renderNewChatForm={(creds) => <NewChatForm creds={creds} />}
-      renderChatFeed={(chatAppState) => <ChatFeed {...chatAppState} />}
+      // renderChatFeed={(chatAppState) => <ChatFeed {...chatAppState} />}
       renderChatHeader={(chat) => <ChatHeader />}
       renderIceBreaker={(chat) => <IceBreaker />}
       renderMessageBubble={(creds, chat, lastMessage, message, nextMessage) => (
