@@ -11,61 +11,73 @@ import ChatFeed from './ChatFeed'
 import ChatSettings from './ChatSettings'
 
 import { Row, Col } from 'react-grid-system'
-import { setConfiguration } from 'react-grid-system';
+import { setConfiguration } from 'react-grid-system'
 
 // TODO: One off imports for Teams tutorial
 import { getLatestMessages } from 'react-chat-engine'
- 
-setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 });
 
-const ChatEngine = props => {
+setConfiguration({ maxScreenClass: 'xl', gutterWidth: 0 })
+
+const ChatEngine = (props) => {
   const context = useContext(ChatEngineContext)
   const { height } = props
-  const propsAndContext = {...props, ...context}
+  const propsAndContext = { ...props, ...context }
 
   return (
-    <div 
+    <div
       className='ce-chat-engine'
       style={{ textAlign: 'left', backgroundColor: 'white' }}
     >
       <Socket {...props} />
 
       <Row className='ce-wrapper'>
-        <Col xs={0} sm={3} style={{ height: height ? height : '' }} className='ce-chat-list-column'>
-          {
-            props.renderChatList ?
-            props.renderChatList(propsAndContext) :
-            <ChatList 
-              {...propsAndContext} 
+        <Col
+          xs={0}
+          sm={3}
+          style={{ height: height ? height : '' }}
+          className='ce-chat-list-column'
+        >
+          {props.renderChatList ? (
+            props.renderChatList(propsAndContext)
+          ) : (
+            <ChatList
+              {...propsAndContext}
               // TODO: One off code for Teams tutorial
               onChatClick={(chatID) => {
                 if (props.renderChatFeed) {
-                  getLatestMessages(
-                    props, chatID, 45,
-                    (id, list) => {
-                      context.setMessages({..._.mapKeys(list, 'created')})
-                    }
-                  )
+                  getLatestMessages(props, chatID, 45, (id, list) => {
+                    context.setMessages({ ..._.mapKeys(list, 'created') })
+                  })
                 }
               }}
             />
-          }
+          )}
         </Col>
 
-        <Col xs={12} sm={6} style={{ height: height ? height : '' }} className='ce-chat-feed-column'>
-          {
-            props.renderChatFeed ?
-            props.renderChatFeed(propsAndContext) :
+        <Col
+          xs={12}
+          sm={6}
+          style={{ height: height ? height : '' }}
+          className='ce-chat-feed-column'
+        >
+          {props.renderChatFeed ? (
+            props.renderChatFeed(propsAndContext)
+          ) : (
             <ChatFeed {...propsAndContext} />
-          }
+          )}
         </Col>
 
-        <Col xs={0} sm={3} style={{ height: height ? height : '' }} className='ce-settings-column'>
-          {
-            props.renderChatSettings ?
-            props.renderChatSettings(props) :
-            <ChatSettings { ...props} />
-          }
+        <Col
+          xs={0}
+          sm={3}
+          style={{ height: height ? height : '' }}
+          className='ce-settings-column'
+        >
+          {props.renderChatSettings ? (
+            props.renderChatSettings(props)
+          ) : (
+            <ChatSettings {...props} />
+          )}
         </Col>
       </Row>
     </div>

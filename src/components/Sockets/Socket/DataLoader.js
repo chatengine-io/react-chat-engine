@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useRef } from 'react'
 
 import {
-  ChatEngineContext,
-  getLatestChats,
-  getLatestMessages
+  ChatEngineContext
+  // getLatestChats,
+  // getLatestMessages
 } from 'react-chat-engine'
 import { getOrCreateSession } from './getOrCreateSession'
 
@@ -25,7 +25,7 @@ const DataLoader = (props) => {
     if (!didMountRef.current) {
       didMountRef.current = true
       getSession()
-      getLatestChats(props, 25, (chats) => onGetChats(chats))
+      // getLatestChats(props, 25, (chats) => onGetChats(chats))
     }
   })
 
@@ -75,9 +75,9 @@ const DataLoader = (props) => {
     setChats(_.mapKeys(chats, 'id'))
     setActiveChat(activeChatID)
 
-    getLatestMessages(props, activeChatID, 45, (id, list) => {
-      setMessages(_.mapKeys(list, 'created'))
-    })
+    // getLatestMessages(props, activeChatID, 45, (id, list) => {
+    //   setMessages(_.mapKeys(list, 'created'))
+    // })
   }
 
   return <div />
