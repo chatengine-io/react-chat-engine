@@ -38,7 +38,7 @@ const Socket = (props) => {
           setCreds(undefined)
           props.onFailAuth && props.onFailAuth(props)
         }
-        setTimeout(() => getSession(), 3000) // Try again
+        setTimeout(() => getSession(), 10 * 1000)
       }
     )
   }
