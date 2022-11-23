@@ -17,13 +17,23 @@ const Socket = (props) => {
   })
 
   function getSession() {
-    console.log('Get session')
+    const sessionKey = `${props.projectID}/${props.userName}/${props.userSecret}`
+
+    if (localStorage.getItem(sessionKey) !== null) {
+      setConn(props)
+      setCreds(props)
+      setSessionToken(localStorage.getItem(sessionKey))
+      console.log('Local fetch!')
+      return
+    }
+
     getOrCreateSession(
       props,
       (data) => {
         setConn(props)
         setCreds(props)
         setSessionToken(data.token)
+        localStorage.setItem(sessionKey, data.token)
       },
       (e) => {
         if (e.response && e.response.status === 403) {
