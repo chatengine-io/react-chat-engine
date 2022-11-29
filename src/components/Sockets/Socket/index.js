@@ -47,6 +47,7 @@ const Socket = (props) => {
           )
           setConn(undefined)
           setCreds(undefined)
+          localStorage.removeItem(sessionKey)
           props.onFailAuth && props.onFailAuth(props)
         }
         setTimeout(() => getSession(), 10 * 1000)
