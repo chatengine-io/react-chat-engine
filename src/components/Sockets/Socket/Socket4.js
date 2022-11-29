@@ -103,9 +103,11 @@ const Socket = (props) => {
 
   async function handleEvent(event) {
     const eventJSON = JSON.parse(event)
+    console.log('eventJSON.action', eventJSON.action)
     if (eventJSON.action === 'pong') {
       setShouldPongBy(Date.now() + minLag)
     } else if (eventJSON.action === 'login_error') {
+      const sessionKey = `${props.projectID}/${props.userName}/${props.userSecret}`
       localStorage.removeItem(sessionKey)
       props.onFailAuth && props.onFailAuth(conn)
     } else if (eventJSON.action === 'new_chat') {
