@@ -1,0 +1,72 @@
+name: Snyk IaC PR Diff Scan
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  snyk-pipeline:
+    runs-on: ubuntu-latest
+    name: Snyk IaC PR Diff Scan
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    steps:
+      # 1. Checkout base ref branch
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.base_ref }}
+
+      - name: Download Snyk
+        run: |
+          wget -O snyk https://static.snyk.io/cli/latest/snyk-linux
+          chmod +x ./snyk
+          mv ./snyk /usr/local/bin/
+
+      - name: Authenticate Snyk
+        run: snyk auth ${SNYK_TOKEN}
+
+      - name: Run Snyk IaC Test
+        run: snyk iac test --json > ${{ github.workspace }}/snyk_iac_baseline.json
+        continue-on-error: true
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: snyk_iac_baseline
+          path: ${{ github.workspace }}/snyk_iac_baseline.json
+
+      # 2. Checkout PR branch
+      - uses: actions/checkout@v3
+
+      - name: Authenticate Snyk
+        run: snyk auth ${SNYK_TOKEN}
+
+      - name: Download snyk-diff Binary
+        run: |
+          cd "${{ github.workspace }}/.github"
+          curl -LJO https://github.com/snyk-playground/cx-tools/raw/main/snyk-pr-diff/bin/snyk-pr-diff-amd64-linux
+
+      - name: Run IaC Test
+        run: |
+          sleep 10s
+          snyk iac test --json > ${{ github.workspace }}/snyk_iac_pr.json || true
+        continue-on-error: true
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: snyk_iac_pr
+          path: ${{ github.workspace }}/snyk_iac_pr.json
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: snyk_iac_baseline
+
+      # 3. Run the delta-check
+      - name: Run IaC PR check!
+        run: |
+          chmod +x "${{ github.workspace }}/.github/snyk-pr-diff-amd64-linux"
+          ${{ github.workspace }}/.github/snyk-pr-diff-amd64-linux iac ${{ github.workspace }}/snyk_iac_baseline.json ${{ github.workspace }}/snyk_iac_pr.json
+
+      - name: Debugging
+        run: |
+          ls -l "${{ github.workspace }}/.github/"  
+          ls "${{ github.workspace }}/.github/workflows"
